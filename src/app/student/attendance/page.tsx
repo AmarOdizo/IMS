@@ -1338,3 +1338,4 @@ export default function StudentAttendancePage() {
     </div>
   );
 }
+
