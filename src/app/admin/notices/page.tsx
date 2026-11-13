@@ -1875,3 +1875,4 @@ export default function CampusNoticesPage() {
     </div>
   );
 }
+
