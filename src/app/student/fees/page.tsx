@@ -1097,3 +1097,4 @@ export default function StudentFeesPage() {
     </div>
   );
 }
+
