@@ -62,9 +62,9 @@ export default function StaffHeader({
       {/* Right: Session Info, Notifications, Faculty Profile */}
       <div className="flex items-center gap-4">
         {/* Academic Session Pill */}
-        <div className="hidden lg:flex items-center px-3 py-1 bg-surface-container text-primary font-mono text-xs uppercase tracking-wider border border-[#cbd5e1] rounded-sm">
+        <div className="hidden lg:flex items-center px-3 py-1 bg-surface-container text-primary font-mono text-xs uppercase tracking-wider border border-[#d5e3fc] rounded-sm">
           <span className="w-1.5 h-1.5 bg-secondary mr-2 inline-block rounded-full"></span>
-          AY 2024-25 • Spring Term
+          AY 2025-26 • Even Term
         </div>
 
         {/* Biometric Status Pill */}

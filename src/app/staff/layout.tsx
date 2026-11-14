@@ -1,5 +1,11 @@
+import type { Metadata } from "next";
 import StaffSidebar from "@/components/staff/StaffSidebar";
 import StaffHeader from "@/components/staff/StaffHeader";
+
+export const metadata: Metadata = {
+  title: "Staff Dashboard - Faculty Instruction Portal",
+  description: "Apex IMS Faculty & Teacher Academic Instruction Workspace",
+};
 
 export default function StaffLayout({
   children,
@@ -24,4 +30,3 @@ export default function StaffLayout({
     </div>
   );
 }
-

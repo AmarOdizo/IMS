@@ -493,10 +493,26 @@ export default function AccountantDashboardPage() {
                   />
                 </div>
 
+                <div className="hidden lg:flex items-center gap-1 font-mono text-xs">
+                  {["ALL", "UPI", "Cash", "Cheque", "Bank Transfer", "Card"].map((mode) => (
+                    <button
+                      key={mode}
+                      onClick={() => setModeFilter(mode)}
+                      className={`px-2 py-1 text-[11px] font-bold rounded-xs transition-colors cursor-pointer border ${
+                        modeFilter.toLowerCase() === mode.toLowerCase()
+                          ? "bg-primary text-on-primary border-primary shadow-xs"
+                          : "bg-surface-container text-on-surface-variant border-[#d5e3fc] hover:bg-surface-container-high"
+                      }`}
+                    >
+                      {mode}
+                    </button>
+                  ))}
+                </div>
+
                 <select
                   value={modeFilter}
                   onChange={(e) => setModeFilter(e.target.value)}
-                  className="h-8 px-2.5 text-xs bg-surface-container-low border border-[#d5e3fc] rounded-xs font-mono text-on-surface font-semibold focus:outline-none"
+                  className="lg:hidden h-8 px-2.5 text-xs bg-surface-container-low border border-[#d5e3fc] rounded-xs font-mono text-on-surface font-semibold focus:outline-none"
                 >
                   <option value="ALL">All Modes</option>
                   <option value="UPI">UPI</option>

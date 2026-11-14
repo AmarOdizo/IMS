@@ -45,7 +45,7 @@ export default function AdminHeader() {
         {/* Academic Year Badge */}
         <div className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-surface-container border border-outline-variant/40 font-mono text-xs text-primary">
           <Calendar className="w-3.5 h-3.5 text-secondary" />
-          <span className="font-semibold">AY 2024-25</span>
+          <span className="font-semibold">AY 2025-26</span>
         </div>
 
         {/* Quick Create Dropdown / Trigger */}
@@ -123,7 +123,7 @@ export default function AdminHeader() {
                 </div>
                 <div className="px-3 py-2 hover:bg-surface-container-low cursor-pointer">
                   <p className="font-semibold text-primary">Fee Payment Recorded</p>
-                  <p className="text-on-surface-variant text-[11px]">$2,450 received via UPI (Receipt #9042)</p>
+                  <p className="text-on-surface-variant text-[11px]">₹24,500 received via UPI (Receipt #9042)</p>
                   <span className="text-[9px] text-secondary font-mono">25 mins ago</span>
                 </div>
                 <div className="px-3 py-2 hover:bg-surface-container-low cursor-pointer">

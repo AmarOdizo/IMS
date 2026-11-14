@@ -2,8 +2,11 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "EduAdmin ERP | Apex Institute of Technology & Management",
-  description: "Institutional Command & Management System",
+  title: {
+    default: "Apex Institute Management System (IMS)",
+    template: "%s | Apex IMS",
+  },
+  description: "Official Campus ERP & Institutional Management System • Apex Institute of Technology & Management",
 };
 
 export default function RootLayout({
@@ -19,4 +22,3 @@ export default function RootLayout({
     </html>
   );
 }
-

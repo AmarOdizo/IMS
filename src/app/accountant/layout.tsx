@@ -1,5 +1,11 @@
+import type { Metadata } from "next";
 import AccountantSidebar from "@/components/accountant/AccountantSidebar";
 import AccountantHeader from "@/components/accountant/AccountantHeader";
+
+export const metadata: Metadata = {
+  title: "Accountant Dashboard - Treasury & Collections",
+  description: "Apex IMS Financial Operations, Fee Receipts & Cash Counter",
+};
 
 export default function AccountantLayout({
   children,
@@ -24,4 +30,3 @@ export default function AccountantLayout({
     </div>
   );
 }
-

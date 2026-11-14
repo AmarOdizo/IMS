@@ -250,14 +250,31 @@ export default function AdminDashboardPage() {
                 Comparative analysis of forecasted versus actual realized fee intake
               </p>
             </div>
-            <div className="flex items-center gap-4 font-mono text-xs">
-              <div className="flex items-center gap-1.5">
-                <span className="w-3 h-3 bg-surface-container-high border border-[#d5e3fc] inline-block"></span>
-                <span className="text-on-surface-variant text-[11px]">Target</span>
+            <div className="flex flex-wrap items-center gap-3">
+              <div className="flex items-center gap-1 font-mono">
+                {["OCT", "NOV", "DEC", "JAN", "FEB", "MAR"].map((m) => (
+                  <button
+                    key={m}
+                    onClick={() => setSelectedMonth(m)}
+                    className={`px-2 py-0.5 text-[10px] uppercase font-bold rounded-xs transition-colors cursor-pointer border ${
+                      selectedMonth === m
+                        ? "bg-primary text-on-primary border-primary shadow-xs"
+                        : "bg-surface-container text-on-surface-variant border-[#d5e3fc] hover:bg-surface-container-high"
+                    }`}
+                  >
+                    {m}
+                  </button>
+                ))}
               </div>
-              <div className="flex items-center gap-1.5">
-                <span className="w-3 h-3 bg-primary inline-block"></span>
-                <span className="text-on-surface text-[11px] font-semibold">Realized</span>
+              <div className="hidden sm:flex items-center gap-3 font-mono text-xs pl-2 border-l border-[#d5e3fc]">
+                <div className="flex items-center gap-1.5">
+                  <span className="w-2.5 h-2.5 bg-surface-container-high border border-[#d5e3fc] inline-block rounded-xs"></span>
+                  <span className="text-on-surface-variant text-[10px]">Target</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <span className="w-2.5 h-2.5 bg-primary inline-block rounded-xs"></span>
+                  <span className="text-on-surface text-[10px] font-semibold">Realized</span>
+                </div>
               </div>
             </div>
           </div>

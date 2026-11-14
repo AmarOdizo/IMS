@@ -6,12 +6,12 @@ import { ArrowRightLeft, LogOut } from "lucide-react";
 
 const navigationItems = [
   { name: "Dashboard", href: "/staff", icon: "dashboard" },
-  { name: "My Profile", href: "/staff/profile", icon: "account_circle" },
-  { name: "My Batches", href: "/staff/batches", icon: "groups" },
-  { name: "My Students", href: "/staff/students", icon: "badge" },
-  { name: "Attendance", href: "/staff/attendance", icon: "fact_check" },
-  { name: "Exams & Marks", href: "/staff/exams", icon: "grading" },
-  { name: "Notices", href: "/staff/notices", icon: "campaign" },
+  { name: "Faculty Profile", href: "/staff/profile", icon: "account_circle" },
+  { name: "Assigned Batches", href: "/staff/batches", icon: "groups" },
+  { name: "Assigned Students", href: "/staff/students", icon: "badge" },
+  { name: "Mark Attendance", href: "/staff/attendance", icon: "fact_check" },
+  { name: "Enter Exam Marks", href: "/staff/exams", icon: "grading" },
+  { name: "Notices & Circulars", href: "/staff/notices", icon: "campaign" },
 ];
 
 export default function StaffSidebar() {
@@ -77,7 +77,7 @@ export default function StaffSidebar() {
       {/* Bottom Controls: Switcher, Terminate Session, Compliance */}
       <div className="p-3 bg-surface-container-lowest border-t border-[#d5e3fc] flex flex-col gap-2.5 shrink-0">
         {/* Role Portal Quick Switcher */}
-        <div className="bg-surface-container-low p-2 rounded-xs border border-[#cbd5e1]">
+        <div className="bg-surface-container-low p-2 rounded-xs border border-[#d5e3fc]">
           <div className="text-[9px] uppercase font-bold text-secondary tracking-wider mb-1.5 flex items-center justify-between">
             <span className="flex items-center gap-1 font-mono">
               <ArrowRightLeft className="w-2.5 h-2.5" /> Switch Portal
@@ -89,42 +89,38 @@ export default function StaffSidebar() {
           <div className="grid grid-cols-3 gap-1 text-[10px] font-medium text-center font-mono">
             <Link
               href="/admin"
-              className="py-1 px-1 bg-surface-container-lowest border border-[#cbd5e1] hover:border-secondary text-on-surface hover:text-primary transition-colors font-semibold"
+              className="py-1 px-1 bg-surface-container-lowest border border-[#d5e3fc] hover:border-secondary text-on-surface hover:text-primary transition-colors font-semibold rounded-xs"
             >
               Admin
             </Link>
             <Link
               href="/student"
-              className="py-1 px-1 bg-surface-container-lowest border border-[#cbd5e1] hover:border-secondary text-on-surface hover:text-primary transition-colors font-semibold"
+              className="py-1 px-1 bg-surface-container-lowest border border-[#d5e3fc] hover:border-secondary text-on-surface hover:text-primary transition-colors font-semibold rounded-xs"
             >
               Student
             </Link>
             <Link
               href="/accountant"
-              className="py-1 px-1 bg-surface-container-lowest border border-[#cbd5e1] hover:border-secondary text-on-surface hover:text-primary transition-colors font-semibold"
+              className="py-1 px-1 bg-surface-container-lowest border border-[#d5e3fc] hover:border-secondary text-on-surface hover:text-primary transition-colors font-semibold rounded-xs"
             >
-              Accounts
+              Accountant
             </Link>
           </div>
         </div>
 
-        {/* Terminate Session Button */}
+        {/* Sign Out Button linking to /login */}
         <Link
           href="/login"
-          className="flex items-center justify-center gap-1.5 w-full py-1.5 bg-error text-on-error text-[11px] font-bold uppercase tracking-wider hover:bg-error/90 transition-colors rounded-xs shadow-xs"
+          className="w-full flex items-center justify-center gap-2 py-2 px-3 text-xs uppercase tracking-wider font-semibold text-error hover:bg-error-container hover:text-on-error-container border border-error/30 transition-colors rounded-xs"
         >
-          <LogOut className="h-3.5 w-3.5" />
-          <span>Sign Out</span>
+          <LogOut className="w-3.5 h-3.5" />
+          <span>Sign Out / Lock</span>
         </Link>
 
-        {/* Audit Compliance Seal */}
-        <div className="flex flex-col items-center justify-center text-center">
-          <span className="text-[9px] uppercase tracking-wider text-on-surface-variant font-bold">
-            Faculty Directorate
-          </span>
-          <span className="font-mono text-[9px] text-secondary font-bold">
-            ACADEMIC COUNCIL SYNC
-          </span>
+        {/* Compliance Seal */}
+        <div className="flex items-center justify-between text-[9px] font-mono text-on-surface-variant/70 border-t border-[#d5e3fc]/60 pt-1.5">
+          <span>APEX-IMS CORE</span>
+          <span>ISO-27001</span>
         </div>
       </div>
     </aside>

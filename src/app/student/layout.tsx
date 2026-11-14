@@ -1,5 +1,11 @@
+import type { Metadata } from "next";
 import StudentSidebar from "@/components/student/StudentSidebar";
 import StudentHeader from "@/components/student/StudentHeader";
+
+export const metadata: Metadata = {
+  title: "Student Dashboard - Academic Portal",
+  description: "Apex IMS Enrolled Student Learning & Academic Desk",
+};
 
 export default function StudentLayout({
   children,
@@ -24,4 +30,3 @@ export default function StudentLayout({
     </div>
   );
 }
-

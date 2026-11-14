@@ -30,6 +30,7 @@ import {
 } from "lucide-react";
 
 export default function StudentDashboard() {
+  const [studentTab, setStudentTab] = useState<"all" | "exams" | "fees">("all");
   const [showHallTicketModal, setShowHallTicketModal] = useState(false);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [showAttestationModal, setShowAttestationModal] = useState(false);
@@ -349,8 +350,43 @@ export default function StudentDashboard() {
       {/* SECTION 3: Dual Column Academic Layout (8 cols / 4 cols) */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         {/* LEFT COLUMN: Examination Manifest & Transaction Records (8 cols) */}
-        <div className="lg:col-span-8 flex flex-col space-y-6">
+        <div className="lg:col-span-8 flex flex-col space-y-4">
+          {/* Navigation Filter Tabs */}
+          <div className="flex flex-wrap items-center gap-1.5 font-mono text-xs pb-1">
+            <button
+              onClick={() => setStudentTab("all")}
+              className={`px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider rounded-xs transition-colors cursor-pointer border ${
+                studentTab === "all"
+                  ? "bg-primary text-on-primary border-primary shadow-xs"
+                  : "bg-surface-container-lowest text-on-surface-variant border-[#d5e3fc] hover:bg-surface-container-low"
+              }`}
+            >
+              Academic Overview (All)
+            </button>
+            <button
+              onClick={() => setStudentTab("exams")}
+              className={`px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider rounded-xs transition-colors cursor-pointer border ${
+                studentTab === "exams"
+                  ? "bg-primary text-on-primary border-primary shadow-xs"
+                  : "bg-surface-container-lowest text-on-surface-variant border-[#d5e3fc] hover:bg-surface-container-low"
+              }`}
+            >
+              Exams &amp; Datesheet ({upcomingExams.length})
+            </button>
+            <button
+              onClick={() => setStudentTab("fees")}
+              className={`px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider rounded-xs transition-colors cursor-pointer border ${
+                studentTab === "fees"
+                  ? "bg-primary text-on-primary border-primary shadow-xs"
+                  : "bg-surface-container-lowest text-on-surface-variant border-[#d5e3fc] hover:bg-surface-container-low"
+              }`}
+            >
+              Fee Receipts &amp; Ledger ({recentTransactions.length})
+            </button>
+          </div>
+
           {/* Section A: Upcoming Examination Schedule */}
+          {(studentTab === "all" || studentTab === "exams") && (
           <div className="bg-surface-container-lowest shadow-xs border border-[#d5e3fc] rounded-sm overflow-hidden">
             <div className="px-5 py-3.5 bg-surface-container-low border-b border-[#d5e3fc] flex flex-wrap items-center justify-between gap-2">
               <div className="flex items-center gap-2">
@@ -435,8 +471,10 @@ export default function StudentDashboard() {
               </span>
             </div>
           </div>
+          )}
 
           {/* Section B: Recent Fee Payments & Transaction Ledger */}
+          {(studentTab === "all" || studentTab === "fees") && (
           <div className="bg-surface-container-lowest shadow-xs border border-[#d5e3fc] rounded-sm overflow-hidden">
             <div className="px-5 py-3.5 bg-surface-container-low border-b border-[#d5e3fc] flex flex-wrap items-center justify-between gap-2">
               <div className="flex items-center gap-2">
@@ -535,6 +573,7 @@ export default function StudentDashboard() {
               </button>
             </div>
           </div>
+          )}
         </div>
 
         {/* RIGHT COLUMN: Bulletins, Digital ID Pass, Credentials (4 cols) */}

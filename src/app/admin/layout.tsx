@@ -1,5 +1,11 @@
+import type { Metadata } from "next";
 import AdminSidebar from "@/components/admin/AdminSidebar";
 import AdminHeader from "@/components/admin/AdminHeader";
+
+export const metadata: Metadata = {
+  title: "Admin Dashboard - Central Command Matrix",
+  description: "Apex IMS Central Administrative Governance & Operations",
+};
 
 export default function AdminLayout({
   children,
@@ -18,4 +24,3 @@ export default function AdminLayout({
     </div>
   );
 }
-

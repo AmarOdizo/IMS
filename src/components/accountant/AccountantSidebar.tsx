@@ -6,13 +6,13 @@ import { ArrowRightLeft, LogOut } from "lucide-react";
 
 const navigationItems = [
   { name: "Dashboard", href: "/accountant", icon: "dashboard" },
-  { name: "Student Fee Details", href: "/accountant/fee-details", icon: "manage_search" },
-  { name: "Record Fee Payment", href: "/accountant/record-payment", icon: "payments" },
+  { name: "Student Fee Ledgers", href: "/accountant/fee-details", icon: "manage_search" },
+  { name: "Collect Fee Payment", href: "/accountant/record-payment", icon: "payments" },
   { name: "Payment History", href: "/accountant/payment-history", icon: "history" },
-  { name: "Fee Receipts", href: "/accountant/receipts", icon: "receipt_long" },
-  { name: "Pending Dues", href: "/accountant/pending-dues", icon: "pending_actions" },
-  { name: "Reports", href: "/accountant/reports", icon: "analytics" },
-  { name: "My Profile", href: "/accountant/profile", icon: "badge" },
+  { name: "Receipts Register", href: "/accountant/receipts", icon: "receipt_long" },
+  { name: "Pending Dues & Defaulters", href: "/accountant/pending-dues", icon: "pending_actions" },
+  { name: "Financial Reports", href: "/accountant/reports", icon: "analytics" },
+  { name: "Accountant Profile", href: "/accountant/profile", icon: "badge" },
 ];
 
 export default function AccountantSidebar() {
@@ -29,10 +29,10 @@ export default function AccountantSidebar() {
           </div>
           <div className="flex flex-col min-w-0">
             <span className="font-headline text-sm font-bold uppercase tracking-tight text-on-primary leading-tight truncate">
-              Apex IMS
+              Apex Institute
             </span>
             <span className="text-[10px] tracking-wider uppercase text-on-primary-container font-mono font-semibold truncate">
-              Financial Cadre
+              Accountant Portal
             </span>
           </div>
         </div>
@@ -40,7 +40,7 @@ export default function AccountantSidebar() {
         {/* Substrip */}
         <div className="px-4 py-2 bg-surface-container-low flex items-center justify-between border-b border-[#d5e3fc] shrink-0">
           <span className="text-[10px] uppercase tracking-wider text-on-surface-variant font-semibold">
-            Fiscal Navigation
+            Bursar Directorate
           </span>
           <span className="font-mono text-[10px] text-secondary font-bold">
             v4.2-ACC
@@ -59,10 +59,11 @@ export default function AccountantSidebar() {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`flex items-center gap-3 px-3 py-2 text-xs uppercase tracking-wider font-semibold transition-colors rounded-xs ${isActive
-                  ? "bg-primary text-on-primary font-bold shadow-xs"
-                  : "text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface"
-                  }`}
+                className={`flex items-center gap-3 px-3 py-2 text-xs uppercase tracking-wider font-semibold transition-colors rounded-xs ${
+                  isActive
+                    ? "bg-primary text-on-primary font-bold shadow-xs"
+                    : "text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface"
+                }`}
               >
                 <span className="material-symbols-outlined text-[19px]">
                   {item.icon}
@@ -77,7 +78,7 @@ export default function AccountantSidebar() {
       {/* Bottom Controls: Switcher, Terminate Session, Compliance */}
       <div className="p-3 bg-surface-container-lowest border-t border-[#d5e3fc] flex flex-col gap-2.5 shrink-0">
         {/* Role Portal Quick Switcher */}
-        <div className="bg-surface-container-low p-2 rounded-xs border border-[#cbd5e1]">
+        <div className="bg-surface-container-low p-2 rounded-xs border border-[#d5e3fc]">
           <div className="text-[9px] uppercase font-bold text-secondary tracking-wider mb-1.5 flex items-center justify-between">
             <span className="flex items-center gap-1 font-mono">
               <ArrowRightLeft className="w-2.5 h-2.5" /> Switch Portal
@@ -89,42 +90,38 @@ export default function AccountantSidebar() {
           <div className="grid grid-cols-3 gap-1 text-[10px] font-medium text-center font-mono">
             <Link
               href="/admin"
-              className="py-1 px-1 bg-surface-container-lowest border border-[#cbd5e1] hover:border-secondary text-on-surface hover:text-primary transition-colors font-semibold"
+              className="py-1 px-1 bg-surface-container-lowest border border-[#d5e3fc] hover:border-secondary text-on-surface hover:text-primary transition-colors font-semibold rounded-xs"
             >
               Admin
             </Link>
             <Link
               href="/student"
-              className="py-1 px-1 bg-surface-container-lowest border border-[#cbd5e1] hover:border-secondary text-on-surface hover:text-primary transition-colors font-semibold"
+              className="py-1 px-1 bg-surface-container-lowest border border-[#d5e3fc] hover:border-secondary text-on-surface hover:text-primary transition-colors font-semibold rounded-xs"
             >
               Student
             </Link>
             <Link
               href="/staff"
-              className="py-1 px-1 bg-surface-container-lowest border border-[#cbd5e1] hover:border-secondary text-on-surface hover:text-primary transition-colors font-semibold"
+              className="py-1 px-1 bg-surface-container-lowest border border-[#d5e3fc] hover:border-secondary text-on-surface hover:text-primary transition-colors font-semibold rounded-xs"
             >
-              Staff
+              Faculty
             </Link>
           </div>
         </div>
 
-        {/* Terminate Session Button */}
+        {/* Sign Out Button linking to /login */}
         <Link
           href="/login"
-          className="flex items-center justify-center gap-1.5 w-full py-1.5 bg-error text-on-error text-[11px] font-bold uppercase tracking-wider hover:bg-error/90 transition-colors rounded-xs shadow-xs"
+          className="w-full flex items-center justify-center gap-2 py-2 px-3 text-xs uppercase tracking-wider font-semibold text-error hover:bg-error-container hover:text-on-error-container border border-error/30 transition-colors rounded-xs"
         >
-          <LogOut className="h-3.5 w-3.5" />
-          <span>Sign Out</span>
+          <LogOut className="w-3.5 h-3.5" />
+          <span>Sign Out / Lock</span>
         </Link>
 
-        {/* Audit Compliance Seal */}
-        <div className="flex flex-col items-center justify-center text-center">
-          <span className="text-[9px] uppercase tracking-wider text-on-surface-variant font-bold">
-            Strict Bursar Audit Mode
-          </span>
-          <span className="font-mono text-[9px] text-secondary font-bold">
-            RBI &amp; IT ACT COMPLIANT
-          </span>
+        {/* Compliance Seal */}
+        <div className="flex items-center justify-between text-[9px] font-mono text-on-surface-variant/70 border-t border-[#d5e3fc]/60 pt-1.5">
+          <span>APEX-IMS CORE</span>
+          <span>ISO-27001</span>
         </div>
       </div>
     </aside>

@@ -172,8 +172,15 @@ const facultyNotices = [
 
 export default function StaffDashboardPage() {
   const [schedule, setSchedule] = useState<ScheduleItem[]>(todaySchedule);
+  const [scheduleFilter, setScheduleFilter] = useState<"all" | "active" | "completed">("all");
   const [selectedAuditSession, setSelectedAuditSession] = useState<ScheduleItem | null>(null);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+
+  const filteredSchedule = schedule.filter((item) => {
+    if (scheduleFilter === "active") return item.status === "live" || item.status === "upcoming";
+    if (scheduleFilter === "completed") return item.status === "completed";
+    return true;
+  });
 
   const showToast = (msg: string) => {
     setToastMessage(msg);
@@ -386,10 +393,41 @@ export default function StaffDashboardPage() {
               </p>
             </div>
           </div>
-          <div className="flex items-center gap-2">
-            <span className="text-xs font-mono uppercase text-on-surface-variant">Live Telemetry:</span>
-            <span className="px-2.5 py-0.5 bg-surface-container text-primary font-mono text-xs font-bold border border-[#d5e3fc] rounded-xs">
-              T-MINUS 1:12 TO NEXT LAB
+          <div className="flex flex-wrap items-center gap-2">
+            <div className="flex items-center gap-1 font-mono text-xs">
+              <button
+                onClick={() => setScheduleFilter("all")}
+                className={`px-2.5 py-1 text-[11px] font-bold rounded-xs transition-colors cursor-pointer border ${
+                  scheduleFilter === "all"
+                    ? "bg-primary text-on-primary border-primary shadow-xs"
+                    : "bg-surface-container text-on-surface-variant border-[#d5e3fc] hover:bg-surface-container-high"
+                }`}
+              >
+                All ({schedule.length})
+              </button>
+              <button
+                onClick={() => setScheduleFilter("active")}
+                className={`px-2.5 py-1 text-[11px] font-bold rounded-xs transition-colors cursor-pointer border ${
+                  scheduleFilter === "active"
+                    ? "bg-primary text-on-primary border-primary shadow-xs"
+                    : "bg-surface-container text-on-surface-variant border-[#d5e3fc] hover:bg-surface-container-high"
+                }`}
+              >
+                Active ({schedule.filter((s) => s.status !== "completed").length})
+              </button>
+              <button
+                onClick={() => setScheduleFilter("completed")}
+                className={`px-2.5 py-1 text-[11px] font-bold rounded-xs transition-colors cursor-pointer border ${
+                  scheduleFilter === "completed"
+                    ? "bg-primary text-on-primary border-primary shadow-xs"
+                    : "bg-surface-container text-on-surface-variant border-[#d5e3fc] hover:bg-surface-container-high"
+                }`}
+              >
+                Completed ({schedule.filter((s) => s.status === "completed").length})
+              </button>
+            </div>
+            <span className="hidden sm:inline-block px-2.5 py-1 bg-surface-container text-primary font-mono text-xs font-bold border border-[#d5e3fc] rounded-xs">
+              T-MINUS 1:12
             </span>
           </div>
         </div>
@@ -397,7 +435,7 @@ export default function StaffDashboardPage() {
         {/* Timeline Table */}
         <div className="overflow-x-auto">
           <div className="min-w-[800px] flex flex-col gap-2">
-            {schedule.map((item) => {
+            {filteredSchedule.map((item) => {
               const isCompleted = item.status === "completed";
               const isLive = item.status === "live";
               const isUpcoming = item.status === "upcoming";

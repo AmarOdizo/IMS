@@ -6,18 +6,18 @@ import { ArrowRightLeft, LogOut } from "lucide-react";
 
 const navigationItems = [
   { name: "Dashboard", href: "/admin", icon: "space_dashboard" },
-  { name: "Students", href: "/admin/students", icon: "school" },
-  { name: "Staff", href: "/admin/staff", icon: "badge" },
+  { name: "Student Directory", href: "/admin/students", icon: "school" },
+  { name: "Staff & Faculty", href: "/admin/staff", icon: "badge" },
   { name: "Courses & Subjects", href: "/admin/courses", icon: "menu_book" },
-  { name: "Batches", href: "/admin/batches", icon: "groups" },
-  { name: "Attendance", href: "/admin/attendance", icon: "fact_check" },
-  { name: "Fees Management", href: "/admin/fees", icon: "payments" },
+  { name: "Batches & Sections", href: "/admin/batches", icon: "groups" },
+  { name: "Attendance Register", href: "/admin/attendance", icon: "fact_check" },
+  { name: "Fee Management", href: "/admin/fees", icon: "payments" },
   { name: "Exams & Results", href: "/admin/exams", icon: "assignment_turned_in" },
-  { name: "Certificates", href: "/admin/certificates", icon: "verified" },
-  { name: "ID Card Management", href: "/admin/id-cards", icon: "contact_emergency" },
-  { name: "Notices", href: "/admin/notices", icon: "campaign" },
-  { name: "Reports", href: "/admin/reports", icon: "analytics" },
-  { name: "Settings", href: "/admin/settings", icon: "settings" },
+  { name: "Certificates Studio", href: "/admin/certificates", icon: "verified" },
+  { name: "ID Cards Studio", href: "/admin/id-cards", icon: "contact_emergency" },
+  { name: "Notices & Circulars", href: "/admin/notices", icon: "campaign" },
+  { name: "Reports & Analytics", href: "/admin/reports", icon: "analytics" },
+  { name: "System Settings", href: "/admin/settings", icon: "settings" },
 ];
 
 export default function AdminSidebar() {
@@ -83,7 +83,7 @@ export default function AdminSidebar() {
       {/* Bottom Controls: Switcher, Terminate Session, Compliance */}
       <div className="p-3 bg-surface-container-lowest border-t border-[#d5e3fc] flex flex-col gap-2.5 shrink-0">
         {/* Role Portal Quick Switcher */}
-        <div className="bg-surface-container-low p-2 rounded-xs border border-[#cbd5e1]">
+        <div className="bg-surface-container-low p-2 rounded-xs border border-[#d5e3fc]">
           <div className="text-[9px] uppercase font-bold text-secondary tracking-wider mb-1.5 flex items-center justify-between">
             <span className="flex items-center gap-1 font-mono">
               <ArrowRightLeft className="w-2.5 h-2.5" /> Switch Portal
@@ -95,42 +95,38 @@ export default function AdminSidebar() {
           <div className="grid grid-cols-3 gap-1 text-[10px] font-medium text-center font-mono">
             <Link
               href="/student"
-              className="py-1 px-1 bg-surface-container-lowest border border-[#cbd5e1] hover:border-secondary text-on-surface hover:text-primary transition-colors font-semibold"
+              className="py-1 px-1 bg-surface-container-lowest border border-[#d5e3fc] hover:border-secondary text-on-surface hover:text-primary transition-colors font-semibold rounded-xs"
             >
               Student
             </Link>
             <Link
               href="/staff"
-              className="py-1 px-1 bg-surface-container-lowest border border-[#cbd5e1] hover:border-secondary text-on-surface hover:text-primary transition-colors font-semibold"
+              className="py-1 px-1 bg-surface-container-lowest border border-[#d5e3fc] hover:border-secondary text-on-surface hover:text-primary transition-colors font-semibold rounded-xs"
             >
-              Staff
+              Faculty
             </Link>
             <Link
               href="/accountant"
-              className="py-1 px-1 bg-surface-container-lowest border border-[#cbd5e1] hover:border-secondary text-on-surface hover:text-primary transition-colors font-semibold"
+              className="py-1 px-1 bg-surface-container-lowest border border-[#d5e3fc] hover:border-secondary text-on-surface hover:text-primary transition-colors font-semibold rounded-xs"
             >
-              Accounts
+              Accountant
             </Link>
           </div>
         </div>
 
-        {/* Terminate Session Button */}
+        {/* Sign Out Button linking to /login */}
         <Link
           href="/login"
-          className="flex items-center justify-center gap-1.5 w-full py-1.5 bg-error text-on-error text-[11px] font-bold uppercase tracking-wider hover:bg-error/90 transition-colors rounded-xs shadow-xs"
+          className="w-full flex items-center justify-center gap-2 py-2 px-3 text-xs uppercase tracking-wider font-semibold text-error hover:bg-error-container hover:text-on-error-container border border-error/30 transition-colors rounded-xs"
         >
-          <LogOut className="h-3.5 w-3.5" />
-          <span>Terminate Session</span>
+          <LogOut className="w-3.5 h-3.5" />
+          <span>Sign Out / Lock</span>
         </Link>
 
-        {/* Audit Compliance Seal */}
-        <div className="flex flex-col items-center justify-center text-center">
-          <span className="text-[9px] uppercase tracking-wider text-on-surface-variant font-bold">
-            Campus Grid Controller
-          </span>
-          <span className="font-mono text-[9px] text-secondary font-bold">
-            CENTRAL NODE ACTIVE
-          </span>
+        {/* Compliance Seal */}
+        <div className="flex items-center justify-between text-[9px] font-mono text-on-surface-variant/70 border-t border-[#d5e3fc]/60 pt-1.5">
+          <span>APEX-IMS CORE</span>
+          <span>ISO-27001</span>
         </div>
       </div>
     </aside>

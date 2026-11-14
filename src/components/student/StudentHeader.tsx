@@ -62,9 +62,9 @@ export default function StudentHeader({
       {/* Right: Academic Year, Notifications, Profile */}
       <div className="flex items-center gap-5">
         {/* AY / Semester Pill */}
-        <div className="hidden md:flex items-center px-3 py-1 bg-surface-container text-on-surface font-mono text-xs uppercase tracking-wider border border-[#c4c6cf]">
+        <div className="hidden md:flex items-center px-3 py-1 bg-surface-container text-on-surface font-mono text-xs uppercase tracking-wider border border-[#d5e3fc]">
           <span className="w-1.5 h-1.5 bg-secondary mr-2 inline-block"></span>
-          AY 2024-25 • Sem IV
+          AY 2025-26 • Sem IV
         </div>
 
         {/* Academic Calendar Link */}

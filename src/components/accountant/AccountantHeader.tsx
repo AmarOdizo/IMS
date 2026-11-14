@@ -77,7 +77,7 @@ export default function AccountantHeader({
 
         <div className="hidden xl:flex items-center gap-2 pl-4 border-l border-[#d5e3fc]">
           <div className="px-2 py-0.5 bg-surface-container-high text-on-surface font-mono text-[11px] font-semibold">
-            AY 2024-25
+            AY 2025-26
           </div>
           <div className="px-2 py-0.5 bg-surface-container font-mono text-[11px] text-on-surface font-semibold">
             TERM II (EVEN)
@@ -97,7 +97,7 @@ export default function AccountantHeader({
             {currentTime || "14:28:42 IST"}
           </span>
           <span className="text-[10px] text-on-surface-variant uppercase tracking-wider">
-            24 OCT 2024
+            LIVE FY 2025-26
           </span>
         </div>
 
