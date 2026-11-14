@@ -143,30 +143,30 @@ const assignedCohorts = [
 const facultyNotices = [
   {
     id: "FN-01",
-    ref: "APX/DEAN/2024-119",
+    ref: "APX/DEAN/2025-119",
     title: "Mid-Term Question Paper Submission Deadline",
     dept: "Office of the Controller of Examinations",
-    deadline: "May 28, 2024 • 17:00 IST",
+    deadline: "April 08, 2025 • 17:00 IST",
     priority: "Urgent",
     badgeColor: "bg-error text-on-error"
   },
   {
     id: "FN-02",
-    ref: "APX/ACAD/2024-098",
+    ref: "APX/ACAD/2025-098",
     title: "Final Exam Script Moderation Guidelines & Evaluation Rubric",
     dept: "Directorate of Academic Affairs",
-    deadline: "June 05, 2024",
+    deadline: "April 15, 2025",
     priority: "High",
     badgeColor: "bg-secondary text-on-secondary"
   },
   {
     id: "FN-03",
-    ref: "APX/RES/2024-042",
+    ref: "APX/RES/2025-042",
     title: "Distinguished Guest Lecture: Microkernels for Transformer Workloads",
     dept: "Center for Advanced Computing",
-    deadline: "May 28 • Turing Hall",
+    deadline: "April 20 • Turing Hall",
     priority: "Notice",
-    badgeColor: "bg-surface-container text-primary border border-[#cbd5e1]"
+    badgeColor: "bg-surface-container text-primary border border-[#d5e3fc]"
   }
 ];
 
@@ -197,7 +197,7 @@ export default function StaffDashboardPage() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-surface">
+    <div className="p-6 space-y-6 max-w-[1600px] mx-auto font-body text-on-surface select-none">
       {/* Toast Notification */}
       {toastMessage && (
         <div className="fixed bottom-6 right-6 z-50 bg-primary text-on-primary px-4 py-3 rounded shadow-xl flex items-center gap-3 border border-secondary text-xs uppercase tracking-wider font-semibold animate-in fade-in slide-in-from-bottom-3 duration-200">
@@ -210,7 +210,7 @@ export default function StaffDashboardPage() {
       )}
 
       {/* Top Command Telemetry Bar */}
-      <div className="px-6 py-2.5 bg-surface-container-low border-b border-[#0D2545]/15 flex flex-wrap items-center justify-between gap-3">
+      <div className="px-5 py-2.5 bg-surface-container-low border border-[#d5e3fc] flex flex-wrap items-center justify-between gap-3 rounded-sm shadow-xs">
         <div className="flex items-center gap-3 flex-wrap">
           <span className="inline-flex items-center gap-1.5 font-mono text-xs text-primary uppercase tracking-widest font-bold">
             <span className="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
@@ -226,469 +226,467 @@ export default function StaffDashboardPage() {
             SERVER TIME: <strong className="text-primary font-bold">14:18:22 IST</strong>
           </span>
           <span className="text-outline">|</span>
-          <span>CYCLE: AY-2024-S2</span>
+          <span>CYCLE: <strong className="text-primary font-bold">AY 2025-26 (EVEN TERM)</strong></span>
         </div>
       </div>
 
-      <div className="p-6 flex flex-col gap-6">
-        {/* Personalized Faculty Header Banner */}
-        <div className="bg-surface-container-lowest p-6 border border-[#cbd5e1] shadow-sm relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-80 h-full bg-gradient-to-l from-secondary/10 to-transparent pointer-events-none"></div>
+      {/* Personalized Faculty Header Banner */}
+      <div className="bg-surface-container-lowest p-6 border border-[#d5e3fc] shadow-xs relative overflow-hidden rounded-sm">
+        <div className="absolute top-0 right-0 w-96 h-full bg-gradient-to-l from-primary/5 via-secondary/10 to-transparent pointer-events-none"></div>
 
-          <div className="relative z-10 flex flex-col xl:flex-row xl:items-center justify-between gap-6">
-            <div className="flex flex-col gap-1.5">
-              <div className="flex flex-wrap items-center gap-2">
-                <span className="bg-primary text-on-primary font-mono text-[10px] px-2 py-0.5 uppercase tracking-wider font-semibold rounded-xs">
-                  FACULTY DIRECTORY
-                </span>
-                <span className="bg-surface-container text-primary font-mono text-[10px] px-2 py-0.5 uppercase font-bold border border-[#c4c6cf] rounded-xs">
-                  EMP-CS-2018-842
-                </span>
-                <div className="flex items-center gap-1.5 bg-[#ecfdf5] text-[#047857] border border-[#a7f3d0] px-2 py-0.5 rounded-xs">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#047857]"></span>
-                  <span className="font-mono text-[10px] uppercase font-bold">
-                    ACTIVE FACULTY • BIOMETRIC LOGGED 08:42 AM
-                  </span>
-                </div>
-              </div>
-
-              <h1 className="text-2xl md:text-3xl font-bold uppercase tracking-tight text-primary mt-1">
-                Welcome back, Mr. Amit Sharma
-              </h1>
-              <p className="text-xs text-on-surface-variant flex items-center gap-2 flex-wrap">
-                <span className="font-semibold text-primary">Senior Assistant Professor</span>
-                <span className="text-outline">•</span>
-                <span>Department of Computer Science &amp; Engineering</span>
-                <span className="text-outline">•</span>
-                <span className="font-mono text-secondary font-bold">Cabin CS-B204</span>
-              </p>
-            </div>
-
-            {/* Quick Action Buttons */}
+        <div className="relative z-10 flex flex-col xl:flex-row xl:items-center justify-between gap-6">
+          <div className="flex flex-col gap-1.5">
             <div className="flex flex-wrap items-center gap-2">
-              <Link
-                href="/staff/attendance"
-                className="bg-primary hover:bg-primary-container text-on-primary px-3.5 py-2 font-mono text-xs uppercase font-bold tracking-wider flex items-center gap-1.5 transition-colors shadow-sm rounded-sm"
-              >
-                <CheckCheck className="h-4 w-4 text-secondary-container" />
-                <span>Mark Today&apos;s Attendance</span>
-              </Link>
-              <Link
-                href="/staff/exams"
-                className="bg-surface-container hover:bg-surface-container-high text-primary px-3.5 py-2 font-mono text-xs uppercase font-bold tracking-wider flex items-center gap-1.5 transition-colors border border-[#cbd5e1] rounded-sm"
-              >
-                <FileSpreadsheet className="h-4 w-4 text-secondary" />
-                <span>Enter Exam Marks</span>
-              </Link>
-              <Link
-                href="/staff/students"
-                className="bg-surface-container-lowest hover:bg-surface-container text-on-surface hover:text-primary px-3.5 py-2 font-mono text-xs uppercase font-bold tracking-wider flex items-center gap-1.5 transition-colors border border-[#cbd5e1] rounded-sm"
-              >
-                <Users className="h-4 w-4 text-outline" />
-                <span>View Assigned Students</span>
-              </Link>
+              <span className="bg-primary text-on-primary font-mono text-[10px] px-2 py-0.5 uppercase tracking-wider font-semibold rounded-xs">
+                FACULTY INSTRUCTION MATRIX
+              </span>
+              <span className="bg-surface-container text-primary font-mono text-[10px] px-2 py-0.5 uppercase font-bold border border-[#d5e3fc] rounded-xs">
+                EMP-CS-2018-842
+              </span>
+              <div className="flex items-center gap-1.5 bg-[#ecfdf5] text-[#047857] border border-[#a7f3d0] px-2 py-0.5 rounded-xs">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#047857] animate-pulse"></span>
+                <span className="font-mono text-[10px] uppercase font-bold">
+                  ACTIVE ON DUTY &bull; BIOMETRIC LOGGED 08:42 AM
+                </span>
+              </div>
             </div>
+
+            <h1 className="text-2xl md:text-3xl font-bold uppercase tracking-tight text-primary font-headline mt-1">
+              Welcome back, Prof. Amit Sharma!
+            </h1>
+            <p className="text-xs text-on-surface-variant flex items-center gap-2 flex-wrap font-sans">
+              <span className="font-semibold text-primary">Senior Assistant Professor</span>
+              <span>&bull;</span>
+              <span>Department of Computer Science &amp; Engineering</span>
+              <span>&bull;</span>
+              <span className="font-mono text-secondary font-bold">Cabin CS-B204 (Computing Block)</span>
+            </p>
+          </div>
+
+          {/* Quick Action Buttons */}
+          <div className="flex flex-wrap items-center gap-2">
+            <Link
+              href="/staff/attendance"
+              className="bg-primary hover:bg-primary-container text-on-primary px-3.5 py-2 font-mono text-xs uppercase font-bold tracking-wider flex items-center gap-1.5 transition-colors shadow-xs rounded-xs"
+            >
+              <CheckCheck className="h-4 w-4 text-secondary-container" />
+              <span>Mark Attendance</span>
+            </Link>
+            <Link
+              href="/staff/exams"
+              className="bg-surface-container hover:bg-surface-container-high text-primary px-3.5 py-2 font-mono text-xs uppercase font-bold tracking-wider flex items-center gap-1.5 transition-colors border border-[#d5e3fc] rounded-xs"
+            >
+              <FileSpreadsheet className="h-4 w-4 text-secondary" />
+              <span>Enter Exam Marks</span>
+            </Link>
+            <Link
+              href="/staff/students"
+              className="bg-surface-container-lowest hover:bg-surface-container text-on-surface hover:text-primary px-3.5 py-2 font-mono text-xs uppercase font-bold tracking-wider flex items-center gap-1.5 transition-colors border border-[#d5e3fc] rounded-xs"
+            >
+              <Users className="h-4 w-4 text-secondary" />
+              <span>Assigned Students</span>
+            </Link>
+          </div>
+        </div>
+      </div>
+
+      {/* 4 KPI Metrics Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
+        {/* Card 1 */}
+        <div className="bg-surface-container-lowest p-5 border border-[#d5e3fc] shadow-xs relative flex flex-col justify-between border-l-4 border-l-primary rounded-sm">
+          <div className="flex flex-col gap-1">
+            <div className="flex items-center justify-between">
+              <span className="text-[11px] font-mono uppercase tracking-wider text-on-surface-variant font-bold">
+                Assigned Batches
+              </span>
+              <Layers className="h-4 w-4 text-secondary" />
+            </div>
+            <div className="text-2xl font-bold text-primary tracking-tight mt-1">4 Active Cohorts</div>
+          </div>
+          <div className="mt-3 pt-2 bg-surface-container-low p-2 rounded-xs border border-[#eff4ff]">
+            <p className="font-mono text-[11px] text-on-surface-variant truncate">
+              B.Tech IV (A/B), M.Tech II, BCA II
+            </p>
           </div>
         </div>
 
-        {/* 4 KPI Metrics Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
-          {/* Card 1 */}
-          <div className="bg-surface-container-lowest p-4 border border-[#cbd5e1] shadow-sm relative flex flex-col justify-between border-l-4 border-l-primary rounded-sm">
-            <div className="flex flex-col gap-1">
-              <div className="flex items-center justify-between">
-                <span className="text-[10px] font-mono uppercase tracking-wider text-outline font-bold">
-                  Assigned Batches
-                </span>
-                <Layers className="h-4 w-4 text-secondary" />
-              </div>
-              <div className="text-2xl font-bold text-primary tracking-tight mt-1">4 Active Cohorts</div>
+        {/* Card 2 */}
+        <div className="bg-surface-container-lowest p-5 border border-[#d5e3fc] shadow-xs relative flex flex-col justify-between border-l-4 border-l-secondary rounded-sm">
+          <div className="flex flex-col gap-1">
+            <div className="flex items-center justify-between">
+              <span className="text-[11px] font-mono uppercase tracking-wider text-on-surface-variant font-bold">
+                Registered Roster
+              </span>
+              <Users className="h-4 w-4 text-secondary" />
             </div>
-            <div className="mt-3 pt-2 bg-surface-container-low p-2 rounded-xs border border-[#eff4ff]">
-              <p className="font-mono text-[11px] text-on-surface-variant truncate">
-                B.Tech IV (A/B), M.Tech II, BCA II
-              </p>
-            </div>
+            <div className="text-2xl font-bold text-primary tracking-tight mt-1">184 Students</div>
           </div>
-
-          {/* Card 2 */}
-          <div className="bg-surface-container-lowest p-4 border border-[#cbd5e1] shadow-sm relative flex flex-col justify-between border-l-4 border-l-secondary rounded-sm">
-            <div className="flex flex-col gap-1">
-              <div className="flex items-center justify-between">
-                <span className="text-[10px] font-mono uppercase tracking-wider text-outline font-bold">
-                  Registered Roster
-                </span>
-                <Users className="h-4 w-4 text-secondary" />
-              </div>
-              <div className="text-2xl font-bold text-primary tracking-tight mt-1">184 Students</div>
-            </div>
-            <div className="mt-3 pt-2 bg-surface-container-low p-2 rounded-xs border border-[#eff4ff] flex items-center justify-between">
-              <span className="font-mono text-[11px] text-on-surface-variant">156 UG • 28 PG Scholars</span>
-              <span className="text-[10px] font-mono text-[#047857] font-bold uppercase">100% Verified</span>
-            </div>
-          </div>
-
-          {/* Card 3 */}
-          <div className="bg-surface-container-lowest p-4 border border-[#cbd5e1] shadow-sm relative flex flex-col justify-between border-l-4 border-l-primary-container rounded-sm">
-            <div className="flex flex-col gap-1">
-              <div className="flex items-center justify-between">
-                <span className="text-[10px] font-mono uppercase tracking-wider text-outline font-bold">
-                  Today&apos;s Attendance
-                </span>
-                <Clock className="h-4 w-4 text-secondary" />
-              </div>
-              <div className="flex items-baseline gap-2 mt-1">
-                <div className="text-2xl font-bold text-primary tracking-tight">
-                  {schedule.filter((s) => s.status === "completed").length} of 4 Marked
-                </div>
-                <span className="text-[11px] font-mono font-bold text-secondary">
-                  {schedule.filter((s) => s.status === "completed").length === 4 ? "100% DONE" : "75% DONE"}
-                </span>
-              </div>
-            </div>
-            <div className="mt-3 pt-2 bg-surface-container-low p-2 rounded-xs border border-[#eff4ff]">
-              <p className="font-mono text-[11px] text-on-surface-variant truncate">
-                Pending: CS-405L Turing Lab (03:30 PM)
-              </p>
-            </div>
-          </div>
-
-          {/* Card 4 */}
-          <div className="bg-surface-container-lowest p-4 border border-[#cbd5e1] shadow-sm relative flex flex-col justify-between border-l-4 border-l-tertiary-container rounded-sm">
-            <div className="flex flex-col gap-1">
-              <div className="flex items-center justify-between">
-                <span className="text-[10px] font-mono uppercase tracking-wider text-outline font-bold">
-                  Mid-Term Cycle
-                </span>
-                <CalendarDays className="h-4 w-4 text-secondary" />
-              </div>
-              <div className="text-2xl font-bold text-primary tracking-tight mt-1">2 Evaluations</div>
-            </div>
-            <div className="mt-3 pt-2 bg-surface-container-low p-2 rounded-xs border border-[#eff4ff] flex items-center justify-between">
-              <span className="font-mono text-[11px] text-error font-bold">Starts in 6 Days</span>
-              <span className="text-[10px] font-mono text-primary font-bold">CS-401 • CS-405L</span>
-            </div>
+          <div className="mt-3 pt-2 bg-surface-container-low p-2 rounded-xs border border-[#eff4ff] flex items-center justify-between">
+            <span className="font-mono text-[11px] text-on-surface-variant">156 UG &bull; 28 PG Scholars</span>
+            <span className="text-[10px] font-mono text-[#047857] font-bold uppercase">100% Verified</span>
           </div>
         </div>
 
-        {/* Teaching Schedule Strip (Interactive Timetable) */}
-        <div className="bg-surface-container-lowest p-6 border border-[#cbd5e1] shadow-sm flex flex-col gap-4 rounded-sm">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#0D2545]/10">
-            <div className="flex items-center gap-3">
-              <div className="p-2 bg-surface-container rounded-sm text-secondary">
-                <Clock className="h-5 w-5" />
-              </div>
-              <div>
-                <h2 className="text-base font-bold text-primary uppercase tracking-tight">
-                  Today&apos;s Teaching Schedule
-                </h2>
-                <p className="text-xs font-mono text-on-surface-variant">
-                  THURSDAY • 4 SESSIONS PROGRAMMED
-                </p>
-              </div>
+        {/* Card 3 */}
+        <div className="bg-surface-container-lowest p-5 border border-[#d5e3fc] shadow-xs relative flex flex-col justify-between border-l-4 border-l-primary-container rounded-sm">
+          <div className="flex flex-col gap-1">
+            <div className="flex items-center justify-between">
+              <span className="text-[11px] font-mono uppercase tracking-wider text-on-surface-variant font-bold">
+                Today&apos;s Attendance
+              </span>
+              <Clock className="h-4 w-4 text-secondary" />
             </div>
-            <div className="flex items-center gap-2">
-              <span className="text-xs font-mono uppercase text-on-surface-variant">Live Telemetry:</span>
-              <span className="px-2.5 py-0.5 bg-surface-container text-primary font-mono text-xs font-bold border border-[#cbd5e1] rounded-xs">
-                T-MINUS 1:12 TO NEXT LAB
+            <div className="flex items-baseline gap-2 mt-1">
+              <div className="text-2xl font-bold text-primary tracking-tight">
+                {schedule.filter((s) => s.status === "completed").length} of 4 Marked
+              </div>
+              <span className="text-[11px] font-mono font-bold text-secondary">
+                {schedule.filter((s) => s.status === "completed").length === 4 ? "100% DONE" : "75% DONE"}
               </span>
             </div>
           </div>
-
-          {/* Timeline Table */}
-          <div className="overflow-x-auto">
-            <div className="min-w-[800px] flex flex-col gap-2">
-              {schedule.map((item) => {
-                const isCompleted = item.status === "completed";
-                const isLive = item.status === "live";
-                const isUpcoming = item.status === "upcoming";
-
-                return (
-                  <div
-                    key={item.id}
-                    className={`p-4 flex items-center justify-between transition-colors border rounded-sm ${
-                      isLive
-                        ? "bg-[#eff4ff] border-secondary shadow-sm"
-                        : "bg-surface-container-lowest hover:bg-surface-container-low border-[#cbd5e1]"
-                    }`}
-                  >
-                    {/* Time Window */}
-                    <div className="flex items-center gap-4 w-1/4">
-                      <div
-                        className={`font-mono text-base font-bold ${
-                          isLive ? "text-secondary" : "text-primary"
-                        }`}
-                      >
-                        {item.time}
-                      </div>
-                      <span className="font-mono text-[10px] uppercase bg-surface-container text-on-surface-variant px-1.5 py-0.5 border border-[#c4c6cf] rounded-xs">
-                        {item.duration}
-                      </span>
-                    </div>
-
-                    {/* Subject & Details */}
-                    <div className="w-2/5 flex flex-col">
-                      <div className="flex items-center gap-2">
-                        <span className="text-sm font-bold text-primary leading-tight">
-                          {item.code}: {item.subject}
-                        </span>
-                        {isLive && (
-                          <span className="h-2 w-2 rounded-full bg-secondary animate-ping"></span>
-                        )}
-                      </div>
-                      <div className="flex items-center gap-2 text-xs text-on-surface-variant mt-0.5">
-                        <span className="font-semibold text-primary">{item.batch}</span>
-                        <span>•</span>
-                        <span>{item.venue}</span>
-                        <span>•</span>
-                        <span className="font-mono text-[11px]">{item.attendanceInfo}</span>
-                      </div>
-                    </div>
-
-                    {/* Action & Status */}
-                    <div className="flex items-center gap-3">
-                      {isCompleted && (
-                        <>
-                          <div className="bg-surface-container text-primary px-2.5 py-1 font-mono text-[11px] font-bold uppercase tracking-wider flex items-center gap-1 border border-[#cbd5e1] rounded-xs">
-                            <Lock className="h-3.5 w-3.5 text-secondary" />
-                            <span>{item.statusText}</span>
-                          </div>
-                          <button
-                            onClick={() => setSelectedAuditSession(item)}
-                            className="px-3 py-1 bg-surface-container-lowest text-primary font-mono text-[11px] uppercase font-bold hover:bg-surface-container border border-[#cbd5e1] transition-colors rounded-xs"
-                          >
-                            Audit Roll
-                          </button>
-                        </>
-                      )}
-
-                      {isLive && (
-                        <>
-                          <div className="bg-secondary text-on-secondary px-2.5 py-1 font-mono text-[11px] font-bold uppercase tracking-wider flex items-center gap-1 rounded-xs animate-pulse">
-                            <Radio className="h-3.5 w-3.5" />
-                            <span>{item.statusText}</span>
-                          </div>
-                          <button
-                            onClick={handleMarkLiveAttendance}
-                            className="px-3.5 py-1 bg-primary text-on-primary font-mono text-[11px] uppercase font-bold hover:bg-primary-container transition-colors shadow-sm rounded-xs flex items-center gap-1"
-                          >
-                            <CheckCheck className="h-3.5 w-3.5" />
-                            <span>Mark Register</span>
-                          </button>
-                        </>
-                      )}
-
-                      {isUpcoming && (
-                        <>
-                          <div className="bg-surface-container text-outline px-2.5 py-1 font-mono text-[11px] font-semibold uppercase tracking-wider flex items-center gap-1 border border-[#cbd5e1] rounded-xs">
-                            <Clock className="h-3.5 w-3.5" />
-                            <span>{item.statusText}</span>
-                          </div>
-                          <Link
-                            href="/staff/attendance"
-                            className="px-3 py-1 bg-surface-container hover:bg-surface-container-high text-primary font-mono text-[11px] uppercase font-bold border border-[#cbd5e1] transition-colors rounded-xs"
-                          >
-                            Pre-Load Roster
-                          </Link>
-                        </>
-                      )}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
+          <div className="mt-3 pt-2 bg-surface-container-low p-2 rounded-xs border border-[#eff4ff]">
+            <p className="font-mono text-[11px] text-on-surface-variant truncate">
+              Pending: CS-405L Turing Lab (03:30 PM)
+            </p>
           </div>
         </div>
 
-        {/* Assigned Academic Cohorts Grid */}
-        <div className="flex flex-col gap-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <GraduationCap className="h-5 w-5 text-secondary" />
+        {/* Card 4 */}
+        <div className="bg-surface-container-lowest p-5 border border-[#d5e3fc] shadow-xs relative flex flex-col justify-between border-l-4 border-l-tertiary-container rounded-sm">
+          <div className="flex flex-col gap-1">
+            <div className="flex items-center justify-between">
+              <span className="text-[11px] font-mono uppercase tracking-wider text-on-surface-variant font-bold">
+                Mid-Term Cycle
+              </span>
+              <CalendarDays className="h-4 w-4 text-secondary" />
+            </div>
+            <div className="text-2xl font-bold text-primary tracking-tight mt-1">2 Evaluations</div>
+          </div>
+          <div className="mt-3 pt-2 bg-surface-container-low p-2 rounded-xs border border-[#eff4ff] flex items-center justify-between">
+            <span className="font-mono text-[11px] text-error font-bold">Starts in 6 Days</span>
+            <span className="text-[10px] font-mono text-primary font-bold">CS-401 &bull; CS-405L</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Teaching Schedule Strip (Interactive Timetable) */}
+      <div className="bg-surface-container-lowest p-6 border border-[#d5e3fc] shadow-xs flex flex-col gap-4 rounded-sm">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#d5e3fc]">
+          <div className="flex items-center gap-3">
+            <div className="p-2 bg-surface-container rounded-xs text-secondary border border-[#d5e3fc]">
+              <Clock className="h-5 w-5" />
+            </div>
+            <div>
               <h2 className="text-base font-bold text-primary uppercase tracking-tight">
-                Assigned Academic Cohorts (AY 2024–25)
+                Today&apos;s Teaching Schedule &bull; Semester IV
+              </h2>
+              <p className="text-xs font-mono text-on-surface-variant">
+                THURSDAY &bull; 4 SESSIONS PROGRAMMED &bull; AY 2025-26
+              </p>
+            </div>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="text-xs font-mono uppercase text-on-surface-variant">Live Telemetry:</span>
+            <span className="px-2.5 py-0.5 bg-surface-container text-primary font-mono text-xs font-bold border border-[#d5e3fc] rounded-xs">
+              T-MINUS 1:12 TO NEXT LAB
+            </span>
+          </div>
+        </div>
+
+        {/* Timeline Table */}
+        <div className="overflow-x-auto">
+          <div className="min-w-[800px] flex flex-col gap-2">
+            {schedule.map((item) => {
+              const isCompleted = item.status === "completed";
+              const isLive = item.status === "live";
+              const isUpcoming = item.status === "upcoming";
+
+              return (
+                <div
+                  key={item.id}
+                  className={`p-4 flex items-center justify-between transition-colors border rounded-xs ${
+                    isLive
+                      ? "bg-[#eff4ff] border-secondary shadow-xs"
+                      : "bg-surface-container-lowest hover:bg-surface-container-low border-[#d5e3fc]"
+                  }`}
+                >
+                  {/* Time Window */}
+                  <div className="flex items-center gap-4 w-1/4">
+                    <div
+                      className={`font-mono text-base font-bold ${
+                        isLive ? "text-secondary" : "text-primary"
+                      }`}
+                    >
+                      {item.time}
+                    </div>
+                    <span className="font-mono text-[10px] uppercase bg-surface-container text-on-surface-variant px-1.5 py-0.5 border border-[#d5e3fc] rounded-xs">
+                      {item.duration}
+                    </span>
+                  </div>
+
+                  {/* Subject & Details */}
+                  <div className="w-2/5 flex flex-col">
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm font-bold text-primary leading-tight">
+                        {item.code}: {item.subject}
+                      </span>
+                      {isLive && (
+                        <span className="h-2 w-2 rounded-full bg-secondary animate-ping"></span>
+                      )}
+                    </div>
+                    <div className="flex items-center gap-2 text-xs text-on-surface-variant mt-0.5">
+                      <span className="font-semibold text-primary">{item.batch}</span>
+                      <span>&bull;</span>
+                      <span>{item.venue}</span>
+                      <span>&bull;</span>
+                      <span className="font-mono text-[11px]">{item.attendanceInfo}</span>
+                    </div>
+                  </div>
+
+                  {/* Action & Status */}
+                  <div className="flex items-center gap-3">
+                    {isCompleted && (
+                      <>
+                        <div className="bg-surface-container text-primary px-2.5 py-1 font-mono text-[11px] font-bold uppercase tracking-wider flex items-center gap-1 border border-[#d5e3fc] rounded-xs">
+                          <Lock className="h-3.5 w-3.5 text-secondary" />
+                          <span>{item.statusText}</span>
+                        </div>
+                        <button
+                          onClick={() => setSelectedAuditSession(item)}
+                          className="px-3 py-1 bg-surface-container-lowest text-primary font-mono text-[11px] uppercase font-bold hover:bg-surface-container border border-[#d5e3fc] transition-colors rounded-xs cursor-pointer"
+                        >
+                          Audit Roll
+                        </button>
+                      </>
+                    )}
+
+                    {isLive && (
+                      <>
+                        <div className="bg-secondary text-on-secondary px-2.5 py-1 font-mono text-[11px] font-bold uppercase tracking-wider flex items-center gap-1 rounded-xs animate-pulse">
+                          <Radio className="h-3.5 w-3.5" />
+                          <span>{item.statusText}</span>
+                        </div>
+                        <button
+                          onClick={handleMarkLiveAttendance}
+                          className="px-3.5 py-1 bg-primary text-on-primary font-mono text-[11px] uppercase font-bold hover:bg-primary-container transition-colors shadow-xs rounded-xs flex items-center gap-1 cursor-pointer"
+                        >
+                          <CheckCheck className="h-3.5 w-3.5 text-secondary-container" />
+                          <span>Mark Register</span>
+                        </button>
+                      </>
+                    )}
+
+                    {isUpcoming && (
+                      <>
+                        <div className="bg-surface-container text-on-surface-variant px-2.5 py-1 font-mono text-[11px] font-semibold uppercase tracking-wider flex items-center gap-1 border border-[#d5e3fc] rounded-xs">
+                          <Clock className="h-3.5 w-3.5" />
+                          <span>{item.statusText}</span>
+                        </div>
+                        <Link
+                          href="/staff/attendance"
+                          className="px-3 py-1 bg-surface-container hover:bg-surface-container-high text-primary font-mono text-[11px] uppercase font-bold border border-[#d5e3fc] transition-colors rounded-xs"
+                        >
+                          Pre-Load Roster
+                        </Link>
+                      </>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+
+      {/* Assigned Academic Cohorts Grid */}
+      <div className="flex flex-col gap-4">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <GraduationCap className="h-5 w-5 text-secondary" />
+            <h2 className="text-base font-bold text-primary uppercase tracking-tight">
+              Assigned Academic Cohorts (AY 2025–26)
+            </h2>
+          </div>
+          <Link
+            href="/staff/batches"
+            className="text-xs font-mono uppercase font-bold text-secondary hover:underline flex items-center gap-1"
+          >
+            <span>Manage All Batches</span>
+            <ArrowRight className="h-3.5 w-3.5" />
+          </Link>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
+          {assignedCohorts.map((cohort) => (
+            <div
+              key={cohort.id}
+              className="bg-surface-container-lowest p-5 border border-[#d5e3fc] shadow-xs flex flex-col justify-between rounded-sm hover:border-secondary transition-all"
+            >
+              <div>
+                <div className="flex items-center justify-between pb-2 border-b border-[#d5e3fc]">
+                  <span className="font-mono text-[11px] text-secondary font-bold">
+                    {cohort.code}
+                  </span>
+                  <span className="px-2 py-0.5 bg-surface-container font-mono text-[10px] text-primary font-bold rounded-xs border border-[#d5e3fc]">
+                    {cohort.students} Enrolled
+                  </span>
+                </div>
+
+                <h3 className="text-sm font-bold uppercase text-primary tracking-tight mt-2.5">
+                  {cohort.name}
+                </h3>
+                <p className="text-xs text-on-surface-variant mt-0.5">{cohort.course}</p>
+
+                <div className="mt-3.5 pt-3 border-t border-[#eff4ff] flex flex-col gap-2">
+                  <div className="flex items-center justify-between text-xs">
+                    <span className="text-on-surface-variant">Attendance Health:</span>
+                    <span className="font-mono font-bold text-[#047857]">
+                      {cohort.avgAttendance}%
+                    </span>
+                  </div>
+                  {/* Progress Bar */}
+                  <div className="w-full h-1.5 bg-surface-container rounded-full overflow-hidden">
+                    <div
+                      className="h-full bg-secondary rounded-full"
+                      style={{ width: `${cohort.avgAttendance}%` }}
+                    ></div>
+                  </div>
+
+                  <div className="flex items-center justify-between text-xs mt-1">
+                    <span className="text-on-surface-variant">Syllabus Covered:</span>
+                    <span className="font-mono font-bold text-primary">
+                      {cohort.syllabusProgress}%
+                    </span>
+                  </div>
+                  {/* Progress Bar */}
+                  <div className="w-full h-1.5 bg-surface-container rounded-full overflow-hidden">
+                    <div
+                      className="h-full bg-primary rounded-full"
+                      style={{ width: `${cohort.syllabusProgress}%` }}
+                    ></div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-4 pt-3 border-t border-[#d5e3fc] flex items-center justify-between text-[11px] font-mono text-on-surface-variant">
+                <span>{cohort.venue}</span>
+                <Link
+                  href={`/staff/batches?batch=${cohort.id}`}
+                  className="text-secondary font-bold hover:underline"
+                >
+                  View Roster &rarr;
+                </Link>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Bottom Dual Grid: Analytics & Notices */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        {/* Weekly Workload & Attendance Analytics (7 Cols) */}
+        <div className="lg:col-span-7 bg-surface-container-lowest p-6 border border-[#d5e3fc] shadow-xs flex flex-col gap-4 rounded-sm">
+          <div className="flex items-center justify-between pb-3 border-b border-[#d5e3fc]">
+            <div className="flex items-center gap-2">
+              <BarChart3 className="h-5 w-5 text-secondary" />
+              <h2 className="text-sm font-bold uppercase tracking-tight text-primary">
+                Weekly Teaching Workload &amp; Attendance Analytics
               </h2>
             </div>
-            <Link
-              href="/staff/batches"
-              className="text-xs font-mono uppercase font-bold text-secondary hover:underline flex items-center gap-1"
-            >
-              <span>Manage All Batches</span>
-              <ArrowRight className="h-3.5 w-3.5" />
-            </Link>
+            <span className="font-mono text-xs text-on-surface-variant font-bold">Total: 22 Hrs / Wk</span>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
-            {assignedCohorts.map((cohort) => (
-              <div
-                key={cohort.id}
-                className="bg-surface-container-lowest p-5 border border-[#cbd5e1] shadow-sm flex flex-col justify-between rounded-sm hover:border-secondary transition-all"
-              >
-                <div>
-                  <div className="flex items-center justify-between pb-2 border-b border-[#0D2545]/10">
-                    <span className="font-mono text-[11px] text-secondary font-bold">
-                      {cohort.code}
-                    </span>
-                    <span className="px-2 py-0.5 bg-surface-container font-mono text-[10px] text-primary font-bold rounded-xs">
-                      {cohort.students} Enrolled
-                    </span>
-                  </div>
-
-                  <h3 className="text-sm font-bold uppercase text-primary tracking-tight mt-2.5">
-                    {cohort.name}
-                  </h3>
-                  <p className="text-xs text-on-surface-variant mt-0.5">{cohort.course}</p>
-
-                  <div className="mt-3.5 pt-3 border-t border-[#eff4ff] flex flex-col gap-2">
-                    <div className="flex items-center justify-between text-xs">
-                      <span className="text-outline">Attendance Health:</span>
-                      <span className="font-mono font-bold text-[#047857]">
-                        {cohort.avgAttendance}%
-                      </span>
-                    </div>
-                    {/* Progress Bar */}
-                    <div className="w-full h-1.5 bg-surface-container rounded-full overflow-hidden">
-                      <div
-                        className="h-full bg-secondary"
-                        style={{ width: `${cohort.avgAttendance}%` }}
-                      ></div>
-                    </div>
-
-                    <div className="flex items-center justify-between text-xs mt-1">
-                      <span className="text-outline">Syllabus Covered:</span>
-                      <span className="font-mono font-bold text-primary">
-                        {cohort.syllabusProgress}%
-                      </span>
-                    </div>
-                    {/* Progress Bar */}
-                    <div className="w-full h-1.5 bg-surface-container rounded-full overflow-hidden">
-                      <div
-                        className="h-full bg-primary"
-                        style={{ width: `${cohort.syllabusProgress}%` }}
-                      ></div>
-                    </div>
-                  </div>
+          {/* Metric Bars Visualization */}
+          <div className="grid grid-cols-5 gap-3 pt-2 text-center">
+            {[
+              { day: "MON", hours: "5.0h", attendance: "91%", height: "h-28" },
+              { day: "TUE", hours: "4.5h", attendance: "94%", height: "h-24" },
+              { day: "WED", hours: "5.5h", attendance: "88%", height: "h-32" },
+              { day: "THU", hours: "4.0h", attendance: "93%", height: "h-20" },
+              { day: "FRI", hours: "3.0h", attendance: "90%", height: "h-16" }
+            ].map((item, idx) => (
+              <div key={idx} className="flex flex-col items-center gap-1.5">
+                <div className="font-mono text-xs font-bold text-primary">{item.hours}</div>
+                <div className="w-full bg-surface-container-low h-36 flex items-end justify-center p-1 rounded-xs border border-[#d5e3fc]">
+                  <div
+                    className={`w-full ${item.height} bg-gradient-to-t from-primary to-secondary rounded-xs`}
+                  ></div>
                 </div>
-
-                <div className="mt-4 pt-3 border-t border-[#0D2545]/10 flex items-center justify-between text-[11px] font-mono text-outline">
-                  <span>{cohort.venue}</span>
-                  <Link
-                    href={`/staff/batches?batch=${cohort.id}`}
-                    className="text-secondary font-bold hover:underline"
-                  >
-                    View Roster &rarr;
-                  </Link>
-                </div>
+                <span className="font-mono text-xs font-bold text-on-surface">{item.day}</span>
+                <span className="font-mono text-[10px] text-[#047857] font-semibold">
+                  {item.attendance}
+                </span>
               </div>
             ))}
           </div>
+
+          <div className="p-3 bg-surface-container-low border border-[#d5e3fc] text-xs font-mono text-on-surface-variant flex items-center justify-between rounded-xs">
+            <span className="flex items-center gap-2">
+              <CheckCircle2 className="h-4 w-4 text-[#047857]" />
+              Compliance Rating: 99.4% (All sessions logged on biometric reader)
+            </span>
+            <span className="text-primary font-bold">Grade A++ NAAC Standard</span>
+          </div>
         </div>
 
-        {/* Bottom Dual Grid: Analytics & Notices */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-          {/* Weekly Workload & Attendance Analytics (7 Cols) */}
-          <div className="lg:col-span-7 bg-surface-container-lowest p-6 border border-[#cbd5e1] shadow-sm flex flex-col gap-4 rounded-sm">
-            <div className="flex items-center justify-between pb-3 border-b border-[#0D2545]/10">
+        {/* Faculty Notices & Circulars (5 Cols) */}
+        <div className="lg:col-span-5 bg-surface-container-lowest p-6 border border-[#d5e3fc] shadow-xs flex flex-col justify-between gap-4 rounded-sm">
+          <div>
+            <div className="flex items-center justify-between pb-3 border-b border-[#d5e3fc]">
               <div className="flex items-center gap-2">
-                <BarChart3 className="h-5 w-5 text-secondary" />
+                <BookOpen className="h-5 w-5 text-secondary" />
                 <h2 className="text-sm font-bold uppercase tracking-tight text-primary">
-                  Weekly Teaching Workload &amp; Attendance Analytics
+                  Faculty Notices &amp; Directives
                 </h2>
               </div>
-              <span className="font-mono text-xs text-outline">Total: 22 Hrs / Wk</span>
+              <Link
+                href="/staff/notices"
+                className="font-mono text-xs text-secondary font-bold hover:underline"
+              >
+                All Circulars &rarr;
+              </Link>
             </div>
 
-            {/* Metric Bars Visualization */}
-            <div className="grid grid-cols-5 gap-3 pt-2 text-center">
-              {[
-                { day: "MON", hours: "5.0h", attendance: "91%", height: "h-28" },
-                { day: "TUE", hours: "4.5h", attendance: "94%", height: "h-24" },
-                { day: "WED", hours: "5.5h", attendance: "88%", height: "h-32" },
-                { day: "THU", hours: "4.0h", attendance: "93%", height: "h-20" },
-                { day: "FRI", hours: "3.0h", attendance: "90%", height: "h-16" }
-              ].map((item, idx) => (
-                <div key={idx} className="flex flex-col items-center gap-1.5">
-                  <div className="font-mono text-xs font-bold text-primary">{item.hours}</div>
-                  <div className="w-full bg-surface-container-low h-36 flex items-end justify-center p-1 rounded-sm border border-[#cbd5e1]">
-                    <div
-                      className={`w-full ${item.height} bg-gradient-to-t from-primary to-secondary rounded-xs`}
-                    ></div>
+            <div className="divide-y divide-[#d5e3fc]">
+              {facultyNotices.map((memo) => (
+                <div key={memo.id} className="py-3 flex flex-col gap-1">
+                  <div className="flex items-center justify-between">
+                    <span className="font-mono text-[10px] text-on-surface-variant font-semibold">
+                      {memo.ref}
+                    </span>
+                    <span
+                      className={`px-1.5 py-0.2 font-mono text-[9px] uppercase font-bold rounded-xs ${memo.badgeColor}`}
+                    >
+                      {memo.priority}
+                    </span>
                   </div>
-                  <span className="font-mono text-xs font-bold text-on-surface">{item.day}</span>
-                  <span className="font-mono text-[10px] text-[#047857] font-semibold">
-                    {item.attendance}
-                  </span>
+                  <h3 className="text-xs font-bold text-primary uppercase leading-snug">
+                    {memo.title}
+                  </h3>
+                  <div className="flex items-center justify-between text-[11px] font-mono text-on-surface-variant mt-0.5">
+                    <span className="truncate">{memo.dept}</span>
+                    <span className="text-error font-semibold shrink-0">{memo.deadline}</span>
+                  </div>
                 </div>
               ))}
             </div>
-
-            <div className="p-3 bg-surface-container-low border border-[#cbd5e1] text-xs font-mono text-on-surface-variant flex items-center justify-between rounded-sm">
-              <span className="flex items-center gap-2">
-                <CheckCircle2 className="h-4 w-4 text-[#047857]" />
-                Compliance Rating: 99.4% (All sessions logged on biometric reader)
-              </span>
-              <span className="text-primary font-bold">Grade A++ Standard</span>
-            </div>
           </div>
 
-          {/* Faculty Notices & Memos (5 Cols) */}
-          <div className="lg:col-span-5 bg-surface-container-lowest p-6 border border-[#cbd5e1] shadow-sm flex flex-col justify-between gap-4 rounded-sm">
-            <div>
-              <div className="flex items-center justify-between pb-3 border-b border-[#0D2545]/10">
-                <div className="flex items-center gap-2">
-                  <BookOpen className="h-5 w-5 text-secondary" />
-                  <h2 className="text-sm font-bold uppercase tracking-tight text-primary">
-                    Faculty Notices &amp; Directives
-                  </h2>
-                </div>
-                <Link
-                  href="/staff/notices"
-                  className="font-mono text-xs text-secondary font-bold hover:underline"
-                >
-                  All Circulars &rarr;
-                </Link>
-              </div>
-
-              <div className="divide-y divide-[#0D2545]/10">
-                {facultyNotices.map((memo) => (
-                  <div key={memo.id} className="py-3 flex flex-col gap-1">
-                    <div className="flex items-center justify-between">
-                      <span className="font-mono text-[10px] text-outline font-semibold">
-                        {memo.ref}
-                      </span>
-                      <span
-                        className={`px-1.5 py-0.2 font-mono text-[9px] uppercase font-bold rounded-xs ${memo.badgeColor}`}
-                      >
-                        {memo.priority}
-                      </span>
-                    </div>
-                    <h3 className="text-xs font-bold text-primary uppercase leading-snug">
-                      {memo.title}
-                    </h3>
-                    <div className="flex items-center justify-between text-[11px] font-mono text-on-surface-variant mt-0.5">
-                      <span className="truncate">{memo.dept}</span>
-                      <span className="text-error font-semibold shrink-0">{memo.deadline}</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <Link
-              href="/staff/notices"
-              className="w-full py-2 bg-surface-container hover:bg-surface-container-high text-primary text-center font-mono text-xs uppercase font-bold tracking-wider border border-[#cbd5e1] transition-colors rounded-sm"
-            >
-              Open Academic Gazette &rarr;
-            </Link>
-          </div>
+          <Link
+            href="/staff/notices"
+            className="w-full py-2 bg-surface-container hover:bg-surface-container-high text-primary text-center font-mono text-xs uppercase font-bold tracking-wider border border-[#d5e3fc] transition-colors rounded-xs"
+          >
+            Open Academic Gazette &rarr;
+          </Link>
         </div>
       </div>
 
       {/* Audit Roll Modal */}
       {selectedAuditSession && (
-        <div className="fixed inset-0 z-50 bg-primary/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-surface-container-lowest w-full max-w-lg border-2 border-primary shadow-[4px_4px_0_0_#0d2545] p-6 relative rounded-sm">
-            <div className="flex items-center justify-between pb-3 border-b border-[#cbd5e1]">
+        <div className="fixed inset-0 z-50 bg-primary/60 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-surface-container-lowest w-full max-w-lg border border-[#d5e3fc] shadow-2xl p-6 relative rounded-sm animate-in fade-in zoom-in-95 duration-150">
+            <div className="flex items-center justify-between pb-3 border-b border-[#d5e3fc]">
               <div className="flex items-center gap-2">
                 <CheckCircle2 className="h-5 w-5 text-secondary" />
                 <h3 className="text-base font-bold uppercase text-primary">
@@ -697,35 +695,35 @@ export default function StaffDashboardPage() {
               </div>
               <button
                 onClick={() => setSelectedAuditSession(null)}
-                className="p-1 hover:bg-surface-container text-outline hover:text-primary transition-colors"
+                className="p-1 hover:bg-surface-container text-on-surface-variant hover:text-primary transition-colors cursor-pointer"
               >
                 <X className="h-5 w-5" />
               </button>
             </div>
 
             <div className="py-4 text-xs font-mono flex flex-col gap-3">
-              <div className="p-3 bg-surface-container-low border border-[#cbd5e1] rounded-sm">
+              <div className="p-3 bg-surface-container-low border border-[#d5e3fc] rounded-xs">
                 <div className="text-sm font-bold text-primary">
                   {selectedAuditSession.code}: {selectedAuditSession.subject}
                 </div>
                 <div className="text-on-surface-variant mt-1">
-                  Batch: {selectedAuditSession.batch} • Venue: {selectedAuditSession.venue}
+                  Batch: {selectedAuditSession.batch} &bull; Venue: {selectedAuditSession.venue}
                 </div>
                 <div className="text-secondary font-bold mt-1">
-                  Time: {selectedAuditSession.time} • Recorded Attendance:{" "}
+                  Time: {selectedAuditSession.time} &bull; Recorded Attendance:{" "}
                   {selectedAuditSession.attendanceInfo}
                 </div>
               </div>
 
-              <div className="p-3 bg-[#ecfdf5] border border-[#a7f3d0] text-[#047857] rounded-sm">
+              <div className="p-3 bg-[#ecfdf5] border border-[#a7f3d0] text-[#047857] rounded-xs">
                 Session cryptographic hash locked. Biometric attendance synchronized with Campus Attendance Controller at 10:04 AM.
               </div>
             </div>
 
-            <div className="pt-3 border-t border-[#cbd5e1] flex justify-end gap-2">
+            <div className="pt-3 border-t border-[#d5e3fc] flex justify-end gap-2">
               <button
                 onClick={() => setSelectedAuditSession(null)}
-                className="px-4 py-1.5 bg-surface-container text-primary font-mono text-xs uppercase font-bold tracking-wider hover:bg-surface-container-high transition-colors rounded-sm"
+                className="px-4 py-1.5 bg-surface-container text-primary font-mono text-xs uppercase font-bold tracking-wider hover:bg-surface-container-high transition-colors rounded-xs cursor-pointer border border-[#d5e3fc]"
               >
                 Close
               </button>
@@ -736,4 +734,3 @@ export default function StaffDashboardPage() {
     </div>
   );
 }
-
