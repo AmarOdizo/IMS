@@ -1192,3 +1192,4 @@ export default function RecordPaymentPage() {
     </Suspense>
   );
 }
+
