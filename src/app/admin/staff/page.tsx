@@ -435,9 +435,9 @@ export default function StaffDirectoryPage() {
               <div className="flex items-center overflow-x-auto pt-3 gap-1 text-xs">
                 <button
                   onClick={() => setSelectedTab("all")}
-                  className={`px-3 py-1.5 font-semibold uppercase tracking-wider whitespace-nowrap transition-colors ${
+                  className={`px-3 py-1.5 font-semibold uppercase tracking-wider whitespace-nowrap transition-colors rounded-xs ${
                     selectedTab === "all"
-                      ? "bg-primary-container text-white"
+                      ? "bg-emerald-600 text-white"
                       : "bg-surface-container-low text-on-surface-variant hover:text-on-surface"
                   }`}
                 >
@@ -445,9 +445,9 @@ export default function StaffDirectoryPage() {
                 </button>
                 <button
                   onClick={() => setSelectedTab("teaching")}
-                  className={`px-3 py-1.5 font-semibold uppercase tracking-wider whitespace-nowrap transition-colors ${
+                  className={`px-3 py-1.5 font-semibold uppercase tracking-wider whitespace-nowrap transition-colors rounded-xs ${
                     selectedTab === "teaching"
-                      ? "bg-primary-container text-white"
+                      ? "bg-emerald-600 text-white"
                       : "bg-surface-container-low text-on-surface-variant hover:text-on-surface"
                   }`}
                 >

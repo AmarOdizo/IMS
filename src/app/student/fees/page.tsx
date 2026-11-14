@@ -616,7 +616,7 @@ export default function StudentFeesPage() {
                               }}
                               className={`px-2.5 py-1 text-xs uppercase font-semibold transition-colors ${
                                 isSelected
-                                  ? "bg-primary text-white"
+                                  ? "bg-emerald-600 text-white"
                                   : "bg-surface-container text-on-surface hover:bg-surface-container-high"
                               }`}
                             >

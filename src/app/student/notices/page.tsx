@@ -442,8 +442,8 @@ export default function StudentNoticesPage() {
             onClick={() => setSelectedCategory("all")}
             className={`px-3 py-1 font-mono text-xs uppercase tracking-wider whitespace-nowrap transition-colors rounded-sm font-bold ${
               selectedCategory === "all"
-                ? "bg-primary text-on-primary shadow-sm"
-                : "bg-surface-container-lowest text-on-surface border border-[#cbd5e1] hover:bg-surface-container"
+                ? "bg-emerald-600 text-white shadow-sm"
+                : "bg-surface-container-lowest text-on-surface border border-[#cbd5e1] hover:bg-emerald-50 hover:text-emerald-800"
             }`}
           >
             All Notices ({notices.length})
@@ -452,8 +452,8 @@ export default function StudentNoticesPage() {
             onClick={() => setSelectedCategory("academic")}
             className={`px-3 py-1 font-mono text-xs uppercase tracking-wider whitespace-nowrap transition-colors rounded-sm font-bold ${
               selectedCategory === "academic"
-                ? "bg-primary text-on-primary shadow-sm"
-                : "bg-surface-container-lowest text-on-surface border border-[#cbd5e1] hover:bg-surface-container"
+                ? "bg-emerald-600 text-white shadow-sm"
+                : "bg-surface-container-lowest text-on-surface border border-[#cbd5e1] hover:bg-emerald-50 hover:text-emerald-800"
             }`}
           >
             Academic &amp; Datesheet (2)
@@ -462,8 +462,8 @@ export default function StudentNoticesPage() {
             onClick={() => setSelectedCategory("bursar")}
             className={`px-3 py-1 font-mono text-xs uppercase tracking-wider whitespace-nowrap transition-colors rounded-sm font-bold ${
               selectedCategory === "bursar"
-                ? "bg-primary text-on-primary shadow-sm"
-                : "bg-surface-container-lowest text-on-surface border border-[#cbd5e1] hover:bg-surface-container"
+                ? "bg-emerald-600 text-white shadow-sm"
+                : "bg-surface-container-lowest text-on-surface border border-[#cbd5e1] hover:bg-emerald-50 hover:text-emerald-800"
             }`}
           >
             Bursar &amp; Fees (1)
@@ -472,8 +472,8 @@ export default function StudentNoticesPage() {
             onClick={() => setSelectedCategory("events")}
             className={`px-3 py-1 font-mono text-xs uppercase tracking-wider whitespace-nowrap transition-colors rounded-sm font-bold ${
               selectedCategory === "events"
-                ? "bg-primary text-on-primary shadow-sm"
-                : "bg-surface-container-lowest text-on-surface border border-[#cbd5e1] hover:bg-surface-container"
+                ? "bg-emerald-600 text-white shadow-sm"
+                : "bg-surface-container-lowest text-on-surface border border-[#cbd5e1] hover:bg-emerald-50 hover:text-emerald-800"
             }`}
           >
             Events &amp; Guest Lectures (1)
@@ -482,8 +482,8 @@ export default function StudentNoticesPage() {
             onClick={() => setSelectedCategory("advisory")}
             className={`px-3 py-1 font-mono text-xs uppercase tracking-wider whitespace-nowrap transition-colors rounded-sm font-bold ${
               selectedCategory === "advisory"
-                ? "bg-primary text-on-primary shadow-sm"
-                : "bg-surface-container-lowest text-on-surface border border-[#cbd5e1] hover:bg-surface-container"
+                ? "bg-emerald-600 text-white shadow-sm"
+                : "bg-surface-container-lowest text-on-surface border border-[#cbd5e1] hover:bg-emerald-50 hover:text-emerald-800"
             }`}
           >
             Emergency &amp; Advisories (1)

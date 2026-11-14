@@ -577,7 +577,7 @@ export default function AttendancePage() {
                   onClick={() => setStatusFilter("all")}
                   className={`px-2 py-1 text-xs transition-colors ${
                     statusFilter === "all"
-                      ? "bg-primary text-on-primary font-semibold"
+                      ? "bg-emerald-600 text-white font-semibold"
                       : "text-on-surface-variant hover:bg-surface"
                   }`}
                 >
@@ -587,7 +587,7 @@ export default function AttendancePage() {
                   onClick={() => setStatusFilter("A")}
                   className={`px-2 py-1 text-xs transition-colors ${
                     statusFilter === "A"
-                      ? "bg-primary text-on-primary font-semibold"
+                      ? "bg-emerald-600 text-white font-semibold"
                       : "text-on-surface-variant hover:bg-surface"
                   }`}
                 >
@@ -597,7 +597,7 @@ export default function AttendancePage() {
                   onClick={() => setStatusFilter("critical")}
                   className={`px-2 py-1 text-xs transition-colors ${
                     statusFilter === "critical"
-                      ? "bg-primary text-on-primary font-semibold"
+                      ? "bg-emerald-600 text-white font-semibold"
                       : "text-on-surface-variant hover:bg-surface"
                   }`}
                 >

@@ -376,9 +376,9 @@ export default function FeesManagementPage() {
             <div className="inline-flex bg-surface-container shadow-inner p-0.5 font-mono-data">
               <button
                 onClick={() => setActiveTab("all")}
-                className={`px-space-md py-1.5 font-label-md uppercase tracking-wider text-label-sm font-semibold transition-all ${
+                className={`px-space-md py-1.5 font-label-md uppercase tracking-wider text-label-sm font-semibold transition-all rounded-xs ${
                   activeTab === "all"
-                    ? "bg-primary-container text-on-primary"
+                    ? "bg-emerald-600 text-white font-bold shadow-xs"
                     : "text-on-surface-variant hover:text-on-surface"
                 }`}
               >
@@ -389,9 +389,9 @@ export default function FeesManagementPage() {
                   setActiveTab("defaulters");
                   triggerToast("Loaded 210 overdue defaulter accounts for follow-up.");
                 }}
-                className={`px-space-md py-1.5 font-label-md uppercase tracking-wider text-label-sm font-semibold transition-all ${
+                className={`px-space-md py-1.5 font-label-md uppercase tracking-wider text-label-sm font-semibold transition-all rounded-xs ${
                   activeTab === "defaulters"
-                    ? "bg-primary-container text-on-primary"
+                    ? "bg-emerald-600 text-white font-bold shadow-xs"
                     : "text-on-surface-variant hover:text-on-surface"
                 }`}
               >
@@ -399,9 +399,9 @@ export default function FeesManagementPage() {
               </button>
               <button
                 onClick={() => setActiveTab("schedule")}
-                className={`px-space-md py-1.5 font-label-md uppercase tracking-wider text-label-sm font-semibold transition-all ${
+                className={`px-space-md py-1.5 font-label-md uppercase tracking-wider text-label-sm font-semibold transition-all rounded-xs ${
                   activeTab === "schedule"
-                    ? "bg-primary-container text-on-primary"
+                    ? "bg-emerald-600 text-white font-bold shadow-xs"
                     : "text-on-surface-variant hover:text-on-surface"
                 }`}
               >
@@ -412,9 +412,9 @@ export default function FeesManagementPage() {
                   setActiveTab("reconcile");
                   triggerToast("Tally / Central Bank statement matched: 99.4%");
                 }}
-                className={`px-space-md py-1.5 font-label-md uppercase tracking-wider text-label-sm font-semibold transition-all ${
+                className={`px-space-md py-1.5 font-label-md uppercase tracking-wider text-label-sm font-semibold transition-all rounded-xs ${
                   activeTab === "reconcile"
-                    ? "bg-primary-container text-on-primary"
+                    ? "bg-emerald-600 text-white font-bold shadow-xs"
                     : "text-on-surface-variant hover:text-on-surface"
                 }`}
               >

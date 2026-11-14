@@ -247,7 +247,7 @@ export default function StaffDashboardPage() {
           <div className="flex items-center flex-wrap gap-2.5">
             <Link
               href="/staff/attendance"
-              className="inline-flex items-center gap-2 px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-xl shadow-sm hover:shadow transition-all"
+              className="inline-flex items-center gap-2 px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-xl shadow-sm hover:shadow transition-all"
             >
               <CheckCheck className="w-4 h-4" />
               <span>Mark Attendance</span>
@@ -351,7 +351,7 @@ export default function StaffDashboardPage() {
               onClick={() => setScheduleFilter("all")}
               className={`px-3 py-1 text-xs font-semibold rounded-md transition-all ${
                 scheduleFilter === "all"
-                  ? "bg-white text-blue-600 shadow-xs"
+                  ? "bg-emerald-600 text-white shadow-xs font-bold"
                   : "text-slate-600 hover:text-slate-900"
               }`}
             >
@@ -361,7 +361,7 @@ export default function StaffDashboardPage() {
               onClick={() => setScheduleFilter("active")}
               className={`px-3 py-1 text-xs font-semibold rounded-md transition-all ${
                 scheduleFilter === "active"
-                  ? "bg-white text-blue-600 shadow-xs"
+                  ? "bg-emerald-600 text-white shadow-xs font-bold"
                   : "text-slate-600 hover:text-slate-900"
               }`}
             >
@@ -371,7 +371,7 @@ export default function StaffDashboardPage() {
               onClick={() => setScheduleFilter("completed")}
               className={`px-3 py-1 text-xs font-semibold rounded-md transition-all ${
                 scheduleFilter === "completed"
-                  ? "bg-white text-blue-600 shadow-xs"
+                  ? "bg-emerald-600 text-white shadow-xs font-bold"
                   : "text-slate-600 hover:text-slate-900"
               }`}
             >
@@ -446,7 +446,7 @@ export default function StaffDashboardPage() {
                   {isLive && (
                     <button
                       onClick={handleMarkLiveAttendance}
-                      className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-lg shadow-sm hover:shadow flex items-center gap-1.5 transition-all"
+                      className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-lg shadow-sm hover:shadow flex items-center gap-1.5 transition-all"
                     >
                       <CheckCheck className="w-4 h-4" />
                       <span>Submit Attendance</span>

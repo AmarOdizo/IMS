@@ -363,8 +363,8 @@ export default function CampusSettingsPage() {
             onClick={() => setActiveTab("general")}
             className={`px-space-md py-3 font-label-md text-label-md uppercase tracking-wider whitespace-nowrap transition-colors flex items-center gap-1.5 ${
               activeTab === "general"
-                ? "text-on-primary bg-primary-container font-semibold"
-                : "text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low"
+                ? "text-white bg-emerald-600 font-semibold shadow-xs"
+                : "text-on-surface-variant hover:text-emerald-800 hover:bg-emerald-50"
             }`}
           >
             <Building className="w-4 h-4" />
@@ -374,8 +374,8 @@ export default function CampusSettingsPage() {
             onClick={() => setActiveTab("academic")}
             className={`px-space-md py-3 font-label-md text-label-md uppercase tracking-wider whitespace-nowrap transition-colors flex items-center gap-1.5 ${
               activeTab === "academic"
-                ? "text-on-primary bg-primary-container font-semibold"
-                : "text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low"
+                ? "text-white bg-emerald-600 font-semibold shadow-xs"
+                : "text-on-surface-variant hover:text-emerald-800 hover:bg-emerald-50"
             }`}
           >
             <Clock className="w-4 h-4" />
@@ -385,8 +385,8 @@ export default function CampusSettingsPage() {
             onClick={() => setActiveTab("rbac")}
             className={`px-space-md py-3 font-label-md text-label-md uppercase tracking-wider whitespace-nowrap transition-colors flex items-center gap-1.5 ${
               activeTab === "rbac"
-                ? "text-on-primary bg-primary-container font-semibold"
-                : "text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low"
+                ? "text-white bg-emerald-600 font-semibold shadow-xs"
+                : "text-on-surface-variant hover:text-emerald-800 hover:bg-emerald-50"
             }`}
           >
             <Users className="w-4 h-4" />
@@ -396,8 +396,8 @@ export default function CampusSettingsPage() {
             onClick={() => setActiveTab("grading")}
             className={`px-space-md py-3 font-label-md text-label-md uppercase tracking-wider whitespace-nowrap transition-colors flex items-center gap-1.5 ${
               activeTab === "grading"
-                ? "text-on-primary bg-primary-container font-semibold"
-                : "text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low"
+                ? "text-white bg-emerald-600 font-semibold shadow-xs"
+                : "text-on-surface-variant hover:text-emerald-800 hover:bg-emerald-50"
             }`}
           >
             <Award className="w-4 h-4" />
@@ -407,8 +407,8 @@ export default function CampusSettingsPage() {
             onClick={() => setActiveTab("gateways")}
             className={`px-space-md py-3 font-label-md text-label-md uppercase tracking-wider whitespace-nowrap transition-colors flex items-center gap-1.5 ${
               activeTab === "gateways"
-                ? "text-on-primary bg-primary-container font-semibold"
-                : "text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low"
+                ? "text-white bg-emerald-600 font-semibold shadow-xs"
+                : "text-on-surface-variant hover:text-emerald-800 hover:bg-emerald-50"
             }`}
           >
             <Radio className="w-4 h-4" />
@@ -418,8 +418,8 @@ export default function CampusSettingsPage() {
             onClick={() => setActiveTab("security")}
             className={`px-space-md py-3 font-label-md text-label-md uppercase tracking-wider whitespace-nowrap transition-colors flex items-center gap-1.5 ${
               activeTab === "security"
-                ? "text-on-primary bg-primary-container font-semibold"
-                : "text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low"
+                ? "text-white bg-emerald-600 font-semibold shadow-xs"
+                : "text-on-surface-variant hover:text-emerald-800 hover:bg-emerald-50"
             }`}
           >
             <Shield className="w-4 h-4" />
@@ -429,8 +429,8 @@ export default function CampusSettingsPage() {
             onClick={() => setActiveTab("backup")}
             className={`px-space-md py-3 font-label-md text-label-md uppercase tracking-wider whitespace-nowrap transition-colors flex items-center gap-1.5 ${
               activeTab === "backup"
-                ? "text-on-primary bg-primary-container font-semibold"
-                : "text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low"
+                ? "text-white bg-emerald-600 font-semibold shadow-xs"
+                : "text-on-surface-variant hover:text-emerald-800 hover:bg-emerald-50"
             }`}
           >
             <Database className="w-4 h-4" />

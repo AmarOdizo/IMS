@@ -427,7 +427,7 @@ export default function AccountantDashboardPage() {
                       onClick={() => setModeFilter(mode)}
                       className={`px-2.5 py-1 text-xs font-semibold rounded-lg transition-all ${
                         modeFilter.toLowerCase() === mode.toLowerCase()
-                          ? "bg-white text-blue-600 shadow-xs"
+                          ? "bg-emerald-600 text-white shadow-xs font-bold"
                           : "text-slate-600 hover:text-slate-900"
                       }`}
                     >
@@ -754,7 +754,7 @@ export default function AccountantDashboardPage() {
                   handlePrintReceipt(selectedReceipt);
                   setSelectedReceipt(null);
                 }}
-                className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-lg flex items-center gap-1.5 transition-all shadow-xs cursor-pointer"
+                className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-lg flex items-center gap-1.5 transition-all shadow-xs cursor-pointer"
               >
                 <Printer className="w-4 h-4" />
                 <span>Print Receipt</span>

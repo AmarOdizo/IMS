@@ -294,8 +294,8 @@ export default function StaffNoticesPage() {
               onClick={() => setFilterTab("all")}
               className={`px-3 py-1.5 uppercase font-bold tracking-wider rounded-xs transition-colors ${
                 filterTab === "all"
-                  ? "bg-primary text-on-primary shadow-xs"
-                  : "text-on-surface hover:bg-surface-container"
+                  ? "bg-emerald-600 text-white shadow-xs"
+                  : "text-on-surface hover:bg-emerald-50 hover:text-emerald-800"
               }`}
             >
               All Active Notices ({notices.length})
@@ -304,8 +304,8 @@ export default function StaffNoticesPage() {
               onClick={() => setFilterTab("institutional")}
               className={`px-3 py-1.5 uppercase font-bold tracking-wider rounded-xs transition-colors ${
                 filterTab === "institutional"
-                  ? "bg-primary text-on-primary shadow-xs"
-                  : "text-on-surface hover:bg-surface-container"
+                  ? "bg-emerald-600 text-white shadow-xs"
+                  : "text-on-surface hover:bg-emerald-50 hover:text-emerald-800"
               }`}
             >
               Institutional &amp; Faculty Memos (2)
@@ -314,8 +314,8 @@ export default function StaffNoticesPage() {
               onClick={() => setFilterTab("my-batches")}
               className={`px-3 py-1.5 uppercase font-bold tracking-wider rounded-xs transition-colors ${
                 filterTab === "my-batches"
-                  ? "bg-primary text-on-primary shadow-xs"
-                  : "text-on-surface hover:bg-surface-container"
+                  ? "bg-emerald-600 text-white shadow-xs"
+                  : "text-on-surface hover:bg-emerald-50 hover:text-emerald-800"
               }`}
             >
               My Published Batch Notices ({notices.filter((n) => n.isMyPublished).length})

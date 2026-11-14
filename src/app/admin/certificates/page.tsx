@@ -369,7 +369,7 @@ export default function CertificatesPage() {
                 onClick={() => setFilterType("all")}
                 className={`px-space-sm py-1 font-label-sm text-label-sm uppercase tracking-wider whitespace-nowrap shadow-sm transition-colors ${
                   filterType === "all"
-                    ? "bg-primary text-on-primary font-bold"
+                    ? "bg-emerald-600 text-white font-bold"
                     : "bg-surface-container text-on-surface hover:bg-surface-container-high"
                 }`}
               >
@@ -379,7 +379,7 @@ export default function CertificatesPage() {
                 onClick={() => setFilterType("completion")}
                 className={`px-space-sm py-1 font-label-sm text-label-sm uppercase tracking-wider whitespace-nowrap transition-colors ${
                   filterType === "completion"
-                    ? "bg-primary text-on-primary font-bold"
+                    ? "bg-emerald-600 text-white font-bold"
                     : "bg-surface-container text-on-surface hover:bg-surface-container-high"
                 }`}
               >
@@ -389,7 +389,7 @@ export default function CertificatesPage() {
                 onClick={() => setFilterType("bonafide")}
                 className={`px-space-sm py-1 font-label-sm text-label-sm uppercase tracking-wider whitespace-nowrap transition-colors ${
                   filterType === "bonafide"
-                    ? "bg-primary text-on-primary font-bold"
+                    ? "bg-emerald-600 text-white font-bold"
                     : "bg-surface-container text-on-surface hover:bg-surface-container-high"
                 }`}
               >
@@ -399,7 +399,7 @@ export default function CertificatesPage() {
                 onClick={() => setFilterType("merit")}
                 className={`px-space-sm py-1 font-label-sm text-label-sm uppercase tracking-wider whitespace-nowrap transition-colors ${
                   filterType === "merit"
-                    ? "bg-primary text-on-primary font-bold"
+                    ? "bg-emerald-600 text-white font-bold"
                     : "bg-surface-container text-on-surface hover:bg-surface-container-high"
                 }`}
               >
@@ -409,7 +409,7 @@ export default function CertificatesPage() {
                 onClick={() => setFilterType("transfer")}
                 className={`px-space-sm py-1 font-label-sm text-label-sm uppercase tracking-wider whitespace-nowrap transition-colors ${
                   filterType === "transfer"
-                    ? "bg-primary text-on-primary font-bold"
+                    ? "bg-emerald-600 text-white font-bold"
                     : "bg-surface-container text-on-surface hover:bg-surface-container-high"
                 }`}
               >

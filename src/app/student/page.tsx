@@ -170,7 +170,7 @@ export default function StudentDashboardPage() {
           <div className="flex items-center flex-wrap gap-2.5">
             <Link
               href="/student/id-card"
-              className="inline-flex items-center gap-2 px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-xl shadow-sm hover:shadow transition-all"
+              className="inline-flex items-center gap-2 px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-xl shadow-sm hover:shadow transition-all"
             >
               <BadgeCheck className="w-4 h-4" />
               <span>Download ID Card</span>
@@ -304,7 +304,7 @@ export default function StudentDashboardPage() {
               onClick={() => setStudentTab("all")}
               className={`px-3.5 py-1.5 text-xs font-semibold rounded-lg transition-all ${
                 studentTab === "all"
-                  ? "bg-white text-blue-600 shadow-xs"
+                  ? "bg-emerald-600 text-white shadow-xs font-bold"
                   : "text-slate-600 hover:text-slate-900"
               }`}
             >
@@ -314,7 +314,7 @@ export default function StudentDashboardPage() {
               onClick={() => setStudentTab("exams")}
               className={`px-3.5 py-1.5 text-xs font-semibold rounded-lg transition-all ${
                 studentTab === "exams"
-                  ? "bg-white text-blue-600 shadow-xs"
+                  ? "bg-emerald-600 text-white shadow-xs font-bold"
                   : "text-slate-600 hover:text-slate-900"
               }`}
             >
@@ -324,7 +324,7 @@ export default function StudentDashboardPage() {
               onClick={() => setStudentTab("fees")}
               className={`px-3.5 py-1.5 text-xs font-semibold rounded-lg transition-all ${
                 studentTab === "fees"
-                  ? "bg-white text-blue-600 shadow-xs"
+                  ? "bg-emerald-600 text-white shadow-xs font-bold"
                   : "text-slate-600 hover:text-slate-900"
               }`}
             >
@@ -349,7 +349,7 @@ export default function StudentDashboardPage() {
                 </div>
                 <button
                   onClick={() => setShowHallTicketModal(true)}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-lg shadow-xs transition-all cursor-pointer"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-lg shadow-xs transition-all cursor-pointer"
                 >
                   <Download className="w-3.5 h-3.5" />
                   <span>Download Admit Card</span>

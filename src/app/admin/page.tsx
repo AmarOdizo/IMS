@@ -80,7 +80,7 @@ export default function AdminDashboardPage() {
           <div className="flex items-center flex-wrap gap-2.5">
             <Link
               href="/admin/students"
-              className="inline-flex items-center gap-2 px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-xl shadow-sm hover:shadow transition-all"
+              className="inline-flex items-center gap-2 px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-xl shadow-sm hover:shadow transition-all"
             >
               <UserPlus className="w-4 h-4" />
               <span>New Admission</span>
@@ -210,7 +210,7 @@ export default function AdminDashboardPage() {
                     onClick={() => setSelectedMonth(m)}
                     className={`px-2.5 py-1 text-xs font-semibold rounded-md transition-all ${
                       selectedMonth === m
-                        ? "bg-white text-blue-600 shadow-xs"
+                        ? "bg-emerald-600 text-white shadow-xs font-bold"
                         : "text-slate-600 hover:text-slate-900"
                     }`}
                   >
@@ -224,7 +224,7 @@ export default function AdminDashboardPage() {
                   <span className="text-slate-500 text-xs">Target</span>
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <span className="w-3 h-3 bg-blue-600 rounded-sm"></span>
+                  <span className="w-3 h-3 bg-emerald-600 rounded-sm"></span>
                   <span className="text-slate-800 text-xs font-medium">Realized</span>
                 </div>
               </div>
@@ -255,51 +255,51 @@ export default function AdminDashboardPage() {
 
               {/* NOV */}
               <rect fill="#e2e8f0" height="120" rx="3" width="22" x="70" y="70" />
-              <rect fill="#3b82f6" height="105" rx="3" width="22" x="96" y="85" />
+              <rect fill="#10b981" height="105" rx="3" width="22" x="96" y="85" />
               <text className="text-[11px] font-sans fill-slate-500 font-medium" textAnchor="middle" x="94" y="208">NOV</text>
 
               {/* DEC */}
               <rect fill="#e2e8f0" height="130" rx="3" width="22" x="160" y="60" />
-              <rect fill="#3b82f6" height="115" rx="3" width="22" x="186" y="75" />
+              <rect fill="#10b981" height="115" rx="3" width="22" x="186" y="75" />
               <text className="text-[11px] font-sans fill-slate-500 font-medium" textAnchor="middle" x="184" y="208">DEC</text>
 
               {/* JAN */}
               <rect fill="#e2e8f0" height="140" rx="3" width="22" x="250" y="50" />
-              <rect fill="#3b82f6" height="128" rx="3" width="22" x="276" y="62" />
+              <rect fill="#10b981" height="128" rx="3" width="22" x="276" y="62" />
               <text className="text-[11px] font-sans fill-slate-500 font-medium" textAnchor="middle" x="274" y="208">JAN</text>
 
               {/* FEB */}
               <rect fill="#e2e8f0" height="145" rx="3" width="22" x="340" y="45" />
-              <rect fill="#3b82f6" height="132" rx="3" width="22" x="366" y="58" />
+              <rect fill="#10b981" height="132" rx="3" width="22" x="366" y="58" />
               <text className="text-[11px] font-sans fill-slate-500 font-medium" textAnchor="middle" x="364" y="208">FEB</text>
 
               {/* MAR (Active) */}
-              <rect fill="#eff6ff" height="185" rx="8" width="76" x="420" y="10" />
+              <rect fill="#ecfdf5" height="185" rx="8" width="76" x="420" y="10" />
               <rect fill="#94a3b8" height="160" rx="3" width="22" x="428" y="30" />
-              <rect fill="#2563eb" height="142" rx="3" width="22" x="454" y="48" />
-              <text className="text-[11px] font-sans fill-blue-700 font-bold" textAnchor="middle" x="452" y="208">MAR</text>
+              <rect fill="#059669" height="142" rx="3" width="22" x="454" y="48" />
+              <text className="text-[11px] font-sans fill-emerald-800 font-bold" textAnchor="middle" x="452" y="208">MAR</text>
 
               {/* Hover Badge */}
               <g transform="translate(412, 4)">
-                <rect fill="#1e293b" height="30" rx="6" width="102" x="0" y="0" />
+                <rect fill="#059669" height="30" rx="6" width="102" x="0" y="0" />
                 <text className="text-[9px] font-sans font-bold" fill="#FFFFFF" textAnchor="middle" x="51" y="13">
                   REAL: ₹48.60L
                 </text>
-                <text className="text-[8px] font-sans font-semibold" fill="#93c5fd" textAnchor="middle" x="51" y="24">
+                <text className="text-[8px] font-sans font-semibold" fill="#d1fae5" textAnchor="middle" x="51" y="24">
                   81% OF TARGET
                 </text>
               </g>
 
               {/* APR (Projected) */}
               <rect fill="#e2e8f0" height="160" rx="3" width="22" x="520" y="30" />
-              <rect fill="#93c5fd" height="50" rx="3" stroke="#2563eb" strokeDasharray="3 3" width="22" x="546" y="140" />
+              <rect fill="#6ee7b7" height="50" rx="3" stroke="#059669" strokeDasharray="3 3" width="22" x="546" y="140" />
               <text className="text-[11px] font-sans fill-slate-500 font-medium" textAnchor="middle" x="544" y="208">APR</text>
             </svg>
           </div>
 
           <div className="mt-3 pt-3 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-600 bg-slate-50 px-4 py-2.5 rounded-xl border border-slate-100">
             <span>Fiscal Progress: <strong className="text-slate-800">Day 28 of 31</strong></span>
-            <span>Remaining Target: <strong className="text-blue-600">₹11,40,000</strong></span>
+            <span>Remaining Target: <strong className="text-emerald-700">₹11,40,000</strong></span>
             <span>Daily Intake Velocity: <strong className="text-emerald-600">₹1.73L / day</strong></span>
           </div>
         </div>

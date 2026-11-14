@@ -221,7 +221,7 @@ export default function AccountantReportsPage() {
             onClick={() => setActiveTab(tab)}
             className={`px-3 py-1.5 uppercase font-bold tracking-wider transition-colors border cursor-pointer ${
               activeTab === tab
-                ? "bg-primary text-on-primary border-primary shadow-xs"
+                ? "bg-emerald-600 text-white border-emerald-600 shadow-xs"
                 : "bg-surface-container-low text-on-surface-variant hover:text-on-surface border-[#cbd5e1]"
             }`}
           >

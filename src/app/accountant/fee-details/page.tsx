@@ -566,7 +566,7 @@ export default function StudentFeeDetailsPage() {
                 onClick={() => setStatusFilter("ALL")}
                 className={`px-3 py-1 font-bold uppercase rounded-xs transition-colors ${
                   statusFilter === "ALL"
-                    ? "bg-primary text-on-primary"
+                    ? "bg-emerald-600 text-white"
                     : "bg-surface-container-low text-on-surface hover:bg-surface-container"
                 }`}
               >
@@ -576,7 +576,7 @@ export default function StudentFeeDetailsPage() {
                 onClick={() => setStatusFilter("CLEARED")}
                 className={`px-3 py-1 font-bold uppercase rounded-xs transition-colors ${
                   statusFilter === "CLEARED"
-                    ? "bg-primary text-on-primary"
+                    ? "bg-emerald-600 text-white"
                     : "bg-surface-container-low text-on-surface hover:bg-surface-container"
                 }`}
               >
@@ -586,7 +586,7 @@ export default function StudentFeeDetailsPage() {
                 onClick={() => setStatusFilter("PARTIAL")}
                 className={`px-3 py-1 font-bold uppercase rounded-xs transition-colors ${
                   statusFilter === "PARTIAL"
-                    ? "bg-primary text-on-primary"
+                    ? "bg-emerald-600 text-white"
                     : "bg-surface-container-low text-on-surface hover:bg-surface-container"
                 }`}
               >

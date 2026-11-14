@@ -553,7 +553,7 @@ export default function AccountantFeeReceiptsPage() {
                     onClick={() => setFilterTab(tab)}
                     className={`flex-1 py-1.5 text-[11px] font-mono uppercase font-bold tracking-wider transition-colors border-b-2 -mb-[2px] ${
                       filterTab === tab
-                        ? "border-primary text-primary bg-surface-container-low"
+                        ? "border-emerald-600 text-emerald-700 bg-emerald-50/50"
                         : "border-transparent text-on-surface-variant hover:text-on-surface"
                     }`}
                   >

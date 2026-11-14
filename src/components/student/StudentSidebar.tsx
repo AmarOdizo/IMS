@@ -30,26 +30,26 @@ export default function StudentSidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="fixed left-0 top-0 h-full w-64 bg-surface-container-lowest text-on-surface z-50 flex flex-col justify-between border-r border-[#d5e3fc] shadow-[2px_0_0_0_#d5e3fc] select-none">
+    <aside className="fixed left-0 top-0 h-full w-64 bg-white text-slate-800 z-50 flex flex-col justify-between border-r border-slate-200 shadow-sm select-none">
       {/* Top Branding & Nav */}
       <div className="flex flex-col min-h-0 flex-1">
         {/* Brand Header */}
-        <div className="h-16 px-4 flex items-center gap-3 bg-primary-container text-on-primary border-b border-[#324769] shrink-0">
-          <div className="h-8 w-8 bg-secondary-container text-primary font-bold flex items-center justify-center text-sm rounded-xs shadow-xs">
-            <GraduationCap className="w-4 h-4 text-primary" />
+        <div className="h-16 px-4 flex items-center gap-3 bg-white text-slate-900 border-b border-slate-200 shrink-0">
+          <div className="w-9 h-9 bg-emerald-100 text-emerald-700 font-bold flex items-center justify-center rounded-xl shadow-xs shrink-0">
+            <GraduationCap className="w-5 h-5 text-emerald-700" />
           </div>
           <div className="flex flex-col min-w-0">
-            <span className="font-headline text-sm font-bold uppercase tracking-tight text-on-primary leading-tight truncate">
+            <span className="font-headline text-sm font-bold tracking-tight text-slate-900 leading-tight truncate">
               Apex Institute
             </span>
-            <span className="text-[10px] tracking-wider uppercase text-on-primary-container font-mono font-semibold truncate">
+            <span className="text-[10px] tracking-wider uppercase text-emerald-700 font-semibold truncate">
               Student Portal
             </span>
           </div>
         </div>
 
         {/* Navigation List */}
-        <nav className="flex-1 overflow-y-auto p-2 flex flex-col gap-1">
+        <nav className="flex-1 overflow-y-auto p-2.5 flex flex-col gap-1">
           {navigationItems.map((item) => {
             const isActive =
               item.href === "/student"
@@ -62,15 +62,15 @@ export default function StudentSidebar() {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`flex items-center gap-3 px-3 py-2 text-xs uppercase tracking-wider font-semibold transition-colors rounded-xs ${
+                className={`flex items-center gap-3 px-3.5 py-2.5 text-xs font-semibold transition-all rounded-xl ${
                   isActive
-                    ? "bg-primary text-on-primary font-bold shadow-xs"
-                    : "text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface"
+                    ? "bg-emerald-600 text-white font-bold shadow-sm"
+                    : "text-slate-600 hover:bg-emerald-50 hover:text-emerald-800"
                 }`}
               >
                 <IconComponent
                   className={`w-4 h-4 shrink-0 ${
-                    isActive ? "text-on-primary" : "text-secondary"
+                    isActive ? "text-white" : "text-slate-400"
                   }`}
                 />
                 <span className="truncate">{item.name}</span>
@@ -81,18 +81,18 @@ export default function StudentSidebar() {
       </div>
 
       {/* Bottom Controls: Terminate Session, Compliance */}
-      <div className="p-3 bg-surface-container-lowest border-t border-[#d5e3fc] flex flex-col gap-2.5 shrink-0">
+      <div className="p-3 bg-white border-t border-slate-200 flex flex-col gap-2.5 shrink-0">
         {/* Sign Out Button linking to /login */}
         <Link
           href="/login"
-          className="w-full flex items-center justify-center gap-2 py-2 px-3 text-xs uppercase tracking-wider font-semibold text-error hover:bg-error-container hover:text-on-error-container border border-error/30 transition-colors rounded-xs"
+          className="w-full flex items-center justify-center gap-2 py-2 px-3 text-xs font-semibold text-rose-600 hover:bg-rose-50 hover:text-rose-700 border border-rose-200 transition-colors rounded-xl"
         >
           <LogOut className="w-3.5 h-3.5" />
           <span>Sign Out / Lock</span>
         </Link>
 
         {/* Compliance Seal */}
-        <div className="flex items-center justify-between text-[9px] font-mono text-on-surface-variant/70 border-t border-[#d5e3fc]/60 pt-1.5">
+        <div className="flex items-center justify-between text-[10px] text-slate-400 border-t border-slate-100 pt-2 px-1">
           <span>APEX-IMS CORE</span>
           <span>ISO-27001</span>
         </div>

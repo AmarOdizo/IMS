@@ -432,8 +432,8 @@ export default function StaffExamsPage() {
                 onClick={() => setActiveTab("ica")}
                 className={`h-11 px-4 flex items-center gap-2 border-b-2 font-bold uppercase transition-colors ${
                   activeTab === "ica"
-                    ? "border-primary text-primary bg-surface-container-lowest"
-                    : "border-transparent text-outline hover:text-primary"
+                    ? "border-emerald-600 text-emerald-700 bg-emerald-50/40"
+                    : "border-transparent text-outline hover:text-emerald-700"
                 }`}
               >
                 <span>Continuous Assessment (ICA) - Max 40</span>
@@ -442,8 +442,8 @@ export default function StaffExamsPage() {
                 onClick={() => setActiveTab("lab")}
                 className={`h-11 px-4 flex items-center gap-2 border-b-2 font-bold uppercase transition-colors ${
                   activeTab === "lab"
-                    ? "border-primary text-primary bg-surface-container-lowest"
-                    : "border-transparent text-outline hover:text-primary"
+                    ? "border-emerald-600 text-emerald-700 bg-emerald-50/40"
+                    : "border-transparent text-outline hover:text-emerald-700"
                 }`}
               >
                 <span>Practical Lab Marks (CS-405L) - Max 50</span>
@@ -452,8 +452,8 @@ export default function StaffExamsPage() {
                 onClick={() => setActiveTab("audit")}
                 className={`h-11 px-4 flex items-center gap-2 border-b-2 font-bold uppercase transition-colors ${
                   activeTab === "audit"
-                    ? "border-primary text-primary bg-surface-container-lowest"
-                    : "border-transparent text-outline hover:text-primary"
+                    ? "border-emerald-600 text-emerald-700 bg-emerald-50/40"
+                    : "border-transparent text-outline hover:text-emerald-700"
                 }`}
               >
                 <span>Submission Audit &amp; Archival</span>
