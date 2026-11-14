@@ -45,7 +45,7 @@ interface ScheduleItem {
 const todaySchedule: ScheduleItem[] = [
   {
     id: "sch-1",
-    time: "09:00 - 10:00",
+    time: "09:00 - 10:00 AM",
     duration: "60 MIN",
     code: "CS-401",
     subject: "Database Management Systems",
@@ -53,11 +53,11 @@ const todaySchedule: ScheduleItem[] = [
     venue: "Lecture Hall 302",
     attendanceInfo: "58/62 Attended (93.5%)",
     status: "completed",
-    statusText: "COMPLETED • LOCKED"
+    statusText: "Completed"
   },
   {
     id: "sch-2",
-    time: "11:00 - 12:00",
+    time: "11:00 - 12:00 PM",
     duration: "60 MIN",
     code: "CS-403",
     subject: "Advanced Database Systems",
@@ -65,11 +65,11 @@ const todaySchedule: ScheduleItem[] = [
     venue: "Room 204 (PG Block)",
     attendanceInfo: "27/28 Attended (96.4%)",
     status: "completed",
-    statusText: "COMPLETED • LOCKED"
+    statusText: "Completed"
   },
   {
     id: "sch-3",
-    time: "14:00 - 15:00",
+    time: "02:00 - 03:00 PM",
     duration: "60 MIN",
     code: "CS-202",
     subject: "Data Structures Foundation",
@@ -77,19 +77,19 @@ const todaySchedule: ScheduleItem[] = [
     venue: "Seminar Hall B",
     attendanceInfo: "Active Period: Unit 3 Trees",
     status: "live",
-    statusText: "LIVE IN PROGRESS"
+    statusText: "In Progress"
   },
   {
     id: "sch-4",
-    time: "15:30 - 17:00",
+    time: "03:30 - 05:00 PM",
     duration: "90 MIN",
     code: "CS-405L",
     subject: "Database Engineering Lab",
     batch: "B.Tech CS-IV-B",
     venue: "Turing Computing Lab 3",
-    attendanceInfo: "Strength: 48 Systems • Terminal 01-48",
+    attendanceInfo: "Lab Strength: 48 Systems",
     status: "upcoming",
-    statusText: "UPCOMING • OPENS 15:15"
+    statusText: "Upcoming"
   }
 ];
 
@@ -145,28 +145,28 @@ const facultyNotices = [
     id: "FN-01",
     ref: "APX/DEAN/2025-119",
     title: "Mid-Term Question Paper Submission Deadline",
-    dept: "Office of the Controller of Examinations",
-    deadline: "April 08, 2025 • 17:00 IST",
+    dept: "Examination Cell",
+    deadline: "April 08, 2025",
     priority: "Urgent",
-    badgeColor: "bg-error text-on-error"
+    badgeColor: "bg-rose-50 text-rose-700 border-rose-200"
   },
   {
     id: "FN-02",
     ref: "APX/ACAD/2025-098",
-    title: "Final Exam Script Moderation Guidelines & Evaluation Rubric",
-    dept: "Directorate of Academic Affairs",
+    title: "Final Exam Moderation & Evaluation Rubrics Ratified",
+    dept: "Academic Affairs",
     deadline: "April 15, 2025",
-    priority: "High",
-    badgeColor: "bg-secondary text-on-secondary"
+    priority: "Important",
+    badgeColor: "bg-blue-50 text-blue-700 border-blue-200"
   },
   {
     id: "FN-03",
     ref: "APX/RES/2025-042",
-    title: "Distinguished Guest Lecture: Microkernels for Transformer Workloads",
-    dept: "Center for Advanced Computing",
+    title: "Guest Lecture: Microkernels for Transformer Workloads",
+    dept: "Computing Research",
     deadline: "April 20 • Turing Hall",
     priority: "Notice",
-    badgeColor: "bg-surface-container text-primary border border-[#d5e3fc]"
+    badgeColor: "bg-slate-100 text-slate-700 border-slate-200"
   }
 ];
 
@@ -194,424 +194,355 @@ export default function StaffDashboardPage() {
           ? {
               ...item,
               status: "completed",
-              statusText: "COMPLETED • LOCKED",
+              statusText: "Completed",
               attendanceInfo: "32/34 Attended (94.1%)"
             }
           : item
       )
     );
-    showToast("Attendance for BCA-II-B CS-202 successfully saved and locked!");
+    showToast("Attendance for BCA-II-B CS-202 successfully saved!");
   };
 
   return (
-    <div className="p-6 space-y-6 max-w-[1600px] mx-auto font-body text-on-surface select-none">
+    <div className="p-6 md:p-8 space-y-6 max-w-[1600px] mx-auto font-sans text-slate-800">
       {/* Toast Notification */}
       {toastMessage && (
-        <div className="fixed bottom-6 right-6 z-50 bg-primary text-on-primary px-4 py-3 rounded shadow-xl flex items-center gap-3 border border-secondary text-xs uppercase tracking-wider font-semibold animate-in fade-in slide-in-from-bottom-3 duration-200">
-          <CheckCircle2 className="h-4 w-4 text-[#047857]" />
+        <div className="fixed bottom-6 right-6 z-50 bg-slate-900 text-white px-5 py-3.5 rounded-xl shadow-xl flex items-center gap-3 border border-slate-700 text-sm font-medium animate-in slide-in-from-bottom">
+          <CheckCircle2 className="h-5 w-5 text-emerald-400 shrink-0" />
           <span>{toastMessage}</span>
-          <button onClick={() => setToastMessage(null)} className="ml-2 hover:opacity-75">
-            <X className="h-3.5 w-3.5" />
+          <button onClick={() => setToastMessage(null)} className="ml-2 text-slate-400 hover:text-white transition-colors">
+            <X className="h-4 w-4" />
           </button>
         </div>
       )}
 
-      {/* Top Command Telemetry Bar */}
-      <div className="px-5 py-2.5 bg-surface-container-low border border-[#d5e3fc] flex flex-wrap items-center justify-between gap-3 rounded-sm shadow-xs">
-        <div className="flex items-center gap-3 flex-wrap">
-          <span className="inline-flex items-center gap-1.5 font-mono text-xs text-primary uppercase tracking-widest font-bold">
-            <span className="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
-            FACULTY NODE // CLUSTER 04
-          </span>
-          <span className="text-outline">/</span>
-          <span className="font-mono text-xs text-on-surface-variant">NODE STATUS: SYNCHRONIZED</span>
-          <span className="text-outline">/</span>
-          <span className="font-mono text-xs text-on-surface-variant">PORTAL RELAY: 104.28.19.2</span>
-        </div>
-        <div className="flex items-center gap-3 font-mono text-xs text-on-surface-variant">
-          <span>
-            SERVER TIME: <strong className="text-primary font-bold">14:18:22 IST</strong>
-          </span>
-          <span className="text-outline">|</span>
-          <span>CYCLE: <strong className="text-primary font-bold">AY 2025-26 (EVEN TERM)</strong></span>
-        </div>
-      </div>
+      {/* Header Banner */}
+      <div className="bg-white rounded-2xl p-6 md:p-7 border border-slate-200/80 shadow-sm relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-96 h-full bg-gradient-to-l from-blue-50/60 via-purple-50/30 to-transparent pointer-events-none"></div>
 
-      {/* Personalized Faculty Header Banner */}
-      <div className="bg-surface-container-lowest p-6 border border-[#d5e3fc] shadow-xs relative overflow-hidden rounded-sm">
-        <div className="absolute top-0 right-0 w-96 h-full bg-gradient-to-l from-primary/5 via-secondary/10 to-transparent pointer-events-none"></div>
-
-        <div className="relative z-10 flex flex-col xl:flex-row xl:items-center justify-between gap-6">
-          <div className="flex flex-col gap-1.5">
-            <div className="flex flex-wrap items-center gap-2">
-              <span className="bg-primary text-on-primary font-mono text-[10px] px-2 py-0.5 uppercase tracking-wider font-semibold rounded-xs">
-                FACULTY INSTRUCTION MATRIX
+        <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+          <div className="space-y-2">
+            <div className="flex flex-wrap items-center gap-2.5">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-blue-50 text-blue-700 text-xs font-semibold rounded-full border border-blue-200/60">
+                <span className="w-2 h-2 rounded-full bg-blue-600"></span>
+                Faculty ID: EMP-CS-842
               </span>
-              <span className="bg-surface-container text-primary font-mono text-[10px] px-2 py-0.5 uppercase font-bold border border-[#d5e3fc] rounded-xs">
-                EMP-CS-2018-842
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-50 text-emerald-700 text-xs font-semibold rounded-full border border-emerald-200/60">
+                <span className="w-2 h-2 rounded-full bg-emerald-600 animate-pulse"></span>
+                On Duty &bull; AY 2025–26
               </span>
-              <div className="flex items-center gap-1.5 bg-[#ecfdf5] text-[#047857] border border-[#a7f3d0] px-2 py-0.5 rounded-xs">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#047857] animate-pulse"></span>
-                <span className="font-mono text-[10px] uppercase font-bold">
-                  ACTIVE ON DUTY &bull; BIOMETRIC LOGGED 08:42 AM
-                </span>
-              </div>
             </div>
 
-            <h1 className="text-2xl md:text-3xl font-bold uppercase tracking-tight text-primary font-headline mt-1">
-              Welcome back, Prof. Amit Sharma!
-            </h1>
-            <p className="text-xs text-on-surface-variant flex items-center gap-2 flex-wrap font-sans">
-              <span className="font-semibold text-primary">Senior Assistant Professor</span>
-              <span>&bull;</span>
-              <span>Department of Computer Science &amp; Engineering</span>
-              <span>&bull;</span>
-              <span className="font-mono text-secondary font-bold">Cabin CS-B204 (Computing Block)</span>
-            </p>
+            <div>
+              <h1 className="text-2xl md:text-3xl font-bold text-slate-900 tracking-tight">
+                Welcome back, Prof. Amit Sharma! 👋
+              </h1>
+              <p className="text-sm text-slate-500 mt-1">
+                Department of Computer Science &amp; Engineering &bull; Cabin B-204
+              </p>
+            </div>
           </div>
 
           {/* Quick Action Buttons */}
-          <div className="flex flex-wrap items-center gap-2">
+          <div className="flex items-center flex-wrap gap-2.5">
             <Link
               href="/staff/attendance"
-              className="bg-primary hover:bg-primary-container text-on-primary px-3.5 py-2 font-mono text-xs uppercase font-bold tracking-wider flex items-center gap-1.5 transition-colors shadow-xs rounded-xs"
+              className="inline-flex items-center gap-2 px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-xl shadow-sm hover:shadow transition-all"
             >
-              <CheckCheck className="h-4 w-4 text-secondary-container" />
+              <CheckCheck className="w-4 h-4" />
               <span>Mark Attendance</span>
             </Link>
             <Link
               href="/staff/exams"
-              className="bg-surface-container hover:bg-surface-container-high text-primary px-3.5 py-2 font-mono text-xs uppercase font-bold tracking-wider flex items-center gap-1.5 transition-colors border border-[#d5e3fc] rounded-xs"
+              className="inline-flex items-center gap-2 px-4 py-2.5 bg-slate-50 hover:bg-slate-100 text-slate-700 text-xs font-semibold rounded-xl border border-slate-200 shadow-xs transition-all"
             >
-              <FileSpreadsheet className="h-4 w-4 text-secondary" />
+              <FileSpreadsheet className="w-4 h-4 text-slate-500" />
               <span>Enter Exam Marks</span>
             </Link>
             <Link
               href="/staff/students"
-              className="bg-surface-container-lowest hover:bg-surface-container text-on-surface hover:text-primary px-3.5 py-2 font-mono text-xs uppercase font-bold tracking-wider flex items-center gap-1.5 transition-colors border border-[#d5e3fc] rounded-xs"
+              className="inline-flex items-center gap-2 px-4 py-2.5 bg-slate-50 hover:bg-slate-100 text-slate-700 text-xs font-semibold rounded-xl border border-slate-200 shadow-xs transition-all"
             >
-              <Users className="h-4 w-4 text-secondary" />
-              <span>Assigned Students</span>
+              <Users className="w-4 h-4 text-slate-500" />
+              <span>My Students</span>
             </Link>
           </div>
         </div>
       </div>
 
-      {/* 4 KPI Metrics Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
+      {/* 4 KPI Cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Card 1 */}
-        <div className="bg-surface-container-lowest p-5 border border-[#d5e3fc] shadow-xs relative flex flex-col justify-between border-l-4 border-l-primary rounded-sm">
-          <div className="flex flex-col gap-1">
-            <div className="flex items-center justify-between">
-              <span className="text-[11px] font-mono uppercase tracking-wider text-on-surface-variant font-bold">
-                Assigned Batches
-              </span>
-              <Layers className="h-4 w-4 text-secondary" />
+        <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-medium text-slate-500">Assigned Batches</span>
+            <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
+              <Layers className="w-5 h-5" />
             </div>
-            <div className="text-2xl font-bold text-primary tracking-tight mt-1">4 Active Cohorts</div>
           </div>
-          <div className="mt-3 pt-2 bg-surface-container-low p-2 rounded-xs border border-[#eff4ff]">
-            <p className="font-mono text-[11px] text-on-surface-variant truncate">
-              B.Tech IV (A/B), M.Tech II, BCA II
-            </p>
+          <div className="mt-4">
+            <div className="text-2xl font-bold text-slate-900 tracking-tight">4 Batches</div>
+            <div className="text-xs text-slate-500 mt-1">B.Tech IV (A/B), M.Tech II, BCA II</div>
           </div>
         </div>
 
         {/* Card 2 */}
-        <div className="bg-surface-container-lowest p-5 border border-[#d5e3fc] shadow-xs relative flex flex-col justify-between border-l-4 border-l-secondary rounded-sm">
-          <div className="flex flex-col gap-1">
-            <div className="flex items-center justify-between">
-              <span className="text-[11px] font-mono uppercase tracking-wider text-on-surface-variant font-bold">
-                Registered Roster
-              </span>
-              <Users className="h-4 w-4 text-secondary" />
+        <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-medium text-slate-500">Total Enrolled</span>
+            <div className="w-10 h-10 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center">
+              <Users className="w-5 h-5" />
             </div>
-            <div className="text-2xl font-bold text-primary tracking-tight mt-1">184 Students</div>
           </div>
-          <div className="mt-3 pt-2 bg-surface-container-low p-2 rounded-xs border border-[#eff4ff] flex items-center justify-between">
-            <span className="font-mono text-[11px] text-on-surface-variant">156 UG &bull; 28 PG Scholars</span>
-            <span className="text-[10px] font-mono text-[#047857] font-bold uppercase">100% Verified</span>
+          <div className="mt-4">
+            <div className="text-2xl font-bold text-slate-900 tracking-tight">184 Students</div>
+            <div className="text-xs text-slate-500 mt-1">156 UG &bull; 28 PG Scholars</div>
           </div>
         </div>
 
         {/* Card 3 */}
-        <div className="bg-surface-container-lowest p-5 border border-[#d5e3fc] shadow-xs relative flex flex-col justify-between border-l-4 border-l-primary-container rounded-sm">
-          <div className="flex flex-col gap-1">
-            <div className="flex items-center justify-between">
-              <span className="text-[11px] font-mono uppercase tracking-wider text-on-surface-variant font-bold">
-                Today&apos;s Attendance
-              </span>
-              <Clock className="h-4 w-4 text-secondary" />
-            </div>
-            <div className="flex items-baseline gap-2 mt-1">
-              <div className="text-2xl font-bold text-primary tracking-tight">
-                {schedule.filter((s) => s.status === "completed").length} of 4 Marked
-              </div>
-              <span className="text-[11px] font-mono font-bold text-secondary">
-                {schedule.filter((s) => s.status === "completed").length === 4 ? "100% DONE" : "75% DONE"}
-              </span>
+        <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-medium text-slate-500">Today's Lectures</span>
+            <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
+              <Clock className="w-5 h-5" />
             </div>
           </div>
-          <div className="mt-3 pt-2 bg-surface-container-low p-2 rounded-xs border border-[#eff4ff]">
-            <p className="font-mono text-[11px] text-on-surface-variant truncate">
-              Pending: CS-405L Turing Lab (03:30 PM)
-            </p>
+          <div className="mt-4">
+            <div className="text-2xl font-bold text-slate-900 tracking-tight">
+              {schedule.filter((s) => s.status === "completed").length} of 4 Done
+            </div>
+            <div className="text-xs text-emerald-600 font-medium mt-1">Next: Lab at 03:30 PM</div>
           </div>
         </div>
 
         {/* Card 4 */}
-        <div className="bg-surface-container-lowest p-5 border border-[#d5e3fc] shadow-xs relative flex flex-col justify-between border-l-4 border-l-tertiary-container rounded-sm">
-          <div className="flex flex-col gap-1">
-            <div className="flex items-center justify-between">
-              <span className="text-[11px] font-mono uppercase tracking-wider text-on-surface-variant font-bold">
-                Mid-Term Cycle
-              </span>
-              <CalendarDays className="h-4 w-4 text-secondary" />
+        <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-medium text-slate-500">Upcoming Exams</span>
+            <div className="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center">
+              <CalendarDays className="w-5 h-5" />
             </div>
-            <div className="text-2xl font-bold text-primary tracking-tight mt-1">2 Evaluations</div>
           </div>
-          <div className="mt-3 pt-2 bg-surface-container-low p-2 rounded-xs border border-[#eff4ff] flex items-center justify-between">
-            <span className="font-mono text-[11px] text-error font-bold">Starts in 6 Days</span>
-            <span className="text-[10px] font-mono text-primary font-bold">CS-401 &bull; CS-405L</span>
+          <div className="mt-4">
+            <div className="text-2xl font-bold text-slate-900 tracking-tight">2 Papers</div>
+            <div className="text-xs text-amber-600 font-medium mt-1">Mid-term starts in 6 days</div>
           </div>
         </div>
       </div>
 
-      {/* Teaching Schedule Strip (Interactive Timetable) */}
-      <div className="bg-surface-container-lowest p-6 border border-[#d5e3fc] shadow-xs flex flex-col gap-4 rounded-sm">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#d5e3fc]">
+      {/* Today's Teaching Schedule */}
+      <div className="bg-white rounded-2xl border border-slate-200/80 shadow-sm p-6">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-100">
           <div className="flex items-center gap-3">
-            <div className="p-2 bg-surface-container rounded-xs text-secondary border border-[#d5e3fc]">
-              <Clock className="h-5 w-5" />
+            <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
+              <Clock className="w-5 h-5" />
             </div>
             <div>
-              <h2 className="text-base font-bold text-primary uppercase tracking-tight">
-                Today&apos;s Teaching Schedule &bull; Semester IV
+              <h2 className="text-base font-bold text-slate-900">
+                Today&apos;s Lecture Schedule
               </h2>
-              <p className="text-xs font-mono text-on-surface-variant">
-                THURSDAY &bull; 4 SESSIONS PROGRAMMED &bull; AY 2025-26
-              </p>
+              <p className="text-xs text-slate-500">Thursday &bull; 4 Sessions Scheduled</p>
             </div>
           </div>
-          <div className="flex flex-wrap items-center gap-2">
-            <div className="flex items-center gap-1 font-mono text-xs">
-              <button
-                onClick={() => setScheduleFilter("all")}
-                className={`px-2.5 py-1 text-[11px] font-bold rounded-xs transition-colors cursor-pointer border ${
-                  scheduleFilter === "all"
-                    ? "bg-primary text-on-primary border-primary shadow-xs"
-                    : "bg-surface-container text-on-surface-variant border-[#d5e3fc] hover:bg-surface-container-high"
-                }`}
-              >
-                All ({schedule.length})
-              </button>
-              <button
-                onClick={() => setScheduleFilter("active")}
-                className={`px-2.5 py-1 text-[11px] font-bold rounded-xs transition-colors cursor-pointer border ${
-                  scheduleFilter === "active"
-                    ? "bg-primary text-on-primary border-primary shadow-xs"
-                    : "bg-surface-container text-on-surface-variant border-[#d5e3fc] hover:bg-surface-container-high"
-                }`}
-              >
-                Active ({schedule.filter((s) => s.status !== "completed").length})
-              </button>
-              <button
-                onClick={() => setScheduleFilter("completed")}
-                className={`px-2.5 py-1 text-[11px] font-bold rounded-xs transition-colors cursor-pointer border ${
-                  scheduleFilter === "completed"
-                    ? "bg-primary text-on-primary border-primary shadow-xs"
-                    : "bg-surface-container text-on-surface-variant border-[#d5e3fc] hover:bg-surface-container-high"
-                }`}
-              >
-                Completed ({schedule.filter((s) => s.status === "completed").length})
-              </button>
-            </div>
-            <span className="hidden sm:inline-block px-2.5 py-1 bg-surface-container text-primary font-mono text-xs font-bold border border-[#d5e3fc] rounded-xs">
-              T-MINUS 1:12
-            </span>
+
+          <div className="flex items-center gap-1.5 bg-slate-100 p-1 rounded-lg">
+            <button
+              onClick={() => setScheduleFilter("all")}
+              className={`px-3 py-1 text-xs font-semibold rounded-md transition-all ${
+                scheduleFilter === "all"
+                  ? "bg-white text-blue-600 shadow-xs"
+                  : "text-slate-600 hover:text-slate-900"
+              }`}
+            >
+              All ({schedule.length})
+            </button>
+            <button
+              onClick={() => setScheduleFilter("active")}
+              className={`px-3 py-1 text-xs font-semibold rounded-md transition-all ${
+                scheduleFilter === "active"
+                  ? "bg-white text-blue-600 shadow-xs"
+                  : "text-slate-600 hover:text-slate-900"
+              }`}
+            >
+              Active ({schedule.filter((s) => s.status !== "completed").length})
+            </button>
+            <button
+              onClick={() => setScheduleFilter("completed")}
+              className={`px-3 py-1 text-xs font-semibold rounded-md transition-all ${
+                scheduleFilter === "completed"
+                  ? "bg-white text-blue-600 shadow-xs"
+                  : "text-slate-600 hover:text-slate-900"
+              }`}
+            >
+              Completed ({schedule.filter((s) => s.status === "completed").length})
+            </button>
           </div>
         </div>
 
-        {/* Timeline Table */}
-        <div className="overflow-x-auto">
-          <div className="min-w-[800px] flex flex-col gap-2">
-            {filteredSchedule.map((item) => {
-              const isCompleted = item.status === "completed";
-              const isLive = item.status === "live";
-              const isUpcoming = item.status === "upcoming";
+        {/* Schedule List */}
+        <div className="mt-4 space-y-3">
+          {filteredSchedule.map((item) => {
+            const isCompleted = item.status === "completed";
+            const isLive = item.status === "live";
+            const isUpcoming = item.status === "upcoming";
 
-              return (
-                <div
-                  key={item.id}
-                  className={`p-4 flex items-center justify-between transition-colors border rounded-xs ${
-                    isLive
-                      ? "bg-[#eff4ff] border-secondary shadow-xs"
-                      : "bg-surface-container-lowest hover:bg-surface-container-low border-[#d5e3fc]"
-                  }`}
-                >
-                  {/* Time Window */}
-                  <div className="flex items-center gap-4 w-1/4">
-                    <div
-                      className={`font-mono text-base font-bold ${
-                        isLive ? "text-secondary" : "text-primary"
-                      }`}
-                    >
-                      {item.time}
-                    </div>
-                    <span className="font-mono text-[10px] uppercase bg-surface-container text-on-surface-variant px-1.5 py-0.5 border border-[#d5e3fc] rounded-xs">
-                      {item.duration}
+            return (
+              <div
+                key={item.id}
+                className={`p-4 rounded-xl flex flex-col md:flex-row md:items-center justify-between gap-4 transition-all border ${
+                  isLive
+                    ? "bg-blue-50/40 border-blue-200/80 shadow-xs"
+                    : "bg-slate-50/60 hover:bg-slate-50 border-slate-100"
+                }`}
+              >
+                {/* Time & Duration */}
+                <div className="flex items-center gap-3 md:w-1/4">
+                  <div className={`text-sm font-bold ${isLive ? "text-blue-700" : "text-slate-900"}`}>
+                    {item.time}
+                  </div>
+                  <span className="text-[10px] font-semibold bg-white text-slate-500 px-2 py-0.5 rounded-full border border-slate-200">
+                    {item.duration}
+                  </span>
+                </div>
+
+                {/* Subject & Venue */}
+                <div className="md:w-2/5 space-y-1">
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm font-bold text-slate-900">
+                      {item.code}: {item.subject}
                     </span>
-                  </div>
-
-                  {/* Subject & Details */}
-                  <div className="w-2/5 flex flex-col">
-                    <div className="flex items-center gap-2">
-                      <span className="text-sm font-bold text-primary leading-tight">
-                        {item.code}: {item.subject}
-                      </span>
-                      {isLive && (
-                        <span className="h-2 w-2 rounded-full bg-secondary animate-ping"></span>
-                      )}
-                    </div>
-                    <div className="flex items-center gap-2 text-xs text-on-surface-variant mt-0.5">
-                      <span className="font-semibold text-primary">{item.batch}</span>
-                      <span>&bull;</span>
-                      <span>{item.venue}</span>
-                      <span>&bull;</span>
-                      <span className="font-mono text-[11px]">{item.attendanceInfo}</span>
-                    </div>
-                  </div>
-
-                  {/* Action & Status */}
-                  <div className="flex items-center gap-3">
-                    {isCompleted && (
-                      <>
-                        <div className="bg-surface-container text-primary px-2.5 py-1 font-mono text-[11px] font-bold uppercase tracking-wider flex items-center gap-1 border border-[#d5e3fc] rounded-xs">
-                          <Lock className="h-3.5 w-3.5 text-secondary" />
-                          <span>{item.statusText}</span>
-                        </div>
-                        <button
-                          onClick={() => setSelectedAuditSession(item)}
-                          className="px-3 py-1 bg-surface-container-lowest text-primary font-mono text-[11px] uppercase font-bold hover:bg-surface-container border border-[#d5e3fc] transition-colors rounded-xs cursor-pointer"
-                        >
-                          Audit Roll
-                        </button>
-                      </>
-                    )}
-
                     {isLive && (
-                      <>
-                        <div className="bg-secondary text-on-secondary px-2.5 py-1 font-mono text-[11px] font-bold uppercase tracking-wider flex items-center gap-1 rounded-xs animate-pulse">
-                          <Radio className="h-3.5 w-3.5" />
-                          <span>{item.statusText}</span>
-                        </div>
-                        <button
-                          onClick={handleMarkLiveAttendance}
-                          className="px-3.5 py-1 bg-primary text-on-primary font-mono text-[11px] uppercase font-bold hover:bg-primary-container transition-colors shadow-xs rounded-xs flex items-center gap-1 cursor-pointer"
-                        >
-                          <CheckCheck className="h-3.5 w-3.5 text-secondary-container" />
-                          <span>Mark Register</span>
-                        </button>
-                      </>
+                      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-100 text-blue-700 animate-pulse">
+                        <Radio className="w-3 h-3" /> Live Now
+                      </span>
                     )}
-
-                    {isUpcoming && (
-                      <>
-                        <div className="bg-surface-container text-on-surface-variant px-2.5 py-1 font-mono text-[11px] font-semibold uppercase tracking-wider flex items-center gap-1 border border-[#d5e3fc] rounded-xs">
-                          <Clock className="h-3.5 w-3.5" />
-                          <span>{item.statusText}</span>
-                        </div>
-                        <Link
-                          href="/staff/attendance"
-                          className="px-3 py-1 bg-surface-container hover:bg-surface-container-high text-primary font-mono text-[11px] uppercase font-bold border border-[#d5e3fc] transition-colors rounded-xs"
-                        >
-                          Pre-Load Roster
-                        </Link>
-                      </>
-                    )}
+                  </div>
+                  <div className="flex items-center gap-2 text-xs text-slate-500">
+                    <span className="font-semibold text-slate-700">{item.batch}</span>
+                    <span>&bull;</span>
+                    <span>{item.venue}</span>
+                    <span>&bull;</span>
+                    <span className="text-slate-600">{item.attendanceInfo}</span>
                   </div>
                 </div>
-              );
-            })}
-          </div>
+
+                {/* Actions */}
+                <div className="flex items-center gap-2">
+                  {isCompleted && (
+                    <>
+                      <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                        <CheckCircle2 className="w-3.5 h-3.5" /> Done
+                      </span>
+                      <button
+                        onClick={() => setSelectedAuditSession(item)}
+                        className="px-3 py-1.5 bg-white hover:bg-slate-100 text-slate-700 text-xs font-medium rounded-lg border border-slate-200 transition-colors"
+                      >
+                        View Attendance
+                      </button>
+                    </>
+                  )}
+
+                  {isLive && (
+                    <button
+                      onClick={handleMarkLiveAttendance}
+                      className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-lg shadow-sm hover:shadow flex items-center gap-1.5 transition-all"
+                    >
+                      <CheckCheck className="w-4 h-4" />
+                      <span>Submit Attendance</span>
+                    </button>
+                  )}
+
+                  {isUpcoming && (
+                    <Link
+                      href="/staff/attendance"
+                      className="px-3 py-1.5 bg-white hover:bg-slate-100 text-slate-700 text-xs font-medium rounded-lg border border-slate-200 transition-colors"
+                    >
+                      Pre-load Roster
+                    </Link>
+                  )}
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
 
-      {/* Assigned Academic Cohorts Grid */}
-      <div className="flex flex-col gap-4">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <GraduationCap className="h-5 w-5 text-secondary" />
-            <h2 className="text-base font-bold text-primary uppercase tracking-tight">
-              Assigned Academic Cohorts (AY 2025–26)
+      {/* Assigned Academic Cohorts */}
+      <div>
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-lg bg-purple-50 text-purple-600 flex items-center justify-center">
+              <GraduationCap className="w-4 h-4" />
+            </div>
+            <h2 className="text-base font-bold text-slate-900">
+              Assigned Batches (AY 2025–26)
             </h2>
           </div>
           <Link
             href="/staff/batches"
-            className="text-xs font-mono uppercase font-bold text-secondary hover:underline flex items-center gap-1"
+            className="text-xs font-semibold text-blue-600 hover:text-blue-700 flex items-center gap-1"
           >
             <span>Manage All Batches</span>
-            <ArrowRight className="h-3.5 w-3.5" />
+            <ArrowRight className="w-3.5 h-3.5" />
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {assignedCohorts.map((cohort) => (
             <div
               key={cohort.id}
-              className="bg-surface-container-lowest p-5 border border-[#d5e3fc] shadow-xs flex flex-col justify-between rounded-sm hover:border-secondary transition-all"
+              className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between"
             >
               <div>
-                <div className="flex items-center justify-between pb-2 border-b border-[#d5e3fc]">
-                  <span className="font-mono text-[11px] text-secondary font-bold">
+                <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+                  <span className="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-md">
                     {cohort.code}
                   </span>
-                  <span className="px-2 py-0.5 bg-surface-container font-mono text-[10px] text-primary font-bold rounded-xs border border-[#d5e3fc]">
-                    {cohort.students} Enrolled
+                  <span className="text-xs text-slate-500 font-medium">
+                    {cohort.students} Students
                   </span>
                 </div>
 
-                <h3 className="text-sm font-bold uppercase text-primary tracking-tight mt-2.5">
+                <h3 className="text-sm font-bold text-slate-900 mt-3">
                   {cohort.name}
                 </h3>
-                <p className="text-xs text-on-surface-variant mt-0.5">{cohort.course}</p>
+                <p className="text-xs text-slate-500 mt-0.5">{cohort.course}</p>
 
-                <div className="mt-3.5 pt-3 border-t border-[#eff4ff] flex flex-col gap-2">
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="text-on-surface-variant">Attendance Health:</span>
-                    <span className="font-mono font-bold text-[#047857]">
-                      {cohort.avgAttendance}%
-                    </span>
-                  </div>
-                  {/* Progress Bar */}
-                  <div className="w-full h-1.5 bg-surface-container rounded-full overflow-hidden">
-                    <div
-                      className="h-full bg-secondary rounded-full"
-                      style={{ width: `${cohort.avgAttendance}%` }}
-                    ></div>
+                <div className="mt-4 pt-3 border-t border-slate-100 space-y-2.5">
+                  <div>
+                    <div className="flex items-center justify-between text-xs mb-1">
+                      <span className="text-slate-500">Attendance Rate</span>
+                      <span className="font-semibold text-emerald-600">{cohort.avgAttendance}%</span>
+                    </div>
+                    <div className="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
+                      <div
+                        className="h-full bg-emerald-500 rounded-full"
+                        style={{ width: `${cohort.avgAttendance}%` }}
+                      ></div>
+                    </div>
                   </div>
 
-                  <div className="flex items-center justify-between text-xs mt-1">
-                    <span className="text-on-surface-variant">Syllabus Covered:</span>
-                    <span className="font-mono font-bold text-primary">
-                      {cohort.syllabusProgress}%
-                    </span>
-                  </div>
-                  {/* Progress Bar */}
-                  <div className="w-full h-1.5 bg-surface-container rounded-full overflow-hidden">
-                    <div
-                      className="h-full bg-primary rounded-full"
-                      style={{ width: `${cohort.syllabusProgress}%` }}
-                    ></div>
+                  <div>
+                    <div className="flex items-center justify-between text-xs mb-1">
+                      <span className="text-slate-500">Syllabus Covered</span>
+                      <span className="font-semibold text-blue-600">{cohort.syllabusProgress}%</span>
+                    </div>
+                    <div className="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
+                      <div
+                        className="h-full bg-blue-600 rounded-full"
+                        style={{ width: `${cohort.syllabusProgress}%` }}
+                      ></div>
+                    </div>
                   </div>
                 </div>
               </div>
 
-              <div className="mt-4 pt-3 border-t border-[#d5e3fc] flex items-center justify-between text-[11px] font-mono text-on-surface-variant">
+              <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
                 <span>{cohort.venue}</span>
                 <Link
                   href={`/staff/batches?batch=${cohort.id}`}
-                  className="text-secondary font-bold hover:underline"
+                  className="text-blue-600 font-semibold hover:underline"
                 >
                   View Roster &rarr;
                 </Link>
@@ -621,21 +552,22 @@ export default function StaffDashboardPage() {
         </div>
       </div>
 
-      {/* Bottom Dual Grid: Analytics & Notices */}
+      {/* Bottom Dual Grid: Workload & Notices */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-        {/* Weekly Workload & Attendance Analytics (7 Cols) */}
-        <div className="lg:col-span-7 bg-surface-container-lowest p-6 border border-[#d5e3fc] shadow-xs flex flex-col gap-4 rounded-sm">
-          <div className="flex items-center justify-between pb-3 border-b border-[#d5e3fc]">
-            <div className="flex items-center gap-2">
-              <BarChart3 className="h-5 w-5 text-secondary" />
-              <h2 className="text-sm font-bold uppercase tracking-tight text-primary">
-                Weekly Teaching Workload &amp; Attendance Analytics
+        {/* Workload Analytics (7 Cols) */}
+        <div className="lg:col-span-7 bg-white rounded-2xl border border-slate-200/80 shadow-sm p-6 space-y-4">
+          <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+            <div className="flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
+                <BarChart3 className="w-4 h-4" />
+              </div>
+              <h2 className="text-sm font-bold text-slate-900">
+                Weekly Teaching Workload &amp; Attendance
               </h2>
             </div>
-            <span className="font-mono text-xs text-on-surface-variant font-bold">Total: 22 Hrs / Wk</span>
+            <span className="text-xs font-semibold text-slate-500">Total: 22 Hrs / Week</span>
           </div>
 
-          {/* Metric Bars Visualization */}
           <div className="grid grid-cols-5 gap-3 pt-2 text-center">
             {[
               { day: "MON", hours: "5.0h", attendance: "91%", height: "h-28" },
@@ -644,124 +576,105 @@ export default function StaffDashboardPage() {
               { day: "THU", hours: "4.0h", attendance: "93%", height: "h-20" },
               { day: "FRI", hours: "3.0h", attendance: "90%", height: "h-16" }
             ].map((item, idx) => (
-              <div key={idx} className="flex flex-col items-center gap-1.5">
-                <div className="font-mono text-xs font-bold text-primary">{item.hours}</div>
-                <div className="w-full bg-surface-container-low h-36 flex items-end justify-center p-1 rounded-xs border border-[#d5e3fc]">
-                  <div
-                    className={`w-full ${item.height} bg-gradient-to-t from-primary to-secondary rounded-xs`}
-                  ></div>
+              <div key={idx} className="flex flex-col items-center gap-2">
+                <div className="text-xs font-bold text-slate-700">{item.hours}</div>
+                <div className="w-full bg-slate-50 h-36 flex items-end justify-center p-1.5 rounded-xl border border-slate-100">
+                  <div className={`w-full ${item.height} bg-blue-600 rounded-lg transition-all`}></div>
                 </div>
-                <span className="font-mono text-xs font-bold text-on-surface">{item.day}</span>
-                <span className="font-mono text-[10px] text-[#047857] font-semibold">
-                  {item.attendance}
-                </span>
+                <span className="text-xs font-bold text-slate-900">{item.day}</span>
+                <span className="text-[11px] text-emerald-600 font-semibold">{item.attendance}</span>
               </div>
             ))}
           </div>
 
-          <div className="p-3 bg-surface-container-low border border-[#d5e3fc] text-xs font-mono text-on-surface-variant flex items-center justify-between rounded-xs">
+          <div className="p-3 bg-slate-50 rounded-xl border border-slate-100 text-xs text-slate-600 flex items-center justify-between">
             <span className="flex items-center gap-2">
-              <CheckCircle2 className="h-4 w-4 text-[#047857]" />
-              Compliance Rating: 99.4% (All sessions logged on biometric reader)
+              <CheckCircle2 className="w-4 h-4 text-emerald-500" />
+              Biometric Attendance Rating: 99.4%
             </span>
-            <span className="text-primary font-bold">Grade A++ NAAC Standard</span>
+            <span className="text-blue-600 font-semibold">Grade A Standard</span>
           </div>
         </div>
 
-        {/* Faculty Notices & Circulars (5 Cols) */}
-        <div className="lg:col-span-5 bg-surface-container-lowest p-6 border border-[#d5e3fc] shadow-xs flex flex-col justify-between gap-4 rounded-sm">
-          <div>
-            <div className="flex items-center justify-between pb-3 border-b border-[#d5e3fc]">
-              <div className="flex items-center gap-2">
-                <BookOpen className="h-5 w-5 text-secondary" />
-                <h2 className="text-sm font-bold uppercase tracking-tight text-primary">
-                  Faculty Notices &amp; Directives
-                </h2>
+        {/* Faculty Notices (5 Cols) */}
+        <div className="lg:col-span-5 bg-white rounded-2xl border border-slate-200/80 shadow-sm p-6 space-y-4">
+          <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+            <div className="flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center">
+                <BookOpen className="w-4 h-4" />
               </div>
-              <Link
-                href="/staff/notices"
-                className="font-mono text-xs text-secondary font-bold hover:underline"
-              >
-                All Circulars &rarr;
-              </Link>
+              <h2 className="text-sm font-bold text-slate-900">
+                Faculty Notices
+              </h2>
             </div>
-
-            <div className="divide-y divide-[#d5e3fc]">
-              {facultyNotices.map((memo) => (
-                <div key={memo.id} className="py-3 flex flex-col gap-1">
-                  <div className="flex items-center justify-between">
-                    <span className="font-mono text-[10px] text-on-surface-variant font-semibold">
-                      {memo.ref}
-                    </span>
-                    <span
-                      className={`px-1.5 py-0.2 font-mono text-[9px] uppercase font-bold rounded-xs ${memo.badgeColor}`}
-                    >
-                      {memo.priority}
-                    </span>
-                  </div>
-                  <h3 className="text-xs font-bold text-primary uppercase leading-snug">
-                    {memo.title}
-                  </h3>
-                  <div className="flex items-center justify-between text-[11px] font-mono text-on-surface-variant mt-0.5">
-                    <span className="truncate">{memo.dept}</span>
-                    <span className="text-error font-semibold shrink-0">{memo.deadline}</span>
-                  </div>
-                </div>
-              ))}
-            </div>
+            <Link href="/staff/notices" className="text-xs text-blue-600 hover:text-blue-700 font-semibold">
+              All Notices &rarr;
+            </Link>
           </div>
 
-          <Link
-            href="/staff/notices"
-            className="w-full py-2 bg-surface-container hover:bg-surface-container-high text-primary text-center font-mono text-xs uppercase font-bold tracking-wider border border-[#d5e3fc] transition-colors rounded-xs"
-          >
-            Open Academic Gazette &rarr;
-          </Link>
+          <div className="divide-y divide-slate-100 space-y-2">
+            {facultyNotices.map((memo) => (
+              <div key={memo.id} className="pt-2.5 first:pt-0 space-y-1">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] text-slate-400 font-mono">{memo.ref}</span>
+                  <span className={`px-2 py-0.5 text-[10px] font-semibold rounded-full border ${memo.badgeColor}`}>
+                    {memo.priority}
+                  </span>
+                </div>
+                <h3 className="text-xs font-bold text-slate-900 leading-snug">
+                  {memo.title}
+                </h3>
+                <div className="flex items-center justify-between text-xs text-slate-500">
+                  <span>{memo.dept}</span>
+                  <span className="text-rose-600 font-medium">{memo.deadline}</span>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
       {/* Audit Roll Modal */}
       {selectedAuditSession && (
-        <div className="fixed inset-0 z-50 bg-primary/60 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-surface-container-lowest w-full max-w-lg border border-[#d5e3fc] shadow-2xl p-6 relative rounded-sm animate-in fade-in zoom-in-95 duration-150">
-            <div className="flex items-center justify-between pb-3 border-b border-[#d5e3fc]">
+        <div className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white w-full max-w-lg rounded-2xl border border-slate-200 shadow-2xl p-6 relative animate-in fade-in zoom-in-95 duration-150">
+            <div className="flex items-center justify-between pb-3 border-b border-slate-100">
               <div className="flex items-center gap-2">
-                <CheckCircle2 className="h-5 w-5 text-secondary" />
-                <h3 className="text-base font-bold uppercase text-primary">
-                  Locked Attendance Session Audit
+                <CheckCircle2 className="h-5 w-5 text-emerald-500" />
+                <h3 className="text-base font-bold text-slate-900">
+                  Attendance Session Details
                 </h3>
               </div>
               <button
                 onClick={() => setSelectedAuditSession(null)}
-                className="p-1 hover:bg-surface-container text-on-surface-variant hover:text-primary transition-colors cursor-pointer"
+                className="p-1 hover:bg-slate-100 rounded-lg text-slate-400 hover:text-slate-700 transition-colors"
               >
                 <X className="h-5 w-5" />
               </button>
             </div>
 
-            <div className="py-4 text-xs font-mono flex flex-col gap-3">
-              <div className="p-3 bg-surface-container-low border border-[#d5e3fc] rounded-xs">
-                <div className="text-sm font-bold text-primary">
+            <div className="py-4 text-xs space-y-3">
+              <div className="p-3.5 bg-slate-50 rounded-xl border border-slate-100">
+                <div className="text-sm font-bold text-slate-900">
                   {selectedAuditSession.code}: {selectedAuditSession.subject}
                 </div>
-                <div className="text-on-surface-variant mt-1">
+                <div className="text-slate-500 mt-1">
                   Batch: {selectedAuditSession.batch} &bull; Venue: {selectedAuditSession.venue}
                 </div>
-                <div className="text-secondary font-bold mt-1">
-                  Time: {selectedAuditSession.time} &bull; Recorded Attendance:{" "}
-                  {selectedAuditSession.attendanceInfo}
+                <div className="text-blue-600 font-semibold mt-1">
+                  Time: {selectedAuditSession.time} &bull; Recorded Attendance: {selectedAuditSession.attendanceInfo}
                 </div>
               </div>
 
-              <div className="p-3 bg-[#ecfdf5] border border-[#a7f3d0] text-[#047857] rounded-xs">
-                Session cryptographic hash locked. Biometric attendance synchronized with Campus Attendance Controller at 10:04 AM.
+              <div className="p-3 bg-emerald-50 border border-emerald-200 text-emerald-700 rounded-xl">
+                Session verified. Attendance synchronized with central student academic ledger.
               </div>
             </div>
 
-            <div className="pt-3 border-t border-[#d5e3fc] flex justify-end gap-2">
+            <div className="pt-3 border-t border-slate-100 flex justify-end">
               <button
                 onClick={() => setSelectedAuditSession(null)}
-                className="px-4 py-1.5 bg-surface-container text-primary font-mono text-xs uppercase font-bold tracking-wider hover:bg-surface-container-high transition-colors rounded-xs cursor-pointer border border-[#d5e3fc]"
+                className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-lg transition-colors"
               >
                 Close
               </button>

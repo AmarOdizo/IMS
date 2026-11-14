@@ -6,31 +6,22 @@ import {
   Users,
   GraduationCap,
   CalendarCheck,
-  DollarSign,
-  AlertTriangle,
-  ArrowUpRight,
   TrendingUp,
-  Download,
-  Filter,
   Eye,
   CheckCircle2,
-  Clock,
-  Radio,
-  Wifi,
   Database,
-  ShieldCheck,
   ChevronRight,
   CreditCard,
   UserPlus,
   FileText,
-  Printer,
-  Sparkles,
   Building2,
-  Bell,
-  CheckCheck,
   X,
   Banknote,
-  Search,
+  AlertTriangle,
+  Wifi,
+  Sparkles,
+  ArrowUpRight,
+  Clock
 } from "lucide-react";
 
 export default function AdminDashboardPage() {
@@ -43,244 +34,205 @@ export default function AdminDashboardPage() {
   };
 
   return (
-    <div className="p-6 space-y-6 max-w-[1600px] mx-auto font-body text-on-surface select-none">
+    <div className="p-6 md:p-8 space-y-6 max-w-[1600px] mx-auto font-sans text-slate-800">
       {/* Toast Notification */}
       {toastMessage && (
-        <div className="fixed bottom-6 right-6 z-50 bg-primary-container text-on-primary px-4 py-3 shadow-lg flex items-center gap-2 border border-secondary font-mono text-xs animate-in slide-in-from-bottom">
-          <CheckCircle2 className="w-4 h-4 text-secondary-container" />
+        <div className="fixed bottom-6 right-6 z-50 bg-slate-900 text-white px-5 py-3.5 rounded-xl shadow-xl flex items-center gap-3 border border-slate-700 text-sm font-medium animate-in slide-in-from-bottom">
+          <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0" />
           <span>{toastMessage}</span>
-          <button onClick={() => setToastMessage(null)} className="ml-2 hover:opacity-75">
-            <X className="w-3.5 h-3.5" />
+          <button
+            onClick={() => setToastMessage(null)}
+            className="ml-2 text-slate-400 hover:text-white transition-colors"
+          >
+            <X className="w-4 h-4" />
           </button>
         </div>
       )}
 
-      {/* 1. Executive Command Header Banner */}
-      <div className="bg-surface-container-lowest p-6 border border-[#d5e3fc] shadow-xs relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-96 h-full bg-gradient-to-l from-primary/5 via-secondary/10 to-transparent pointer-events-none"></div>
+      {/* 1. Header Banner */}
+      <div className="bg-white rounded-2xl p-6 md:p-7 border border-slate-200/80 shadow-sm relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-96 h-full bg-gradient-to-l from-blue-50/60 via-indigo-50/30 to-transparent pointer-events-none"></div>
 
         <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
-          <div className="flex flex-col gap-1.5">
-            <div className="flex flex-wrap items-center gap-2">
-              <span className="bg-primary text-on-primary font-mono text-[10px] px-2 py-0.5 uppercase tracking-wider font-semibold rounded-xs">
-                CAMPUS GOVERNANCE
+          <div className="space-y-2">
+            <div className="flex flex-wrap items-center gap-2.5">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-blue-50 text-blue-700 text-xs font-semibold rounded-full border border-blue-200/60">
+                <span className="w-2 h-2 rounded-full bg-blue-600 animate-pulse"></span>
+                Academic Year 2025–26
               </span>
-              <span className="bg-secondary-container text-primary font-mono text-[10px] px-2 py-0.5 uppercase font-bold border border-[#a8c4f0] rounded-xs">
-                SYS-NODE: REG-CORE-A
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-50 text-emerald-700 text-xs font-semibold rounded-full border border-emerald-200/60">
+                <span className="w-2 h-2 rounded-full bg-emerald-600"></span>
+                All Systems Operational
               </span>
-              <div className="flex items-center gap-1.5 bg-emerald-50 text-emerald-800 border border-emerald-200 px-2 py-0.5 rounded-xs">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse"></span>
-                <span className="font-mono text-[10px] uppercase font-bold">
-                  CENTRAL GRID LIVE &bull; 99.98% TELEMETRY
-                </span>
-              </div>
             </div>
 
-            <h1 className="text-2xl lg:text-3xl font-bold uppercase tracking-tight text-primary font-headline mt-1">
-              Institutional Command &amp; Operational Matrix
-            </h1>
-            <p className="text-xs text-on-surface-variant flex items-center gap-2 flex-wrap font-sans">
-              <span className="font-semibold text-primary">Apex Institute of Technology &amp; Management</span>
-              <span>&bull;</span>
-              <span>Academic Year 2025-26 (Even Term)</span>
-              <span>&bull;</span>
-              <span className="font-mono text-secondary font-bold">Main Campus 01 (North Node)</span>
-            </p>
+            <div>
+              <h1 className="text-2xl md:text-3xl font-bold text-slate-900 tracking-tight">
+                Institutional Overview &amp; Control
+              </h1>
+              <p className="text-sm text-slate-500 mt-1">
+                Apex Institute of Technology &amp; Management &bull; Central Campus
+              </p>
+            </div>
           </div>
 
-          {/* Quick Action Deck */}
-          <div className="flex items-center flex-wrap gap-2">
+          {/* Quick Action Buttons */}
+          <div className="flex items-center flex-wrap gap-2.5">
             <Link
               href="/admin/students"
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-primary text-on-primary text-xs uppercase tracking-wider font-mono font-bold hover:bg-primary/95 transition-all shadow-xs cursor-pointer"
+              className="inline-flex items-center gap-2 px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-xl shadow-sm hover:shadow transition-all"
             >
-              <UserPlus className="w-3.5 h-3.5 text-secondary-container" />
-              <span>+ New Admission</span>
+              <UserPlus className="w-4 h-4" />
+              <span>New Admission</span>
             </Link>
             <Link
               href="/admin/fees"
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-surface-container-high hover:bg-surface-container-highest text-primary text-xs uppercase tracking-wider font-mono font-bold transition-all border border-[#d5e3fc] cursor-pointer"
+              className="inline-flex items-center gap-2 px-4 py-2.5 bg-slate-50 hover:bg-slate-100 text-slate-700 text-xs font-semibold rounded-xl border border-slate-200 shadow-xs transition-all"
             >
-              <CreditCard className="w-3.5 h-3.5 text-secondary" />
-              <span>+ Fees &amp; Receipts</span>
+              <CreditCard className="w-4 h-4 text-slate-500" />
+              <span>Record Fees</span>
             </Link>
             <Link
               href="/admin/attendance"
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-surface-container-high hover:bg-surface-container-highest text-primary text-xs uppercase tracking-wider font-mono font-bold transition-all border border-[#d5e3fc] cursor-pointer"
+              className="inline-flex items-center gap-2 px-4 py-2.5 bg-slate-50 hover:bg-slate-100 text-slate-700 text-xs font-semibold rounded-xl border border-slate-200 shadow-xs transition-all"
             >
-              <CalendarCheck className="w-3.5 h-3.5 text-secondary" />
-              <span>+ Mark Attendance</span>
+              <CalendarCheck className="w-4 h-4 text-slate-500" />
+              <span>Attendance</span>
             </Link>
             <Link
               href="/admin/notices"
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-surface-container-high hover:bg-surface-container-highest text-primary text-xs uppercase tracking-wider font-mono font-bold transition-all border border-[#d5e3fc] cursor-pointer"
+              className="inline-flex items-center gap-2 px-4 py-2.5 bg-slate-50 hover:bg-slate-100 text-slate-700 text-xs font-semibold rounded-xl border border-slate-200 shadow-xs transition-all"
             >
-              <FileText className="w-3.5 h-3.5 text-secondary" />
-              <span>+ Broadcast Circular</span>
+              <FileText className="w-4 h-4 text-slate-500" />
+              <span>Circulars</span>
             </Link>
           </div>
         </div>
       </div>
 
-      {/* 2. KPI Metric Summary Tiles (5-Card Dense Strip in INR) */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
-        {/* KPI 1 */}
-        <div className="bg-surface-container-lowest p-4 shadow-xs border border-[#d5e3fc] relative overflow-hidden flex flex-col justify-between border-l-4 border-l-primary">
-          <div className="flex items-start justify-between">
-            <span className="text-[11px] uppercase tracking-wider text-on-surface-variant font-mono font-bold">
-              Total Enrolled Students
-            </span>
-            <GraduationCap className="w-5 h-5 text-secondary" />
-          </div>
-          <div className="my-2">
-            <div className="font-headline text-2xl font-bold text-primary tracking-tight">
-              2,480
+      {/* 2. Key Metrics Tiles (5 Cards) */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+        {/* Metric 1 */}
+        <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-medium text-slate-500">Total Students</span>
+            <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
+              <GraduationCap className="w-5 h-5" />
             </div>
           </div>
-          <div className="flex items-center gap-1.5 font-mono text-xs">
-            <span className="inline-flex items-center px-1.5 py-0.5 bg-emerald-50 text-emerald-800 font-bold text-[10px] border border-emerald-200">
-              <TrendingUp className="w-3 h-3 mr-0.5" />
-              +8.4%
-            </span>
-            <span className="text-on-surface-variant text-[11px]">vs last academic term</span>
+          <div className="mt-4">
+            <div className="text-2xl font-bold text-slate-900 tracking-tight">2,480</div>
+            <div className="flex items-center gap-1.5 text-xs text-slate-500 mt-1">
+              <span className="inline-flex items-center text-emerald-600 font-semibold">
+                <TrendingUp className="w-3.5 h-3.5 mr-0.5" />
+                +8.4%
+              </span>
+              <span>vs last term</span>
+            </div>
           </div>
         </div>
 
-        {/* KPI 2 */}
-        <div className="bg-surface-container-lowest p-4 shadow-xs border border-[#d5e3fc] relative overflow-hidden flex flex-col justify-between border-l-4 border-l-secondary">
-          <div className="flex items-start justify-between">
-            <span className="text-[11px] uppercase tracking-wider text-on-surface-variant font-mono font-bold">
-              Active Faculty &amp; Staff
-            </span>
-            <Users className="w-5 h-5 text-secondary" />
-          </div>
-          <div className="my-2">
-            <div className="font-headline text-2xl font-bold text-primary tracking-tight">
-              142
+        {/* Metric 2 */}
+        <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-medium text-slate-500">Faculty &amp; Staff</span>
+            <div className="w-10 h-10 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center">
+              <Users className="w-5 h-5" />
             </div>
           </div>
-          <div className="flex items-center gap-1.5 font-mono text-xs">
-            <span className="inline-flex items-center px-1.5 py-0.5 bg-surface-container text-primary font-bold text-[10px] border border-[#d5e3fc]">
-              98.6%
-            </span>
-            <span className="text-on-surface-variant text-[11px]">verified on duty today</span>
+          <div className="mt-4">
+            <div className="text-2xl font-bold text-slate-900 tracking-tight">142</div>
+            <div className="text-xs text-slate-500 mt-1">Across 18 Departments</div>
           </div>
         </div>
 
-        {/* KPI 3 */}
-        <div className="bg-surface-container-lowest p-4 shadow-xs border border-[#d5e3fc] relative overflow-hidden flex flex-col justify-between border-l-4 border-l-secondary-container">
-          <div className="flex items-start justify-between">
-            <span className="text-[11px] uppercase tracking-wider text-on-surface-variant font-mono font-bold">
-              Today's Attendance
-            </span>
-            <CalendarCheck className="w-5 h-5 text-secondary" />
-          </div>
-          <div className="my-2">
-            <div className="font-headline text-2xl font-bold text-primary tracking-tight">
-              94.2%
+        {/* Metric 3 */}
+        <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-medium text-slate-500">Today's Attendance</span>
+            <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
+              <CalendarCheck className="w-5 h-5" />
             </div>
           </div>
-          <div className="flex items-center justify-between font-mono text-[10px] text-on-surface-variant">
-            <span className="text-primary font-bold">2,336 Present</span>
-            <span>|</span>
-            <span className="text-error font-bold">108 Absent</span>
-            <span>|</span>
-            <span className="text-secondary font-bold">36 Leave</span>
+          <div className="mt-4">
+            <div className="text-2xl font-bold text-slate-900 tracking-tight">94.2%</div>
+            <div className="text-xs text-emerald-600 font-medium mt-1">2,336 Present today</div>
           </div>
         </div>
 
-        {/* KPI 4 */}
-        <div className="bg-surface-container-lowest p-4 shadow-xs border border-[#d5e3fc] relative overflow-hidden flex flex-col justify-between border-l-4 border-l-primary-container">
-          <div className="flex items-start justify-between">
-            <span className="text-[11px] uppercase tracking-wider text-on-surface-variant font-mono font-bold">
-              Monthly Fee Realization
-            </span>
-            <Banknote className="w-5 h-5 text-secondary" />
-          </div>
-          <div className="my-2">
-            <div className="font-headline text-2xl font-bold text-primary tracking-tight">
-              ₹48.60 L
+        {/* Metric 4 */}
+        <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-medium text-slate-500">Fee Intake (Mar)</span>
+            <div className="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center">
+              <Banknote className="w-5 h-5" />
             </div>
           </div>
-          <div className="flex items-center gap-1.5 font-mono text-xs">
-            <span className="inline-flex items-center px-1.5 py-0.5 bg-surface-container-low text-primary font-bold text-[10px] border border-[#d5e3fc]">
-              81.0%
-            </span>
-            <span className="text-on-surface-variant text-[11px]">of ₹60.0 L target</span>
+          <div className="mt-4">
+            <div className="text-2xl font-bold text-slate-900 tracking-tight">₹48.60 L</div>
+            <div className="text-xs text-slate-500 mt-1">81% of monthly target</div>
           </div>
         </div>
 
-        {/* KPI 5 */}
-        <div className="bg-surface-container-lowest p-4 shadow-xs border border-[#d5e3fc] relative overflow-hidden flex flex-col justify-between border-l-4 border-l-error">
-          <div className="flex items-start justify-between">
-            <span className="text-[11px] uppercase tracking-wider text-on-surface-variant font-mono font-bold">
-              Pending Dues &amp; Arrears
-            </span>
-            <AlertTriangle className="w-5 h-5 text-error" />
-          </div>
-          <div className="my-2">
-            <div className="font-headline text-2xl font-bold text-error tracking-tight">
-              ₹46.50 L
+        {/* Metric 5 */}
+        <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-medium text-slate-500">Pending Dues</span>
+            <div className="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center">
+              <AlertTriangle className="w-5 h-5" />
             </div>
           </div>
-          <div className="flex items-center gap-1.5 font-mono text-xs">
-            <span className="inline-flex items-center px-1.5 py-0.5 bg-rose-100 text-rose-800 font-bold text-[10px] border border-rose-300">
-              342 DEFAULTERS
-            </span>
-            <span className="text-on-surface-variant text-[11px]">82 exam holds</span>
+          <div className="mt-4">
+            <div className="text-2xl font-bold text-amber-600 tracking-tight">₹11.40 L</div>
+            <div className="text-xs text-slate-500 mt-1">128 Students Pending</div>
           </div>
         </div>
       </div>
 
-      {/* 3. Interactive Analytics Grid: Monthly Realization vs Target + Department Attendance Donut */}
+      {/* 3. Analytics Section: Charts */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        {/* Chart 1: Monthly Fee Collection vs Targets (Col 7) */}
-        <div className="lg:col-span-7 bg-surface-container-lowest p-5 shadow-xs border border-[#d5e3fc] flex flex-col justify-between">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 gap-2 border-b border-[#d5e3fc]">
+        {/* Chart 1: Monthly Realization vs Target */}
+        <div className="lg:col-span-7 bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm flex flex-col justify-between">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 gap-3 border-b border-slate-100">
             <div>
-              <div className="flex items-center gap-2">
-                <h2 className="font-headline text-base font-bold text-primary uppercase tracking-tight">
-                  Monthly Realization vs Targets (₹ Lakhs)
-                </h2>
-                <span className="font-mono text-[10px] px-2 py-0.5 bg-surface-container text-secondary font-bold border border-[#d5e3fc]">
-                  AY 2025-26
-                </span>
-              </div>
-              <p className="text-xs text-on-surface-variant mt-0.5 font-sans">
-                Comparative analysis of forecasted versus actual realized fee intake
+              <h2 className="text-base font-bold text-slate-900">
+                Monthly Fee Realization vs Target
+              </h2>
+              <p className="text-xs text-slate-500 mt-0.5">
+                Target vs realized collection in Lakhs (INR)
               </p>
             </div>
-            <div className="flex flex-wrap items-center gap-3">
-              <div className="flex items-center gap-1 font-mono">
+            <div className="flex flex-wrap items-center gap-2">
+              <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-lg">
                 {["OCT", "NOV", "DEC", "JAN", "FEB", "MAR"].map((m) => (
                   <button
                     key={m}
                     onClick={() => setSelectedMonth(m)}
-                    className={`px-2 py-0.5 text-[10px] uppercase font-bold rounded-xs transition-colors cursor-pointer border ${
+                    className={`px-2.5 py-1 text-xs font-semibold rounded-md transition-all ${
                       selectedMonth === m
-                        ? "bg-primary text-on-primary border-primary shadow-xs"
-                        : "bg-surface-container text-on-surface-variant border-[#d5e3fc] hover:bg-surface-container-high"
+                        ? "bg-white text-blue-600 shadow-xs"
+                        : "text-slate-600 hover:text-slate-900"
                     }`}
                   >
                     {m}
                   </button>
                 ))}
               </div>
-              <div className="hidden sm:flex items-center gap-3 font-mono text-xs pl-2 border-l border-[#d5e3fc]">
+              <div className="hidden sm:flex items-center gap-3 text-xs pl-2 border-l border-slate-200">
                 <div className="flex items-center gap-1.5">
-                  <span className="w-2.5 h-2.5 bg-surface-container-high border border-[#d5e3fc] inline-block rounded-xs"></span>
-                  <span className="text-on-surface-variant text-[10px]">Target</span>
+                  <span className="w-3 h-3 bg-slate-200 rounded-sm"></span>
+                  <span className="text-slate-500 text-xs">Target</span>
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <span className="w-2.5 h-2.5 bg-primary inline-block rounded-xs"></span>
-                  <span className="text-on-surface text-[10px] font-semibold">Realized</span>
+                  <span className="w-3 h-3 bg-blue-600 rounded-sm"></span>
+                  <span className="text-slate-800 text-xs font-medium">Realized</span>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Technical SVG Bar Graph with Tooltip Indicator */}
-          <div className="relative w-full pt-4 pb-2">
+          {/* SVG Bar Chart */}
+          <div className="relative w-full pt-6 pb-2">
             <svg
               className="w-full h-56"
               fill="none"
@@ -288,363 +240,276 @@ export default function AdminDashboardPage() {
               xmlns="http://www.w3.org/2000/svg"
             >
               {/* Grid Lines */}
-              <line className="text-[#e2e8f0]" stroke="currentColor" strokeDasharray="2 2" x1="40" x2="600" y1="20" y2="20" />
-              <line className="text-[#e2e8f0]" stroke="currentColor" strokeDasharray="2 2" x1="40" x2="600" y1="65" y2="65" />
-              <line className="text-[#e2e8f0]" stroke="currentColor" strokeDasharray="2 2" x1="40" x2="600" y1="110" y2="110" />
-              <line className="text-[#e2e8f0]" stroke="currentColor" strokeDasharray="2 2" x1="40" x2="600" y1="155" y2="155" />
-              <line className="text-[#94a3b8]" stroke="currentColor" x1="40" x2="600" y1="190" y2="190" />
+              <line className="text-slate-100" stroke="currentColor" strokeDasharray="3 3" x1="40" x2="600" y1="20" y2="20" />
+              <line className="text-slate-100" stroke="currentColor" strokeDasharray="3 3" x1="40" x2="600" y1="65" y2="65" />
+              <line className="text-slate-100" stroke="currentColor" strokeDasharray="3 3" x1="40" x2="600" y1="110" y2="110" />
+              <line className="text-slate-100" stroke="currentColor" strokeDasharray="3 3" x1="40" x2="600" y1="155" y2="155" />
+              <line className="text-slate-200" stroke="currentColor" x1="40" x2="600" y1="190" y2="190" />
 
-              {/* Y-Axis Labels in INR */}
-              <text className="text-[10px] font-mono fill-gray-500" x="10" y="24">₹80L</text>
-              <text className="text-[10px] font-mono fill-gray-500" x="10" y="69">₹60L</text>
-              <text className="text-[10px] font-mono fill-gray-500" x="10" y="114">₹40L</text>
-              <text className="text-[10px] font-mono fill-gray-500" x="10" y="159">₹20L</text>
-              <text className="text-[10px] font-mono fill-gray-500" x="22" y="193">₹0</text>
+              {/* Y-Axis */}
+              <text className="text-[10px] font-sans fill-slate-400" x="10" y="24">₹80L</text>
+              <text className="text-[10px] font-sans fill-slate-400" x="10" y="69">₹60L</text>
+              <text className="text-[10px] font-sans fill-slate-400" x="10" y="114">₹40L</text>
+              <text className="text-[10px] font-sans fill-slate-400" x="10" y="159">₹20L</text>
+              <text className="text-[10px] font-sans fill-slate-400" x="22" y="193">₹0</text>
 
               {/* NOV */}
-              <rect fill="#d5e3fc" height="120" width="20" x="70" y="70" />
-              <rect fill="#365f97" height="105" width="20" x="94" y="85" />
-              <text className="text-[11px] font-mono fill-gray-600" textAnchor="middle" x="87" y="206">NOV</text>
+              <rect fill="#e2e8f0" height="120" rx="3" width="22" x="70" y="70" />
+              <rect fill="#3b82f6" height="105" rx="3" width="22" x="96" y="85" />
+              <text className="text-[11px] font-sans fill-slate-500 font-medium" textAnchor="middle" x="94" y="208">NOV</text>
 
               {/* DEC */}
-              <rect fill="#d5e3fc" height="130" width="20" x="160" y="60" />
-              <rect fill="#365f97" height="115" width="20" x="184" y="75" />
-              <text className="text-[11px] font-mono fill-gray-600" textAnchor="middle" x="177" y="206">DEC</text>
+              <rect fill="#e2e8f0" height="130" rx="3" width="22" x="160" y="60" />
+              <rect fill="#3b82f6" height="115" rx="3" width="22" x="186" y="75" />
+              <text className="text-[11px] font-sans fill-slate-500 font-medium" textAnchor="middle" x="184" y="208">DEC</text>
 
               {/* JAN */}
-              <rect fill="#d5e3fc" height="140" width="20" x="250" y="50" />
-              <rect fill="#365f97" height="128" width="20" x="274" y="62" />
-              <text className="text-[11px] font-mono fill-gray-600" textAnchor="middle" x="267" y="206">JAN</text>
+              <rect fill="#e2e8f0" height="140" rx="3" width="22" x="250" y="50" />
+              <rect fill="#3b82f6" height="128" rx="3" width="22" x="276" y="62" />
+              <text className="text-[11px] font-sans fill-slate-500 font-medium" textAnchor="middle" x="274" y="208">JAN</text>
 
               {/* FEB */}
-              <rect fill="#d5e3fc" height="145" width="20" x="340" y="45" />
-              <rect fill="#365f97" height="132" width="20" x="364" y="58" />
-              <text className="text-[11px] font-mono fill-gray-600" textAnchor="middle" x="357" y="206">FEB</text>
+              <rect fill="#e2e8f0" height="145" rx="3" width="22" x="340" y="45" />
+              <rect fill="#3b82f6" height="132" rx="3" width="22" x="366" y="58" />
+              <text className="text-[11px] font-sans fill-slate-500 font-medium" textAnchor="middle" x="364" y="208">FEB</text>
 
-              {/* MAR (ACTIVE MONTH HIGHLIGHTED) */}
-              <rect fill="#f1f5f9" height="185" opacity="0.9" width="70" x="424" y="10" />
-              <rect fill="#94a3b8" height="160" width="22" x="430" y="30" />
-              <rect fill="#001028" height="142" width="22" x="456" y="48" />
-              <text className="text-[11px] font-mono fill-primary font-bold" textAnchor="middle" x="447" y="206">
-                MAR (CURR)
-              </text>
+              {/* MAR (Active) */}
+              <rect fill="#eff6ff" height="185" rx="8" width="76" x="420" y="10" />
+              <rect fill="#94a3b8" height="160" rx="3" width="22" x="428" y="30" />
+              <rect fill="#2563eb" height="142" rx="3" width="22" x="454" y="48" />
+              <text className="text-[11px] font-sans fill-blue-700 font-bold" textAnchor="middle" x="452" y="208">MAR</text>
 
-              {/* Hover / Callout Badge on MAR */}
-              <g transform="translate(418, 6)">
-                <rect fill="#001028" height="30" width="94" x="0" y="0" rx="2" />
-                <text className="text-[9px] font-mono font-bold" fill="#FFFFFF" textAnchor="middle" x="47" y="13">
+              {/* Hover Badge */}
+              <g transform="translate(412, 4)">
+                <rect fill="#1e293b" height="30" rx="6" width="102" x="0" y="0" />
+                <text className="text-[9px] font-sans font-bold" fill="#FFFFFF" textAnchor="middle" x="51" y="13">
                   REAL: ₹48.60L
                 </text>
-                <text className="text-[8px] font-mono font-bold" fill="#a8c4f0" textAnchor="middle" x="47" y="24">
-                  81.0% OF TGT
+                <text className="text-[8px] font-sans font-semibold" fill="#93c5fd" textAnchor="middle" x="51" y="24">
+                  81% OF TARGET
                 </text>
               </g>
 
-              {/* APR (PROJECTED) */}
-              <rect fill="#d5e3fc" height="160" width="20" x="520" y="30" />
-              <rect fill="#365f97" height="50" stroke="#001028" strokeDasharray="2 2" width="20" x="544" y="140" />
-              <text className="text-[11px] font-mono fill-gray-600" textAnchor="middle" x="537" y="206">APR</text>
+              {/* APR (Projected) */}
+              <rect fill="#e2e8f0" height="160" rx="3" width="22" x="520" y="30" />
+              <rect fill="#93c5fd" height="50" rx="3" stroke="#2563eb" strokeDasharray="3 3" width="22" x="546" y="140" />
+              <text className="text-[11px] font-sans fill-slate-500 font-medium" textAnchor="middle" x="544" y="208">APR</text>
             </svg>
           </div>
 
-          <div className="pt-2 flex flex-col sm:flex-row items-center justify-between font-mono text-xs text-on-surface-variant bg-surface-container-low px-4 py-2 border border-[#d5e3fc]">
-            <span>
-              Fiscal Pace: <strong className="text-primary font-bold">Day 28 of 31</strong>
-            </span>
-            <span className="text-primary font-bold">Remaining Target: ₹11,40,000</span>
-            <span>
-              Daily Intake Velocity: <strong className="text-secondary font-bold">₹1.73L / day</strong>
-            </span>
+          <div className="mt-3 pt-3 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-600 bg-slate-50 px-4 py-2.5 rounded-xl border border-slate-100">
+            <span>Fiscal Progress: <strong className="text-slate-800">Day 28 of 31</strong></span>
+            <span>Remaining Target: <strong className="text-blue-600">₹11,40,000</strong></span>
+            <span>Daily Intake Velocity: <strong className="text-emerald-600">₹1.73L / day</strong></span>
           </div>
         </div>
 
-        {/* Chart 2: Real-time Attendance Analytics & Breakdown (Col 5) */}
-        <div className="lg:col-span-5 bg-surface-container-lowest p-5 shadow-xs border border-[#d5e3fc] flex flex-col justify-between">
-          <div className="flex items-center justify-between pb-3 border-b border-[#d5e3fc]">
+        {/* Chart 2: Department Attendance */}
+        <div className="lg:col-span-5 bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm flex flex-col justify-between">
+          <div className="flex items-center justify-between pb-4 border-b border-slate-100">
             <div>
-              <h2 className="font-headline text-base font-bold text-primary uppercase tracking-tight">
-                Department Attendance
-              </h2>
-              <p className="text-xs text-on-surface-variant font-sans">
-                Real-time biometric validation across academic faculties
-              </p>
+              <h2 className="text-base font-bold text-slate-900">Department Attendance</h2>
+              <p className="text-xs text-slate-500">Live biometric attendance breakdown</p>
             </div>
-            <span className="inline-flex items-center gap-1.5 font-mono text-[10px] px-2 py-0.5 bg-surface-container text-secondary font-bold border border-[#d5e3fc]">
-              <span className="w-2 h-2 rounded-full bg-emerald-600 animate-pulse"></span>
-              LIVE SYNC
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-emerald-50 text-emerald-700 text-xs font-semibold rounded-full border border-emerald-200">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse"></span>
+              Live Sync
             </span>
           </div>
 
-          {/* Donut Visualization & Department Stats */}
-          <div className="grid grid-cols-1 sm:grid-cols-12 items-center gap-4 my-auto py-4">
+          <div className="grid grid-cols-1 sm:grid-cols-12 items-center gap-6 my-auto py-5">
             {/* Donut SVG */}
-            <div className="sm:col-span-6 flex justify-center items-center relative">
+            <div className="sm:col-span-5 flex justify-center items-center relative">
               <svg className="w-40 h-40" viewBox="0 0 160 160">
-                <circle
-                  className="text-surface-container-low"
-                  cx="80"
-                  cy="80"
-                  fill="none"
-                  r="62"
-                  stroke="currentColor"
-                  strokeWidth="16"
-                />
-                {/* B.Tech CS 96% */}
-                <circle
-                  className="text-primary"
-                  cx="80"
-                  cy="80"
-                  fill="none"
-                  r="62"
-                  stroke="currentColor"
-                  strokeDasharray="140 389"
-                  strokeDashoffset="0"
-                  strokeWidth="16"
-                />
-                {/* B.Tech ECE */}
-                <circle
-                  className="text-secondary"
-                  cx="80"
-                  cy="80"
-                  fill="none"
-                  r="62"
-                  stroke="currentColor"
-                  strokeDasharray="100 389"
-                  strokeDashoffset="-140"
-                  strokeWidth="16"
-                />
-                {/* MBA */}
-                <circle
-                  className="text-secondary-container"
-                  cx="80"
-                  cy="80"
-                  fill="none"
-                  r="62"
-                  stroke="#365f97"
-                  strokeDasharray="80 389"
-                  strokeDashoffset="-240"
-                  strokeWidth="16"
-                />
+                <circle className="text-slate-100" cx="80" cy="80" fill="none" r="60" stroke="currentColor" strokeWidth="16" />
+                {/* CS 96% */}
+                <circle className="text-blue-600" cx="80" cy="80" fill="none" r="60" stroke="currentColor" strokeDasharray="140 377" strokeDashoffset="0" strokeWidth="16" />
+                {/* ECE 93% */}
+                <circle className="text-indigo-500" cx="80" cy="80" fill="none" r="60" stroke="currentColor" strokeDasharray="100 377" strokeDashoffset="-140" strokeWidth="16" />
+                {/* MBA 91% */}
+                <circle className="text-purple-500" cx="80" cy="80" fill="none" r="60" stroke="currentColor" strokeDasharray="80 377" strokeDashoffset="-240" strokeWidth="16" />
               </svg>
               <div className="absolute flex flex-col items-center justify-center text-center">
-                <span className="text-xl font-bold font-mono text-primary">94.2%</span>
-                <span className="text-[9px] font-mono uppercase text-gray-500 font-bold">Institute Avg</span>
+                <span className="text-2xl font-bold text-slate-900">94.2%</span>
+                <span className="text-[10px] text-slate-400 font-semibold uppercase">Overall Avg</span>
               </div>
             </div>
 
-            {/* Department Attendance Rows */}
-            <div className="sm:col-span-6 space-y-2 font-mono">
-              <div className="p-2 bg-surface-container-low flex items-center justify-between border-l-3 border-primary">
-                <span className="text-xs font-semibold text-on-surface">B.Tech Computer Science</span>
-                <span className="text-xs font-bold text-primary">96.0%</span>
+            {/* Department Breakdown */}
+            <div className="sm:col-span-7 space-y-2.5">
+              <div className="p-2.5 bg-slate-50 hover:bg-slate-100/80 rounded-xl flex items-center justify-between transition-colors border border-slate-100">
+                <div className="flex items-center gap-2">
+                  <span className="w-2.5 h-2.5 rounded-full bg-blue-600"></span>
+                  <span className="text-xs font-medium text-slate-700">Computer Science</span>
+                </div>
+                <span className="text-xs font-bold text-blue-700">96.0%</span>
               </div>
-              <div className="p-2 bg-surface-container-low flex items-center justify-between border-l-3 border-secondary">
-                <span className="text-xs font-semibold text-on-surface">B.Tech Electronics</span>
-                <span className="text-xs font-bold text-secondary">93.5%</span>
+              <div className="p-2.5 bg-slate-50 hover:bg-slate-100/80 rounded-xl flex items-center justify-between transition-colors border border-slate-100">
+                <div className="flex items-center gap-2">
+                  <span className="w-2.5 h-2.5 rounded-full bg-indigo-500"></span>
+                  <span className="text-xs font-medium text-slate-700">Electronics (ECE)</span>
+                </div>
+                <span className="text-xs font-bold text-indigo-700">93.5%</span>
               </div>
-              <div className="p-2 bg-surface-container-low flex items-center justify-between border-l-3 border-secondary-container">
-                <span className="text-xs font-semibold text-on-surface">MBA &amp; Management</span>
-                <span className="text-xs font-bold text-primary">91.8%</span>
+              <div className="p-2.5 bg-slate-50 hover:bg-slate-100/80 rounded-xl flex items-center justify-between transition-colors border border-slate-100">
+                <div className="flex items-center gap-2">
+                  <span className="w-2.5 h-2.5 rounded-full bg-purple-500"></span>
+                  <span className="text-xs font-medium text-slate-700">MBA &amp; Business</span>
+                </div>
+                <span className="text-xs font-bold text-purple-700">91.8%</span>
               </div>
-              <div className="p-2 bg-surface-container-low flex items-center justify-between border-l-3 border-outline-variant">
-                <span className="text-xs font-semibold text-on-surface">Mechanical &amp; Civil</span>
-                <span className="text-xs font-bold text-gray-700">89.4%</span>
+              <div className="p-2.5 bg-slate-50 hover:bg-slate-100/80 rounded-xl flex items-center justify-between transition-colors border border-slate-100">
+                <div className="flex items-center gap-2">
+                  <span className="w-2.5 h-2.5 rounded-full bg-slate-400"></span>
+                  <span className="text-xs font-medium text-slate-700">Mechanical &amp; Civil</span>
+                </div>
+                <span className="text-xs font-bold text-slate-700">89.4%</span>
               </div>
             </div>
           </div>
 
-          <div className="pt-2 text-[10px] text-on-surface-variant font-mono uppercase tracking-wider flex items-center justify-between border-t border-[#d5e3fc]">
-            <span className="flex items-center gap-1 font-medium">
-              <Radio className="w-3.5 h-3.5 text-secondary" />
-              Synced: RFID Gateway North &amp; South Gates
+          <div className="pt-3 text-xs text-slate-500 flex items-center justify-between border-t border-slate-100">
+            <span className="flex items-center gap-1.5">
+              <Wifi className="w-3.5 h-3.5 text-emerald-500" />
+              RFID Attendance Gateways Synced
             </span>
-            <span className="text-secondary font-bold">Latency: 14ms</span>
+            <span className="text-slate-400">Response time: 14ms</span>
           </div>
         </div>
       </div>
 
-      {/* 4. Operational Split: Admissions Stream Table + Today's Daybook + Directives */}
+      {/* 4. Split: Recent Admissions Table + Collections & Bulletins */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         {/* Left Column (8 Cols): Tables */}
         <div className="lg:col-span-8 space-y-6">
-          {/* Table 1: Recent Admissions Stream */}
-          <div className="bg-surface-container-lowest shadow-xs border border-[#d5e3fc]">
-            <div className="px-4 py-3 bg-surface-container-low flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#d5e3fc]">
-              <div className="flex items-center gap-2">
-                <GraduationCap className="w-4 h-4 text-primary" />
-                <h3 className="font-headline text-sm font-bold text-primary uppercase tracking-tight">
-                  Recent Enrolled Scholars &amp; Admission Stream
-                </h3>
+          {/* Table: Recent Enrolled Students */}
+          <div className="bg-white rounded-2xl border border-slate-200/80 shadow-sm overflow-hidden">
+            <div className="px-6 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100">
+              <div className="flex items-center gap-2.5">
+                <div className="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
+                  <GraduationCap className="w-4 h-4" />
+                </div>
+                <div>
+                  <h3 className="text-sm font-bold text-slate-900">
+                    Recent Enrolled Students
+                  </h3>
+                  <p className="text-xs text-slate-500">Latest admissions stream</p>
+                </div>
               </div>
-              <div className="flex items-center gap-2 font-mono text-xs">
-                <span className="text-on-surface-variant text-[11px]">ACTIVE SESSION:</span>
-                <span className="bg-surface-container text-primary px-2 py-0.5 font-bold text-[11px] border border-[#d5e3fc]">
-                  AY 2025 - 2029
-                </span>
-                <Link
-                  href="/admin/students"
-                  className="text-secondary hover:underline font-bold ml-2 inline-flex items-center gap-1"
-                >
-                  <Eye className="w-3.5 h-3.5" />
-                  View All (2,480)
-                </Link>
-              </div>
+              <Link
+                href="/admin/students"
+                className="text-xs text-blue-600 hover:text-blue-700 font-semibold inline-flex items-center gap-1"
+              >
+                <span>View All (2,480)</span>
+                <ChevronRight className="w-4 h-4" />
+              </Link>
             </div>
 
             <div className="overflow-x-auto">
-              <table className="w-full text-left border-collapse text-xs font-sans">
+              <table className="w-full text-left border-collapse text-xs">
                 <thead>
-                  <tr className="bg-surface-container font-mono text-[10px] uppercase tracking-wider text-on-surface-variant border-b border-[#d5e3fc]">
-                    <th className="py-2.5 px-4 font-semibold">Student Particulars</th>
-                    <th className="py-2.5 px-4 font-semibold">Course &amp; Semester</th>
-                    <th className="py-2.5 px-4 font-semibold font-mono">Admission Date</th>
-                    <th className="py-2.5 px-4 font-semibold font-mono text-center">Status</th>
-                    <th className="py-2.5 px-4 font-semibold font-mono text-right">Action</th>
+                  <tr className="bg-slate-50/70 text-slate-500 border-b border-slate-100">
+                    <th className="py-3 px-6 font-semibold">Student Name</th>
+                    <th className="py-3 px-6 font-semibold">Course &amp; Semester</th>
+                    <th className="py-3 px-6 font-semibold">Admission Date</th>
+                    <th className="py-3 px-6 font-semibold text-center">Status</th>
+                    <th className="py-3 px-6 font-semibold text-right">Action</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[#e2e8f0]">
-                  {/* Record 1 */}
-                  <tr className="hover:bg-surface-container-low transition-colors">
-                    <td className="py-3 px-4">
-                      <div className="flex items-center gap-2.5">
-                        <div className="w-8 h-8 bg-primary text-white flex items-center justify-center font-bold text-xs shrink-0">
+                <tbody className="divide-y divide-slate-100">
+                  {/* Row 1 */}
+                  <tr className="hover:bg-slate-50/60 transition-colors">
+                    <td className="py-3.5 px-6">
+                      <div className="flex items-center gap-3">
+                        <div className="w-9 h-9 rounded-full bg-blue-100 text-blue-700 font-bold flex items-center justify-center text-xs shrink-0">
                           RS
                         </div>
-                        <div className="flex flex-col">
-                          <span className="font-semibold text-primary">Rahul Sharma</span>
-                          <span className="font-mono text-[10px] text-secondary font-bold">
-                            APX-2023-CS-042
-                          </span>
+                        <div>
+                          <div className="font-semibold text-slate-900">Rahul Sharma</div>
+                          <div className="text-[11px] text-slate-400 font-mono">APX-2023-CS-042</div>
                         </div>
                       </div>
                     </td>
-                    <td className="py-3 px-4">
-                      <div className="flex flex-col">
-                        <span className="text-on-surface font-medium">B.Tech Computer Science</span>
-                        <span className="font-mono text-[10px] text-gray-500">Semester IV (Batch 2023-27)</span>
-                      </div>
+                    <td className="py-3.5 px-6">
+                      <div className="text-slate-800 font-medium">B.Tech Computer Science</div>
+                      <div className="text-[11px] text-slate-400">Semester IV (2023–27)</div>
                     </td>
-                    <td className="py-3 px-4 font-mono text-gray-600">28 Mar 2025</td>
-                    <td className="py-3 px-4 text-center">
-                      <span className="inline-flex items-center px-2 py-0.5 text-[10px] font-mono font-bold uppercase tracking-wider bg-emerald-100 text-emerald-800 border border-emerald-300">
+                    <td className="py-3.5 px-6 text-slate-600">28 Mar 2025</td>
+                    <td className="py-3.5 px-6 text-center">
+                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
                         Enrolled
                       </span>
                     </td>
-                    <td className="py-3 px-4 text-right">
+                    <td className="py-3.5 px-6 text-right">
                       <Link
                         href="/admin/students"
-                        className="px-2.5 py-1 bg-surface-container hover:bg-surface-container-high text-primary font-mono text-[10px] font-bold uppercase transition-colors border border-[#d5e3fc]"
+                        className="px-3 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-medium rounded-lg transition-colors"
                       >
                         Inspect
                       </Link>
                     </td>
                   </tr>
 
-                  {/* Record 2 */}
-                  <tr className="hover:bg-surface-container-low transition-colors">
-                    <td className="py-3 px-4">
-                      <div className="flex items-center gap-2.5">
-                        <div className="w-8 h-8 bg-secondary text-white flex items-center justify-center font-bold text-xs shrink-0">
+                  {/* Row 2 */}
+                  <tr className="hover:bg-slate-50/60 transition-colors">
+                    <td className="py-3.5 px-6">
+                      <div className="flex items-center gap-3">
+                        <div className="w-9 h-9 rounded-full bg-purple-100 text-purple-700 font-bold flex items-center justify-center text-xs shrink-0">
                           PP
                         </div>
-                        <div className="flex flex-col">
-                          <span className="font-semibold text-primary">Priya Patel</span>
-                          <span className="font-mono text-[10px] text-secondary font-bold">
-                            APX-2022-EC-019
-                          </span>
+                        <div>
+                          <div className="font-semibold text-slate-900">Priya Patel</div>
+                          <div className="text-[11px] text-slate-400 font-mono">APX-2022-EC-019</div>
                         </div>
                       </div>
                     </td>
-                    <td className="py-3 px-4">
-                      <div className="flex flex-col">
-                        <span className="text-on-surface font-medium">B.Tech Electronics &amp; Comm.</span>
-                        <span className="font-mono text-[10px] text-gray-500">Semester VII (Batch 2022-26)</span>
-                      </div>
+                    <td className="py-3.5 px-6">
+                      <div className="text-slate-800 font-medium">B.Tech Electronics &amp; Comm.</div>
+                      <div className="text-[11px] text-slate-400">Semester VII (2022–26)</div>
                     </td>
-                    <td className="py-3 px-4 font-mono text-gray-600">28 Mar 2025</td>
-                    <td className="py-3 px-4 text-center">
-                      <span className="inline-flex items-center px-2 py-0.5 text-[10px] font-mono font-bold uppercase tracking-wider bg-emerald-100 text-emerald-800 border border-emerald-300">
+                    <td className="py-3.5 px-6 text-slate-600">28 Mar 2025</td>
+                    <td className="py-3.5 px-6 text-center">
+                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
                         Enrolled
                       </span>
                     </td>
-                    <td className="py-3 px-4 text-right">
+                    <td className="py-3.5 px-6 text-right">
                       <Link
                         href="/admin/students"
-                        className="px-2.5 py-1 bg-surface-container hover:bg-surface-container-high text-primary font-mono text-[10px] font-bold uppercase transition-colors border border-[#d5e3fc]"
+                        className="px-3 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-medium rounded-lg transition-colors"
                       >
                         Inspect
                       </Link>
                     </td>
                   </tr>
 
-                  {/* Record 3 */}
-                  <tr className="hover:bg-surface-container-low transition-colors">
-                    <td className="py-3 px-4">
-                      <div className="flex items-center gap-2.5">
-                        <div className="w-8 h-8 bg-indigo-700 text-white flex items-center justify-center font-bold text-xs shrink-0">
-                          RV
+                  {/* Row 3 */}
+                  <tr className="hover:bg-slate-50/60 transition-colors">
+                    <td className="py-3.5 px-6">
+                      <div className="flex items-center gap-3">
+                        <div className="w-9 h-9 rounded-full bg-amber-100 text-amber-700 font-bold flex items-center justify-center text-xs shrink-0">
+                          AK
                         </div>
-                        <div className="flex flex-col">
-                          <span className="font-semibold text-primary">Rohan Verma</span>
-                          <span className="font-mono text-[10px] text-secondary font-bold">
-                            APX-2024-ME-058
-                          </span>
+                        <div>
+                          <div className="font-semibold text-slate-900">Amit Kumar</div>
+                          <div className="text-[11px] text-slate-400 font-mono">APX-2024-ME-058</div>
                         </div>
                       </div>
                     </td>
-                    <td className="py-3 px-4">
-                      <div className="flex flex-col">
-                        <span className="text-on-surface font-medium">B.Tech Mechanical Engineering</span>
-                        <span className="font-mono text-[10px] text-gray-500">Semester III (Batch 2024-28)</span>
-                      </div>
+                    <td className="py-3.5 px-6">
+                      <div className="text-slate-800 font-medium">B.Tech Mechanical Engg</div>
+                      <div className="text-[11px] text-slate-400">Semester II (2024–28)</div>
                     </td>
-                    <td className="py-3 px-4 font-mono text-gray-600">28 Mar 2025</td>
-                    <td className="py-3 px-4 text-center">
-                      <span className="inline-flex items-center px-2 py-0.5 text-[10px] font-mono font-bold uppercase tracking-wider bg-amber-100 text-amber-900 border border-amber-300">
-                        Fee Dues (Hold)
-                      </span>
-                    </td>
-                    <td className="py-3 px-4 text-right">
-                      <Link
-                        href="/admin/students"
-                        className="px-2.5 py-1 bg-surface-container hover:bg-surface-container-high text-primary font-mono text-[10px] font-bold uppercase transition-colors border border-[#d5e3fc]"
-                      >
-                        Inspect
-                      </Link>
-                    </td>
-                  </tr>
-
-                  {/* Record 4 */}
-                  <tr className="hover:bg-surface-container-low transition-colors">
-                    <td className="py-3 px-4">
-                      <div className="flex items-center gap-2.5">
-                        <div className="w-8 h-8 bg-slate-700 text-white flex items-center justify-center font-bold text-xs shrink-0">
-                          SK
-                        </div>
-                        <div className="flex flex-col">
-                          <span className="font-semibold text-primary">Sneha Kulkarni</span>
-                          <span className="font-mono text-[10px] text-secondary font-bold">
-                            APX-2023-CS-088
-                          </span>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="py-3 px-4">
-                      <div className="flex flex-col">
-                        <span className="text-on-surface font-medium">B.Tech Computer Science</span>
-                        <span className="font-mono text-[10px] text-gray-500">Semester V (Batch 2023-27)</span>
-                      </div>
-                    </td>
-                    <td className="py-3 px-4 font-mono text-gray-600">27 Mar 2025</td>
-                    <td className="py-3 px-4 text-center">
-                      <span className="inline-flex items-center px-2 py-0.5 text-[10px] font-mono font-bold uppercase tracking-wider bg-emerald-100 text-emerald-800 border border-emerald-300">
+                    <td className="py-3.5 px-6 text-slate-600">27 Mar 2025</td>
+                    <td className="py-3.5 px-6 text-center">
+                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
                         Enrolled
                       </span>
                     </td>
-                    <td className="py-3 px-4 text-right">
+                    <td className="py-3.5 px-6 text-right">
                       <Link
                         href="/admin/students"
-                        className="px-2.5 py-1 bg-surface-container hover:bg-surface-container-high text-primary font-mono text-[10px] font-bold uppercase transition-colors border border-[#d5e3fc]"
+                        className="px-3 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-medium rounded-lg transition-colors"
                       >
                         Inspect
                       </Link>
@@ -655,180 +520,177 @@ export default function AdminDashboardPage() {
             </div>
           </div>
 
-          {/* Table 2: Today's Counter Collection Daybook */}
-          <div className="bg-surface-container-lowest shadow-xs border border-[#d5e3fc]">
-            <div className="px-4 py-3 bg-surface-container-low flex items-center justify-between border-b border-[#d5e3fc]">
-              <div className="flex items-center gap-2">
-                <CreditCard className="w-4 h-4 text-primary" />
-                <h3 className="font-headline text-sm font-bold text-primary uppercase tracking-tight">
-                  Today's Counter Realization Register (₹ INR)
-                </h3>
+          {/* Today's Fee Receipts */}
+          <div className="bg-white rounded-2xl border border-slate-200/80 shadow-sm p-6">
+            <div className="flex items-center justify-between pb-4 border-b border-slate-100 mb-4">
+              <div className="flex items-center gap-2.5">
+                <div className="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center">
+                  <CreditCard className="w-4 h-4" />
+                </div>
+                <div>
+                  <h3 className="text-sm font-bold text-slate-900">
+                    Today's Fee Collections
+                  </h3>
+                  <p className="text-xs text-slate-500">Live transaction receipts</p>
+                </div>
               </div>
               <Link
                 href="/admin/fees"
-                className="text-xs text-secondary hover:underline font-bold flex items-center gap-1 font-mono"
+                className="text-xs text-blue-600 hover:text-blue-700 font-semibold inline-flex items-center gap-1"
               >
-                View Fees Vault
-                <ChevronRight className="w-3.5 h-3.5" />
+                <span>View Fee Ledger</span>
+                <ChevronRight className="w-4 h-4" />
               </Link>
             </div>
 
-            <div className="p-4 grid grid-cols-1 md:grid-cols-3 gap-3">
-              <div className="p-3 bg-surface-container-low border border-[#d5e3fc] flex justify-between items-center">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+              <div className="p-3.5 bg-slate-50 rounded-xl border border-slate-100 flex justify-between items-center">
                 <div>
-                  <span className="text-[10px] uppercase font-bold text-gray-500 font-mono">
-                    Receipt #REC-2025-0842
-                  </span>
-                  <p className="font-bold text-primary text-xs mt-0.5">Rahul Sharma</p>
-                  <span className="text-[10px] text-gray-600 font-mono">
-                    Tuition &bull; UPI Ref
-                  </span>
+                  <span className="text-[10px] text-slate-400 font-mono">#REC-2025-0842</span>
+                  <p className="font-semibold text-slate-900 text-xs mt-0.5">Rahul Sharma</p>
+                  <span className="text-[11px] text-slate-500">Tuition &bull; UPI</span>
                 </div>
-                <div className="text-right font-mono">
-                  <span className="font-bold text-emerald-700 text-sm block">+₹27,500</span>
-                  <p className="text-[9px] text-gray-500">11:20 AM</p>
+                <div className="text-right">
+                  <span className="font-bold text-emerald-600 text-sm block font-mono">+₹27,500</span>
+                  <span className="text-[10px] text-slate-400">11:20 AM</span>
                 </div>
               </div>
 
-              <div className="p-3 bg-surface-container-low border border-[#d5e3fc] flex justify-between items-center">
+              <div className="p-3.5 bg-slate-50 rounded-xl border border-slate-100 flex justify-between items-center">
                 <div>
-                  <span className="text-[10px] uppercase font-bold text-gray-500 font-mono">
-                    Receipt #REC-2025-0841
-                  </span>
-                  <p className="font-bold text-primary text-xs mt-0.5">Priya Patel</p>
-                  <span className="text-[10px] text-gray-600 font-mono">
-                    Tuition &bull; Chq In Clearing
-                  </span>
+                  <span className="text-[10px] text-slate-400 font-mono">#REC-2025-0841</span>
+                  <p className="font-semibold text-slate-900 text-xs mt-0.5">Priya Patel</p>
+                  <span className="text-[11px] text-slate-500">Tuition &bull; Cheque</span>
                 </div>
-                <div className="text-right font-mono">
-                  <span className="font-bold text-amber-700 text-sm block">+₹40,000</span>
-                  <p className="text-[9px] text-gray-500">10:45 AM</p>
+                <div className="text-right">
+                  <span className="font-bold text-amber-600 text-sm block font-mono">+₹40,000</span>
+                  <span className="text-[10px] text-slate-400">10:45 AM</span>
                 </div>
               </div>
 
-              <div className="p-3 bg-surface-container-low border border-[#d5e3fc] flex justify-between items-center">
+              <div className="p-3.5 bg-slate-50 rounded-xl border border-slate-100 flex justify-between items-center">
                 <div>
-                  <span className="text-[10px] uppercase font-bold text-gray-500 font-mono">
-                    Receipt #REC-2025-0840
-                  </span>
-                  <p className="font-bold text-primary text-xs mt-0.5">Rohan Verma</p>
-                  <span className="text-[10px] text-gray-600 font-mono">
-                    Tuition Tranche 1 &bull; Cash
-                  </span>
+                  <span className="text-[10px] text-slate-400 font-mono">#REC-2025-0840</span>
+                  <p className="font-semibold text-slate-900 text-xs mt-0.5">Rohan Verma</p>
+                  <span className="text-[11px] text-slate-500">Tranche 1 &bull; Cash</span>
                 </div>
-                <div className="text-right font-mono">
-                  <span className="font-bold text-emerald-700 text-sm block">+₹25,000</span>
-                  <p className="text-[9px] text-gray-500">10:15 AM</p>
+                <div className="text-right">
+                  <span className="font-bold text-emerald-600 text-sm block font-mono">+₹25,000</span>
+                  <span className="text-[10px] text-slate-400">10:15 AM</span>
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Right Column (4 Cols): Circulars & Telemetry */}
+        {/* Right Column (4 Cols): Bulletins & System Services */}
         <div className="lg:col-span-4 space-y-6">
-          {/* Campus Bulletins & Active Notices */}
-          <div className="bg-surface-container-lowest shadow-xs border border-[#d5e3fc] p-4">
-            <div className="flex items-center justify-between pb-3 border-b border-[#d5e3fc] mb-3">
-              <div className="flex items-center gap-2">
-                <FileText className="w-4 h-4 text-primary" />
-                <h3 className="font-headline text-sm font-bold text-primary uppercase tracking-tight">
-                  Campus Bulletins &amp; Directives
+          {/* Campus Bulletins & Directives */}
+          <div className="bg-white rounded-2xl border border-slate-200/80 shadow-sm p-6">
+            <div className="flex items-center justify-between pb-4 border-b border-slate-100 mb-4">
+              <div className="flex items-center gap-2.5">
+                <div className="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center">
+                  <FileText className="w-4 h-4" />
+                </div>
+                <h3 className="text-sm font-bold text-slate-900">
+                  Campus Circulars
                 </h3>
               </div>
               <Link
                 href="/admin/notices"
-                className="text-[11px] text-secondary font-bold hover:underline font-mono"
+                className="text-xs text-blue-600 hover:text-blue-700 font-semibold"
               >
                 Manage
               </Link>
             </div>
 
-            <div className="space-y-3 font-mono">
-              <div className="p-3 bg-rose-50 border-l-3 border-error border border-rose-200">
+            <div className="space-y-3">
+              <div className="p-3.5 bg-rose-50/70 border border-rose-200/60 rounded-xl">
                 <div className="flex items-center justify-between">
-                  <span className="text-[10px] font-bold uppercase text-rose-900">
-                    EXAM CELL DIRECTIVE
+                  <span className="text-[10px] font-bold uppercase text-rose-700 tracking-wider">
+                    Exam Cell Directive
                   </span>
-                  <span className="text-[10px] text-gray-500">Today</span>
+                  <span className="text-[10px] text-slate-400">Today</span>
                 </div>
-                <h4 className="font-bold text-primary text-xs mt-1 font-headline">
+                <h4 className="font-bold text-slate-900 text-xs mt-1">
                   End-Semester Examination Schedules Released
                 </h4>
-                <p className="text-xs text-gray-700 mt-1 font-sans leading-relaxed">
+                <p className="text-xs text-slate-600 mt-1 leading-relaxed">
                   Hall tickets issued to eligible candidates with fee clearance &ge; 75% attendance.
                 </p>
               </div>
 
-              <div className="p-3 bg-surface-container-low border-l-3 border-secondary border border-[#d5e3fc]">
+              <div className="p-3.5 bg-blue-50/50 border border-blue-200/60 rounded-xl">
                 <div className="flex items-center justify-between">
-                  <span className="text-[10px] font-bold uppercase text-secondary">
-                    FACULTY NOTICE
+                  <span className="text-[10px] font-bold uppercase text-blue-700 tracking-wider">
+                    Faculty Notice
                   </span>
-                  <span className="text-[10px] text-gray-500">Yesterday</span>
+                  <span className="text-[10px] text-slate-400">Yesterday</span>
                 </div>
-                <h4 className="font-bold text-primary text-xs mt-1 font-headline">
+                <h4 className="font-bold text-slate-900 text-xs mt-1">
                   Internal Marks Upload Deadline: 31st March
                 </h4>
-                <p className="text-xs text-gray-700 mt-1 font-sans leading-relaxed">
+                <p className="text-xs text-slate-600 mt-1 leading-relaxed">
                   Continuous assessment grading portal closes for all B.Tech branches on Tuesday.
                 </p>
               </div>
 
-              <div className="p-3 bg-surface-container-low border-l-3 border-primary border border-[#d5e3fc]">
+              <div className="p-3.5 bg-slate-50 border border-slate-200/70 rounded-xl">
                 <div className="flex items-center justify-between">
-                  <span className="text-[10px] font-bold uppercase text-primary">
-                    BURSAR &amp; ACCOUNTS
+                  <span className="text-[10px] font-bold uppercase text-slate-600 tracking-wider">
+                    Accounts Office
                   </span>
-                  <span className="text-[10px] text-gray-500">2 days ago</span>
+                  <span className="text-[10px] text-slate-400">2 days ago</span>
                 </div>
-                <h4 className="font-bold text-primary text-xs mt-1 font-headline">
+                <h4 className="font-bold text-slate-900 text-xs mt-1">
                   Grace Window for Tranche 2 Settlement
                 </h4>
-                <p className="text-xs text-gray-700 mt-1 font-sans leading-relaxed">
-                  Final fee reconciliation window open at Counter Till #02 without overdue surcharges.
+                <p className="text-xs text-slate-600 mt-1 leading-relaxed">
+                  Fee reconciliation window open at Counter Till #02 without overdue surcharges.
                 </p>
               </div>
             </div>
           </div>
 
-          {/* Campus Infrastructure Telemetry */}
-          <div className="bg-surface-container-lowest shadow-xs border border-[#d5e3fc] p-4 font-mono">
-            <div className="flex items-center justify-between pb-3 border-b border-[#d5e3fc] mb-3">
-              <div className="flex items-center gap-2">
-                <Database className="w-4 h-4 text-primary" />
-                <h3 className="font-headline text-sm font-bold text-primary uppercase tracking-tight">
-                  Infrastructure Telemetry
+          {/* System Services Status */}
+          <div className="bg-white rounded-2xl border border-slate-200/80 shadow-sm p-6">
+            <div className="flex items-center justify-between pb-4 border-b border-slate-100 mb-4">
+              <div className="flex items-center gap-2.5">
+                <div className="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center">
+                  <Database className="w-4 h-4" />
+                </div>
+                <h3 className="text-sm font-bold text-slate-900">
+                  Campus Services Status
                 </h3>
               </div>
-              <span className="inline-flex items-center gap-1 text-[10px] text-emerald-800 bg-emerald-50 border border-emerald-200 px-2 py-0.5 font-bold">
-                99.98% OK
+              <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                All Good
               </span>
             </div>
 
-            <div className="space-y-2 text-xs">
-              <div className="flex items-center justify-between p-2.5 bg-surface-container-low border border-[#d5e3fc]">
-                <div className="flex items-center gap-2">
-                  <Wifi className="w-3.5 h-3.5 text-secondary" />
-                  <span>Biometric RFID Gates</span>
+            <div className="space-y-2.5 text-xs">
+              <div className="flex items-center justify-between p-3 bg-slate-50 rounded-xl border border-slate-100">
+                <div className="flex items-center gap-2 text-slate-700">
+                  <Wifi className="w-4 h-4 text-slate-400" />
+                  <span className="font-medium">Biometric RFID Gates</span>
                 </div>
-                <span className="text-emerald-700 font-bold">12/12 ONLINE</span>
+                <span className="text-emerald-600 font-semibold">12/12 Online</span>
               </div>
 
-              <div className="flex items-center justify-between p-2.5 bg-surface-container-low border border-[#d5e3fc]">
-                <div className="flex items-center gap-2">
-                  <Database className="w-3.5 h-3.5 text-secondary" />
-                  <span>Central SQL Ledger</span>
+              <div className="flex items-center justify-between p-3 bg-slate-50 rounded-xl border border-slate-100">
+                <div className="flex items-center gap-2 text-slate-700">
+                  <Database className="w-4 h-4 text-slate-400" />
+                  <span className="font-medium">Central Database Server</span>
                 </div>
-                <span className="text-primary font-bold">14ms LATENCY</span>
+                <span className="text-blue-600 font-semibold font-mono">14ms latency</span>
               </div>
 
-              <div className="flex items-center justify-between p-2.5 bg-surface-container-low border border-[#d5e3fc]">
-                <div className="flex items-center gap-2">
-                  <ShieldCheck className="w-3.5 h-3.5 text-secondary" />
-                  <span>Bursar Counter Tills</span>
+              <div className="flex items-center justify-between p-3 bg-slate-50 rounded-xl border border-slate-100">
+                <div className="flex items-center gap-2 text-slate-700">
+                  <Building2 className="w-4 h-4 text-slate-400" />
+                  <span className="font-medium">Fee Collection Counters</span>
                 </div>
-                <span className="text-emerald-700 font-bold">TILL #01 &amp; #02 ACTIVE</span>
+                <span className="text-emerald-600 font-semibold">Tills #1 &amp; #2 Active</span>
               </div>
             </div>
           </div>
