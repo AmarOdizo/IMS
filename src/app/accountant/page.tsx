@@ -225,12 +225,12 @@ export default function AccountantDashboardPage() {
             </h1>
             <div className="flex flex-wrap items-center gap-3 text-on-surface-variant font-mono text-xs mt-0.5">
               <span className="flex items-center gap-1.5">
-                <span className="material-symbols-outlined text-sm text-secondary">point_of_sale</span>
+                <CreditCard className="w-4 h-4 text-secondary" />
                 Active Terminal: <strong className="text-primary font-bold">Counter Till #02 (Main Block)</strong>
               </span>
               <span>&bull;</span>
               <span className="flex items-center gap-1.5">
-                <span className="material-symbols-outlined text-sm text-secondary">inventory_2</span>
+                <Building className="w-4 h-4 text-secondary" />
                 Vault Audit: <span className="text-[#047857] font-bold">₹1,42,500 Physical Cash Tallied</span>
               </span>
             </div>

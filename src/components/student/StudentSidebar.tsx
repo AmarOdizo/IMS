@@ -2,17 +2,29 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ArrowRightLeft, LogOut } from "lucide-react";
+import {
+  LayoutDashboard,
+  User,
+  CalendarCheck,
+  CreditCard,
+  Award,
+  ShieldCheck,
+  Contact,
+  Bell,
+  GraduationCap,
+  ArrowRightLeft,
+  LogOut,
+} from "lucide-react";
 
 const navigationItems = [
-  { name: "Dashboard", href: "/student", icon: "grid_view" },
-  { name: "Student Profile", href: "/student/profile", icon: "person" },
-  { name: "My Attendance", href: "/student/attendance", icon: "event_available" },
-  { name: "Fees & Receipts", href: "/student/fees", icon: "receipt_long" },
-  { name: "Exam Results", href: "/student/results", icon: "workspace_premium" },
-  { name: "My Certificates", href: "/student/certificates", icon: "verified" },
-  { name: "Digital ID Card", href: "/student/id-card", icon: "badge" },
-  { name: "Campus Notices", href: "/student/notices", icon: "notifications" },
+  { name: "Dashboard", href: "/student", icon: LayoutDashboard },
+  { name: "Profile", href: "/student/profile", icon: User },
+  { name: "Attendance", href: "/student/attendance", icon: CalendarCheck },
+  { name: "Fees", href: "/student/fees", icon: CreditCard },
+  { name: "Results", href: "/student/results", icon: Award },
+  { name: "Certificates", href: "/student/certificates", icon: ShieldCheck },
+  { name: "ID Card", href: "/student/id-card", icon: Contact },
+  { name: "Notices", href: "/student/notices", icon: Bell },
 ];
 
 export default function StudentSidebar() {
@@ -25,7 +37,7 @@ export default function StudentSidebar() {
         {/* Brand Header */}
         <div className="h-16 px-4 flex items-center gap-3 bg-primary-container text-on-primary border-b border-[#324769] shrink-0">
           <div className="h-8 w-8 bg-secondary-container text-primary font-bold flex items-center justify-center text-sm rounded-xs shadow-xs">
-            <span className="material-symbols-outlined text-lg text-primary">school</span>
+            <GraduationCap className="w-4 h-4 text-primary" />
           </div>
           <div className="flex flex-col min-w-0">
             <span className="font-headline text-sm font-bold uppercase tracking-tight text-on-primary leading-tight truncate">
@@ -55,18 +67,23 @@ export default function StudentSidebar() {
                 ? pathname === "/student"
                 : pathname.startsWith(item.href);
 
+            const IconComponent = item.icon;
+
             return (
               <Link
                 key={item.href}
                 href={item.href}
-                className={`flex items-center gap-3 px-3 py-2 text-xs uppercase tracking-wider font-semibold transition-colors rounded-xs ${isActive
-                  ? "bg-primary text-on-primary font-bold shadow-xs"
-                  : "text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface"
-                  }`}
+                className={`flex items-center gap-3 px-3 py-2 text-xs uppercase tracking-wider font-semibold transition-colors rounded-xs ${
+                  isActive
+                    ? "bg-primary text-on-primary font-bold shadow-xs"
+                    : "text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface"
+                }`}
               >
-                <span className="material-symbols-outlined text-[19px]">
-                  {item.icon}
-                </span>
+                <IconComponent
+                  className={`w-4 h-4 shrink-0 ${
+                    isActive ? "text-on-primary" : "text-secondary"
+                  }`}
+                />
                 <span className="truncate">{item.name}</span>
               </Link>
             );
@@ -97,13 +114,13 @@ export default function StudentSidebar() {
               href="/staff"
               className="py-1 px-1 bg-surface-container-lowest border border-[#d5e3fc] hover:border-secondary text-on-surface hover:text-primary transition-colors font-semibold rounded-xs"
             >
-              Faculty
+              Staff
             </Link>
             <Link
               href="/accountant"
               className="py-1 px-1 bg-surface-container-lowest border border-[#d5e3fc] hover:border-secondary text-on-surface hover:text-primary transition-colors font-semibold rounded-xs"
             >
-              Accountant
+              Accounts
             </Link>
           </div>
         </div>

@@ -2,16 +2,27 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ArrowRightLeft, LogOut } from "lucide-react";
+import {
+  LayoutDashboard,
+  User,
+  Layers,
+  Users,
+  CalendarCheck,
+  FileSpreadsheet,
+  Bell,
+  GraduationCap,
+  ArrowRightLeft,
+  LogOut,
+} from "lucide-react";
 
 const navigationItems = [
-  { name: "Dashboard", href: "/staff", icon: "dashboard" },
-  { name: "Faculty Profile", href: "/staff/profile", icon: "account_circle" },
-  { name: "Assigned Batches", href: "/staff/batches", icon: "groups" },
-  { name: "Assigned Students", href: "/staff/students", icon: "badge" },
-  { name: "Mark Attendance", href: "/staff/attendance", icon: "fact_check" },
-  { name: "Enter Exam Marks", href: "/staff/exams", icon: "grading" },
-  { name: "Notices & Circulars", href: "/staff/notices", icon: "campaign" },
+  { name: "Dashboard", href: "/staff", icon: LayoutDashboard },
+  { name: "Profile", href: "/staff/profile", icon: User },
+  { name: "Batches", href: "/staff/batches", icon: Layers },
+  { name: "Students", href: "/staff/students", icon: Users },
+  { name: "Attendance", href: "/staff/attendance", icon: CalendarCheck },
+  { name: "Marks Entry", href: "/staff/exams", icon: FileSpreadsheet },
+  { name: "Notices", href: "/staff/notices", icon: Bell },
 ];
 
 export default function StaffSidebar() {
@@ -24,7 +35,7 @@ export default function StaffSidebar() {
         {/* Brand Header */}
         <div className="h-16 px-4 flex items-center gap-3 bg-primary-container text-on-primary border-b border-[#324769] shrink-0">
           <div className="h-8 w-8 bg-secondary-container text-primary font-bold flex items-center justify-center text-sm rounded-xs shadow-xs">
-            <span className="material-symbols-outlined text-lg text-primary">school</span>
+            <GraduationCap className="w-4 h-4 text-primary" />
           </div>
           <div className="flex flex-col min-w-0">
             <span className="font-headline text-sm font-bold uppercase tracking-tight text-on-primary leading-tight truncate">
@@ -54,18 +65,23 @@ export default function StaffSidebar() {
                 ? pathname === "/staff"
                 : pathname.startsWith(item.href);
 
+            const IconComponent = item.icon;
+
             return (
               <Link
                 key={item.href}
                 href={item.href}
-                className={`flex items-center gap-3 px-3 py-2 text-xs uppercase tracking-wider font-semibold transition-colors rounded-xs ${isActive
-                  ? "bg-primary text-on-primary font-bold shadow-xs"
-                  : "text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface"
-                  }`}
+                className={`flex items-center gap-3 px-3 py-2 text-xs uppercase tracking-wider font-semibold transition-colors rounded-xs ${
+                  isActive
+                    ? "bg-primary text-on-primary font-bold shadow-xs"
+                    : "text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface"
+                }`}
               >
-                <span className="material-symbols-outlined text-[19px]">
-                  {item.icon}
-                </span>
+                <IconComponent
+                  className={`w-4 h-4 shrink-0 ${
+                    isActive ? "text-on-primary" : "text-secondary"
+                  }`}
+                />
                 <span className="truncate">{item.name}</span>
               </Link>
             );
@@ -102,7 +118,7 @@ export default function StaffSidebar() {
               href="/accountant"
               className="py-1 px-1 bg-surface-container-lowest border border-[#d5e3fc] hover:border-secondary text-on-surface hover:text-primary transition-colors font-semibold rounded-xs"
             >
-              Accountant
+              Accounts
             </Link>
           </div>
         </div>

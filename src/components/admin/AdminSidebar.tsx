@@ -2,22 +2,39 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ArrowRightLeft, LogOut } from "lucide-react";
+import {
+  LayoutDashboard,
+  GraduationCap,
+  Users,
+  BookOpen,
+  Layers,
+  CalendarCheck,
+  CreditCard,
+  FileSpreadsheet,
+  Award,
+  Contact,
+  Bell,
+  BarChart3,
+  Settings,
+  Shield,
+  ArrowRightLeft,
+  LogOut,
+} from "lucide-react";
 
 const navigationItems = [
-  { name: "Dashboard", href: "/admin", icon: "space_dashboard" },
-  { name: "Student Directory", href: "/admin/students", icon: "school" },
-  { name: "Staff & Faculty", href: "/admin/staff", icon: "badge" },
-  { name: "Courses & Subjects", href: "/admin/courses", icon: "menu_book" },
-  { name: "Batches & Sections", href: "/admin/batches", icon: "groups" },
-  { name: "Attendance Register", href: "/admin/attendance", icon: "fact_check" },
-  { name: "Fee Management", href: "/admin/fees", icon: "payments" },
-  { name: "Exams & Results", href: "/admin/exams", icon: "assignment_turned_in" },
-  { name: "Certificates Studio", href: "/admin/certificates", icon: "verified" },
-  { name: "ID Cards Studio", href: "/admin/id-cards", icon: "contact_emergency" },
-  { name: "Notices & Circulars", href: "/admin/notices", icon: "campaign" },
-  { name: "Reports & Analytics", href: "/admin/reports", icon: "analytics" },
-  { name: "System Settings", href: "/admin/settings", icon: "settings" },
+  { name: "Dashboard", href: "/admin", icon: LayoutDashboard },
+  { name: "Students", href: "/admin/students", icon: GraduationCap },
+  { name: "Staff", href: "/admin/staff", icon: Users },
+  { name: "Courses", href: "/admin/courses", icon: BookOpen },
+  { name: "Batches", href: "/admin/batches", icon: Layers },
+  { name: "Attendance", href: "/admin/attendance", icon: CalendarCheck },
+  { name: "Fees", href: "/admin/fees", icon: CreditCard },
+  { name: "Exams", href: "/admin/exams", icon: FileSpreadsheet },
+  { name: "Certificates", href: "/admin/certificates", icon: Award },
+  { name: "ID Cards", href: "/admin/id-cards", icon: Contact },
+  { name: "Notices", href: "/admin/notices", icon: Bell },
+  { name: "Reports", href: "/admin/reports", icon: BarChart3 },
+  { name: "Settings", href: "/admin/settings", icon: Settings },
 ];
 
 export default function AdminSidebar() {
@@ -30,7 +47,7 @@ export default function AdminSidebar() {
         {/* Brand Header */}
         <div className="h-16 px-4 flex items-center gap-3 bg-primary-container text-on-primary border-b border-[#324769] shrink-0">
           <div className="h-8 w-8 bg-secondary-container text-primary font-bold flex items-center justify-center text-sm rounded-xs shadow-xs">
-            <span className="material-symbols-outlined text-lg text-primary">admin_panel_settings</span>
+            <Shield className="w-4 h-4 text-primary" />
           </div>
           <div className="flex flex-col min-w-0">
             <span className="font-headline text-sm font-bold uppercase tracking-tight text-on-primary leading-tight truncate">
@@ -60,18 +77,23 @@ export default function AdminSidebar() {
                 ? pathname === "/admin"
                 : pathname.startsWith(item.href);
 
+            const IconComponent = item.icon;
+
             return (
               <Link
                 key={item.href}
                 href={item.href}
-                className={`flex items-center gap-3 px-3 py-2 text-xs uppercase tracking-wider font-semibold transition-colors rounded-xs ${isActive
-                  ? "bg-primary text-on-primary font-bold shadow-xs"
-                  : "text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface"
-                  }`}
+                className={`flex items-center gap-3 px-3 py-2 text-xs uppercase tracking-wider font-semibold transition-colors rounded-xs ${
+                  isActive
+                    ? "bg-primary text-on-primary font-bold shadow-xs"
+                    : "text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface"
+                }`}
               >
-                <span className="material-symbols-outlined text-[19px]">
-                  {item.icon}
-                </span>
+                <IconComponent
+                  className={`w-4 h-4 shrink-0 ${
+                    isActive ? "text-on-primary" : "text-secondary"
+                  }`}
+                />
                 <span className="truncate">{item.name}</span>
               </Link>
             );
@@ -102,13 +124,13 @@ export default function AdminSidebar() {
               href="/staff"
               className="py-1 px-1 bg-surface-container-lowest border border-[#d5e3fc] hover:border-secondary text-on-surface hover:text-primary transition-colors font-semibold rounded-xs"
             >
-              Faculty
+              Staff
             </Link>
             <Link
               href="/accountant"
               className="py-1 px-1 bg-surface-container-lowest border border-[#d5e3fc] hover:border-secondary text-on-surface hover:text-primary transition-colors font-semibold rounded-xs"
             >
-              Accountant
+              Accounts
             </Link>
           </div>
         </div>

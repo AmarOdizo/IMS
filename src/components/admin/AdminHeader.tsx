@@ -8,6 +8,7 @@ import {
   Plus,
   Bell,
   ChevronDown,
+  ChevronRight,
   UserCheck,
   CreditCard,
   UserPlus,
@@ -24,9 +25,7 @@ export default function AdminHeader() {
       <div className="flex items-center gap-6">
         <nav className="flex items-center gap-1.5 text-xs uppercase tracking-wider text-on-surface-variant font-medium">
           <span className="hover:text-on-surface cursor-pointer">IMS Core</span>
-          <span className="material-symbols-outlined text-[0.875rem]">
-            chevron_right
-          </span>
+          <ChevronRight className="w-3.5 h-3.5 text-on-surface-variant" />
           <span className="text-primary font-bold">Academic Console</span>
         </nav>
 

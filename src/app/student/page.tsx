@@ -26,7 +26,12 @@ import {
   Copy,
   Receipt,
   ShieldCheck,
-  Info
+  Info,
+  GraduationCap,
+  CalendarCheck,
+  Bell,
+  User,
+  Headphones
 } from "lucide-react";
 
 export default function StudentDashboard() {
@@ -209,9 +214,7 @@ export default function StudentDashboard() {
               <span className="text-[11px] uppercase tracking-widest text-on-surface-variant font-bold">
                 Course Progress
               </span>
-              <span className="material-symbols-outlined text-secondary text-[20px]">
-                school
-              </span>
+              <GraduationCap className="w-5 h-5 text-secondary" />
             </div>
             <div className="flex items-baseline gap-2 mt-2">
               <span className="font-headline text-2xl font-bold text-on-surface">
@@ -246,9 +249,7 @@ export default function StudentDashboard() {
               <span className="text-[11px] uppercase tracking-widest text-on-surface-variant font-bold">
                 Attendance Rate
               </span>
-              <span className="material-symbols-outlined text-[#047857] text-[20px]">
-                fact_check
-              </span>
+              <CalendarCheck className="w-5 h-5 text-[#047857]" />
             </div>
             <div className="flex items-baseline gap-2 mt-2">
               <span className="font-headline text-2xl font-bold text-on-surface">
@@ -283,9 +284,7 @@ export default function StudentDashboard() {
               <span className="text-[11px] uppercase tracking-widest text-on-surface-variant font-bold">
                 Tuition &amp; Fees Ledger
               </span>
-              <span className="material-symbols-outlined text-secondary text-[20px]">
-                account_balance_wallet
-              </span>
+              <CreditCard className="w-5 h-5 text-secondary" />
             </div>
             <div className="flex items-baseline gap-2 mt-2">
               <span className="font-headline text-2xl font-bold text-error">
@@ -320,9 +319,7 @@ export default function StudentDashboard() {
               <span className="text-[11px] uppercase tracking-widest text-on-surface-variant font-bold">
                 Term Evaluation
               </span>
-              <span className="material-symbols-outlined text-primary text-[20px]">
-                event_repeat
-              </span>
+              <Clock className="w-5 h-5 text-primary" />
             </div>
             <div className="flex items-baseline gap-2 mt-2">
               <span className="font-headline text-2xl font-bold text-on-surface">
@@ -390,9 +387,7 @@ export default function StudentDashboard() {
           <div className="bg-surface-container-lowest shadow-xs border border-[#d5e3fc] rounded-sm overflow-hidden">
             <div className="px-5 py-3.5 bg-surface-container-low border-b border-[#d5e3fc] flex flex-wrap items-center justify-between gap-2">
               <div className="flex items-center gap-2">
-                <span className="material-symbols-outlined text-primary text-[20px]">
-                  calendar_month
-                </span>
+                <Calendar className="w-5 h-5 text-primary" />
                 <h2 className="font-headline text-sm font-bold text-primary uppercase tracking-tight">
                   Mid-Semester Assessment Schedule &bull; Semester IV
                 </h2>
@@ -478,9 +473,7 @@ export default function StudentDashboard() {
           <div className="bg-surface-container-lowest shadow-xs border border-[#d5e3fc] rounded-sm overflow-hidden">
             <div className="px-5 py-3.5 bg-surface-container-low border-b border-[#d5e3fc] flex flex-wrap items-center justify-between gap-2">
               <div className="flex items-center gap-2">
-                <span className="material-symbols-outlined text-primary text-[20px]">
-                  receipt_long
-                </span>
+                <Receipt className="w-5 h-5 text-primary" />
                 <h2 className="font-headline text-sm font-bold text-primary uppercase tracking-tight">
                   Academic Fee Ledger &amp; Counter Receipts
                 </h2>
@@ -582,9 +575,7 @@ export default function StudentDashboard() {
           <div className="bg-surface-container-lowest shadow-xs border border-[#d5e3fc] rounded-sm overflow-hidden flex flex-col">
             <div className="px-5 py-3.5 bg-surface-container-low border-b border-[#d5e3fc] flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <span className="material-symbols-outlined text-primary text-[20px]">
-                  campaign
-                </span>
+                <Bell className="w-5 h-5 text-primary" />
                 <h2 className="font-headline text-sm font-bold text-primary uppercase tracking-tight">
                   Institutional Bulletins
                 </h2>
@@ -697,9 +688,7 @@ export default function StudentDashboard() {
                   </div>
                 </div>
                 <div className="w-12 h-14 bg-white/10 border border-white/20 rounded-xs flex items-center justify-center overflow-hidden">
-                  <span className="material-symbols-outlined text-[36px] text-white/80">
-                    person
-                  </span>
+                  <User className="w-8 h-8 text-white/80" />
                 </div>
               </div>
 
@@ -800,9 +789,7 @@ export default function StudentDashboard() {
           {/* Section F: Designated Faculty Mentor & Helpdesk */}
           <div className="bg-surface-container-lowest shadow-xs border border-[#d5e3fc] p-5 rounded-sm">
             <div className="flex items-center gap-2 pb-3 border-b border-[#d5e3fc]">
-              <span className="material-symbols-outlined text-primary text-[20px]">
-                support_agent
-              </span>
+              <Headphones className="w-5 h-5 text-primary" />
               <span className="text-xs uppercase tracking-wider font-bold text-primary">
                 Faculty Mentor Liaison
               </span>
@@ -810,9 +797,7 @@ export default function StudentDashboard() {
 
             <div className="flex items-start gap-3 mt-3">
               <div className="w-10 h-10 bg-primary-container text-white flex items-center justify-center shrink-0 rounded-xs">
-                <span className="material-symbols-outlined text-[24px]">
-                  school
-                </span>
+                <GraduationCap className="w-6 h-6 text-white" />
               </div>
               <div>
                 <div className="font-headline text-sm font-bold text-primary">
@@ -844,9 +829,7 @@ export default function StudentDashboard() {
           <div className="bg-surface-container-lowest border border-[#d5e3fc] shadow-2xl max-w-2xl w-full p-6 animate-in fade-in zoom-in-95 duration-150 rounded-sm">
             <div className="flex items-center justify-between pb-3 border-b border-[#d5e3fc]">
               <div className="flex items-center gap-2">
-                <span className="material-symbols-outlined text-primary text-[22px]">
-                  assignment_turned_in
-                </span>
+                <Award className="w-5 h-5 text-primary" />
                 <h3 className="font-headline text-base font-bold text-primary uppercase">
                   Official Examination Admit Card &bull; Hall Ticket
                 </h3>

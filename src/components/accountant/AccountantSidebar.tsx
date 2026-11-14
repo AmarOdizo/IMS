@@ -2,17 +2,29 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ArrowRightLeft, LogOut } from "lucide-react";
+import {
+  LayoutDashboard,
+  Search,
+  CreditCard,
+  History,
+  Receipt,
+  AlertTriangle,
+  BarChart3,
+  User,
+  Building2,
+  ArrowRightLeft,
+  LogOut,
+} from "lucide-react";
 
 const navigationItems = [
-  { name: "Dashboard", href: "/accountant", icon: "dashboard" },
-  { name: "Student Fee Ledgers", href: "/accountant/fee-details", icon: "manage_search" },
-  { name: "Collect Fee Payment", href: "/accountant/record-payment", icon: "payments" },
-  { name: "Payment History", href: "/accountant/payment-history", icon: "history" },
-  { name: "Receipts Register", href: "/accountant/receipts", icon: "receipt_long" },
-  { name: "Pending Dues & Defaulters", href: "/accountant/pending-dues", icon: "pending_actions" },
-  { name: "Financial Reports", href: "/accountant/reports", icon: "analytics" },
-  { name: "Accountant Profile", href: "/accountant/profile", icon: "badge" },
+  { name: "Dashboard", href: "/accountant", icon: LayoutDashboard },
+  { name: "Fee Ledgers", href: "/accountant/fee-details", icon: Search },
+  { name: "Record Payment", href: "/accountant/record-payment", icon: CreditCard },
+  { name: "Payment History", href: "/accountant/payment-history", icon: History },
+  { name: "Receipts", href: "/accountant/receipts", icon: Receipt },
+  { name: "Pending Dues", href: "/accountant/pending-dues", icon: AlertTriangle },
+  { name: "Reports", href: "/accountant/reports", icon: BarChart3 },
+  { name: "Profile", href: "/accountant/profile", icon: User },
 ];
 
 export default function AccountantSidebar() {
@@ -25,7 +37,7 @@ export default function AccountantSidebar() {
         {/* Brand Header */}
         <div className="h-16 px-4 flex items-center gap-3 bg-primary-container text-on-primary border-b border-[#324769] shrink-0">
           <div className="h-8 w-8 bg-secondary-container text-primary font-bold flex items-center justify-center text-sm rounded-xs shadow-xs">
-            <span className="material-symbols-outlined text-lg text-primary">account_balance</span>
+            <Building2 className="w-4 h-4 text-primary" />
           </div>
           <div className="flex flex-col min-w-0">
             <span className="font-headline text-sm font-bold uppercase tracking-tight text-on-primary leading-tight truncate">
@@ -55,6 +67,8 @@ export default function AccountantSidebar() {
                 ? pathname === "/accountant"
                 : pathname.startsWith(item.href);
 
+            const IconComponent = item.icon;
+
             return (
               <Link
                 key={item.href}
@@ -65,9 +79,11 @@ export default function AccountantSidebar() {
                     : "text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface"
                 }`}
               >
-                <span className="material-symbols-outlined text-[19px]">
-                  {item.icon}
-                </span>
+                <IconComponent
+                  className={`w-4 h-4 shrink-0 ${
+                    isActive ? "text-on-primary" : "text-secondary"
+                  }`}
+                />
                 <span className="truncate">{item.name}</span>
               </Link>
             );
@@ -104,7 +120,7 @@ export default function AccountantSidebar() {
               href="/staff"
               className="py-1 px-1 bg-surface-container-lowest border border-[#d5e3fc] hover:border-secondary text-on-surface hover:text-primary transition-colors font-semibold rounded-xs"
             >
-              Faculty
+              Staff
             </Link>
           </div>
         </div>

@@ -146,7 +146,7 @@ export default function LoginPage() {
       <header className="h-16 border-b border-[#d5e3fc] bg-primary-container px-6 flex items-center justify-between text-on-primary shadow-xs">
         <div className="flex items-center gap-3">
           <div className="h-9 w-9 bg-secondary-container text-primary font-bold flex items-center justify-center text-sm border border-secondary shadow-xs">
-            <span className="material-symbols-outlined text-xl">account_balance</span>
+            <Building2 className="w-5 h-5 text-primary" />
           </div>
           <div className="flex flex-col">
             <span className="font-headline text-base font-bold uppercase tracking-tight leading-tight">

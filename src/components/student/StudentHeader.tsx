@@ -73,22 +73,18 @@ export default function StudentHeader({
           className="relative p-1.5 text-on-surface-variant hover:text-primary transition-colors flex items-center"
           title="Academic Calendar"
         >
-          <span className="material-symbols-outlined text-[22px]">
-            calendar_month
-          </span>
+          <Calendar className="w-5 h-5 text-on-surface-variant" />
         </Link>
 
         {/* Notifications Dropdown */}
         <div className="relative">
           <button
             onClick={() => setShowNotifications(!showNotifications)}
-            className="relative p-1.5 text-on-surface-variant hover:text-primary transition-colors flex items-center"
+            className="relative p-1.5 text-on-surface-variant hover:text-primary transition-colors flex items-center cursor-pointer"
             title="Institutional Bulletins"
           >
-            <span className="material-symbols-outlined text-[22px]">
-              notifications
-            </span>
-            <span className="absolute top-0 right-0 w-4 h-4 bg-error text-white text-[9px] flex items-center justify-center font-bold leading-none">
+            <Bell className="w-5 h-5 text-on-surface-variant" />
+            <span className="absolute top-0 right-0 w-4 h-4 bg-error text-white text-[9px] flex items-center justify-center font-bold leading-none rounded-full">
               2
             </span>
           </button>
@@ -163,9 +159,7 @@ export default function StudentHeader({
             title="View Student Profile"
           >
             <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white shadow-sm group-hover:ring-2 group-hover:ring-secondary transition-all">
-              <span className="material-symbols-outlined text-[18px]">
-                person
-              </span>
+              <User className="w-4 h-4 text-white" />
             </div>
             <span
               className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-[#047857] border-2 border-white rounded-full"

@@ -45,7 +45,7 @@ export default function PublicVerifySearchPage() {
         <div className="max-w-5xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 bg-secondary-container text-primary font-bold flex items-center justify-center border border-secondary shadow-xs">
-              <span className="material-symbols-outlined text-2xl">verified</span>
+              <ShieldCheck className="w-6 h-6 text-primary" />
             </div>
             <div>
               <span className="font-headline font-bold uppercase tracking-tight text-base block text-white">
