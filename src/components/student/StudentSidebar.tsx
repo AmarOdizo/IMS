@@ -115,7 +115,7 @@ export default function StudentSidebar() {
 
         {/* Student Session & Sign Out */}
         <Link
-          href="/"
+          href="/login"
           className="flex items-center justify-between px-3 py-2 text-xs font-semibold uppercase tracking-wider text-error-container hover:bg-error hover:text-on-error transition-colors rounded-xs"
         >
           <div className="flex items-center gap-2">
