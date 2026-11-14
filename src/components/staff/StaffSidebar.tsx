@@ -11,7 +11,6 @@ import {
   FileSpreadsheet,
   Bell,
   GraduationCap,
-  ArrowRightLeft,
   LogOut,
 } from "lucide-react";
 
@@ -89,40 +88,8 @@ export default function StaffSidebar() {
         </nav>
       </div>
 
-      {/* Bottom Controls: Switcher, Terminate Session, Compliance */}
+      {/* Bottom Controls: Terminate Session, Compliance */}
       <div className="p-3 bg-surface-container-lowest border-t border-[#d5e3fc] flex flex-col gap-2.5 shrink-0">
-        {/* Role Portal Quick Switcher */}
-        <div className="bg-surface-container-low p-2 rounded-xs border border-[#d5e3fc]">
-          <div className="text-[9px] uppercase font-bold text-secondary tracking-wider mb-1.5 flex items-center justify-between">
-            <span className="flex items-center gap-1 font-mono">
-              <ArrowRightLeft className="w-2.5 h-2.5" /> Switch Portal
-            </span>
-            <span className="text-[8px] bg-secondary/15 text-secondary px-1 py-0.2 rounded-xs font-mono font-bold">
-              ROLE MESH
-            </span>
-          </div>
-          <div className="grid grid-cols-3 gap-1 text-[10px] font-medium text-center font-mono">
-            <Link
-              href="/admin"
-              className="py-1 px-1 bg-surface-container-lowest border border-[#d5e3fc] hover:border-secondary text-on-surface hover:text-primary transition-colors font-semibold rounded-xs"
-            >
-              Admin
-            </Link>
-            <Link
-              href="/student"
-              className="py-1 px-1 bg-surface-container-lowest border border-[#d5e3fc] hover:border-secondary text-on-surface hover:text-primary transition-colors font-semibold rounded-xs"
-            >
-              Student
-            </Link>
-            <Link
-              href="/accountant"
-              className="py-1 px-1 bg-surface-container-lowest border border-[#d5e3fc] hover:border-secondary text-on-surface hover:text-primary transition-colors font-semibold rounded-xs"
-            >
-              Accounts
-            </Link>
-          </div>
-        </div>
-
         {/* Sign Out Button linking to /login */}
         <Link
           href="/login"
