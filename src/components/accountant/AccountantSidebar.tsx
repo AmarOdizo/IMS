@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ArrowRightLeft } from "lucide-react";
+import { ArrowRightLeft, LogOut } from "lucide-react";
 
 const navigationItems = [
   { name: "Dashboard", href: "/accountant", icon: "dashboard" },
@@ -19,28 +19,36 @@ export default function AccountantSidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="fixed left-0 top-0 h-full w-64 bg-primary text-on-primary z-50 flex flex-col justify-between border-r border-[#0D2545] select-none shadow-[2px_0_0_0_#0D2545]">
+    <aside className="fixed left-0 top-0 h-full w-64 bg-surface-container-lowest text-on-surface z-50 flex flex-col justify-between border-r border-[#d5e3fc] shadow-[2px_0_0_0_#d5e3fc] select-none">
       {/* Top Branding & Nav */}
       <div className="flex flex-col min-h-0 flex-1">
         {/* Brand Header */}
-        <div className="h-16 flex flex-col justify-center px-5 bg-tertiary-container border-b border-[#19477e] shrink-0">
-          <div className="flex items-center gap-2.5">
-            <div className="h-8 w-8 bg-secondary-container text-primary font-bold flex items-center justify-center text-base rounded-sm shadow-sm">
-              <span className="material-symbols-outlined text-lg text-primary">account_balance</span>
-            </div>
-            <div className="flex flex-col min-w-0">
-              <span className="font-headline text-sm font-bold uppercase tracking-tight text-on-primary leading-tight truncate">
-                Apex IMS
-              </span>
-              <span className="text-[10px] uppercase tracking-widest text-secondary-container font-medium truncate">
-                Financial Cadre
-              </span>
-            </div>
+        <div className="h-16 px-4 flex items-center gap-3 bg-primary-container text-on-primary border-b border-[#324769] shrink-0">
+          <div className="h-8 w-8 bg-secondary-container text-primary font-bold flex items-center justify-center text-sm rounded-xs shadow-xs">
+            <span className="material-symbols-outlined text-lg text-primary">account_balance</span>
+          </div>
+          <div className="flex flex-col min-w-0">
+            <span className="font-headline text-sm font-bold uppercase tracking-tight text-on-primary leading-tight truncate">
+              Apex IMS
+            </span>
+            <span className="text-[10px] tracking-wider uppercase text-on-primary-container font-mono font-semibold truncate">
+              Financial Cadre
+            </span>
           </div>
         </div>
 
+        {/* Substrip */}
+        <div className="px-4 py-2 bg-surface-container-low flex items-center justify-between border-b border-[#d5e3fc] shrink-0">
+          <span className="text-[10px] uppercase tracking-wider text-on-surface-variant font-semibold">
+            Fiscal Navigation
+          </span>
+          <span className="font-mono text-[10px] text-secondary font-bold">
+            v4.2-ACC
+          </span>
+        </div>
+
         {/* Navigation List */}
-        <nav className="flex-1 overflow-y-auto py-2 flex flex-col">
+        <nav className="flex-1 overflow-y-auto p-2 flex flex-col gap-1">
           {navigationItems.map((item) => {
             const isActive =
               item.href === "/accountant"
@@ -51,13 +59,13 @@ export default function AccountantSidebar() {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`flex items-center gap-3 px-5 py-2.5 text-xs uppercase tracking-wider font-semibold transition-all duration-150 ${
+                className={`flex items-center gap-3 px-3 py-2 text-xs uppercase tracking-wider font-semibold transition-colors rounded-xs ${
                   isActive
-                    ? "bg-primary-container text-on-primary shadow-[inset_3px_0_0_0_#99c0fe]"
-                    : "text-primary-fixed-dim hover:bg-primary-container hover:text-on-primary"
+                    ? "bg-primary text-on-primary font-bold shadow-xs"
+                    : "text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface"
                 }`}
               >
-                <span className="material-symbols-outlined text-[20px]">
+                <span className="material-symbols-outlined text-[19px]">
                   {item.icon}
                 </span>
                 <span className="truncate">{item.name}</span>
@@ -67,51 +75,58 @@ export default function AccountantSidebar() {
         </nav>
       </div>
 
-      {/* Bottom Switcher & Logout */}
-      <div className="p-3 border-t border-[#19477e] flex flex-col gap-2 shrink-0">
+      {/* Bottom Controls: Switcher, Terminate Session, Compliance */}
+      <div className="p-3 bg-surface-container-lowest border-t border-[#d5e3fc] flex flex-col gap-2.5 shrink-0">
         {/* Role Portal Quick Switcher */}
-        <div className="bg-primary-container/60 p-2 rounded-xs border border-white/10">
-          <div className="text-[9px] uppercase font-bold text-secondary-fixed-dim tracking-wider mb-1.5 flex items-center justify-between">
-            <span className="flex items-center gap-1">
+        <div className="bg-surface-container-low p-2 rounded-xs border border-[#cbd5e1]">
+          <div className="text-[9px] uppercase font-bold text-secondary tracking-wider mb-1.5 flex items-center justify-between">
+            <span className="flex items-center gap-1 font-mono">
               <ArrowRightLeft className="w-2.5 h-2.5" /> Switch Portal
             </span>
-            <span className="text-[8px] bg-secondary/40 text-secondary-container px-1 py-0.5 rounded-xs font-mono">
+            <span className="text-[8px] bg-secondary/15 text-secondary px-1 py-0.2 rounded-xs font-mono font-bold">
               ROLE MESH
             </span>
           </div>
-          <div className="grid grid-cols-3 gap-1 text-[10px] font-medium text-center">
+          <div className="grid grid-cols-3 gap-1 text-[10px] font-medium text-center font-mono">
             <Link
               href="/admin"
-              className="py-1 px-1 bg-surface-container-lowest/10 border border-white/10 hover:border-secondary-container text-white/80 hover:text-white transition-colors"
+              className="py-1 px-1 bg-surface-container-lowest border border-[#cbd5e1] hover:border-secondary text-on-surface hover:text-primary transition-colors font-semibold"
             >
               Admin
             </Link>
             <Link
               href="/student"
-              className="py-1 px-1 bg-surface-container-lowest/10 border border-white/10 hover:border-secondary-container text-white/80 hover:text-white transition-colors"
+              className="py-1 px-1 bg-surface-container-lowest border border-[#cbd5e1] hover:border-secondary text-on-surface hover:text-primary transition-colors font-semibold"
             >
               Student
             </Link>
             <Link
               href="/staff"
-              className="py-1 px-1 bg-surface-container-lowest/10 border border-white/10 hover:border-secondary-container text-white/80 hover:text-white transition-colors"
+              className="py-1 px-1 bg-surface-container-lowest border border-[#cbd5e1] hover:border-secondary text-on-surface hover:text-primary transition-colors font-semibold"
             >
               Staff
             </Link>
           </div>
         </div>
 
-        {/* Accountant Session & Sign Out */}
+        {/* Terminate Session Button */}
         <Link
           href="/login"
-          className="flex items-center justify-between px-3 py-2 text-xs font-semibold uppercase tracking-wider text-error-container hover:bg-error hover:text-on-error transition-colors rounded-xs"
+          className="flex items-center justify-center gap-1.5 w-full py-1.5 bg-error text-on-error text-[11px] font-bold uppercase tracking-wider hover:bg-error/90 transition-colors rounded-xs shadow-xs"
         >
-          <div className="flex items-center gap-2">
-            <span className="material-symbols-outlined text-[18px]">logout</span>
-            <span>Sign Out</span>
-          </div>
-          <span className="text-[9px] font-mono text-white/40">v4.2-ACC</span>
+          <LogOut className="h-3.5 w-3.5" />
+          <span>Sign Out</span>
         </Link>
+
+        {/* Audit Compliance Seal */}
+        <div className="flex flex-col items-center justify-center text-center">
+          <span className="text-[9px] uppercase tracking-wider text-on-surface-variant font-bold">
+            Strict Bursar Audit Mode
+          </span>
+          <span className="font-mono text-[9px] text-secondary font-bold">
+            RBI &amp; IT ACT COMPLIANT
+          </span>
+        </div>
       </div>
     </aside>
   );
