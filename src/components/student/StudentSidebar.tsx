@@ -48,16 +48,6 @@ export default function StudentSidebar() {
           </div>
         </div>
 
-        {/* Substrip */}
-        <div className="px-4 py-2 bg-surface-container-low flex items-center justify-between border-b border-[#d5e3fc] shrink-0">
-          <span className="text-[10px] uppercase tracking-wider text-on-surface-variant font-semibold">
-            Student Navigation
-          </span>
-          <span className="font-mono text-[10px] text-secondary font-bold">
-            v4.2-STU
-          </span>
-        </div>
-
         {/* Navigation List */}
         <nav className="flex-1 overflow-y-auto p-2 flex flex-col gap-1">
           {navigationItems.map((item) => {
