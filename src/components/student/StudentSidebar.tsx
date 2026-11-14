@@ -59,11 +59,10 @@ export default function StudentSidebar() {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`flex items-center gap-3 px-3 py-2 text-xs uppercase tracking-wider font-semibold transition-colors rounded-xs ${
-                  isActive
-                    ? "bg-primary text-on-primary font-bold shadow-xs"
-                    : "text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface"
-                }`}
+                className={`flex items-center gap-3 px-3 py-2 text-xs uppercase tracking-wider font-semibold transition-colors rounded-xs ${isActive
+                  ? "bg-primary text-on-primary font-bold shadow-xs"
+                  : "text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface"
+                  }`}
               >
                 <span className="material-symbols-outlined text-[19px]">
                   {item.icon}
