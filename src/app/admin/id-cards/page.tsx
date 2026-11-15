@@ -814,7 +814,7 @@ export default function IdCardManagementPage() {
                   className="absolute inset-0 opacity-15 pointer-events-none"
                   style={{
                     backgroundSize: "16px 16px",
-                    backgroundImage: "radial-gradient(#0d2545 1px, transparent 1px)"
+                    backgroundImage: "radial-gradient(#3D405B 1px, transparent 1px)"
                   }}
                 ></div>
 
@@ -897,7 +897,7 @@ export default function IdCardManagementPage() {
                             className="w-full h-full object-cover"
                           />
                           {/* Contactless Chip NFC Glyph */}
-                          <div className="absolute bottom-1 right-1 bg-amber-400 text-slate-900 px-1 py-0.2 text-[0.5rem] font-mono font-bold flex items-center gap-0.5 border border-amber-600">
+                          <div className="absolute bottom-1 right-1 bg-amber-400 text-[#3D405B] px-1 py-0.2 text-[0.5rem] font-mono font-bold flex items-center gap-0.5 border border-amber-600">
                             <Radio className="w-2.5 h-2.5" />
                             <span>NFC</span>
                           </div>
@@ -906,7 +906,7 @@ export default function IdCardManagementPage() {
 
                       {/* Cardholder Primary Data Fields */}
                       <div className="px-3 py-1 text-center">
-                        <div className="font-headline-sm text-[0.9375rem] font-bold text-[#0d2545] tracking-tight uppercase leading-tight">
+                        <div className="font-headline-sm text-[0.9375rem] font-bold text-[#3D405B] tracking-tight uppercase leading-tight">
                           {activeCard.name}
                         </div>
                         <div
@@ -925,25 +925,25 @@ export default function IdCardManagementPage() {
                             <span className="text-slate-500 uppercase block text-[0.5rem]">
                               Roll / ID No
                             </span>
-                            <span className="font-bold text-slate-900">{activeCard.rollId}</span>
+                            <span className="font-bold text-[#3D405B]">{activeCard.rollId}</span>
                           </div>
                           <div>
                             <span className="text-slate-500 uppercase block text-[0.5rem]">
                               Blood Group
                             </span>
-                            <span className="font-bold text-slate-900">{activeCard.bloodGroup}</span>
+                            <span className="font-bold text-[#3D405B]">{activeCard.bloodGroup}</span>
                           </div>
                           <div>
                             <span className="text-slate-500 uppercase block text-[0.5rem]">
                               Academic Cohort
                             </span>
-                            <span className="font-bold text-slate-900">{activeCard.validity}</span>
+                            <span className="font-bold text-[#3D405B]">{activeCard.validity}</span>
                           </div>
                           <div>
                             <span className="text-slate-500 uppercase block text-[0.5rem]">
                               Card Serial
                             </span>
-                            <span className="font-bold text-slate-900">{activeCard.serial}</span>
+                            <span className="font-bold text-[#3D405B]">{activeCard.serial}</span>
                           </div>
                         </div>
                       </div>
@@ -965,7 +965,7 @@ export default function IdCardManagementPage() {
                     <div className="w-[230px] h-[364px] bg-[#ffffff] border border-slate-400 shadow-xl relative overflow-hidden flex flex-col justify-between p-3 text-left select-none font-mono-data">
                       {/* Institutional Instructions Header */}
                       <div className="border-b border-slate-300 pb-1">
-                        <div className="text-[0.5625rem] font-bold text-slate-900 uppercase">
+                        <div className="text-[0.5625rem] font-bold text-[#3D405B] uppercase">
                           Emergency &amp; Institutional Contacts
                         </div>
                         <div className="text-[0.46875rem] text-slate-600 leading-tight mt-0.5">
@@ -979,7 +979,7 @@ export default function IdCardManagementPage() {
                       <div className="flex items-center gap-2 py-1">
                         <div className="w-16 h-16 bg-white border border-slate-400 p-0.5 shrink-0 flex items-center justify-center">
                           <svg
-                            className="w-full h-full text-slate-900"
+                            className="w-full h-full text-[#3D405B]"
                             fill="currentColor"
                             viewBox="0 0 100 100"
                           >
@@ -1000,7 +1000,7 @@ export default function IdCardManagementPage() {
                           </svg>
                         </div>
                         <div className="text-[0.46875rem] text-slate-600 space-y-0.5 leading-snug">
-                          <div className="font-bold text-slate-900 uppercase">Cardholder Terms:</div>
+                          <div className="font-bold text-[#3D405B] uppercase">Cardholder Terms:</div>
                           <p>
                             This credential remains sole property of Apex Institute. Non-transferable.
                             Lost cards must be reported immediately.
@@ -1012,34 +1012,34 @@ export default function IdCardManagementPage() {
                       {/* 1D Barcode Strip (Code 128 Simulation) */}
                       <div className="flex flex-col items-center bg-slate-50 border border-slate-200 py-1.5 px-2">
                         <div className="h-9 w-full flex items-stretch justify-center gap-[1.5px] px-1 bg-white">
-                          <div className="w-1 bg-black"></div>
-                          <div className="w-0.5 bg-black"></div>
-                          <div className="w-1.5 bg-black"></div>
-                          <div className="w-0.5 bg-black"></div>
-                          <div className="w-2 bg-black"></div>
-                          <div className="w-0.5 bg-black"></div>
-                          <div className="w-1 bg-black"></div>
-                          <div className="w-0.5 bg-black"></div>
-                          <div className="w-1.5 bg-black"></div>
-                          <div className="w-1 bg-black"></div>
-                          <div className="w-0.5 bg-black"></div>
-                          <div className="w-2 bg-black"></div>
-                          <div className="w-1 bg-black"></div>
-                          <div className="w-0.5 bg-black"></div>
-                          <div className="w-1.5 bg-black"></div>
-                          <div className="w-2 bg-black"></div>
-                          <div className="w-0.5 bg-black"></div>
-                          <div className="w-1 bg-black"></div>
-                          <div className="w-1.5 bg-black"></div>
-                          <div className="w-0.5 bg-black"></div>
-                          <div className="w-1 bg-black"></div>
-                          <div className="w-2 bg-black"></div>
-                          <div className="w-0.5 bg-black"></div>
-                          <div className="w-1 bg-black"></div>
-                          <div className="w-1.5 bg-black"></div>
-                          <div className="w-0.5 bg-black"></div>
-                          <div className="w-2 bg-black"></div>
-                          <div className="w-1 bg-black"></div>
+                          <div className="w-1 bg-[#3D405B]"></div>
+                          <div className="w-0.5 bg-[#3D405B]"></div>
+                          <div className="w-1.5 bg-[#3D405B]"></div>
+                          <div className="w-0.5 bg-[#3D405B]"></div>
+                          <div className="w-2 bg-[#3D405B]"></div>
+                          <div className="w-0.5 bg-[#3D405B]"></div>
+                          <div className="w-1 bg-[#3D405B]"></div>
+                          <div className="w-0.5 bg-[#3D405B]"></div>
+                          <div className="w-1.5 bg-[#3D405B]"></div>
+                          <div className="w-1 bg-[#3D405B]"></div>
+                          <div className="w-0.5 bg-[#3D405B]"></div>
+                          <div className="w-2 bg-[#3D405B]"></div>
+                          <div className="w-1 bg-[#3D405B]"></div>
+                          <div className="w-0.5 bg-[#3D405B]"></div>
+                          <div className="w-1.5 bg-[#3D405B]"></div>
+                          <div className="w-2 bg-[#3D405B]"></div>
+                          <div className="w-0.5 bg-[#3D405B]"></div>
+                          <div className="w-1 bg-[#3D405B]"></div>
+                          <div className="w-1.5 bg-[#3D405B]"></div>
+                          <div className="w-0.5 bg-[#3D405B]"></div>
+                          <div className="w-1 bg-[#3D405B]"></div>
+                          <div className="w-2 bg-[#3D405B]"></div>
+                          <div className="w-0.5 bg-[#3D405B]"></div>
+                          <div className="w-1 bg-[#3D405B]"></div>
+                          <div className="w-1.5 bg-[#3D405B]"></div>
+                          <div className="w-0.5 bg-[#3D405B]"></div>
+                          <div className="w-2 bg-[#3D405B]"></div>
+                          <div className="w-1 bg-[#3D405B]"></div>
                         </div>
                         <span className="text-[0.5625rem] font-bold text-slate-800 tracking-widest mt-1 leading-none">
                           {activeCard.barcode}
@@ -1052,7 +1052,7 @@ export default function IdCardManagementPage() {
                           <span className="text-[0.46875rem] text-slate-500 uppercase block">
                             Guardian Emergency:
                           </span>
-                          <span className="text-[0.5rem] font-bold text-slate-900">
+                          <span className="text-[0.5rem] font-bold text-[#3D405B]">
                             +1 (555) 019-4820
                           </span>
                         </div>
@@ -1162,7 +1162,7 @@ export default function IdCardManagementPage() {
                             className="w-6 h-7 object-cover border border-slate-400 shrink-0"
                           />
                           <div className="leading-tight overflow-hidden">
-                            <div className="font-bold text-slate-900 truncate uppercase">
+                            <div className="font-bold text-[#3D405B] truncate uppercase">
                               {card.name}
                             </div>
                             <div className="text-[0.375rem] text-slate-600 truncate">

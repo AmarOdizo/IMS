@@ -202,7 +202,7 @@ export default function StaffExamsPage() {
       )}
 
       {/* Top Header & Deadline Sentinel Bar */}
-      <div className="px-6 py-5 bg-surface-container-low border-b border-[#0D2545]/15 flex flex-col gap-1">
+      <div className="px-6 py-5 bg-surface-container-low border-b border-[#3D405B]/15 flex flex-col gap-1">
         <div className="flex items-center gap-1.5 font-mono text-xs text-on-surface-variant uppercase">
           <Link href="/staff" className="hover:text-primary">Staff Portal</Link>
           <ChevronRight className="h-3.5 w-3.5 text-outline" />
@@ -236,7 +236,7 @@ export default function StaffExamsPage() {
       </div>
 
       {/* Access Scope Banner */}
-      <div className="bg-surface-container-highest px-6 py-2 border-b border-[#0D2545]/15 flex items-center justify-between flex-wrap gap-2 text-xs">
+      <div className="bg-surface-container-highest px-6 py-2 border-b border-[#3D405B]/15 flex items-center justify-between flex-wrap gap-2 text-xs">
         <div className="flex items-center gap-2 text-on-surface">
           <ShieldCheck className="h-4 w-4 text-secondary shrink-0" />
           <span className="font-mono font-bold uppercase text-primary">Faculty Access Scope:</span>
@@ -679,7 +679,7 @@ export default function StaffExamsPage() {
       {/* Submit Marks Modal */}
       {isSubmitModalOpen && (
         <div className="fixed inset-0 z-50 bg-primary/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-surface-container-lowest w-full max-w-md border-2 border-primary shadow-[4px_4px_0_0_#0d2545] p-6 relative rounded-sm">
+          <div className="bg-surface-container-lowest w-full max-w-md border-2 border-primary shadow-[4px_4px_0_0_#3D405B] p-6 relative rounded-sm">
             <div className="flex items-center justify-between pb-3 border-b border-[#cbd5e1]">
               <div className="flex items-center gap-2">
                 <Lock className="h-5 w-5 text-secondary" />

@@ -639,7 +639,7 @@ export default function StaffStudentsPage() {
       {/* Advisory Modal */}
       {isAdvisoryModalOpen && (
         <div className="fixed inset-0 z-50 bg-primary/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-surface-container-lowest w-full max-w-lg border-2 border-primary shadow-[4px_4px_0_0_#0d2545] p-6 relative rounded-sm">
+          <div className="bg-surface-container-lowest w-full max-w-lg border-2 border-primary shadow-[4px_4px_0_0_#3D405B] p-6 relative rounded-sm">
             <div className="flex items-center justify-between pb-3 border-b border-[#cbd5e1]">
               <div className="flex items-center gap-2">
                 <MessageSquare className="h-5 w-5 text-secondary" />

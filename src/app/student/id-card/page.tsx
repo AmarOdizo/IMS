@@ -62,7 +62,7 @@ export default function StudentIdCardPage() {
       )}
 
       {/* Command Center Header Area */}
-      <div className="px-6 py-5 bg-surface-container-lowest border-b border-[#0D2545]/15 shadow-sm">
+      <div className="px-6 py-5 bg-surface-container-lowest border-b border-[#3D405B]/15 shadow-sm">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
           <div>
             <div className="flex items-center gap-2 mb-1">
@@ -107,7 +107,7 @@ export default function StudentIdCardPage() {
         </div>
 
         {/* Smart Card Telemetry Row (4 Metrics) */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3.5 mt-4 pt-3 border-t border-[#0D2545]/10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3.5 mt-4 pt-3 border-t border-[#3D405B]/10">
           {/* Telemetry 1 */}
           <div className="bg-surface-container-low p-3.5 shadow-sm relative overflow-hidden flex flex-col justify-between border-l-4 border-[#047857]">
             <div className="flex items-center justify-between">
@@ -257,7 +257,7 @@ export default function StudentIdCardPage() {
                 <div className="absolute top-0 right-0 w-48 h-48 bg-gradient-to-br from-[#99c0fe]/15 via-transparent to-transparent pointer-events-none"></div>
 
                 {/* FRONT: Top Header Section */}
-                <div className="relative z-10 px-4 pt-3.5 pb-2 bg-gradient-to-b from-[#0D2545] to-[#07172C] border-b border-[#99c0fe]/30">
+                <div className="relative z-10 px-4 pt-3.5 pb-2 bg-gradient-to-b from-[#3D405B] to-[#2E3046] border-b border-[#99c0fe]/30">
                   <div className="flex items-center justify-between gap-2">
                     <div className="flex items-center gap-2">
                       {/* Institute Crest */}
@@ -347,7 +347,7 @@ export default function StudentIdCardPage() {
                   </div>
 
                   {/* Student Metadata Key-Value Matrix */}
-                  <div className="bg-black/35 p-2 grid grid-cols-2 gap-2 text-[8px] font-mono rounded-sm">
+                  <div className="bg-[#3D405B]/35 p-2 grid grid-cols-2 gap-2 text-[8px] font-mono rounded-sm">
                     <div className="flex items-center justify-between pr-2 border-r border-white/10">
                       <span className="text-[#99c0fe] uppercase">Blood Group</span>
                       <span className="text-white font-bold">O+</span>
@@ -462,8 +462,8 @@ export default function StudentIdCardPage() {
                   <div className="flex items-start gap-3">
                     {/* QR Code */}
                     <div className="shrink-0 p-1.5 bg-white shadow-sm flex flex-col items-center rounded-xs">
-                      <QrCode className="h-14 w-14 text-black" />
-                      <span className="font-mono text-[5.5px] text-black font-bold tracking-tighter mt-0.5">
+                      <QrCode className="h-14 w-14 text-[#3D405B]" />
+                      <span className="font-mono text-[5.5px] text-[#3D405B] font-bold tracking-tighter mt-0.5">
                         SCAN TO AUDIT
                       </span>
                     </div>
@@ -478,7 +478,7 @@ export default function StudentIdCardPage() {
                         <div className="text-[#99c0fe] uppercase font-bold tracking-tight">Permanent Domicile:</div>
                         <div className="text-white leading-tight">Gurugram, Haryana • India</div>
                       </div>
-                      <div className="flex items-center justify-between bg-black/40 p-1 rounded-xs">
+                      <div className="flex items-center justify-between bg-[#3D405B]/40 p-1 rounded-xs">
                         <span className="text-[#d5e3ff]/80">Library Patron:</span>
                         <span className="text-[#99c0fe] font-bold">APX-LIB-8841</span>
                       </div>
@@ -531,7 +531,7 @@ export default function StudentIdCardPage() {
 
         {/* Printable Actions, Cut-out Specifications & Digital Wallet Sync */}
         <div className="w-full max-w-5xl mt-10 bg-surface-container-lowest p-6 shadow-sm border border-[#cbd5e1] flex flex-col gap-6">
-          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-4 border-b border-[#0D2545]/10">
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-4 border-b border-[#3D405B]/10">
             <div>
               <h2 className="text-base font-bold uppercase tracking-tight text-primary">
                 Print Layout &amp; Card Production Center
@@ -550,7 +550,7 @@ export default function StudentIdCardPage() {
               </button>
               <button
                 onClick={() => showToast("Apple / Google Wallet card certificate (.pkpass) exported!")}
-                className="h-9 px-4 bg-[#001c3b] hover:bg-[#00273f] text-[#d6e3ff] font-mono text-xs uppercase font-bold tracking-wider flex items-center gap-2 transition-colors shadow-sm"
+                className="h-9 px-4 bg-[#3D405B] hover:bg-[#2E3046] text-[#d6e3ff] font-mono text-xs uppercase font-bold tracking-wider flex items-center gap-2 transition-colors shadow-sm"
               >
                 <Wallet className="h-4 w-4 text-secondary-container" />
                 <span>Add to Apple / Google Wallet (.pkpass)</span>

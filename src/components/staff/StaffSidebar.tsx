@@ -32,12 +32,12 @@ export default function StaffSidebar() {
       {/* Top Branding & Nav */}
       <div className="flex flex-col min-h-0 flex-1">
         {/* Brand Header */}
-        <div className="h-16 px-4 flex items-center gap-3 bg-white text-slate-900 border-b border-slate-200 shrink-0">
+        <div className="h-16 px-4 flex items-center gap-3 bg-white text-[#3D405B] border-b border-slate-200 shrink-0">
           <div className="w-9 h-9 bg-emerald-100 text-emerald-700 font-bold flex items-center justify-center rounded-xl shadow-xs shrink-0">
             <GraduationCap className="w-5 h-5 text-emerald-700" />
           </div>
           <div className="flex flex-col min-w-0">
-            <span className="font-headline text-sm font-bold tracking-tight text-slate-900 leading-tight truncate">
+            <span className="font-headline text-sm font-bold tracking-tight text-[#3D405B] leading-tight truncate">
               Apex Institute
             </span>
             <span className="text-[10px] tracking-wider uppercase text-emerald-700 font-semibold truncate">

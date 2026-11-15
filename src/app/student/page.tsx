@@ -125,7 +125,7 @@ export default function StudentDashboardPage() {
     <div className="p-6 md:p-8 space-y-6 max-w-[1600px] mx-auto font-sans text-slate-800">
       {/* Toast Notification */}
       {toastMessage && (
-        <div className="fixed bottom-6 right-6 z-50 bg-slate-900 text-white px-5 py-3.5 rounded-xl shadow-xl flex items-center gap-3 border border-slate-700 text-sm font-medium animate-in slide-in-from-bottom">
+        <div className="fixed bottom-6 right-6 z-50 bg-[#3D405B] text-white px-5 py-3.5 rounded-xl shadow-xl flex items-center gap-3 border border-slate-700 text-sm font-medium animate-in slide-in-from-bottom">
           <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0" />
           <span>{toastMessage}</span>
           <button
@@ -157,7 +157,7 @@ export default function StudentDashboardPage() {
             </div>
 
             <div>
-              <h1 className="text-2xl md:text-3xl font-bold text-slate-900 tracking-tight">
+              <h1 className="text-2xl md:text-3xl font-bold text-[#3D405B] tracking-tight">
                 Welcome back, Rahul Sharma! 🎓
               </h1>
               <p className="text-sm text-slate-500 mt-1">
@@ -205,7 +205,7 @@ export default function StudentDashboardPage() {
               </div>
             </div>
             <div className="mt-3 flex items-baseline gap-2">
-              <span className="text-2xl font-bold text-slate-900 tracking-tight">68.0%</span>
+              <span className="text-2xl font-bold text-[#3D405B] tracking-tight">68.0%</span>
               <span className="text-xs text-slate-500">Completed</span>
             </div>
             <div className="w-full bg-slate-100 h-2 mt-3 rounded-full overflow-hidden">
@@ -228,7 +228,7 @@ export default function StudentDashboardPage() {
               </div>
             </div>
             <div className="mt-3 flex items-baseline gap-2">
-              <span className="text-2xl font-bold text-slate-900 tracking-tight">88.4%</span>
+              <span className="text-2xl font-bold text-[#3D405B] tracking-tight">88.4%</span>
               <span className="text-[11px] font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
                 Good Standing
               </span>
@@ -280,7 +280,7 @@ export default function StudentDashboardPage() {
               </div>
             </div>
             <div className="mt-3 flex items-baseline gap-2">
-              <span className="text-2xl font-bold text-slate-900 tracking-tight">Mid-Term IV</span>
+              <span className="text-2xl font-bold text-[#3D405B] tracking-tight">Mid-Term IV</span>
               <span className="text-xs text-slate-500">5 Papers</span>
             </div>
             <p className="text-xs text-blue-600 font-medium mt-3">
@@ -305,7 +305,7 @@ export default function StudentDashboardPage() {
               className={`px-3.5 py-1.5 text-xs font-semibold rounded-lg transition-all ${
                 studentTab === "all"
                   ? "bg-emerald-600 text-white shadow-xs font-bold"
-                  : "text-slate-600 hover:text-slate-900"
+                  : "text-slate-600 hover:text-[#3D405B]"
               }`}
             >
               All Academic Records
@@ -315,7 +315,7 @@ export default function StudentDashboardPage() {
               className={`px-3.5 py-1.5 text-xs font-semibold rounded-lg transition-all ${
                 studentTab === "exams"
                   ? "bg-emerald-600 text-white shadow-xs font-bold"
-                  : "text-slate-600 hover:text-slate-900"
+                  : "text-slate-600 hover:text-[#3D405B]"
               }`}
             >
               Exams &amp; Datesheet ({upcomingExams.length})
@@ -325,7 +325,7 @@ export default function StudentDashboardPage() {
               className={`px-3.5 py-1.5 text-xs font-semibold rounded-lg transition-all ${
                 studentTab === "fees"
                   ? "bg-emerald-600 text-white shadow-xs font-bold"
-                  : "text-slate-600 hover:text-slate-900"
+                  : "text-slate-600 hover:text-[#3D405B]"
               }`}
             >
               Fee Receipts ({recentTransactions.length})
@@ -341,7 +341,7 @@ export default function StudentDashboardPage() {
                     <Award className="w-4 h-4" />
                   </div>
                   <div>
-                    <h2 className="text-sm font-bold text-slate-900">
+                    <h2 className="text-sm font-bold text-[#3D405B]">
                       Mid-Semester Examination Schedule
                     </h2>
                     <p className="text-xs text-slate-500">Semester IV &bull; Seated Hall Allocations</p>
@@ -371,7 +371,7 @@ export default function StudentDashboardPage() {
                     {upcomingExams.map((exam) => (
                       <tr key={exam.code} className="hover:bg-slate-50/60 transition-colors">
                         <td className="py-3.5 px-6">
-                          <div className="font-semibold text-slate-900">{exam.date}</div>
+                          <div className="font-semibold text-[#3D405B]">{exam.date}</div>
                           <div className="text-[11px] text-slate-400">{exam.time}</div>
                         </td>
                         <td className="py-3.5 px-6 font-bold text-blue-600">
@@ -413,7 +413,7 @@ export default function StudentDashboardPage() {
                     <Receipt className="w-4 h-4" />
                   </div>
                   <div>
-                    <h2 className="text-sm font-bold text-slate-900">
+                    <h2 className="text-sm font-bold text-[#3D405B]">
                       Fee Payment History &amp; Receipts
                     </h2>
                     <p className="text-xs text-slate-500">Verified institutional counter receipts</p>
@@ -452,7 +452,7 @@ export default function StudentDashboardPage() {
                           <div className="text-[11px] text-slate-400">{tx.reg}</div>
                         </td>
                         <td className="py-3.5 px-6 text-slate-600">{tx.instrument}</td>
-                        <td className="py-3.5 px-6 font-bold text-slate-900 font-mono">
+                        <td className="py-3.5 px-6 font-bold text-[#3D405B] font-mono">
                           {tx.amount}
                         </td>
                         <td className="py-3.5 px-6 text-right">
@@ -492,7 +492,7 @@ export default function StudentDashboardPage() {
             <div className="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
               <div className="flex items-center gap-2">
                 <BadgeCheck className="w-4 h-4 text-blue-600" />
-                <span className="text-sm font-bold text-slate-900">
+                <span className="text-sm font-bold text-[#3D405B]">
                   Digital Student ID Card
                 </span>
               </div>
@@ -544,7 +544,7 @@ export default function StudentDashboardPage() {
                 <div className="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
                   <Bell className="w-4 h-4" />
                 </div>
-                <h3 className="text-sm font-bold text-slate-900">Campus Notices</h3>
+                <h3 className="text-sm font-bold text-[#3D405B]">Campus Notices</h3>
               </div>
               <Link href="/student/notices" className="text-xs text-blue-600 hover:text-blue-700 font-semibold">
                 All &rarr;
@@ -557,7 +557,7 @@ export default function StudentDashboardPage() {
                   <span className="font-bold uppercase text-rose-700">High Priority</span>
                   <span className="text-slate-400">2h ago</span>
                 </div>
-                <h4 className="text-xs font-bold text-slate-900 mt-1">
+                <h4 className="text-xs font-bold text-[#3D405B] mt-1">
                   Mid-Term Examination Datesheet Released
                 </h4>
                 <p className="text-xs text-slate-600 mt-1 leading-relaxed">
@@ -570,7 +570,7 @@ export default function StudentDashboardPage() {
                   <span className="font-bold uppercase text-blue-700">Guest Lecture</span>
                   <span className="text-slate-400">Yesterday</span>
                 </div>
-                <h4 className="text-xs font-bold text-slate-900 mt-1">
+                <h4 className="text-xs font-bold text-[#3D405B] mt-1">
                   AI &amp; Distributed Systems Lecture
                 </h4>
                 <p className="text-xs text-slate-600 mt-1 leading-relaxed">
@@ -584,7 +584,7 @@ export default function StudentDashboardPage() {
           <div className="bg-white rounded-2xl border border-slate-200/80 shadow-sm p-6">
             <div className="flex items-center gap-2 pb-3 border-b border-slate-100 mb-3">
               <Headphones className="w-4 h-4 text-blue-600" />
-              <h3 className="text-sm font-bold text-slate-900">Faculty Mentor</h3>
+              <h3 className="text-sm font-bold text-[#3D405B]">Faculty Mentor</h3>
             </div>
 
             <div className="flex items-start gap-3 mt-3">
@@ -592,7 +592,7 @@ export default function StudentDashboardPage() {
                 RS
               </div>
               <div>
-                <div className="text-sm font-bold text-slate-900">Prof. Rajesh K. Sharma</div>
+                <div className="text-sm font-bold text-[#3D405B]">Prof. Rajesh K. Sharma</div>
                 <div className="text-xs text-slate-500">Department of Computer Science</div>
                 <a
                   href="mailto:r.sharma@apex.ac.in"
@@ -613,12 +613,12 @@ export default function StudentDashboardPage() {
 
       {/* MODAL 1: Hall Ticket Preview Modal */}
       {showHallTicketModal && (
-        <div className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-50 bg-[#3D405B]/40 backdrop-blur-xs flex items-center justify-center p-4">
           <div className="bg-white w-full max-w-2xl rounded-2xl border border-slate-200 shadow-2xl p-6 relative animate-in fade-in zoom-in-95 duration-150">
             <div className="flex items-center justify-between pb-3 border-b border-slate-100">
               <div className="flex items-center gap-2">
                 <Award className="w-5 h-5 text-blue-600" />
-                <h3 className="text-base font-bold text-slate-900">
+                <h3 className="text-base font-bold text-[#3D405B]">
                   Official Examination Admit Card
                 </h3>
               </div>
@@ -633,7 +633,7 @@ export default function StudentDashboardPage() {
             <div className="my-4 p-5 border border-slate-200 rounded-xl bg-slate-50/60 space-y-4">
               <div className="flex items-center justify-between pb-3 border-b border-slate-200">
                 <div>
-                  <div className="text-base font-bold text-slate-900">APEX INSTITUTE OF TECHNOLOGY</div>
+                  <div className="text-base font-bold text-[#3D405B]">APEX INSTITUTE OF TECHNOLOGY</div>
                   <div className="text-xs text-slate-500">Controller of Examinations &bull; AY 2025–26</div>
                 </div>
                 <div className="text-right text-xs font-mono font-bold text-blue-600">
@@ -644,19 +644,19 @@ export default function StudentDashboardPage() {
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
                 <div>
                   <span className="text-slate-400">Student</span>
-                  <div className="font-semibold text-slate-900">Rahul Sharma</div>
+                  <div className="font-semibold text-[#3D405B]">Rahul Sharma</div>
                 </div>
                 <div>
                   <span className="text-slate-400">Roll No</span>
-                  <div className="font-semibold text-slate-900 font-mono">23CS042</div>
+                  <div className="font-semibold text-[#3D405B] font-mono">23CS042</div>
                 </div>
                 <div>
                   <span className="text-slate-400">Program</span>
-                  <div className="font-semibold text-slate-900">B.Tech CSE - Sem IV</div>
+                  <div className="font-semibold text-[#3D405B]">B.Tech CSE - Sem IV</div>
                 </div>
                 <div>
                   <span className="text-slate-400">Center</span>
-                  <div className="font-semibold text-slate-900">AUD-B (North Campus)</div>
+                  <div className="font-semibold text-[#3D405B]">AUD-B (North Campus)</div>
                 </div>
               </div>
 
@@ -675,19 +675,19 @@ export default function StudentDashboardPage() {
                       <td className="p-2.5 font-bold text-blue-600 font-mono">CS-401</td>
                       <td className="p-2.5 font-medium text-slate-800">Database Management Systems</td>
                       <td className="p-2.5 text-slate-600">15-Apr-2025 (09:30 AM)</td>
-                      <td className="p-2.5 text-right font-bold text-slate-900">Desk 42</td>
+                      <td className="p-2.5 text-right font-bold text-[#3D405B]">Desk 42</td>
                     </tr>
                     <tr>
                       <td className="p-2.5 font-bold text-blue-600 font-mono">CS-402</td>
                       <td className="p-2.5 font-medium text-slate-800">Operating Systems</td>
                       <td className="p-2.5 text-slate-600">17-Apr-2025 (09:30 AM)</td>
-                      <td className="p-2.5 text-right font-bold text-slate-900">Desk 42</td>
+                      <td className="p-2.5 text-right font-bold text-[#3D405B]">Desk 42</td>
                     </tr>
                     <tr>
                       <td className="p-2.5 font-bold text-blue-600 font-mono">CS-403</td>
                       <td className="p-2.5 font-medium text-slate-800">Design &amp; Analysis of Algorithms</td>
                       <td className="p-2.5 text-slate-600">21-Apr-2025 (02:00 PM)</td>
-                      <td className="p-2.5 text-right font-bold text-slate-900">Desk 18</td>
+                      <td className="p-2.5 text-right font-bold text-[#3D405B]">Desk 18</td>
                     </tr>
                   </tbody>
                 </table>
@@ -718,12 +718,12 @@ export default function StudentDashboardPage() {
 
       {/* MODAL 2: Fee Payment Advice Modal */}
       {showPaymentModal && (
-        <div className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-50 bg-[#3D405B]/40 backdrop-blur-xs flex items-center justify-center p-4">
           <div className="bg-white w-full max-w-lg rounded-2xl border border-slate-200 shadow-2xl p-6 relative animate-in fade-in zoom-in-95 duration-150">
             <div className="flex items-center justify-between pb-3 border-b border-slate-100">
               <div className="flex items-center gap-2">
                 <Receipt className="w-5 h-5 text-emerald-600" />
-                <h3 className="text-base font-bold text-slate-900">
+                <h3 className="text-base font-bold text-[#3D405B]">
                   Fee Payment &amp; Bank Challan
                 </h3>
               </div>
@@ -740,7 +740,7 @@ export default function StudentDashboardPage() {
                 <div className="flex justify-between items-start">
                   <div>
                     <div className="text-xs text-slate-500 font-medium">Pending Balance (Tranche 2)</div>
-                    <div className="text-2xl font-bold text-slate-900 font-mono mt-1">₹25,000.00</div>
+                    <div className="text-2xl font-bold text-[#3D405B] font-mono mt-1">₹25,000.00</div>
                   </div>
                   <span className="px-2.5 py-1 bg-amber-50 text-amber-700 text-xs font-semibold rounded-full border border-amber-200">
                     Due: May 02, 2025
@@ -750,12 +750,12 @@ export default function StudentDashboardPage() {
 
               <div className="space-y-2.5 text-xs">
                 <div className="p-3 bg-slate-50 rounded-xl border border-slate-100">
-                  <div className="font-semibold text-slate-900">1. Counter Cash / Cheque Payment</div>
+                  <div className="font-semibold text-[#3D405B]">1. Counter Cash / Cheque Payment</div>
                   <p className="text-slate-500 mt-0.5">Visit Counter Till #01 or #02 at Admin Block. Thermal receipt issued on the spot.</p>
                 </div>
 
                 <div className="p-3 bg-slate-50 rounded-xl border border-slate-100">
-                  <div className="font-semibold text-slate-900">2. Bank Wire / NEFT Transfer</div>
+                  <div className="font-semibold text-[#3D405B]">2. Bank Wire / NEFT Transfer</div>
                   <div className="text-slate-600 mt-1 space-y-0.5 font-mono text-[11px]">
                     <div>Bank: HDFC Bank (Connaught Place)</div>
                     <div>A/C Name: APEX INSTITUTE OF TECHNOLOGY</div>

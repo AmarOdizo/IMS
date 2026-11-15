@@ -1098,7 +1098,7 @@ function RecordPaymentContent() {
 
       {/* CONFIRMATION MODAL */}
       {isConfirmModalOpen && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-50 bg-[#3D405B]/60 backdrop-blur-xs flex items-center justify-center p-4">
           <div className="bg-surface-container-lowest max-w-xl w-full border-2 border-primary shadow-2xl p-6 flex flex-col gap-4 animate-in fade-in zoom-in-95 duration-150">
             <div className="flex items-start justify-between pb-3 border-b border-[#cbd5e1]">
               <div>

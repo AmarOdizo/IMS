@@ -126,7 +126,7 @@ export default function StaffProfilePage() {
             {/* Faculty Details & Credentials Summary */}
             <div className="lg:col-span-9 p-6 flex flex-col justify-between">
               <div>
-                <div className="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-[#0D2545]/10">
+                <div className="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-[#3D405B]/10">
                   <div className="flex items-center gap-1.5 flex-wrap">
                     <span className="bg-surface-container text-primary font-mono text-[10px] px-2 py-0.5 font-bold uppercase tracking-wider border border-[#c4c6cf] rounded-xs">
                       Active &amp; Tenured Faculty
@@ -188,7 +188,7 @@ export default function StaffProfilePage() {
               </div>
 
               {/* Bottom Telemetry strip */}
-              <div className="mt-5 pt-3 border-t border-[#0D2545]/10 flex flex-wrap items-center justify-between text-on-surface-variant gap-3 text-xs font-mono">
+              <div className="mt-5 pt-3 border-t border-[#3D405B]/10 flex flex-wrap items-center justify-between text-on-surface-variant gap-3 text-xs font-mono">
                 <div className="flex items-center gap-3 flex-wrap">
                   <span>
                     Date of Joining: <strong className="text-primary font-bold">16 July 2018</strong>
@@ -288,7 +288,7 @@ export default function StaffProfilePage() {
           <div className="lg:col-span-8 flex flex-col gap-6">
             {/* SECTION 1: Academic & Professional Credentials */}
             <div className="bg-surface-container-lowest border border-[#cbd5e1] shadow-sm p-6 rounded-sm">
-              <div className="flex items-center justify-between pb-3 border-b border-[#0D2545]/10 mb-4">
+              <div className="flex items-center justify-between pb-3 border-b border-[#3D405B]/10 mb-4">
                 <div className="flex items-center gap-2">
                   <Award className="h-5 w-5 text-secondary" />
                   <h2 className="text-base font-bold uppercase tracking-tight text-primary">
@@ -370,7 +370,7 @@ export default function StaffProfilePage() {
               </div>
 
               {/* Research Specializations & Publication Summary Tag Cloud */}
-              <div className="mt-4 pt-4 border-t border-[#0D2545]/10 flex flex-col gap-2">
+              <div className="mt-4 pt-4 border-t border-[#3D405B]/10 flex flex-col gap-2">
                 <span className="text-[11px] font-mono text-outline uppercase tracking-wider font-bold">
                   Primary Research Specializations &amp; Domains
                 </span>
@@ -409,7 +409,7 @@ export default function StaffProfilePage() {
 
             {/* SECTION 2: Assigned Teaching Workload & Courses (AY 2024-25) */}
             <div className="bg-surface-container-lowest border border-[#cbd5e1] shadow-sm p-6 rounded-sm">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#0D2545]/10 mb-4 gap-2">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#3D405B]/10 mb-4 gap-2">
                 <div className="flex items-center gap-2">
                   <Layers className="h-5 w-5 text-secondary" />
                   <h2 className="text-base font-bold uppercase tracking-tight text-primary">
@@ -535,7 +535,7 @@ export default function StaffProfilePage() {
 
             {/* SECTION 3: Assigned Batches & Mentorship */}
             <div className="bg-surface-container-lowest border border-[#cbd5e1] shadow-sm p-6 rounded-sm">
-              <div className="flex items-center justify-between pb-3 border-b border-[#0D2545]/10 mb-4">
+              <div className="flex items-center justify-between pb-3 border-b border-[#3D405B]/10 mb-4">
                 <div className="flex items-center gap-2">
                   <Users className="h-5 w-5 text-secondary" />
                   <h2 className="text-base font-bold uppercase tracking-tight text-primary">
@@ -608,7 +608,7 @@ export default function StaffProfilePage() {
           <div className="lg:col-span-4 flex flex-col gap-6">
             {/* SECTION 4: Institutional Roles & Committees */}
             <div className="bg-surface-container-lowest border border-[#cbd5e1] shadow-sm p-6 rounded-sm">
-              <div className="flex items-center gap-2 pb-3 border-b border-[#0D2545]/10 mb-4">
+              <div className="flex items-center gap-2 pb-3 border-b border-[#3D405B]/10 mb-4">
                 <ShieldCheck className="h-5 w-5 text-secondary" />
                 <h2 className="text-base font-bold uppercase tracking-tight text-primary">
                   Institutional Roles
@@ -665,7 +665,7 @@ export default function StaffProfilePage() {
 
             {/* SECTION 5: Security & Access Telemetry */}
             <div className="bg-surface-container-lowest border border-[#cbd5e1] shadow-sm p-6 rounded-sm">
-              <div className="flex items-center justify-between pb-3 border-b border-[#0D2545]/10 mb-4">
+              <div className="flex items-center justify-between pb-3 border-b border-[#3D405B]/10 mb-4">
                 <div className="flex items-center gap-2">
                   <Lock className="h-5 w-5 text-secondary" />
                   <h2 className="text-base font-bold uppercase tracking-tight text-primary">
@@ -751,7 +751,7 @@ export default function StaffProfilePage() {
       {/* MODAL: Request Dossier Update */}
       {isUpdateModalOpen && (
         <div className="fixed inset-0 z-50 bg-primary/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-surface-container-lowest w-full max-w-lg border-2 border-primary shadow-[4px_4px_0_0_#0d2545] p-6 relative rounded-sm">
+          <div className="bg-surface-container-lowest w-full max-w-lg border-2 border-primary shadow-[4px_4px_0_0_#3D405B] p-6 relative rounded-sm">
             <div className="flex items-center justify-between pb-3 border-b border-[#cbd5e1]">
               <div className="flex items-center gap-2">
                 <Edit3 className="h-5 w-5 text-secondary" />

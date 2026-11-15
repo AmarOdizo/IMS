@@ -411,7 +411,7 @@ export default function AccountantReportsPage() {
                         y={y}
                         width="12"
                         height={barHeight}
-                        fill={isSpike ? "#0d2545" : "#365f97"}
+                        fill={isSpike ? "#3D405B" : "#365f97"}
                         className="hover:opacity-80 transition-opacity"
                       />
                     </g>
@@ -634,7 +634,7 @@ export default function AccountantReportsPage() {
 
       {/* Modal: View Report Dossier */}
       {selectedReportView && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-50 bg-[#3D405B]/60 backdrop-blur-xs flex items-center justify-center p-4">
           <div className="bg-surface-container-lowest border-2 border-primary w-full max-w-2xl p-5 shadow-2xl animate-in zoom-in-95 font-mono text-xs">
             <div className="flex items-center justify-between border-b border-[#cbd5e1] pb-3 mb-4">
               <div className="flex items-center gap-2">
@@ -713,7 +713,7 @@ export default function AccountantReportsPage() {
 
       {/* Modal: Consolidated Audit Dossier */}
       {isConsolidatedModalOpen && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-50 bg-[#3D405B]/60 backdrop-blur-xs flex items-center justify-center p-4">
           <div className="bg-surface-container-lowest border-2 border-primary w-full max-w-md p-5 shadow-2xl animate-in zoom-in-95 font-mono text-xs">
             <div className="flex items-center justify-between border-b border-[#cbd5e1] pb-3 mb-4">
               <div className="flex items-center gap-2">
@@ -772,7 +772,7 @@ export default function AccountantReportsPage() {
 
       {/* Modal: Lock Day-End Cashbook */}
       {isCashbookLockModalOpen && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-50 bg-[#3D405B]/60 backdrop-blur-xs flex items-center justify-center p-4">
           <div className="bg-surface-container-lowest border-2 border-primary w-full max-w-md p-5 shadow-2xl animate-in zoom-in-95 font-mono text-xs">
             <div className="flex items-center justify-between border-b border-[#cbd5e1] pb-3 mb-4">
               <div className="flex items-center gap-2">

@@ -150,7 +150,7 @@ export default function StudentCertificatesPage() {
       )}
 
       {/* Page Command Header */}
-      <div className="px-6 py-5 bg-surface-container-lowest border-b border-[#0D2545]/15 shadow-sm">
+      <div className="px-6 py-5 bg-surface-container-lowest border-b border-[#3D405B]/15 shadow-sm">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
           <div>
             <div className="flex items-center gap-2 mb-1">
@@ -198,7 +198,7 @@ export default function StudentCertificatesPage() {
         </div>
 
         {/* 4 Telemetry Metrics */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-4 pt-3 border-t border-[#0D2545]/10">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-4 pt-3 border-t border-[#3D405B]/10">
           <div className="bg-surface-container-low p-3 rounded-sm border-l-2 border-primary">
             <span className="text-[10px] font-mono uppercase tracking-wider text-outline block">Total Issued</span>
             <span className="text-base font-bold text-primary">3 Credentials</span>
@@ -244,7 +244,7 @@ export default function StudentCertificatesPage() {
                 onClick={() => setSelectedCert(cert)}
                 className={`cursor-pointer p-5 rounded-sm transition-all relative ${
                   isSelected
-                    ? "bg-surface-container-lowest border-2 border-primary shadow-[2px_2px_0_0_#0d2545]"
+                    ? "bg-surface-container-lowest border-2 border-primary shadow-[2px_2px_0_0_#3D405B]"
                     : "bg-surface-container-lowest border border-[#cbd5e1] hover:border-secondary shadow-sm"
                 }`}
               >
@@ -376,7 +376,7 @@ export default function StudentCertificatesPage() {
           </div>
 
           {/* Parchment Box */}
-          <div className="bg-[#FAFBFD] border-4 border-[#0D2545] p-8 shadow-xl relative overflow-hidden flex flex-col justify-between min-h-[580px]">
+          <div className="bg-[#FAFBFD] border-4 border-[#3D405B] p-8 shadow-xl relative overflow-hidden flex flex-col justify-between min-h-[580px]">
             {/* Ornamental Border Corners */}
             <div className="absolute top-2 left-2 w-8 h-8 border-t-2 border-l-2 border-secondary pointer-events-none"></div>
             <div className="absolute top-2 right-2 w-8 h-8 border-t-2 border-r-2 border-secondary pointer-events-none"></div>
@@ -384,7 +384,7 @@ export default function StudentCertificatesPage() {
             <div className="absolute bottom-2 right-2 w-8 h-8 border-b-2 border-r-2 border-secondary pointer-events-none"></div>
 
             {/* Institutional Header */}
-            <div className="flex flex-col items-center text-center pb-4 border-b-2 border-[#0D2545]/20">
+            <div className="flex flex-col items-center text-center pb-4 border-b-2 border-[#3D405B]/20">
               <div className="flex items-center gap-2.5 mb-1.5">
                 <div className="h-9 w-9 bg-primary text-secondary-container font-black text-lg flex items-center justify-center rounded-sm shadow-sm">
                   A
@@ -432,7 +432,7 @@ export default function StudentCertificatesPage() {
             </div>
 
             {/* Signatures & Seal Row */}
-            <div className="mt-8 pt-4 border-t-2 border-[#0D2545]/20 grid grid-cols-3 items-end gap-3 text-center">
+            <div className="mt-8 pt-4 border-t-2 border-[#3D405B]/20 grid grid-cols-3 items-end gap-3 text-center">
               {/* Signatory 1 */}
               <div className="flex flex-col items-center">
                 <div className="h-9 w-28 border-b border-primary/40 flex items-center justify-center font-serif italic text-primary/70 text-xs">
@@ -488,7 +488,7 @@ export default function StudentCertificatesPage() {
       {/* MODAL 1: Verify Document Authenticity */}
       {isVerifyModalOpen && (
         <div className="fixed inset-0 z-50 bg-primary/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-surface-container-lowest w-full max-w-lg border-2 border-primary shadow-[4px_4px_0_0_#0d2545] p-6 relative">
+          <div className="bg-surface-container-lowest w-full max-w-lg border-2 border-primary shadow-[4px_4px_0_0_#3D405B] p-6 relative">
             <div className="flex items-center justify-between pb-3 border-b border-[#eff4ff]">
               <div className="flex items-center gap-2">
                 <ShieldCheck className="h-5 w-5 text-secondary" />
@@ -567,7 +567,7 @@ export default function StudentCertificatesPage() {
       {/* MODAL 2: Request New Certificate / Attestation */}
       {isRequestModalOpen && (
         <div className="fixed inset-0 z-50 bg-primary/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-surface-container-lowest w-full max-w-lg border-2 border-primary shadow-[4px_4px_0_0_#0d2545] p-6 relative">
+          <div className="bg-surface-container-lowest w-full max-w-lg border-2 border-primary shadow-[4px_4px_0_0_#3D405B] p-6 relative">
             <div className="flex items-center justify-between pb-3 border-b border-[#eff4ff]">
               <div className="flex items-center gap-2">
                 <PlusCircle className="h-5 w-5 text-secondary" />

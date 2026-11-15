@@ -163,7 +163,7 @@ export default function StudentAttendancePage() {
     <div className="flex flex-col w-full pb-10">
       {/* Toast Notification */}
       {toastMessage && (
-        <div className="fixed bottom-6 right-6 z-50 bg-primary text-on-primary px-4 py-3 shadow-[2px_2px_0_0_#0D2545] border-l-4 border-secondary-container flex items-center gap-3 animate-in fade-in slide-in-from-bottom-2">
+        <div className="fixed bottom-6 right-6 z-50 bg-primary text-on-primary px-4 py-3 shadow-[2px_2px_0_0_#3D405B] border-l-4 border-secondary-container flex items-center gap-3 animate-in fade-in slide-in-from-bottom-2">
           <span className="material-symbols-outlined text-secondary-container text-[20px]">
             info
           </span>
@@ -1235,7 +1235,7 @@ export default function StudentAttendancePage() {
 
       {/* MODAL: Apply for Leave / On-Duty (OD) */}
       {showLeaveModal && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-50 bg-[#3D405B]/60 backdrop-blur-xs flex items-center justify-center p-4">
           <div className="bg-surface-container-lowest border border-[#d5e3fc] shadow-2xl max-w-lg w-full p-6 animate-in fade-in zoom-in-95 duration-150">
             <div className="flex items-center justify-between pb-3 border-b border-[#d5e3fc]">
               <div className="flex items-center gap-2">

@@ -232,7 +232,7 @@ export default function StaffAttendancePage() {
       )}
 
       {/* Command Telemetry Header */}
-      <div className="w-full bg-surface-container-lowest p-6 border-b border-[#0D2545]/15 shadow-sm flex flex-col gap-4">
+      <div className="w-full bg-surface-container-lowest p-6 border-b border-[#3D405B]/15 shadow-sm flex flex-col gap-4">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div className="flex flex-col">
             <div className="flex items-center gap-2 font-mono text-xs text-secondary uppercase tracking-wider">
@@ -668,7 +668,7 @@ export default function StaffAttendancePage() {
         <div className="xl:col-span-4 flex flex-col gap-6">
           {/* Shortage Radar Card */}
           <div className="bg-surface-container-lowest border border-[#cbd5e1] shadow-sm p-5 rounded-sm flex flex-col gap-3">
-            <div className="flex items-center justify-between pb-2 border-b border-[#0D2545]/10">
+            <div className="flex items-center justify-between pb-2 border-b border-[#3D405B]/10">
               <div className="flex items-center gap-2">
                 <AlertTriangle className="h-4 w-4 text-error" />
                 <h3 className="text-xs font-bold uppercase font-mono text-primary">
@@ -735,7 +735,7 @@ export default function StaffAttendancePage() {
 
           {/* 30-Day Heatmap Card */}
           <div className="bg-surface-container-lowest border border-[#cbd5e1] shadow-sm p-5 rounded-sm flex flex-col gap-3">
-            <div className="flex items-center justify-between pb-2 border-b border-[#0D2545]/10">
+            <div className="flex items-center justify-between pb-2 border-b border-[#3D405B]/10">
               <div className="flex items-center gap-2">
                 <Flame className="h-4 w-4 text-secondary" />
                 <h3 className="text-xs font-bold uppercase font-mono text-primary">
@@ -795,7 +795,7 @@ export default function StaffAttendancePage() {
       {/* Lock Register Confirmation Modal */}
       {isLockModalOpen && (
         <div className="fixed inset-0 z-50 bg-primary/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-surface-container-lowest w-full max-w-md border-2 border-primary shadow-[4px_4px_0_0_#0d2545] p-6 relative rounded-sm">
+          <div className="bg-surface-container-lowest w-full max-w-md border-2 border-primary shadow-[4px_4px_0_0_#3D405B] p-6 relative rounded-sm">
             <div className="flex items-center justify-between pb-3 border-b border-[#cbd5e1]">
               <div className="flex items-center gap-2">
                 <Lock className="h-5 w-5 text-secondary" />

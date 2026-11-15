@@ -207,7 +207,7 @@ export default function StaffDashboardPage() {
     <div className="p-6 md:p-8 space-y-6 max-w-[1600px] mx-auto font-sans text-slate-800">
       {/* Toast Notification */}
       {toastMessage && (
-        <div className="fixed bottom-6 right-6 z-50 bg-slate-900 text-white px-5 py-3.5 rounded-xl shadow-xl flex items-center gap-3 border border-slate-700 text-sm font-medium animate-in slide-in-from-bottom">
+        <div className="fixed bottom-6 right-6 z-50 bg-[#3D405B] text-white px-5 py-3.5 rounded-xl shadow-xl flex items-center gap-3 border border-slate-700 text-sm font-medium animate-in slide-in-from-bottom">
           <CheckCircle2 className="h-5 w-5 text-emerald-400 shrink-0" />
           <span>{toastMessage}</span>
           <button onClick={() => setToastMessage(null)} className="ml-2 text-slate-400 hover:text-white transition-colors">
@@ -234,7 +234,7 @@ export default function StaffDashboardPage() {
             </div>
 
             <div>
-              <h1 className="text-2xl md:text-3xl font-bold text-slate-900 tracking-tight">
+              <h1 className="text-2xl md:text-3xl font-bold text-[#3D405B] tracking-tight">
                 Welcome back, Prof. Amit Sharma! 👋
               </h1>
               <p className="text-sm text-slate-500 mt-1">
@@ -281,7 +281,7 @@ export default function StaffDashboardPage() {
             </div>
           </div>
           <div className="mt-4">
-            <div className="text-2xl font-bold text-slate-900 tracking-tight">4 Batches</div>
+            <div className="text-2xl font-bold text-[#3D405B] tracking-tight">4 Batches</div>
             <div className="text-xs text-slate-500 mt-1">B.Tech IV (A/B), M.Tech II, BCA II</div>
           </div>
         </div>
@@ -295,7 +295,7 @@ export default function StaffDashboardPage() {
             </div>
           </div>
           <div className="mt-4">
-            <div className="text-2xl font-bold text-slate-900 tracking-tight">184 Students</div>
+            <div className="text-2xl font-bold text-[#3D405B] tracking-tight">184 Students</div>
             <div className="text-xs text-slate-500 mt-1">156 UG &bull; 28 PG Scholars</div>
           </div>
         </div>
@@ -309,7 +309,7 @@ export default function StaffDashboardPage() {
             </div>
           </div>
           <div className="mt-4">
-            <div className="text-2xl font-bold text-slate-900 tracking-tight">
+            <div className="text-2xl font-bold text-[#3D405B] tracking-tight">
               {schedule.filter((s) => s.status === "completed").length} of 4 Done
             </div>
             <div className="text-xs text-emerald-600 font-medium mt-1">Next: Lab at 03:30 PM</div>
@@ -325,7 +325,7 @@ export default function StaffDashboardPage() {
             </div>
           </div>
           <div className="mt-4">
-            <div className="text-2xl font-bold text-slate-900 tracking-tight">2 Papers</div>
+            <div className="text-2xl font-bold text-[#3D405B] tracking-tight">2 Papers</div>
             <div className="text-xs text-amber-600 font-medium mt-1">Mid-term starts in 6 days</div>
           </div>
         </div>
@@ -339,7 +339,7 @@ export default function StaffDashboardPage() {
               <Clock className="w-5 h-5" />
             </div>
             <div>
-              <h2 className="text-base font-bold text-slate-900">
+              <h2 className="text-base font-bold text-[#3D405B]">
                 Today&apos;s Lecture Schedule
               </h2>
               <p className="text-xs text-slate-500">Thursday &bull; 4 Sessions Scheduled</p>
@@ -352,7 +352,7 @@ export default function StaffDashboardPage() {
               className={`px-3 py-1 text-xs font-semibold rounded-md transition-all ${
                 scheduleFilter === "all"
                   ? "bg-emerald-600 text-white shadow-xs font-bold"
-                  : "text-slate-600 hover:text-slate-900"
+                  : "text-slate-600 hover:text-[#3D405B]"
               }`}
             >
               All ({schedule.length})
@@ -362,7 +362,7 @@ export default function StaffDashboardPage() {
               className={`px-3 py-1 text-xs font-semibold rounded-md transition-all ${
                 scheduleFilter === "active"
                   ? "bg-emerald-600 text-white shadow-xs font-bold"
-                  : "text-slate-600 hover:text-slate-900"
+                  : "text-slate-600 hover:text-[#3D405B]"
               }`}
             >
               Active ({schedule.filter((s) => s.status !== "completed").length})
@@ -372,7 +372,7 @@ export default function StaffDashboardPage() {
               className={`px-3 py-1 text-xs font-semibold rounded-md transition-all ${
                 scheduleFilter === "completed"
                   ? "bg-emerald-600 text-white shadow-xs font-bold"
-                  : "text-slate-600 hover:text-slate-900"
+                  : "text-slate-600 hover:text-[#3D405B]"
               }`}
             >
               Completed ({schedule.filter((s) => s.status === "completed").length})
@@ -398,7 +398,7 @@ export default function StaffDashboardPage() {
               >
                 {/* Time & Duration */}
                 <div className="flex items-center gap-3 md:w-1/4">
-                  <div className={`text-sm font-bold ${isLive ? "text-blue-700" : "text-slate-900"}`}>
+                  <div className={`text-sm font-bold ${isLive ? "text-blue-700" : "text-[#3D405B]"}`}>
                     {item.time}
                   </div>
                   <span className="text-[10px] font-semibold bg-white text-slate-500 px-2 py-0.5 rounded-full border border-slate-200">
@@ -409,7 +409,7 @@ export default function StaffDashboardPage() {
                 {/* Subject & Venue */}
                 <div className="md:w-2/5 space-y-1">
                   <div className="flex items-center gap-2">
-                    <span className="text-sm font-bold text-slate-900">
+                    <span className="text-sm font-bold text-[#3D405B]">
                       {item.code}: {item.subject}
                     </span>
                     {isLive && (
@@ -475,7 +475,7 @@ export default function StaffDashboardPage() {
             <div className="w-8 h-8 rounded-lg bg-purple-50 text-purple-600 flex items-center justify-center">
               <GraduationCap className="w-4 h-4" />
             </div>
-            <h2 className="text-base font-bold text-slate-900">
+            <h2 className="text-base font-bold text-[#3D405B]">
               Assigned Batches (AY 2025–26)
             </h2>
           </div>
@@ -504,7 +504,7 @@ export default function StaffDashboardPage() {
                   </span>
                 </div>
 
-                <h3 className="text-sm font-bold text-slate-900 mt-3">
+                <h3 className="text-sm font-bold text-[#3D405B] mt-3">
                   {cohort.name}
                 </h3>
                 <p className="text-xs text-slate-500 mt-0.5">{cohort.course}</p>
@@ -561,7 +561,7 @@ export default function StaffDashboardPage() {
               <div className="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
                 <BarChart3 className="w-4 h-4" />
               </div>
-              <h2 className="text-sm font-bold text-slate-900">
+              <h2 className="text-sm font-bold text-[#3D405B]">
                 Weekly Teaching Workload &amp; Attendance
               </h2>
             </div>
@@ -581,7 +581,7 @@ export default function StaffDashboardPage() {
                 <div className="w-full bg-slate-50 h-36 flex items-end justify-center p-1.5 rounded-xl border border-slate-100">
                   <div className={`w-full ${item.height} bg-blue-600 rounded-lg transition-all`}></div>
                 </div>
-                <span className="text-xs font-bold text-slate-900">{item.day}</span>
+                <span className="text-xs font-bold text-[#3D405B]">{item.day}</span>
                 <span className="text-[11px] text-emerald-600 font-semibold">{item.attendance}</span>
               </div>
             ))}
@@ -603,7 +603,7 @@ export default function StaffDashboardPage() {
               <div className="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center">
                 <BookOpen className="w-4 h-4" />
               </div>
-              <h2 className="text-sm font-bold text-slate-900">
+              <h2 className="text-sm font-bold text-[#3D405B]">
                 Faculty Notices
               </h2>
             </div>
@@ -621,7 +621,7 @@ export default function StaffDashboardPage() {
                     {memo.priority}
                   </span>
                 </div>
-                <h3 className="text-xs font-bold text-slate-900 leading-snug">
+                <h3 className="text-xs font-bold text-[#3D405B] leading-snug">
                   {memo.title}
                 </h3>
                 <div className="flex items-center justify-between text-xs text-slate-500">
@@ -636,12 +636,12 @@ export default function StaffDashboardPage() {
 
       {/* Audit Roll Modal */}
       {selectedAuditSession && (
-        <div className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-50 bg-[#3D405B]/40 backdrop-blur-xs flex items-center justify-center p-4">
           <div className="bg-white w-full max-w-lg rounded-2xl border border-slate-200 shadow-2xl p-6 relative animate-in fade-in zoom-in-95 duration-150">
             <div className="flex items-center justify-between pb-3 border-b border-slate-100">
               <div className="flex items-center gap-2">
                 <CheckCircle2 className="h-5 w-5 text-emerald-500" />
-                <h3 className="text-base font-bold text-slate-900">
+                <h3 className="text-base font-bold text-[#3D405B]">
                   Attendance Session Details
                 </h3>
               </div>
@@ -655,7 +655,7 @@ export default function StaffDashboardPage() {
 
             <div className="py-4 text-xs space-y-3">
               <div className="p-3.5 bg-slate-50 rounded-xl border border-slate-100">
-                <div className="text-sm font-bold text-slate-900">
+                <div className="text-sm font-bold text-[#3D405B]">
                   {selectedAuditSession.code}: {selectedAuditSession.subject}
                 </div>
                 <div className="text-slate-500 mt-1">

@@ -37,7 +37,7 @@ export default function AdminDashboardPage() {
     <div className="p-6 md:p-8 space-y-6 max-w-[1600px] mx-auto font-sans text-slate-800">
       {/* Toast Notification */}
       {toastMessage && (
-        <div className="fixed bottom-6 right-6 z-50 bg-slate-900 text-white px-5 py-3.5 rounded-xl shadow-xl flex items-center gap-3 border border-slate-700 text-sm font-medium animate-in slide-in-from-bottom">
+        <div className="fixed bottom-6 right-6 z-50 bg-[#3D405B] text-white px-5 py-3.5 rounded-xl shadow-xl flex items-center gap-3 border border-slate-700 text-sm font-medium animate-in slide-in-from-bottom">
           <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0" />
           <span>{toastMessage}</span>
           <button
@@ -67,7 +67,7 @@ export default function AdminDashboardPage() {
             </div>
 
             <div>
-              <h1 className="text-2xl md:text-3xl font-bold text-slate-900 tracking-tight">
+              <h1 className="text-2xl md:text-3xl font-bold text-[#3D405B] tracking-tight">
                 Institutional Overview &amp; Control
               </h1>
               <p className="text-sm text-slate-500 mt-1">
@@ -121,7 +121,7 @@ export default function AdminDashboardPage() {
             </div>
           </div>
           <div className="mt-4">
-            <div className="text-2xl font-bold text-slate-900 tracking-tight">2,480</div>
+            <div className="text-2xl font-bold text-[#3D405B] tracking-tight">2,480</div>
             <div className="flex items-center gap-1.5 text-xs text-slate-500 mt-1">
               <span className="inline-flex items-center text-emerald-600 font-semibold">
                 <TrendingUp className="w-3.5 h-3.5 mr-0.5" />
@@ -141,7 +141,7 @@ export default function AdminDashboardPage() {
             </div>
           </div>
           <div className="mt-4">
-            <div className="text-2xl font-bold text-slate-900 tracking-tight">142</div>
+            <div className="text-2xl font-bold text-[#3D405B] tracking-tight">142</div>
             <div className="text-xs text-slate-500 mt-1">Across 18 Departments</div>
           </div>
         </div>
@@ -155,7 +155,7 @@ export default function AdminDashboardPage() {
             </div>
           </div>
           <div className="mt-4">
-            <div className="text-2xl font-bold text-slate-900 tracking-tight">94.2%</div>
+            <div className="text-2xl font-bold text-[#3D405B] tracking-tight">94.2%</div>
             <div className="text-xs text-emerald-600 font-medium mt-1">2,336 Present today</div>
           </div>
         </div>
@@ -169,7 +169,7 @@ export default function AdminDashboardPage() {
             </div>
           </div>
           <div className="mt-4">
-            <div className="text-2xl font-bold text-slate-900 tracking-tight">₹48.60 L</div>
+            <div className="text-2xl font-bold text-[#3D405B] tracking-tight">₹48.60 L</div>
             <div className="text-xs text-slate-500 mt-1">81% of monthly target</div>
           </div>
         </div>
@@ -195,7 +195,7 @@ export default function AdminDashboardPage() {
         <div className="lg:col-span-7 bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm flex flex-col justify-between">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 gap-3 border-b border-slate-100">
             <div>
-              <h2 className="text-base font-bold text-slate-900">
+              <h2 className="text-base font-bold text-[#3D405B]">
                 Monthly Fee Realization vs Target
               </h2>
               <p className="text-xs text-slate-500 mt-0.5">
@@ -211,7 +211,7 @@ export default function AdminDashboardPage() {
                     className={`px-2.5 py-1 text-xs font-semibold rounded-md transition-all ${
                       selectedMonth === m
                         ? "bg-emerald-600 text-white shadow-xs font-bold"
-                        : "text-slate-600 hover:text-slate-900"
+                        : "text-slate-600 hover:text-[#3D405B]"
                     }`}
                   >
                     {m}
@@ -308,7 +308,7 @@ export default function AdminDashboardPage() {
         <div className="lg:col-span-5 bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm flex flex-col justify-between">
           <div className="flex items-center justify-between pb-4 border-b border-slate-100">
             <div>
-              <h2 className="text-base font-bold text-slate-900">Department Attendance</h2>
+              <h2 className="text-base font-bold text-[#3D405B]">Department Attendance</h2>
               <p className="text-xs text-slate-500">Live biometric attendance breakdown</p>
             </div>
             <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-emerald-50 text-emerald-700 text-xs font-semibold rounded-full border border-emerald-200">
@@ -330,7 +330,7 @@ export default function AdminDashboardPage() {
                 <circle className="text-purple-500" cx="80" cy="80" fill="none" r="60" stroke="currentColor" strokeDasharray="80 377" strokeDashoffset="-240" strokeWidth="16" />
               </svg>
               <div className="absolute flex flex-col items-center justify-center text-center">
-                <span className="text-2xl font-bold text-slate-900">94.2%</span>
+                <span className="text-2xl font-bold text-[#3D405B]">94.2%</span>
                 <span className="text-[10px] text-slate-400 font-semibold uppercase">Overall Avg</span>
               </div>
             </div>
@@ -390,7 +390,7 @@ export default function AdminDashboardPage() {
                   <GraduationCap className="w-4 h-4" />
                 </div>
                 <div>
-                  <h3 className="text-sm font-bold text-slate-900">
+                  <h3 className="text-sm font-bold text-[#3D405B]">
                     Recent Enrolled Students
                   </h3>
                   <p className="text-xs text-slate-500">Latest admissions stream</p>
@@ -425,7 +425,7 @@ export default function AdminDashboardPage() {
                           RS
                         </div>
                         <div>
-                          <div className="font-semibold text-slate-900">Rahul Sharma</div>
+                          <div className="font-semibold text-[#3D405B]">Rahul Sharma</div>
                           <div className="text-[11px] text-slate-400 font-mono">APX-2023-CS-042</div>
                         </div>
                       </div>
@@ -458,7 +458,7 @@ export default function AdminDashboardPage() {
                           PP
                         </div>
                         <div>
-                          <div className="font-semibold text-slate-900">Priya Patel</div>
+                          <div className="font-semibold text-[#3D405B]">Priya Patel</div>
                           <div className="text-[11px] text-slate-400 font-mono">APX-2022-EC-019</div>
                         </div>
                       </div>
@@ -491,7 +491,7 @@ export default function AdminDashboardPage() {
                           AK
                         </div>
                         <div>
-                          <div className="font-semibold text-slate-900">Amit Kumar</div>
+                          <div className="font-semibold text-[#3D405B]">Amit Kumar</div>
                           <div className="text-[11px] text-slate-400 font-mono">APX-2024-ME-058</div>
                         </div>
                       </div>
@@ -528,7 +528,7 @@ export default function AdminDashboardPage() {
                   <CreditCard className="w-4 h-4" />
                 </div>
                 <div>
-                  <h3 className="text-sm font-bold text-slate-900">
+                  <h3 className="text-sm font-bold text-[#3D405B]">
                     Today's Fee Collections
                   </h3>
                   <p className="text-xs text-slate-500">Live transaction receipts</p>
@@ -547,7 +547,7 @@ export default function AdminDashboardPage() {
               <div className="p-3.5 bg-slate-50 rounded-xl border border-slate-100 flex justify-between items-center">
                 <div>
                   <span className="text-[10px] text-slate-400 font-mono">#REC-2025-0842</span>
-                  <p className="font-semibold text-slate-900 text-xs mt-0.5">Rahul Sharma</p>
+                  <p className="font-semibold text-[#3D405B] text-xs mt-0.5">Rahul Sharma</p>
                   <span className="text-[11px] text-slate-500">Tuition &bull; UPI</span>
                 </div>
                 <div className="text-right">
@@ -559,7 +559,7 @@ export default function AdminDashboardPage() {
               <div className="p-3.5 bg-slate-50 rounded-xl border border-slate-100 flex justify-between items-center">
                 <div>
                   <span className="text-[10px] text-slate-400 font-mono">#REC-2025-0841</span>
-                  <p className="font-semibold text-slate-900 text-xs mt-0.5">Priya Patel</p>
+                  <p className="font-semibold text-[#3D405B] text-xs mt-0.5">Priya Patel</p>
                   <span className="text-[11px] text-slate-500">Tuition &bull; Cheque</span>
                 </div>
                 <div className="text-right">
@@ -571,7 +571,7 @@ export default function AdminDashboardPage() {
               <div className="p-3.5 bg-slate-50 rounded-xl border border-slate-100 flex justify-between items-center">
                 <div>
                   <span className="text-[10px] text-slate-400 font-mono">#REC-2025-0840</span>
-                  <p className="font-semibold text-slate-900 text-xs mt-0.5">Rohan Verma</p>
+                  <p className="font-semibold text-[#3D405B] text-xs mt-0.5">Rohan Verma</p>
                   <span className="text-[11px] text-slate-500">Tranche 1 &bull; Cash</span>
                 </div>
                 <div className="text-right">
@@ -592,7 +592,7 @@ export default function AdminDashboardPage() {
                 <div className="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center">
                   <FileText className="w-4 h-4" />
                 </div>
-                <h3 className="text-sm font-bold text-slate-900">
+                <h3 className="text-sm font-bold text-[#3D405B]">
                   Campus Circulars
                 </h3>
               </div>
@@ -612,7 +612,7 @@ export default function AdminDashboardPage() {
                   </span>
                   <span className="text-[10px] text-slate-400">Today</span>
                 </div>
-                <h4 className="font-bold text-slate-900 text-xs mt-1">
+                <h4 className="font-bold text-[#3D405B] text-xs mt-1">
                   End-Semester Examination Schedules Released
                 </h4>
                 <p className="text-xs text-slate-600 mt-1 leading-relaxed">
@@ -627,7 +627,7 @@ export default function AdminDashboardPage() {
                   </span>
                   <span className="text-[10px] text-slate-400">Yesterday</span>
                 </div>
-                <h4 className="font-bold text-slate-900 text-xs mt-1">
+                <h4 className="font-bold text-[#3D405B] text-xs mt-1">
                   Internal Marks Upload Deadline: 31st March
                 </h4>
                 <p className="text-xs text-slate-600 mt-1 leading-relaxed">
@@ -642,7 +642,7 @@ export default function AdminDashboardPage() {
                   </span>
                   <span className="text-[10px] text-slate-400">2 days ago</span>
                 </div>
-                <h4 className="font-bold text-slate-900 text-xs mt-1">
+                <h4 className="font-bold text-[#3D405B] text-xs mt-1">
                   Grace Window for Tranche 2 Settlement
                 </h4>
                 <p className="text-xs text-slate-600 mt-1 leading-relaxed">
@@ -659,7 +659,7 @@ export default function AdminDashboardPage() {
                 <div className="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center">
                   <Database className="w-4 h-4" />
                 </div>
-                <h3 className="text-sm font-bold text-slate-900">
+                <h3 className="text-sm font-bold text-[#3D405B]">
                   Campus Services Status
                 </h3>
               </div>

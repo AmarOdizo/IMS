@@ -399,7 +399,7 @@ export default function LoginPage() {
 
       {/* Reset Password Modal with Email OTP (FR-1.4) */}
       {isResetModalOpen && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-50 bg-[#3D405B]/60 backdrop-blur-xs flex items-center justify-center p-4">
           <div className="bg-surface-container-lowest border-2 border-primary w-full max-w-md p-5 shadow-2xl animate-in zoom-in-95 font-mono text-xs">
             <div className="flex items-center justify-between border-b border-[#cbd5e1] pb-3 mb-4">
               <div className="flex items-center gap-2">

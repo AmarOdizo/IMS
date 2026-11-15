@@ -790,7 +790,7 @@ export default function StaffDirectoryPage() {
 
       {/* 4. Onboard Faculty Modal */}
       {showOnboardModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs animate-in fade-in">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#3D405B]/50 backdrop-blur-xs animate-in fade-in">
           <div className="w-full max-w-lg bg-surface-container-lowest shadow-2xl border border-outline-variant/30 overflow-hidden">
             <div className="p-4 bg-primary text-white flex items-center justify-between">
               <div className="flex items-center gap-2">

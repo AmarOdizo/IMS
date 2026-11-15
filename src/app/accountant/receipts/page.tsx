@@ -696,7 +696,7 @@ export default function AccountantFeeReceiptsPage() {
           {/* MASTER PRINTABLE RECEIPT CONTAINER (Institutional Brutalist Layout) */}
           <div
             id="printable-receipt"
-            className="bg-white p-6 border-2 border-primary text-[#001028] shadow-md relative select-text"
+            className="bg-white p-6 border-2 border-primary text-[#3D405B] shadow-md relative select-text"
           >
             {/* Optional Duplicate Watermark */}
             {isDuplicateStamp && (
@@ -1013,7 +1013,7 @@ export default function AccountantFeeReceiptsPage() {
 
       {/* Verify Hash Modal */}
       {isVerifyHashModalOpen && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-50 bg-[#3D405B]/60 backdrop-blur-xs flex items-center justify-center p-4">
           <div className="bg-surface-container-lowest border border-primary w-full max-w-lg p-5 shadow-2xl animate-in zoom-in-95">
             <div className="flex items-center justify-between border-b border-[#d5e3fc] pb-3 mb-4">
               <div className="flex items-center gap-2">
@@ -1093,7 +1093,7 @@ export default function AccountantFeeReceiptsPage() {
 
       {/* Batch Print Modal */}
       {isBatchPrintModalOpen && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-50 bg-[#3D405B]/60 backdrop-blur-xs flex items-center justify-center p-4">
           <div className="bg-surface-container-lowest border border-primary w-full max-w-md p-5 shadow-2xl animate-in zoom-in-95">
             <div className="flex items-center justify-between border-b border-[#d5e3fc] pb-3 mb-4">
               <div className="flex items-center gap-2">

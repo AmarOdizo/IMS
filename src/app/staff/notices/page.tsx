@@ -416,7 +416,7 @@ export default function StaffNoticesPage() {
                   </div>
 
                   {/* Card Control Footer */}
-                  <div className="flex items-center justify-between pt-2 border-t border-[#0D2545]/10 text-xs font-mono">
+                  <div className="flex items-center justify-between pt-2 border-t border-[#3D405B]/10 text-xs font-mono">
                     <div className="flex items-center gap-2">
                       <button
                         onClick={() => showToast(`Edit drafted for ${notice.ref}`)}

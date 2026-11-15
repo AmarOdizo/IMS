@@ -341,7 +341,7 @@ export default function StudentNoticesPage() {
       )}
 
       {/* Command Strip / Master Context Header */}
-      <div className="px-6 py-5 bg-surface-container-lowest border-b border-[#0D2545]/15 shadow-sm">
+      <div className="px-6 py-5 bg-surface-container-lowest border-b border-[#3D405B]/15 shadow-sm">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div>
             <div className="flex items-center gap-2 mb-1">
@@ -381,7 +381,7 @@ export default function StudentNoticesPage() {
         </div>
 
         {/* Live Search & Filtration Bar */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 pt-3 mt-3 border-t border-[#0D2545]/10 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 pt-3 mt-3 border-t border-[#3D405B]/10 items-center">
           <div className="lg:col-span-7 relative">
             <Search className="absolute left-3 top-2.5 text-on-surface-variant h-4 w-4" />
             <input
@@ -435,7 +435,7 @@ export default function StudentNoticesPage() {
       </div>
 
       {/* Operational Status Bar & Filter Tabs */}
-      <div className="px-6 py-2 bg-surface-container-low border-b border-[#0D2545]/15 flex flex-wrap items-center justify-between gap-3">
+      <div className="px-6 py-2 bg-surface-container-low border-b border-[#3D405B]/15 flex flex-wrap items-center justify-between gap-3">
         {/* Category Pills */}
         <div className="flex items-center gap-1.5 overflow-x-auto max-w-full py-0.5">
           <button
@@ -500,10 +500,10 @@ export default function StudentNoticesPage() {
       {/* Primary Operations Surface: 45/55 Dual-Pane Console */}
       <div className="grid grid-cols-1 lg:grid-cols-12 w-full flex-1">
         {/* LEFT PANEL: Master Notice Feed (5 Cols) */}
-        <section className="lg:col-span-5 bg-surface-container-lowest border-r border-[#0D2545]/15 flex flex-col justify-between overflow-y-auto min-h-[500px]">
+        <section className="lg:col-span-5 bg-surface-container-lowest border-r border-[#3D405B]/15 flex flex-col justify-between overflow-y-auto min-h-[500px]">
           <div>
             {/* Stream Header */}
-            <div className="px-5 py-2.5 bg-surface-container-high/60 border-b border-[#0D2545]/10 flex items-center justify-between">
+            <div className="px-5 py-2.5 bg-surface-container-high/60 border-b border-[#3D405B]/10 flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <Bell className="h-4 w-4 text-secondary" />
                 <span className="text-xs font-mono uppercase tracking-wider text-primary font-bold">
@@ -517,7 +517,7 @@ export default function StudentNoticesPage() {
             </div>
 
             {/* Feed List Items */}
-            <div className="divide-y divide-[#0D2545]/10">
+            <div className="divide-y divide-[#3D405B]/10">
               {filteredNotices.map((notice) => {
                 const isSelected = selectedNotice.id === notice.id;
                 return (
@@ -559,7 +559,7 @@ export default function StudentNoticesPage() {
                       {notice.summary}
                     </p>
 
-                    <div className="mt-3 pt-2.5 border-t border-[#0D2545]/10 flex items-center justify-between text-outline font-mono text-[11px]">
+                    <div className="mt-3 pt-2.5 border-t border-[#3D405B]/10 flex items-center justify-between text-outline font-mono text-[11px]">
                       <div className="flex items-center gap-1.5">
                         <Clock className="h-3.5 w-3.5 text-secondary" />
                         <span>{notice.timeAgo}</span>
@@ -582,7 +582,7 @@ export default function StudentNoticesPage() {
           </div>
 
           {/* Feed Pagination */}
-          <div className="p-4 bg-surface-container-low border-t border-[#0D2545]/10 flex items-center justify-between">
+          <div className="p-4 bg-surface-container-low border-t border-[#3D405B]/10 flex items-center justify-between">
             <div className="font-mono text-xs text-on-surface-variant">
               SHOWING <span className="font-bold text-primary">{filteredNotices.length}</span> OF 14 CIRCULARS
             </div>

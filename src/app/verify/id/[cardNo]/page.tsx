@@ -140,7 +140,7 @@ export default function IdCardPublicVerifyPage({
           {/* Status Header */}
           <div
             className={`p-4 sm:p-5 flex items-center justify-between text-white ${
-              isActive ? (isStaff ? "bg-[#780016]" : "bg-[#001028]") : "bg-rose-900"
+              isActive ? (isStaff ? "bg-[#780016]" : "bg-[#3D405B]") : "bg-rose-900"
             }`}
           >
             <div className="flex items-center gap-3">
@@ -181,7 +181,7 @@ export default function IdCardPublicVerifyPage({
               <div className="relative">
                 <div
                   className={`w-28 h-36 ${
-                    isStaff ? "bg-[#780016]" : "bg-[#001028]"
+                    isStaff ? "bg-[#780016]" : "bg-[#3D405B]"
                   } text-white flex flex-col items-center justify-center border-2 border-primary shadow-md p-2 text-center`}
                 >
                   <User className="w-14 h-14 text-white/70 mb-1" />

@@ -787,9 +787,9 @@ export default function CertificatesPage() {
                   }`}
                 >
                   {/* Geometric Institutional Borders */}
-                  <div className="absolute inset-2 pointer-events-none bg-transparent shadow-[inset_0_0_0_2px_#0d2545]"></div>
+                  <div className="absolute inset-2 pointer-events-none bg-transparent shadow-[inset_0_0_0_2px_#3D405B]"></div>
                   <div className="absolute inset-3 pointer-events-none bg-transparent shadow-[inset_0_0_0_1px_#c4c6cf]"></div>
-                  <div className="absolute inset-5 pointer-events-none bg-transparent shadow-[inset_0_0_0_1px_#0d2545]"></div>
+                  <div className="absolute inset-5 pointer-events-none bg-transparent shadow-[inset_0_0_0_1px_#3D405B]"></div>
 
                   {/* Revoked Watermark Stamp if Revoked */}
                   {activeCert.status === "Revoked" && (

@@ -654,7 +654,7 @@ export default function AccountantPaymentHistoryPage() {
 
       {/* Slideout Modal: Detailed Transaction Audit Voucher */}
       {drawerTxn && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex justify-end">
+        <div className="fixed inset-0 z-50 bg-[#3D405B]/60 backdrop-blur-xs flex justify-end">
           <div className="bg-surface-container-lowest border-l-2 border-primary w-full max-w-xl h-full shadow-2xl flex flex-col justify-between overflow-y-auto animate-in slide-in-from-right font-mono text-xs">
             {/* Drawer Header */}
             <div>
@@ -829,7 +829,7 @@ export default function AccountantPaymentHistoryPage() {
 
       {/* Tally XML Export Modal */}
       {isTallyModalOpen && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-50 bg-[#3D405B]/60 backdrop-blur-xs flex items-center justify-center p-4">
           <div className="bg-surface-container-lowest border-2 border-primary w-full max-w-md p-5 shadow-2xl animate-in zoom-in-95 font-mono text-xs">
             <div className="flex items-center justify-between border-b border-[#cbd5e1] pb-3 mb-4">
               <div className="flex items-center gap-2">

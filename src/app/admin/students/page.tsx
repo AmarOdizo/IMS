@@ -659,7 +659,7 @@ export default function StudentsDirectoryPage() {
 
       {/* 4. Slide-Over 360 Student Profile Drawer */}
       {selectedStudent && (
-        <div className="fixed inset-0 z-50 overflow-hidden flex justify-end bg-black/40 backdrop-blur-xs animate-in fade-in duration-200">
+        <div className="fixed inset-0 z-50 overflow-hidden flex justify-end bg-[#3D405B]/40 backdrop-blur-xs animate-in fade-in duration-200">
           <div className="w-full max-w-md bg-surface-container-lowest h-full shadow-2xl flex flex-col border-l border-outline-variant/30 animate-in slide-in-from-right duration-300">
             {/* Drawer Header */}
             <div className="p-4 bg-primary text-white flex items-center justify-between border-b border-primary-container">
@@ -811,7 +811,7 @@ export default function StudentsDirectoryPage() {
 
       {/* 5. Enroll New Student Modal */}
       {showEnrollModal && (
-        <div className="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs animate-in fade-in">
+        <div className="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center p-4 bg-[#3D405B]/50 backdrop-blur-xs animate-in fade-in">
           <div className="w-full max-w-xl bg-surface-container-lowest shadow-2xl border border-outline-variant/30 overflow-hidden">
             <div className="p-4 bg-primary text-white flex items-center justify-between">
               <div className="flex items-center gap-2">

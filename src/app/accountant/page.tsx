@@ -160,7 +160,7 @@ export default function AccountantDashboardPage() {
     <div className="p-6 md:p-8 space-y-6 max-w-[1600px] mx-auto font-sans text-slate-800">
       {/* Toast Notification */}
       {toastMessage && (
-        <div className="fixed bottom-6 right-6 z-50 bg-slate-900 text-white px-5 py-3.5 rounded-xl shadow-xl flex items-center gap-3 border border-slate-700 text-sm font-medium animate-in slide-in-from-bottom">
+        <div className="fixed bottom-6 right-6 z-50 bg-[#3D405B] text-white px-5 py-3.5 rounded-xl shadow-xl flex items-center gap-3 border border-slate-700 text-sm font-medium animate-in slide-in-from-bottom">
           <CheckCircle2 className="h-5 w-5 text-emerald-400 shrink-0" />
           <span>{toastMessage}</span>
           <button onClick={() => setToastMessage(null)} className="ml-2 text-slate-400 hover:text-white transition-colors">
@@ -189,7 +189,7 @@ export default function AccountantDashboardPage() {
             </div>
 
             <div>
-              <h1 className="text-2xl md:text-3xl font-bold text-slate-900 tracking-tight">
+              <h1 className="text-2xl md:text-3xl font-bold text-[#3D405B] tracking-tight">
                 Welcome back, Mr. Rajesh Kumar! 💳
               </h1>
               <p className="text-sm text-slate-500 mt-1">
@@ -236,7 +236,7 @@ export default function AccountantDashboardPage() {
             </div>
           </div>
           <div className="mt-4">
-            <div className="text-2xl font-bold text-slate-900 tracking-tight font-mono">₹3,85,000</div>
+            <div className="text-2xl font-bold text-[#3D405B] tracking-tight font-mono">₹3,85,000</div>
             <div className="flex items-center gap-1.5 text-xs text-slate-500 mt-1">
               <span className="text-emerald-600 font-semibold">+14.2%</span>
               <span>vs yesterday</span>
@@ -257,7 +257,7 @@ export default function AccountantDashboardPage() {
             </div>
           </div>
           <div className="mt-4">
-            <div className="text-2xl font-bold text-slate-900 tracking-tight font-mono">₹48.60 L</div>
+            <div className="text-2xl font-bold text-[#3D405B] tracking-tight font-mono">₹48.60 L</div>
             <div className="text-xs text-slate-500 mt-1">Target: ₹55.00 Lakhs</div>
           </div>
           <div className="pt-3 mt-3 border-t border-slate-100 text-xs text-slate-500 flex justify-between">
@@ -275,7 +275,7 @@ export default function AccountantDashboardPage() {
             </div>
           </div>
           <div className="mt-4">
-            <div className="text-2xl font-bold text-slate-900 tracking-tight font-mono">₹4.18 Cr</div>
+            <div className="text-2xl font-bold text-[#3D405B] tracking-tight font-mono">₹4.18 Cr</div>
             <div className="text-xs text-slate-500 mt-1">Total Billed: ₹4.65 Cr</div>
           </div>
           <div className="pt-3 mt-3 border-t border-slate-100 text-xs text-slate-500 flex justify-between">
@@ -311,7 +311,7 @@ export default function AccountantDashboardPage() {
             </div>
           </div>
           <div className="mt-4">
-            <div className="text-2xl font-bold text-slate-900 tracking-tight font-mono">1,842</div>
+            <div className="text-2xl font-bold text-[#3D405B] tracking-tight font-mono">1,842</div>
             <div className="text-xs text-slate-500 mt-1">Reversals: 0 Nil</div>
           </div>
           <div className="pt-3 mt-3 border-t border-slate-100 text-xs text-slate-500 flex justify-between">
@@ -329,7 +329,7 @@ export default function AccountantDashboardPage() {
           <div className="bg-white rounded-2xl border border-slate-200/80 shadow-sm p-6 space-y-4">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-100">
               <div>
-                <h2 className="text-base font-bold text-slate-900">
+                <h2 className="text-base font-bold text-[#3D405B]">
                   Monthly Fee Intake: Target vs. Actual
                 </h2>
                 <p className="text-xs text-slate-500">Figures in Lakhs (INR)</p>
@@ -402,7 +402,7 @@ export default function AccountantDashboardPage() {
           <div className="bg-white rounded-2xl border border-slate-200/80 shadow-sm p-6 space-y-4">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-3 border-b border-slate-100">
               <div>
-                <h3 className="text-base font-bold text-slate-900">
+                <h3 className="text-base font-bold text-[#3D405B]">
                   Recent Fee Transactions &amp; Receipts
                 </h3>
                 <p className="text-xs text-slate-500">Audit trail of verified student vouchers</p>
@@ -428,7 +428,7 @@ export default function AccountantDashboardPage() {
                       className={`px-2.5 py-1 text-xs font-semibold rounded-lg transition-all ${
                         modeFilter.toLowerCase() === mode.toLowerCase()
                           ? "bg-emerald-600 text-white shadow-xs font-bold"
-                          : "text-slate-600 hover:text-slate-900"
+                          : "text-slate-600 hover:text-[#3D405B]"
                       }`}
                     >
                       {mode}
@@ -465,10 +465,10 @@ export default function AccountantDashboardPage() {
                   {filteredTransactions.map((t) => (
                     <tr key={t.id} className="hover:bg-slate-50/60 transition-colors">
                       <td className="py-3 px-4 font-semibold text-blue-600 font-mono">{t.id}</td>
-                      <td className="py-3 px-4 font-semibold text-slate-900">{t.studentName}</td>
+                      <td className="py-3 px-4 font-semibold text-[#3D405B]">{t.studentName}</td>
                       <td className="py-3 px-4 text-slate-500 font-mono text-[11px]">{t.roll}</td>
                       <td className="py-3 px-4 text-slate-600">{t.course}</td>
-                      <td className="py-3 px-4 text-right font-bold text-slate-900 font-mono">
+                      <td className="py-3 px-4 text-right font-bold text-[#3D405B] font-mono">
                         ₹{t.amount.toLocaleString("en-IN")}
                       </td>
                       <td className="py-3 px-4">
@@ -520,7 +520,7 @@ export default function AccountantDashboardPage() {
           {/* Payment Mode Breakdown */}
           <div className="bg-white rounded-2xl border border-slate-200/80 shadow-sm p-6 space-y-4">
             <div className="flex items-center justify-between pb-3 border-b border-slate-100">
-              <h3 className="text-sm font-bold text-slate-900">Payment Channels (March)</h3>
+              <h3 className="text-sm font-bold text-[#3D405B]">Payment Channels (March)</h3>
               <span className="text-xs text-slate-500">MTD Realized</span>
             </div>
 
@@ -538,35 +538,35 @@ export default function AccountantDashboardPage() {
                   <span className="w-2.5 h-2.5 rounded-full bg-blue-600"></span>
                   <span className="text-slate-700">UPI (QR / VPA)</span>
                 </div>
-                <span className="font-semibold text-slate-900">42% (₹20.41L)</span>
+                <span className="font-semibold text-[#3D405B]">42% (₹20.41L)</span>
               </div>
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <span className="w-2.5 h-2.5 rounded-full bg-indigo-500"></span>
                   <span className="text-slate-700">Direct Bank Wire (NEFT)</span>
                 </div>
-                <span className="font-semibold text-slate-900">28% (₹13.60L)</span>
+                <span className="font-semibold text-[#3D405B]">28% (₹13.60L)</span>
               </div>
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <span className="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
                   <span className="text-slate-700">Counter Physical Cash</span>
                 </div>
-                <span className="font-semibold text-slate-900">15% (₹7.29L)</span>
+                <span className="font-semibold text-[#3D405B]">15% (₹7.29L)</span>
               </div>
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <span className="w-2.5 h-2.5 rounded-full bg-purple-500"></span>
                   <span className="text-slate-700">POS Debit / Credit Card</span>
                 </div>
-                <span className="font-semibold text-slate-900">10% (₹4.86L)</span>
+                <span className="font-semibold text-[#3D405B]">10% (₹4.86L)</span>
               </div>
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <span className="w-2.5 h-2.5 rounded-full bg-slate-400"></span>
                   <span className="text-slate-700">Cheque / Demand Draft</span>
                 </div>
-                <span className="font-semibold text-slate-900">5% (₹2.43L)</span>
+                <span className="font-semibold text-[#3D405B]">5% (₹2.43L)</span>
               </div>
             </div>
           </div>
@@ -575,7 +575,7 @@ export default function AccountantDashboardPage() {
           <div className="bg-white rounded-2xl border border-slate-200/80 shadow-sm p-6 space-y-4">
             <div className="flex items-center justify-between pb-3 border-b border-slate-100">
               <div>
-                <h3 className="text-sm font-bold text-slate-900">Exam Clearance Holds</h3>
+                <h3 className="text-sm font-bold text-[#3D405B]">Exam Clearance Holds</h3>
                 <p className="text-xs text-slate-500">Pending fee clearance</p>
               </div>
               <span className="px-2.5 py-0.5 bg-rose-50 text-rose-700 text-xs font-semibold rounded-full border border-rose-200">
@@ -586,7 +586,7 @@ export default function AccountantDashboardPage() {
             <div className="space-y-3">
               <div className="p-3 bg-slate-50 rounded-xl border border-slate-100 space-y-1">
                 <div className="flex items-center justify-between">
-                  <span className="font-semibold text-slate-900 text-xs">Rohan Verma</span>
+                  <span className="font-semibold text-[#3D405B] text-xs">Rohan Verma</span>
                   <span className="font-bold text-rose-600 font-mono text-xs">₹45,000</span>
                 </div>
                 <div className="text-xs text-slate-500 flex justify-between">
@@ -605,7 +605,7 @@ export default function AccountantDashboardPage() {
 
               <div className="p-3 bg-slate-50 rounded-xl border border-slate-100 space-y-1">
                 <div className="flex items-center justify-between">
-                  <span className="font-semibold text-slate-900 text-xs">Sneha Kulkarni</span>
+                  <span className="font-semibold text-[#3D405B] text-xs">Sneha Kulkarni</span>
                   <span className="font-bold text-amber-600 font-mono text-xs">₹35,000</span>
                 </div>
                 <div className="text-xs text-slate-500 flex justify-between">
@@ -632,7 +632,7 @@ export default function AccountantDashboardPage() {
           </div>
 
           {/* Daily Cash Till Reconciliation Panel */}
-          <div className="bg-slate-900 text-white rounded-2xl p-6 shadow-md space-y-4">
+          <div className="bg-[#3D405B] text-white rounded-2xl p-6 shadow-md space-y-4">
             <div className="flex items-center justify-between pb-3 border-b border-slate-800">
               <div className="flex items-center gap-2">
                 <CreditCard className="w-5 h-5 text-emerald-400" />
@@ -681,7 +681,7 @@ export default function AccountantDashboardPage() {
 
       {/* MODAL 1: View Receipt Modal */}
       {selectedReceipt && (
-        <div className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-50 bg-[#3D405B]/40 backdrop-blur-xs flex items-center justify-center p-4">
           <div className="bg-white max-w-lg w-full rounded-2xl border border-slate-200 shadow-2xl p-6 flex flex-col gap-4 animate-in fade-in zoom-in-95 duration-150">
             <div className="flex items-center justify-between pb-3 border-b border-slate-100">
               <div className="flex items-center gap-2.5">
@@ -689,7 +689,7 @@ export default function AccountantDashboardPage() {
                   <Receipt className="w-5 h-5" />
                 </div>
                 <div>
-                  <h3 className="text-base font-bold text-slate-900">Fee Receipt Voucher</h3>
+                  <h3 className="text-base font-bold text-[#3D405B]">Fee Receipt Voucher</h3>
                   <span className="text-xs text-blue-600 font-mono font-semibold">{selectedReceipt.id}</span>
                 </div>
               </div>
@@ -703,14 +703,14 @@ export default function AccountantDashboardPage() {
 
             <div className="bg-slate-50 p-4 rounded-xl border border-slate-100 text-xs space-y-3">
               <div className="text-center border-b border-slate-200 pb-2">
-                <div className="text-sm font-bold text-slate-900">Apex Institute of Technology</div>
+                <div className="text-sm font-bold text-[#3D405B]">Apex Institute of Technology</div>
                 <div className="text-slate-500 text-[11px]">Accounts Directorate &bull; Official Receipt</div>
               </div>
 
               <div className="grid grid-cols-2 gap-2.5 text-xs">
                 <div>
                   <span className="text-slate-400 block text-[10px]">Student Name:</span>
-                  <span className="font-semibold text-slate-900">{selectedReceipt.studentName}</span>
+                  <span className="font-semibold text-[#3D405B]">{selectedReceipt.studentName}</span>
                 </div>
                 <div>
                   <span className="text-slate-400 block text-[10px]">Roll Number:</span>
@@ -726,7 +726,7 @@ export default function AccountantDashboardPage() {
                 </div>
                 <div>
                   <span className="text-slate-400 block text-[10px]">Payment Mode:</span>
-                  <span className="font-semibold text-slate-900">{selectedReceipt.mode}</span>
+                  <span className="font-semibold text-[#3D405B]">{selectedReceipt.mode}</span>
                 </div>
                 <div>
                   <span className="text-slate-400 block text-[10px]">Reference:</span>
@@ -735,7 +735,7 @@ export default function AccountantDashboardPage() {
               </div>
 
               <div className="p-3 bg-white rounded-lg border border-slate-200 flex items-center justify-between">
-                <span className="font-bold text-slate-900">Total Amount:</span>
+                <span className="font-bold text-[#3D405B]">Total Amount:</span>
                 <span className="text-xl font-bold font-mono text-emerald-600">
                   ₹{selectedReceipt.amount.toLocaleString("en-IN")}
                 </span>
@@ -766,12 +766,12 @@ export default function AccountantDashboardPage() {
 
       {/* MODAL 2: Lock Till Modal */}
       {isTillLockModalOpen && (
-        <div className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-50 bg-[#3D405B]/40 backdrop-blur-xs flex items-center justify-center p-4">
           <div className="bg-white max-w-md w-full rounded-2xl border border-slate-200 shadow-2xl p-6 flex flex-col gap-4 animate-in fade-in zoom-in-95 duration-150">
             <div className="flex items-center justify-between pb-3 border-b border-slate-100">
               <div className="flex items-center gap-2">
                 <Lock className="w-5 h-5 text-amber-500" />
-                <h3 className="text-base font-bold text-slate-900">Confirm Counter Till Lock</h3>
+                <h3 className="text-base font-bold text-[#3D405B]">Confirm Counter Till Lock</h3>
               </div>
               <button
                 onClick={() => setIsTillLockModalOpen(false)}
@@ -788,7 +788,7 @@ export default function AccountantDashboardPage() {
             <div className="p-3 bg-slate-50 rounded-xl border border-slate-100 text-xs space-y-1">
               <div className="flex justify-between">
                 <span className="text-slate-500">Total Cash Counted:</span>
-                <span className="font-bold text-slate-900 font-mono">₹1,42,500</span>
+                <span className="font-bold text-[#3D405B] font-mono">₹1,42,500</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-slate-500">Supervisor on Duty:</span>

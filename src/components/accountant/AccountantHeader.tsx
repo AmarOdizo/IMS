@@ -168,7 +168,7 @@ export default function AccountantHeader({
           href="/accountant/profile"
           className="flex items-center gap-2.5 pl-2 hover:opacity-90 transition-opacity"
         >
-          <div className="w-8 h-8 rounded-full bg-primary text-secondary-container font-mono font-bold text-xs flex items-center justify-center border border-[#0d2545] shadow-xs">
+          <div className="w-8 h-8 rounded-full bg-primary text-secondary-container font-mono font-bold text-xs flex items-center justify-center border border-[#3D405B] shadow-xs">
             RK
           </div>
           <div className="hidden lg:flex flex-col text-left">
