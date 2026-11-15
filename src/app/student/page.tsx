@@ -242,78 +242,78 @@ export default function StudentDashboardPage() {
       </div>
 
       {/* 2. 4 Simplified KPI Metrics */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-3.5">
         {/* Metric 1: Degree Progress */}
-        <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs flex flex-col justify-between">
+        <div className="bg-white p-3.5 sm:p-4 rounded-xl border border-slate-200/80 shadow-xs flex flex-col justify-between">
           <div className="flex items-center justify-between">
             <span className="text-xs font-medium text-slate-500">Degree Progress</span>
-            <div className="w-9 h-9 rounded-xl bg-violet-50 text-violet-600 flex items-center justify-center">
+            <div className="w-8 h-8 rounded-lg bg-violet-50 text-violet-600 flex items-center justify-center shrink-0">
               <GraduationCap className="w-4 h-4" />
             </div>
           </div>
-          <div className="mt-3">
+          <div className="mt-2">
             <div className="flex items-baseline gap-2">
-              <span className="text-2xl font-bold text-[#3D405B]">68%</span>
-              <span className="text-xs text-slate-400">108/160 Credits</span>
+              <span className="text-xl sm:text-2xl font-bold text-[#3D405B]">68%</span>
+              <span className="text-[11px] text-slate-400">108/160 Credits</span>
             </div>
-            <div className="w-full bg-slate-100 h-1.5 mt-2.5 rounded-full overflow-hidden">
+            <div className="w-full bg-slate-100 h-1.5 mt-2 rounded-full overflow-hidden">
               <div className="bg-violet-600 h-full rounded-full" style={{ width: "68%" }}></div>
             </div>
           </div>
         </div>
 
         {/* Metric 2: Attendance */}
-        <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs flex flex-col justify-between">
+        <div className="bg-white p-3.5 sm:p-4 rounded-xl border border-slate-200/80 shadow-xs flex flex-col justify-between">
           <div className="flex items-center justify-between">
             <span className="text-xs font-medium text-slate-500">Attendance</span>
-            <div className="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
+            <div className="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
               <CalendarCheck className="w-4 h-4" />
             </div>
           </div>
-          <div className="mt-3">
+          <div className="mt-2">
             <div className="flex items-baseline gap-2">
-              <span className="text-2xl font-bold text-emerald-600">88.4%</span>
-              <span className="text-xs text-emerald-700 font-medium bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
+              <span className="text-xl sm:text-2xl font-bold text-emerald-600">88.4%</span>
+              <span className="text-[11px] text-emerald-700 font-medium bg-emerald-50 px-1.5 py-0.5 rounded-full border border-emerald-200">
                 Regular
               </span>
             </div>
-            <div className="w-full bg-slate-100 h-1.5 mt-2.5 rounded-full overflow-hidden">
+            <div className="w-full bg-slate-100 h-1.5 mt-2 rounded-full overflow-hidden">
               <div className="bg-emerald-500 h-full rounded-full" style={{ width: "88.4%" }}></div>
             </div>
           </div>
         </div>
 
         {/* Metric 3: Fee Balance */}
-        <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs flex flex-col justify-between">
+        <div className="bg-white p-3.5 sm:p-4 rounded-xl border border-slate-200/80 shadow-xs flex flex-col justify-between">
           <div className="flex items-center justify-between">
             <span className="text-xs font-medium text-slate-500">Pending Fees</span>
-            <div className="w-9 h-9 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center">
+            <div className="w-8 h-8 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center shrink-0">
               <CreditCard className="w-4 h-4" />
             </div>
           </div>
-          <div className="mt-3">
+          <div className="mt-2">
             <div className="flex items-baseline gap-2">
-              <span className="text-2xl font-bold text-amber-600 font-mono">₹25,000</span>
-              <span className="text-xs text-amber-700 font-medium">Due May 02</span>
+              <span className="text-xl sm:text-2xl font-bold text-amber-600 font-mono">₹25,000</span>
+              <span className="text-[11px] text-amber-700 font-medium">Due May 02</span>
             </div>
-            <div className="w-full bg-slate-100 h-1.5 mt-2.5 rounded-full overflow-hidden">
+            <div className="w-full bg-slate-100 h-1.5 mt-2 rounded-full overflow-hidden">
               <div className="bg-amber-500 h-full rounded-full" style={{ width: "68%" }}></div>
             </div>
           </div>
         </div>
 
         {/* Metric 4: Upcoming Exam */}
-        <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs flex flex-col justify-between">
+        <div className="bg-white p-3.5 sm:p-4 rounded-xl border border-slate-200/80 shadow-xs flex flex-col justify-between">
           <div className="flex items-center justify-between">
             <span className="text-xs font-medium text-slate-500">Upcoming Exams</span>
-            <div className="w-9 h-9 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center">
+            <div className="w-8 h-8 rounded-lg bg-purple-50 text-purple-600 flex items-center justify-center shrink-0">
               <Clock className="w-4 h-4" />
             </div>
           </div>
-          <div className="mt-3">
+          <div className="mt-2">
             <div className="flex items-baseline gap-2">
-              <span className="text-2xl font-bold text-[#3D405B]">Mid-Term IV</span>
-              <span className="text-xs text-violet-700 font-medium">Starts Apr 15</span>
+              <span className="text-xl sm:text-2xl font-bold text-[#3D405B]">Mid-Term IV</span>
+              <span className="text-[11px] text-violet-700 font-medium">Starts Apr 15</span>
             </div>
             <p className="text-[11px] text-slate-400 mt-1">5 registered examination papers</p>
           </div>
