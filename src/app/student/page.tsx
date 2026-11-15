@@ -34,6 +34,78 @@ export default function StudentDashboardPage() {
     setTimeout(() => setToastMessage(null), 3000);
   };
 
+  const handlePrintAdmitCard = () => {
+    triggerToast("Opening 1-Page Official Admit Card Print...");
+    const card = document.getElementById("printable-admit-card");
+    if (!card) return;
+
+    const printWindow = window.open("", "_blank", "width=850,height=1100");
+    if (printWindow) {
+      const cardHTML = card.outerHTML;
+      printWindow.document.write(`<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Admit_Card_23CS042_Rahul_Sharma</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap">
+    <style>
+      @page {
+        size: A4 portrait;
+        margin: 5mm;
+      }
+      *, *::before, *::after {
+        box-sizing: border-box;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+      html, body {
+        margin: 0;
+        padding: 0;
+        background: #ffffff;
+        font-family: 'Geist', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        color: #0f172a;
+      }
+      .print-container {
+        width: 100%;
+        max-width: 100%;
+        margin: 0 auto;
+      }
+      #printable-admit-card {
+        width: 100% !important;
+        max-width: 100% !important;
+        box-shadow: none !important;
+        border: 2px solid #0f172a !important;
+        padding: 14px 18px !important;
+        page-break-after: avoid !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+        break-after: avoid !important;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="print-container">
+      ${cardHTML}
+    </div>
+    <script>
+      window.onload = function() {
+        window.focus();
+        setTimeout(function() {
+          window.print();
+          window.close();
+        }, 250);
+      };
+    <\/script>
+  </body>
+</html>`);
+      printWindow.document.close();
+    } else {
+      window.print();
+    }
+  };
+
   const upcomingExams = [
     {
       date: "Apr 15, 2025",
@@ -529,25 +601,22 @@ export default function StudentDashboardPage() {
 
       {/* MODAL 1: Authentic Examination Admit Card / Hall Ticket Modal */}
       {showHallTicketModal && (
-        <div className="fixed inset-0 z-50 bg-[#3D405B]/60 backdrop-blur-sm flex items-center justify-center p-3 md:p-6 overflow-y-auto">
+        <div id="hall-ticket-modal-container" className="fixed inset-0 z-50 bg-[#3D405B]/60 backdrop-blur-sm flex items-center justify-center p-3 md:p-6 overflow-y-auto">
           <div className="bg-slate-100 w-full max-w-4xl max-h-[94vh] flex flex-col rounded-2xl border border-slate-300 shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-150">
             {/* Modal Control Bar */}
-            <div className="px-5 py-3.5 bg-white border-b border-slate-200 flex items-center justify-between shrink-0">
+            <div className="px-5 py-3.5 bg-white border-b border-slate-200 flex items-center justify-between shrink-0 modal-controls">
               <div className="flex items-center gap-2">
                 <Printer className="w-5 h-5 text-violet-700" />
                 <span className="text-sm font-bold text-[#3D405B]">
                   Official Examination Hall Ticket / Admit Card Preview
                 </span>
                 <span className="hidden sm:inline-block px-2 py-0.5 bg-emerald-50 text-emerald-700 border border-emerald-200 text-[11px] font-semibold rounded-full">
-                  Verified &amp; Ready for Hall Entry
+                  1-Page Verified Hall Ticket
                 </span>
               </div>
               <div className="flex items-center gap-2">
                 <button
-                  onClick={() => {
-                    triggerToast("Opening system print dialog...");
-                    setTimeout(() => window.print(), 250);
-                  }}
+                  onClick={handlePrintAdmitCard}
                   className="px-3.5 py-1.5 bg-violet-600 hover:bg-violet-700 text-white text-xs font-semibold rounded-lg flex items-center gap-1.5 transition-all shadow-xs cursor-pointer"
                 >
                   <Printer className="w-3.5 h-3.5" />
@@ -568,10 +637,10 @@ export default function StudentDashboardPage() {
               {/* THE AUTHENTIC ADMIT CARD SHEET */}
               <div
                 id="printable-admit-card"
-                className="w-full max-w-[800px] bg-white border-2 border-slate-800 p-6 md:p-8 shadow-sm text-slate-900 font-sans relative"
+                className="w-full max-w-[800px] bg-white border-2 border-slate-800 p-5 md:p-6 shadow-sm text-slate-900 font-sans relative"
               >
                 {/* Outer Decorative Double Border Line */}
-                <div className="absolute inset-1.5 pointer-events-none border border-slate-400"></div>
+                <div className="absolute inset-1 pointer-events-none border border-slate-400"></div>
 
                 {/* Subtle Background Watermark */}
                 <div className="absolute inset-0 pointer-events-none flex items-center justify-center opacity-[0.03] select-none">
@@ -582,199 +651,181 @@ export default function StudentDashboardPage() {
                 </div>
 
                 {/* 1. INSTITUTIONAL HEADER */}
-                <div className="relative z-10 border-b-2 border-slate-800 pb-4">
-                  <div className="flex items-center justify-between gap-4">
+                <div className="relative z-10 border-b-2 border-slate-800 pb-3">
+                  <div className="flex items-center justify-between gap-3">
                     {/* Emblem */}
-                    <div className="w-16 h-16 md:w-20 md:h-20 shrink-0 border-2 border-slate-800 rounded-lg flex flex-col items-center justify-center bg-slate-50 p-1 text-center">
-                      <GraduationCap className="w-8 h-8 md:w-9 md:h-9 text-[#3D405B]" />
+                    <div className="w-14 h-16 md:w-16 md:h-20 shrink-0 border-2 border-slate-800 rounded-lg flex flex-col items-center justify-center bg-slate-50 p-1 text-center">
+                      <GraduationCap className="w-8 h-8 text-[#3D405B]" />
                       <span className="font-serif font-bold text-[7px] md:text-[8px] uppercase tracking-tighter text-slate-700 mt-0.5">ESTD. 1998</span>
                     </div>
 
                     {/* Central University Title */}
                     <div className="text-center flex-1">
-                      <h1 className="font-serif text-lg md:text-2xl font-black tracking-wide text-slate-900 uppercase">
+                      <h1 className="font-serif text-base md:text-xl font-black tracking-wide text-slate-900 uppercase">
                         Apex Institute of Technology
                       </h1>
-                      <div className="text-[10px] md:text-xs font-semibold text-slate-600 uppercase tracking-widest mt-0.5">
-                        (An Autonomous Institution Approved by AICTE &amp; Accredited NAAC &apos;A++&apos;)
+                      <div className="text-[9px] md:text-[10px] font-semibold text-slate-600 uppercase tracking-widest mt-0.5">
+                        (Autonomous Institution Approved by AICTE &amp; Accredited NAAC &apos;A++&apos;)
                       </div>
-                      <div className="text-[11px] md:text-xs font-bold text-slate-700 uppercase tracking-wider mt-0.5">
+                      <div className="text-[10px] md:text-xs font-bold text-slate-700 uppercase tracking-wider mt-0.5">
                         Office of the Controller of Examinations
                       </div>
-                      <div className="mt-2 inline-block px-4 py-1 bg-slate-900 text-white font-mono text-xs md:text-sm font-bold uppercase tracking-widest rounded-xs shadow-xs">
+                      <div className="mt-1.5 inline-block px-3 py-0.5 bg-slate-900 text-white font-mono text-[11px] md:text-xs font-bold uppercase tracking-widest rounded-xs shadow-xs">
                         Admit Card / Hall Ticket &bull; Even Semester 2024–25
                       </div>
                     </div>
 
-                    {/* Barcode / QR Section */}
+                    {/* Candidate Photograph Image (Replaces QR Code) */}
                     <div className="shrink-0 flex flex-col items-center justify-center text-center">
-                      <div className="p-1 border border-slate-300 bg-white shadow-2xs">
-                        <QrCode className="w-14 h-14 md:w-16 md:h-16 text-slate-900" />
+                      <div className="w-20 h-24 sm:w-22 sm:h-26 border-2 border-slate-800 bg-white p-0.5 shadow-xs overflow-hidden rounded-xs">
+                        <img
+                          src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=400&q=80"
+                          alt="Rahul Sharma"
+                          className="w-full h-full object-cover"
+                        />
                       </div>
-                      <span className="font-mono text-[9px] text-slate-600 font-bold mt-1">APX-40289</span>
+                      <span className="font-mono text-[8px] text-slate-800 font-bold mt-0.5">23CS042 &bull; PHOTO</span>
                     </div>
                   </div>
                 </div>
 
-                {/* 2. CANDIDATE PROFILE & CENTER DETAILS GRID */}
-                <div className="relative z-10 my-4 border border-slate-800 grid grid-cols-1 md:grid-cols-12 text-xs">
-                  {/* Left 9 Columns: Form Fields */}
-                  <div className="md:col-span-9 divide-y divide-slate-300">
-                    <div className="grid grid-cols-2 divide-x divide-slate-300">
-                      <div className="p-2.5">
-                        <span className="text-[10px] uppercase font-bold text-slate-500 block">Candidate Name</span>
-                        <span className="font-bold text-slate-900 text-sm">RAHUL SHARMA</span>
-                      </div>
-                      <div className="p-2.5 bg-slate-50/60">
-                        <span className="text-[10px] uppercase font-bold text-slate-500 block">Roll Number</span>
-                        <span className="font-mono font-bold text-slate-900 text-sm text-violet-900">23CS042</span>
-                      </div>
+                {/* 2. CANDIDATE DETAILS GRID */}
+                <div className="relative z-10 my-2.5 border border-slate-800 text-xs">
+                  <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-y md:divide-y-0 divide-slate-300">
+                    <div className="p-1.5 px-2.5">
+                      <span className="text-[9px] uppercase font-bold text-slate-500 block">Candidate Name</span>
+                      <span className="font-bold text-slate-900 text-xs">RAHUL SHARMA</span>
                     </div>
-
-                    <div className="grid grid-cols-2 divide-x divide-slate-300">
-                      <div className="p-2.5">
-                        <span className="text-[10px] uppercase font-bold text-slate-500 block">Enrollment / Registration No.</span>
-                        <span className="font-mono font-semibold text-slate-800">APX-2023-CS-042</span>
-                      </div>
-                      <div className="p-2.5">
-                        <span className="text-[10px] uppercase font-bold text-slate-500 block">Candidate Category</span>
-                        <span className="font-semibold text-slate-800">Regular / Full-Time</span>
-                      </div>
+                    <div className="p-1.5 px-2.5 bg-slate-50/60">
+                      <span className="text-[9px] uppercase font-bold text-slate-500 block">Roll Number</span>
+                      <span className="font-mono font-bold text-slate-900 text-xs text-violet-900">23CS042</span>
                     </div>
-
-                    <div className="grid grid-cols-2 divide-x divide-slate-300">
-                      <div className="p-2.5">
-                        <span className="text-[10px] uppercase font-bold text-slate-500 block">Course / Program</span>
-                        <span className="font-bold text-slate-800">B.Tech (Computer Science &amp; Engineering)</span>
-                      </div>
-                      <div className="p-2.5">
-                        <span className="text-[10px] uppercase font-bold text-slate-500 block">Semester &amp; Batch</span>
-                        <span className="font-semibold text-slate-800">Semester IV (Batch 2023–2027)</span>
-                      </div>
+                    <div className="p-1.5 px-2.5">
+                      <span className="text-[9px] uppercase font-bold text-slate-500 block">Registration No.</span>
+                      <span className="font-mono font-semibold text-slate-800 text-xs">APX-2023-CS-042</span>
                     </div>
-
-                    <div className="p-2.5 bg-slate-50/60">
-                      <span className="text-[10px] uppercase font-bold text-slate-500 block">Examination Center &amp; Venue</span>
-                      <span className="font-semibold text-slate-900">AUD-B, Main Academic Complex, North Campus (Center Code: 104-APX)</span>
+                    <div className="p-1.5 px-2.5 bg-slate-50/60">
+                      <span className="text-[9px] uppercase font-bold text-slate-500 block">Category</span>
+                      <span className="font-semibold text-slate-800 text-xs">Regular / Full-Time</span>
                     </div>
                   </div>
 
-                  {/* Right 3 Columns: Candidate Photograph & Signature Frame */}
-                  <div className="md:col-span-3 border-t md:border-t-0 md:border-l border-slate-800 p-3 bg-slate-50 flex flex-col items-center justify-between">
-                    <div className="w-28 h-32 border-2 border-slate-700 bg-white flex flex-col items-center justify-center p-1 text-center shadow-xs">
-                      <div className="w-full h-full bg-slate-100 flex flex-col items-center justify-center text-slate-400">
-                        <User className="w-12 h-12 text-slate-400" />
-                        <span className="text-[9px] uppercase font-bold mt-1 text-slate-500">Candidate Photo</span>
-                      </div>
+                  <div className="border-t border-slate-300 grid grid-cols-2 md:grid-cols-4 divide-x divide-y md:divide-y-0 divide-slate-300">
+                    <div className="p-1.5 px-2.5">
+                      <span className="text-[9px] uppercase font-bold text-slate-500 block">Program / Branch</span>
+                      <span className="font-bold text-slate-800 text-[11px]">B.Tech (Computer Science &amp; Engg)</span>
                     </div>
-                    {/* Candidate Signature Box */}
-                    <div className="w-full mt-2 pt-1 border-t border-dashed border-slate-400 text-center">
-                      <div className="font-serif italic text-sm text-slate-800 select-none">Rahul Sharma</div>
-                      <span className="text-[9px] uppercase font-bold text-slate-500 block">Candidate Signature</span>
+                    <div className="p-1.5 px-2.5 bg-slate-50/60">
+                      <span className="text-[9px] uppercase font-bold text-slate-500 block">Semester &amp; Batch</span>
+                      <span className="font-semibold text-slate-800 text-[11px]">Semester IV (2023–27)</span>
+                    </div>
+                    <div className="p-1.5 px-2.5 md:col-span-2">
+                      <span className="text-[9px] uppercase font-bold text-slate-500 block">Examination Center &amp; Venue</span>
+                      <span className="font-semibold text-slate-900 text-[11px]">AUD-B, Academic Complex, North Campus (Center: 104-APX)</span>
                     </div>
                   </div>
                 </div>
 
                 {/* 3. EXAMINATION PAPERS / DATESHEET SCHEDULE */}
-                <div className="relative z-10 mt-4">
-                  <div className="bg-slate-800 text-white px-3 py-1 font-mono text-[11px] font-bold uppercase tracking-wider flex justify-between items-center">
-                    <span>Approved Courses &amp; Seated Schedule</span>
+                <div className="relative z-10 mt-2.5">
+                  <div className="bg-slate-800 text-white px-2.5 py-0.5 font-mono text-[10px] font-bold uppercase tracking-wider flex justify-between items-center">
+                    <span>Approved Courses &amp; Seated Datesheet Schedule</span>
                     <span>Total Courses: 05</span>
                   </div>
 
-                  <table className="w-full text-left text-xs border-collapse border border-slate-800">
+                  <table className="w-full text-left text-[11px] border-collapse border border-slate-800">
                     <thead className="bg-slate-100 text-slate-900 font-bold border-b border-slate-800">
-                      <tr className="divide-x divide-slate-800 text-[11px]">
-                        <th className="p-2 w-10 text-center">S.No</th>
-                        <th className="p-2 w-20">Code</th>
-                        <th className="p-2">Subject / Course Title</th>
-                        <th className="p-2 w-28">Date</th>
-                        <th className="p-2 w-28">Timing</th>
-                        <th className="p-2 w-24">Room / Desk</th>
-                        <th className="p-2 w-28 text-center">Invigilator Sign</th>
+                      <tr className="divide-x divide-slate-800 text-[10px]">
+                        <th className="p-1.5 w-8 text-center">S.No</th>
+                        <th className="p-1.5 w-16">Code</th>
+                        <th className="p-1.5">Subject / Course Title</th>
+                        <th className="p-1.5 w-24">Date</th>
+                        <th className="p-1.5 w-28">Timing</th>
+                        <th className="p-1.5 w-24">Desk / Room</th>
+                        <th className="p-1.5 w-24 text-center">Invigilator Sign</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-800">
                       <tr className="divide-x divide-slate-800">
-                        <td className="p-2 text-center font-mono">1</td>
-                        <td className="p-2 font-mono font-bold text-slate-900">CS-401</td>
-                        <td className="p-2 font-medium">Database Management Systems</td>
-                        <td className="p-2 font-mono">15-Apr-2025</td>
-                        <td className="p-2 text-[11px]">09:30 AM – 12:30 PM</td>
-                        <td className="p-2 font-semibold">AUD-B / Desk 42</td>
-                        <td className="p-2 border-b border-slate-200"></td>
+                        <td className="p-1.5 text-center font-mono">1</td>
+                        <td className="p-1.5 font-mono font-bold text-slate-900">CS-401</td>
+                        <td className="p-1.5 font-medium">Database Management Systems</td>
+                        <td className="p-1.5 font-mono">15-Apr-2025</td>
+                        <td className="p-1.5 text-[10px]">09:30 AM – 12:30 PM</td>
+                        <td className="p-1.5 font-semibold">AUD-B / Desk 42</td>
+                        <td className="p-1.5 border-b border-slate-200"></td>
                       </tr>
                       <tr className="divide-x divide-slate-800 bg-slate-50/40">
-                        <td className="p-2 text-center font-mono">2</td>
-                        <td className="p-2 font-mono font-bold text-slate-900">CS-402</td>
-                        <td className="p-2 font-medium">Operating Systems</td>
-                        <td className="p-2 font-mono">17-Apr-2025</td>
-                        <td className="p-2 text-[11px]">09:30 AM – 12:30 PM</td>
-                        <td className="p-2 font-semibold">AUD-B / Desk 42</td>
-                        <td className="p-2 border-b border-slate-200"></td>
+                        <td className="p-1.5 text-center font-mono">2</td>
+                        <td className="p-1.5 font-mono font-bold text-slate-900">CS-402</td>
+                        <td className="p-1.5 font-medium">Operating Systems</td>
+                        <td className="p-1.5 font-mono">17-Apr-2025</td>
+                        <td className="p-1.5 text-[10px]">09:30 AM – 12:30 PM</td>
+                        <td className="p-1.5 font-semibold">AUD-B / Desk 42</td>
+                        <td className="p-1.5 border-b border-slate-200"></td>
                       </tr>
                       <tr className="divide-x divide-slate-800">
-                        <td className="p-2 text-center font-mono">3</td>
-                        <td className="p-2 font-mono font-bold text-slate-900">CS-403</td>
-                        <td className="p-2 font-medium">Design &amp; Analysis of Algorithms</td>
-                        <td className="p-2 font-mono">21-Apr-2025</td>
-                        <td className="p-2 text-[11px]">02:00 PM – 05:00 PM</td>
-                        <td className="p-2 font-semibold">HALL-3 / Desk 18</td>
-                        <td className="p-2 border-b border-slate-200"></td>
+                        <td className="p-1.5 text-center font-mono">3</td>
+                        <td className="p-1.5 font-mono font-bold text-slate-900">CS-403</td>
+                        <td className="p-1.5 font-medium">Design &amp; Analysis of Algorithms</td>
+                        <td className="p-1.5 font-mono">21-Apr-2025</td>
+                        <td className="p-1.5 text-[10px]">02:00 PM – 05:00 PM</td>
+                        <td className="p-1.5 font-semibold">HALL-3 / Desk 18</td>
+                        <td className="p-1.5 border-b border-slate-200"></td>
                       </tr>
                       <tr className="divide-x divide-slate-800 bg-slate-50/40">
-                        <td className="p-2 text-center font-mono">4</td>
-                        <td className="p-2 font-mono font-bold text-slate-900">CS-404</td>
-                        <td className="p-2 font-medium">Automata &amp; Formal Languages</td>
-                        <td className="p-2 font-mono">24-Apr-2025</td>
-                        <td className="p-2 text-[11px]">09:30 AM – 12:30 PM</td>
-                        <td className="p-2 font-semibold">AUD-B / Desk 42</td>
-                        <td className="p-2 border-b border-slate-200"></td>
+                        <td className="p-1.5 text-center font-mono">4</td>
+                        <td className="p-1.5 font-mono font-bold text-slate-900">CS-404</td>
+                        <td className="p-1.5 font-medium">Automata &amp; Formal Languages</td>
+                        <td className="p-1.5 font-mono">24-Apr-2025</td>
+                        <td className="p-1.5 text-[10px]">09:30 AM – 12:30 PM</td>
+                        <td className="p-1.5 font-semibold">AUD-B / Desk 42</td>
+                        <td className="p-1.5 border-b border-slate-200"></td>
                       </tr>
                       <tr className="divide-x divide-slate-800">
-                        <td className="p-2 text-center font-mono">5</td>
-                        <td className="p-2 font-mono font-bold text-slate-900">CS-405L</td>
-                        <td className="p-2 font-medium">Systems Engineering Laboratory (Practical)</td>
-                        <td className="p-2 font-mono">27-Apr-2025</td>
-                        <td className="p-2 text-[11px]">09:30 AM – 12:30 PM</td>
-                        <td className="p-2 font-semibold">LAB-TURING-3</td>
-                        <td className="p-2 border-b border-slate-200"></td>
+                        <td className="p-1.5 text-center font-mono">5</td>
+                        <td className="p-1.5 font-mono font-bold text-slate-900">CS-405L</td>
+                        <td className="p-1.5 font-medium">Systems Engineering Laboratory (Practical)</td>
+                        <td className="p-1.5 font-mono">27-Apr-2025</td>
+                        <td className="p-1.5 text-[10px]">09:30 AM – 12:30 PM</td>
+                        <td className="p-1.5 font-semibold">LAB-TURING-3</td>
+                        <td className="p-1.5 border-b border-slate-200"></td>
                       </tr>
                     </tbody>
                   </table>
                 </div>
 
                 {/* 4. MANDATORY CANDIDATE INSTRUCTIONS */}
-                <div className="relative z-10 mt-4 p-3 bg-slate-50 border border-slate-400 rounded-xs text-[10px] text-slate-700 space-y-1">
-                  <div className="font-bold text-slate-900 uppercase tracking-wide flex items-center gap-1.5">
-                    <span>Mandatory Instructions for the Candidate:</span>
+                <div className="relative z-10 mt-2.5 p-2 bg-slate-50 border border-slate-400 rounded-xs text-[9px] text-slate-700 space-y-0.5 leading-tight">
+                  <div className="font-bold text-slate-900 uppercase tracking-wide">
+                    Mandatory Instructions for Candidate:
                   </div>
-                  <ol className="list-decimal pl-4 space-y-0.5 leading-tight">
-                    <li>Candidate must produce this printed Admit Card along with the official Institute Student ID Card to gain admission into the examination hall.</li>
-                    <li>Candidates must report at the allocated examination room at least 20 minutes prior to the commencement of the session.</li>
-                    <li>Possession of mobile phones, smartwatches, programmable calculators, or any unauthorized materials is strictly prohibited and subject to disciplinary action.</li>
-                    <li>No candidate shall be permitted to leave the examination hall until 60 minutes after the start of the paper.</li>
+                  <ol className="list-decimal pl-3.5 space-y-0.5">
+                    <li>Produce this printed Admit Card along with original Institute Student ID Card to enter the examination hall.</li>
+                    <li>Report to allocated examination venue at least 20 minutes prior to session commencement.</li>
+                    <li>Possession of mobile phones, smartwatches, or unauthorized study material is strictly prohibited.</li>
+                    <li>No candidate may leave the examination room until 60 minutes after paper commencement.</li>
                   </ol>
                 </div>
 
                 {/* 5. VERIFICATION SEALS & SIGNATURES */}
-                <div className="relative z-10 mt-6 pt-3 border-t-2 border-slate-800 flex flex-wrap items-end justify-between gap-4">
-                  {/* Candidate Declaration */}
-                  <div className="text-center w-48">
-                    <div className="h-10 border-b border-slate-400 flex items-end justify-center pb-1">
-                      <span className="font-serif italic text-xs text-slate-700">Verified by Biometric / RFID</span>
+                <div className="relative z-10 mt-3 pt-2 border-t-2 border-slate-800 flex items-end justify-between gap-2 text-xs">
+                  {/* Candidate Signature */}
+                  <div className="text-center w-40">
+                    <div className="h-7 border-b border-slate-400 flex items-end justify-center pb-0.5">
+                      <span className="font-serif italic text-sm text-slate-800 select-none">Rahul Sharma</span>
                     </div>
-                    <span className="text-[10px] uppercase font-bold text-slate-600 block mt-1">
-                      Dean of Student Affairs
+                    <span className="text-[9px] uppercase font-bold text-slate-600 block mt-0.5">
+                      Candidate Signature
                     </span>
                   </div>
 
                   {/* Red/Crimson Verification Stamp Badge */}
                   <div className="flex flex-col items-center">
-                    <div className="w-20 h-20 rounded-full border-2 border-dashed border-rose-600/70 p-1 flex items-center justify-center rotate-[-8deg] text-center bg-rose-50/40">
-                      <div className="border border-rose-600/60 rounded-full w-full h-full flex flex-col items-center justify-center text-[7px] font-bold text-rose-700 uppercase leading-none">
+                    <div className="w-14 h-14 rounded-full border-2 border-dashed border-rose-600/70 p-0.5 flex items-center justify-center rotate-[-6deg] text-center bg-rose-50/40">
+                      <div className="border border-rose-600/60 rounded-full w-full h-full flex flex-col items-center justify-center text-[6px] font-bold text-rose-700 uppercase leading-none">
                         <span>APEX INST.</span>
-                        <Award className="w-3.5 h-3.5 text-rose-600 my-0.5" />
+                        <Award className="w-2.5 h-2.5 text-rose-600 my-0.2" />
                         <span>COE VERIFIED</span>
                         <span>2024-25</span>
                       </div>
@@ -782,23 +833,23 @@ export default function StudentDashboardPage() {
                   </div>
 
                   {/* Controller of Examinations Signature */}
-                  <div className="text-center w-56">
-                    <div className="h-10 border-b border-slate-400 flex items-end justify-center pb-1">
+                  <div className="text-center w-48">
+                    <div className="h-7 border-b border-slate-400 flex items-end justify-center pb-0.5">
                       <span className="font-serif italic font-bold text-sm text-slate-900 tracking-wider">K. N. Murthy</span>
                     </div>
-                    <span className="text-[10px] uppercase font-bold text-slate-900 block mt-1">
+                    <span className="text-[9px] uppercase font-bold text-slate-900 block mt-0.5">
                       Controller of Examinations
                     </span>
-                    <span className="text-[9px] text-slate-500 font-mono">Issued: 02-Apr-2025 &bull; Apex Core</span>
+                    <span className="text-[8px] text-slate-500 font-mono">Issued: 02-Apr-2025</span>
                   </div>
                 </div>
               </div>
             </div>
 
             {/* Bottom Modal Actions */}
-            <div className="px-6 py-3 bg-white border-t border-slate-200 flex items-center justify-between shrink-0">
+            <div className="px-6 py-3 bg-white border-t border-slate-200 flex items-center justify-between shrink-0 modal-controls">
               <span className="text-xs text-slate-500 hidden sm:inline-block">
-                Tip: Use <strong>Print / Save PDF</strong> to generate a print-ready document or carry digital copy.
+                Print mode optimized for <strong>1-Page A4 Sheet</strong> with high-resolution layout.
               </span>
               <div className="flex items-center gap-2.5 ml-auto">
                 <button
@@ -808,20 +859,50 @@ export default function StudentDashboardPage() {
                   Close Preview
                 </button>
                 <button
-                  onClick={() => {
-                    triggerToast("Opening system print dialog...");
-                    setTimeout(() => window.print(), 250);
-                  }}
+                  onClick={handlePrintAdmitCard}
                   className="px-5 py-2 bg-violet-600 hover:bg-violet-700 text-white text-xs font-semibold rounded-xl flex items-center gap-2 transition-all shadow-xs cursor-pointer"
                 >
                   <Printer className="w-4 h-4" />
-                  <span>Print Official Admit Card</span>
+                  <span>Print Official Admit Card (1 Page)</span>
                 </button>
               </div>
             </div>
           </div>
         </div>
       )}
+
+      {/* Global Print Isolation CSS ensuring 1-Page Perfect Print */}
+      <style jsx global>{`
+        @media print {
+          @page {
+            size: A4 portrait;
+            margin: 5mm;
+          }
+          body * {
+            visibility: hidden !important;
+          }
+          #printable-admit-card,
+          #printable-admit-card * {
+            visibility: visible !important;
+          }
+          #printable-admit-card {
+            position: fixed !important;
+            left: 0 !important;
+            top: 0 !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            margin: 0 !important;
+            padding: 12px 16px !important;
+            border: 2px solid #0f172a !important;
+            box-shadow: none !important;
+            background: #ffffff !important;
+            page-break-after: avoid !important;
+            page-break-inside: avoid !important;
+            break-inside: avoid !important;
+            break-after: avoid !important;
+          }
+        }
+      `}</style>
 
       {/* MODAL 2: Fee Payment Advice Modal */}
       {showPaymentModal && (
