@@ -606,8 +606,8 @@ export default function StudentDashboardPage() {
             {/* Modal Control Bar */}
             <div className="px-5 py-3.5 bg-white border-b border-slate-200 flex items-center justify-between shrink-0 modal-controls">
               <div className="flex items-center gap-2">
-                <Printer className="w-5 h-5 text-violet-700" />
-                <span className="text-sm font-bold text-[#3D405B]">
+                <Printer className="w-5 h-5 text-[#355C7D]" />
+                <span className="text-sm font-bold text-[#355C7D]">
                   Official Examination Hall Ticket / Admit Card Preview
                 </span>
                 <span className="hidden sm:inline-block px-2 py-0.5 bg-emerald-50 text-emerald-700 border border-emerald-200 text-[11px] font-semibold rounded-full">
@@ -617,7 +617,7 @@ export default function StudentDashboardPage() {
               <div className="flex items-center gap-2">
                 <button
                   onClick={handlePrintAdmitCard}
-                  className="px-3.5 py-1.5 bg-violet-600 hover:bg-violet-700 text-white text-xs font-semibold rounded-lg flex items-center gap-1.5 transition-all shadow-xs cursor-pointer"
+                  className="px-3.5 py-1.5 bg-[#355C7D] hover:opacity-90 text-white text-xs font-semibold rounded-lg flex items-center gap-1.5 transition-all shadow-xs cursor-pointer"
                 >
                   <Printer className="w-3.5 h-3.5" />
                   <span>Print / Save PDF</span>
@@ -670,7 +670,10 @@ export default function StudentDashboardPage() {
                       <div className="text-[10px] md:text-xs font-bold text-slate-700 uppercase tracking-wider mt-0.5">
                         Office of the Controller of Examinations
                       </div>
-                      <div className="mt-1.5 inline-block px-3 py-0.5 bg-slate-900 text-white font-mono text-[11px] md:text-xs font-bold uppercase tracking-widest rounded-xs shadow-xs">
+                      <div
+                        className="mt-1.5 inline-block px-3 py-0.5 text-white font-mono text-[11px] md:text-xs font-bold uppercase tracking-widest rounded-xs shadow-xs"
+                        style={{ backgroundColor: '#355C7D' }}
+                      >
                         Admit Card / Hall Ticket &bull; Even Semester 2024–25
                       </div>
                     </div>
@@ -684,7 +687,6 @@ export default function StudentDashboardPage() {
                           className="w-full h-full object-cover"
                         />
                       </div>
-                      <span className="font-mono text-[8px] text-slate-800 font-bold mt-0.5">23CS042 &bull; PHOTO</span>
                     </div>
                   </div>
                 </div>
@@ -698,7 +700,7 @@ export default function StudentDashboardPage() {
                     </div>
                     <div className="p-1.5 px-2.5 bg-slate-50/60">
                       <span className="text-[9px] uppercase font-bold text-slate-500 block">Roll Number</span>
-                      <span className="font-mono font-bold text-slate-900 text-xs text-violet-900">23CS042</span>
+                      <span className="font-mono font-bold text-xs text-[#355C7D]">23CS042</span>
                     </div>
                     <div className="p-1.5 px-2.5">
                       <span className="text-[9px] uppercase font-bold text-slate-500 block">Registration No.</span>
@@ -728,7 +730,10 @@ export default function StudentDashboardPage() {
 
                 {/* 3. EXAMINATION PAPERS / DATESHEET SCHEDULE */}
                 <div className="relative z-10 mt-2.5">
-                  <div className="bg-slate-800 text-white px-2.5 py-0.5 font-mono text-[10px] font-bold uppercase tracking-wider flex justify-between items-center">
+                  <div
+                    className="text-white px-2.5 py-0.5 font-mono text-[10px] font-bold uppercase tracking-wider flex justify-between items-center"
+                    style={{ backgroundColor: '#355C7D' }}
+                  >
                     <span>Approved Courses &amp; Seated Datesheet Schedule</span>
                     <span>Total Courses: 05</span>
                   </div>
@@ -741,8 +746,7 @@ export default function StudentDashboardPage() {
                         <th className="p-1.5">Subject / Course Title</th>
                         <th className="p-1.5 w-24">Date</th>
                         <th className="p-1.5 w-28">Timing</th>
-                        <th className="p-1.5 w-24">Desk / Room</th>
-                        <th className="p-1.5 w-24 text-center">Invigilator Sign</th>
+                        <th className="p-1.5 w-28">Desk / Room</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-800">
@@ -753,7 +757,6 @@ export default function StudentDashboardPage() {
                         <td className="p-1.5 font-mono">15-Apr-2025</td>
                         <td className="p-1.5 text-[10px]">09:30 AM – 12:30 PM</td>
                         <td className="p-1.5 font-semibold">AUD-B / Desk 42</td>
-                        <td className="p-1.5 border-b border-slate-200"></td>
                       </tr>
                       <tr className="divide-x divide-slate-800 bg-slate-50/40">
                         <td className="p-1.5 text-center font-mono">2</td>
@@ -762,7 +765,6 @@ export default function StudentDashboardPage() {
                         <td className="p-1.5 font-mono">17-Apr-2025</td>
                         <td className="p-1.5 text-[10px]">09:30 AM – 12:30 PM</td>
                         <td className="p-1.5 font-semibold">AUD-B / Desk 42</td>
-                        <td className="p-1.5 border-b border-slate-200"></td>
                       </tr>
                       <tr className="divide-x divide-slate-800">
                         <td className="p-1.5 text-center font-mono">3</td>
@@ -771,7 +773,6 @@ export default function StudentDashboardPage() {
                         <td className="p-1.5 font-mono">21-Apr-2025</td>
                         <td className="p-1.5 text-[10px]">02:00 PM – 05:00 PM</td>
                         <td className="p-1.5 font-semibold">HALL-3 / Desk 18</td>
-                        <td className="p-1.5 border-b border-slate-200"></td>
                       </tr>
                       <tr className="divide-x divide-slate-800 bg-slate-50/40">
                         <td className="p-1.5 text-center font-mono">4</td>
@@ -780,7 +781,6 @@ export default function StudentDashboardPage() {
                         <td className="p-1.5 font-mono">24-Apr-2025</td>
                         <td className="p-1.5 text-[10px]">09:30 AM – 12:30 PM</td>
                         <td className="p-1.5 font-semibold">AUD-B / Desk 42</td>
-                        <td className="p-1.5 border-b border-slate-200"></td>
                       </tr>
                       <tr className="divide-x divide-slate-800">
                         <td className="p-1.5 text-center font-mono">5</td>
@@ -789,7 +789,6 @@ export default function StudentDashboardPage() {
                         <td className="p-1.5 font-mono">27-Apr-2025</td>
                         <td className="p-1.5 text-[10px]">09:30 AM – 12:30 PM</td>
                         <td className="p-1.5 font-semibold">LAB-TURING-3</td>
-                        <td className="p-1.5 border-b border-slate-200"></td>
                       </tr>
                     </tbody>
                   </table>
@@ -810,12 +809,12 @@ export default function StudentDashboardPage() {
 
                 {/* 5. VERIFICATION SEALS & SIGNATURES */}
                 <div className="relative z-10 mt-3 pt-2 border-t-2 border-slate-800 flex items-end justify-between gap-2 text-xs">
-                  {/* Candidate Signature */}
-                  <div className="text-center w-40">
-                    <div className="h-7 border-b border-slate-400 flex items-end justify-center pb-0.5">
-                      <span className="font-serif italic text-sm text-slate-800 select-none">Rahul Sharma</span>
+                  {/* Candidate Signature (Blank for physical signature by student) */}
+                  <div className="text-center w-44">
+                    <div className="h-8 border-b-2 border-slate-500">
+                      {/* Blank area for candidate physical signature */}
                     </div>
-                    <span className="text-[9px] uppercase font-bold text-slate-600 block mt-0.5">
+                    <span className="text-[9px] uppercase font-bold text-slate-700 block mt-1 tracking-wide">
                       Candidate Signature
                     </span>
                   </div>
@@ -860,7 +859,7 @@ export default function StudentDashboardPage() {
                 </button>
                 <button
                   onClick={handlePrintAdmitCard}
-                  className="px-5 py-2 bg-violet-600 hover:bg-violet-700 text-white text-xs font-semibold rounded-xl flex items-center gap-2 transition-all shadow-xs cursor-pointer"
+                  className="px-5 py-2 bg-[#355C7D] hover:opacity-90 text-white text-xs font-semibold rounded-xl flex items-center gap-2 transition-all shadow-xs cursor-pointer"
                 >
                   <Printer className="w-4 h-4" />
                   <span>Print Official Admit Card (1 Page)</span>
