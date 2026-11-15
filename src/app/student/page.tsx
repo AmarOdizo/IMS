@@ -608,10 +608,10 @@ export default function StudentDashboardPage() {
               <div className="flex items-center gap-2">
                 <Printer className="w-5 h-5 text-[#355C7D]" />
                 <span className="text-sm font-bold text-[#355C7D]">
-                  Official Examination Hall Ticket / Admit Card Preview
+                  Official Examination Admit Card Preview
                 </span>
                 <span className="hidden sm:inline-block px-2 py-0.5 bg-emerald-50 text-emerald-700 border border-emerald-200 text-[11px] font-semibold rounded-full">
-                  1-Page Verified Hall Ticket
+                  1-Page Verified Admit Card
                 </span>
               </div>
               <div className="flex items-center gap-2">
@@ -674,7 +674,7 @@ export default function StudentDashboardPage() {
                         className="mt-1.5 inline-block px-3 py-0.5 text-white font-mono text-[11px] md:text-xs font-bold uppercase tracking-widest rounded-xs shadow-xs"
                         style={{ backgroundColor: '#355C7D' }}
                       >
-                        Admit Card / Hall Ticket &bull; Even Semester 2024–25
+                        Admit Card &bull; Even Semester 2024–25
                       </div>
                     </div>
 
@@ -741,12 +741,11 @@ export default function StudentDashboardPage() {
                   <table className="w-full text-left text-[11px] border-collapse border border-slate-800">
                     <thead className="bg-slate-100 text-slate-900 font-bold border-b border-slate-800">
                       <tr className="divide-x divide-slate-800 text-[10px]">
-                        <th className="p-1.5 w-8 text-center">S.No</th>
-                        <th className="p-1.5 w-16">Code</th>
+                        <th className="p-1.5 w-10 text-center">S.No</th>
+                        <th className="p-1.5 w-20">Code</th>
                         <th className="p-1.5">Subject / Course Title</th>
-                        <th className="p-1.5 w-24">Date</th>
-                        <th className="p-1.5 w-28">Timing</th>
-                        <th className="p-1.5 w-28">Desk / Room</th>
+                        <th className="p-1.5 w-28 text-center">Date</th>
+                        <th className="p-1.5 w-36 text-center">Timing</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-800">
@@ -754,41 +753,36 @@ export default function StudentDashboardPage() {
                         <td className="p-1.5 text-center font-mono">1</td>
                         <td className="p-1.5 font-mono font-bold text-slate-900">CS-401</td>
                         <td className="p-1.5 font-medium">Database Management Systems</td>
-                        <td className="p-1.5 font-mono">15-Apr-2025</td>
-                        <td className="p-1.5 text-[10px]">09:30 AM – 12:30 PM</td>
-                        <td className="p-1.5 font-semibold">AUD-B / Desk 42</td>
+                        <td className="p-1.5 font-mono text-center">15-Apr-2025</td>
+                        <td className="p-1.5 text-[10px] text-center">09:30 AM – 12:30 PM</td>
                       </tr>
                       <tr className="divide-x divide-slate-800 bg-slate-50/40">
                         <td className="p-1.5 text-center font-mono">2</td>
                         <td className="p-1.5 font-mono font-bold text-slate-900">CS-402</td>
                         <td className="p-1.5 font-medium">Operating Systems</td>
-                        <td className="p-1.5 font-mono">17-Apr-2025</td>
-                        <td className="p-1.5 text-[10px]">09:30 AM – 12:30 PM</td>
-                        <td className="p-1.5 font-semibold">AUD-B / Desk 42</td>
+                        <td className="p-1.5 font-mono text-center">17-Apr-2025</td>
+                        <td className="p-1.5 text-[10px] text-center">09:30 AM – 12:30 PM</td>
                       </tr>
                       <tr className="divide-x divide-slate-800">
                         <td className="p-1.5 text-center font-mono">3</td>
                         <td className="p-1.5 font-mono font-bold text-slate-900">CS-403</td>
                         <td className="p-1.5 font-medium">Design &amp; Analysis of Algorithms</td>
-                        <td className="p-1.5 font-mono">21-Apr-2025</td>
-                        <td className="p-1.5 text-[10px]">02:00 PM – 05:00 PM</td>
-                        <td className="p-1.5 font-semibold">HALL-3 / Desk 18</td>
+                        <td className="p-1.5 font-mono text-center">21-Apr-2025</td>
+                        <td className="p-1.5 text-[10px] text-center">02:00 PM – 05:00 PM</td>
                       </tr>
                       <tr className="divide-x divide-slate-800 bg-slate-50/40">
                         <td className="p-1.5 text-center font-mono">4</td>
                         <td className="p-1.5 font-mono font-bold text-slate-900">CS-404</td>
                         <td className="p-1.5 font-medium">Automata &amp; Formal Languages</td>
-                        <td className="p-1.5 font-mono">24-Apr-2025</td>
-                        <td className="p-1.5 text-[10px]">09:30 AM – 12:30 PM</td>
-                        <td className="p-1.5 font-semibold">AUD-B / Desk 42</td>
+                        <td className="p-1.5 font-mono text-center">24-Apr-2025</td>
+                        <td className="p-1.5 text-[10px] text-center">09:30 AM – 12:30 PM</td>
                       </tr>
                       <tr className="divide-x divide-slate-800">
                         <td className="p-1.5 text-center font-mono">5</td>
                         <td className="p-1.5 font-mono font-bold text-slate-900">CS-405L</td>
                         <td className="p-1.5 font-medium">Systems Engineering Laboratory (Practical)</td>
-                        <td className="p-1.5 font-mono">27-Apr-2025</td>
-                        <td className="p-1.5 text-[10px]">09:30 AM – 12:30 PM</td>
-                        <td className="p-1.5 font-semibold">LAB-TURING-3</td>
+                        <td className="p-1.5 font-mono text-center">27-Apr-2025</td>
+                        <td className="p-1.5 text-[10px] text-center">09:30 AM – 12:30 PM</td>
                       </tr>
                     </tbody>
                   </table>
