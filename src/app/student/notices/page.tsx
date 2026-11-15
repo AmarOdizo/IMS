@@ -25,30 +25,31 @@ import {
   MessageSquare,
   GraduationCap,
   Sparkles,
-  Layers,
-  ArrowRight
+  ArrowRight,
+  BadgeAlert,
+  CalendarDays,
+  FileSpreadsheet,
 } from "lucide-react";
 
 interface NoticeItem {
   id: string;
   circularRef: string;
   title: string;
-  category: "academic" | "bursar" | "events" | "advisory";
-  categoryBadge: string;
-  badgeStyle: string;
+  category: "academic" | "fees" | "events" | "advisory";
+  categoryLabel: string;
+  categoryBadgeStyle: string;
   date: string;
   timeAgo: string;
   isUnread: boolean;
+  isUrgent?: boolean;
   summary: string;
   subjectLine: string;
   actionRequired?: string;
   authority: string;
   addressedTo: string;
-  gazetteRecord: string;
   bodyParagraphs: string[];
   deliverables?: { title: string; spec: string }[];
-  timeline?: { date: string; event: string; venue: string; status: string; statusStyle: string }[];
-  signatureKey: string;
+  timeline?: { date: string; event: string; venue: string; status: string }[];
   signatory: { name: string; title: string; dept: string };
   enclosures: { name: string; size: string; type: string }[];
 }
@@ -56,230 +57,229 @@ interface NoticeItem {
 const noticesMasterData: NoticeItem[] = [
   {
     id: "apx-88",
-    circularRef: "APX/CIR/2024-88",
-    title: "End-Semester Capstone Project Submission Deadline & Viva Voce Schedule AY 2024-25",
+    circularRef: "APX/CIR/2025/088",
+    title: "Mid-Term Project Submission Deadline & Viva Voce Schedule AY 2024-25",
     category: "academic",
-    categoryBadge: "Academic & Exam // Urgent",
-    badgeStyle: "bg-error-container text-on-error-container border border-[#ba1a1a]",
-    date: "24 May 2024 • 12:00:00 IST",
+    categoryLabel: "Academic & Exam",
+    categoryBadgeStyle: "bg-rose-50 text-rose-700 border-rose-200",
+    date: "12 May 2025 &bull; 11:30 AM",
     timeAgo: "2 hours ago",
     isUnread: true,
+    isUrgent: true,
     summary:
-      "Formal notification regarding mandatory repository freeze, Turnitin verification certificates (<12%), and external committee viva sessions for graduating engineering cohorts.",
+      "Mandatory guidelines for 4th Semester B.Tech project report submission, GitHub repository freeze, and internal committee viva schedule.",
     subjectLine:
-      "End-Semester Capstone Project Submission Deadline & External Viva Voce Examination Schedule for AY 2024-25",
-    actionRequired: "Action Required // Strict Deadline: June 15, 2024 at 23:59 EST",
-    authority: "Office of Academic Affairs • Dr. Margaret Vance (Dean)",
+      "Schedule for Semester IV Mini-Project Submission and Viva-Voce Examination for Academic Year 2024–25",
+    actionRequired: "Strict Submission Deadline: 25 May 2025 (5:00 PM IST)",
+    authority: "Office of Dean Academics &bull; Dr. Alistair Chen",
     addressedTo:
-      "All 4th Year B.Tech & 2nd Year M.Tech Candidates, Capstone Project Mentors & Internal/External Evaluators",
-    gazetteRecord: "#88",
+      "All 2nd Year B.Tech Students (Batch 2023–27), Project Faculty Guides & Department Coordinators",
     bodyParagraphs: [
-      "This is to formally notify all registered candidates that the Central Capstone Submission Portal will officially lock on June 15, 2024. All project deliverables—including verified source code repositories, IEEE standard project dossiers, and Turnitin similarity indexes (< 12%)—must be uploaded before the deadline. Physical viva-voce examinations will commence on June 20, 2024.",
-      "Each evaluation committee consists of one assigned internal faculty guide, one departmental senior observer, and one accredited external domain specialist nominated by the Academic Council."
+      "This is to inform all second-year B.Tech students (Semester IV) that the project portal for submitting the Semester Mini-Project report and source code documentation will close on 25 May 2025 at 5:00 PM IST.",
+      "Students must upload their project synopsis, final PDF report in the prescribed IEEE format, and verified code links. The physical viva-voce evaluation will be conducted between 28 May and 02 June 2025 by the departmental review committee.",
+      "Failure to present the project work before the designated committee within the stipulated timeframe will result in the forfeiture of practical evaluation marks for the semester."
     ],
     deliverables: [
-      { title: "IEEE Format Final Dissertation Dossier", spec: "PDF/A-1b Standard (.pdf)" },
-      { title: "Turnitin Plagiarism Clearance Certificate", spec: "< 12% Max Permitted Match" },
-      { title: "Institutional Git Repository Commit Hash", spec: "Production Branch • Tag v1.0.0" },
-      { title: "Departmental Mentor Clearance NOC", spec: "Digitally Signed via Faculty Portal" }
+      { title: "Final Project Report (IEEE Format)", spec: "PDF Document (.pdf) &bull; Max 20 MB" },
+      { title: "Project Source Code / Repository Link", spec: "Verified Departmental Git / GitHub Link" },
+      { title: "Faculty Guide Approval Certificate", spec: "Signed by Assigned Project Mentor" }
     ],
     timeline: [
       {
-        date: "June 01 - June 10",
-        event: "Preliminary Guide Dossier Review & Similarity Scan",
-        venue: "LMS Capstone Module",
-        status: "Scheduled",
-        statusStyle: "bg-secondary-fixed text-on-secondary-fixed"
+        date: "15 May – 20 May 2025",
+        event: "Draft Report Review & Guide Verification",
+        venue: "Department of CSE &bull; Respective Faculty Cabins",
+        status: "Ongoing"
       },
       {
-        date: "June 15 • 23:59",
-        event: "Hard Gateway Submission Freeze",
-        venue: "Registrar Cloud Infrastructure",
-        status: "Hard Cutoff",
-        statusStyle: "bg-error-container text-on-error-container"
+        date: "25 May 2025 (5:00 PM)",
+        event: "Final Report & Code Submission Cutoff",
+        venue: "Student Academic Portal (Online)",
+        status: "Upcoming Deadline"
       },
       {
-        date: "June 20 - June 26",
-        event: "On-Campus External Panel Oral Defense & Code Inspection",
-        venue: "Engineering Complex • Lab 4B",
-        status: "In-Person",
-        statusStyle: "bg-surface-container text-on-surface"
+        date: "28 May – 02 Jun 2025",
+        event: "In-Person Project Viva-Voce Examination",
+        venue: "Computer Center &bull; Software Lab 3 & 4",
+        status: "Scheduled"
       }
     ],
-    signatureKey: "APX-ACAD-SIGNATURE-KEY: 9F84B-2024-VNC",
     signatory: {
-      name: "Dr. Margaret Vance, Ph.D.",
-      title: "Dean, Directorate of Academic Affairs",
-      dept: "Apex Institute of Technology • Governing Board"
+      name: "Dr. Alistair Chen",
+      title: "Dean of Academic Affairs",
+      dept: "Apex Institute of Technology & Management"
     },
     enclosures: [
-      { name: "Annexure_A_Rubrics.pdf", size: "1.2 MB", type: "PDF Spec" },
-      { name: "IEEE_Dossier_Template.docx", size: "840 KB", type: "Document" },
-      { name: "Evaluation_Criteria_Matrix.xlsx", size: "480 KB", type: "Spreadsheet" }
+      { name: "Project_Report_Template_IEEE.docx", size: "640 KB", type: "Word Document" },
+      { name: "Viva_Evaluation_Rubric_2025.pdf", size: "420 KB", type: "PDF Document" },
+      { name: "Guide_Allotment_List_CSE.pdf", size: "850 KB", type: "PDF List" }
     ]
   },
   {
     id: "apx-87",
-    circularRef: "APX/CIR/2024-87",
-    title: "Final Timetable for End-Semester Regular & Backlog Theory Examinations",
+    circularRef: "APX/CIR/2025/087",
+    title: "Final Datesheet for End-Semester Theory Examinations (Even Semester)",
     category: "academic",
-    categoryBadge: "Academic Schedule // High Priority",
-    badgeStyle: "bg-secondary-container text-primary border border-[#99c0fe]",
-    date: "22 May 2024 • 10:30:00 IST",
+    categoryLabel: "Examination Schedule",
+    categoryBadgeStyle: "bg-blue-50 text-blue-700 border-blue-200",
+    date: "10 May 2025 &bull; 02:00 PM",
     timeAgo: "2 days ago",
     isUnread: false,
+    isUrgent: true,
     summary:
-      "Controller of Examinations releases synchronized schedule for slot-based morning and evening written examinations across all technical engineering blocks.",
-    subjectLine: "Final Schedule for Theory Examinations – Spring Semester AY 2024-25",
-    actionRequired: "Hall Ticket Download Window Opens: June 01, 2024",
-    authority: "Office of the Controller of Examinations",
-    addressedTo: "All Registered Students (Batches 2021, 2022, 2023, 2024)",
-    gazetteRecord: "#87",
+      "Controller of Examinations announces the finalized timetable for B.Tech Semester IV regular and backlog written examinations.",
+    subjectLine:
+      "Final Schedule for End-Semester Theory Examinations – Even Semester (AY 2024–25)",
+    actionRequired: "Admit Card Download Available from 20 May 2025",
+    authority: "Office of the Controller of Examinations &bull; Dr. K. N. Murthy",
+    addressedTo: "All Enrolled Students (B.Tech, M.Tech & BCA Programs)",
     bodyParagraphs: [
-      "The comprehensive timetable for End-Semester Theory Examinations (Regular and Arrear/Backlog papers) has been finalized following Senate ratification.",
-      "Morning sessions operate from 09:30 to 12:30 IST. Afternoon sessions operate from 14:00 to 17:00 IST. Entry into exam halls is strictly prohibited without biometric RFID smart badge and physically printed hall ticket."
+      "The comprehensive timetable for the upcoming End-Semester Theory Examinations (Regular and Arrear/Backlog papers) for Even Semester 2024–25 has been ratified by the Academic Council.",
+      "Morning sessions will be conducted from 10:00 AM to 1:00 PM, and Afternoon sessions from 2:00 PM to 5:00 PM. Students must carry their official Student ID Card and printed Admit Card to gain entrance into the examination hall.",
+      "No electronic gadgets, smartwatches, or unauthorized study materials are permitted inside the examination halls. Candidates are advised to report 30 minutes prior to the commencement of each session."
     ],
     timeline: [
       {
-        date: "June 05, 2024",
-        event: "CS301 Advanced Data Structures & Algorithms",
-        venue: "Block B • Examination Hall 1",
-        status: "Confirmed",
-        statusStyle: "bg-secondary-container text-primary"
+        date: "05 June 2025",
+        event: "CS401: Database Management Systems",
+        venue: "Examination Block B &bull; Hall 201",
+        status: "Morning (10:00 AM - 1:00 PM)"
       },
       {
-        date: "June 08, 2024",
-        event: "CS302 Computer Architecture & Organization",
-        venue: "Block B • Examination Hall 1",
-        status: "Confirmed",
-        statusStyle: "bg-secondary-container text-primary"
+        date: "08 June 2025",
+        event: "CS402: Operating Systems & Systems Programming",
+        venue: "Examination Block B &bull; Hall 201",
+        status: "Morning (10:00 AM - 1:00 PM)"
       },
       {
-        date: "June 12, 2024",
-        event: "MA301 Discrete Mathematics & Probability",
-        venue: "Main Auditorium Block",
-        status: "Confirmed",
-        statusStyle: "bg-secondary-container text-primary"
+        date: "11 June 2025",
+        event: "CS403: Design & Analysis of Algorithms",
+        venue: "Examination Block B &bull; Hall 204",
+        status: "Morning (10:00 AM - 1:00 PM)"
+      },
+      {
+        date: "14 June 2025",
+        event: "MA401: Discrete Mathematics & Graph Theory",
+        venue: "Examination Block A &bull; Main Auditorium",
+        status: "Morning (10:00 AM - 1:00 PM)"
       }
     ],
-    signatureKey: "APX-EXAM-KEY: 44D91-2024-COE",
     signatory: {
-      name: "Prof. Kenneth Sterling",
-      title: "Controller of Examinations",
-      dept: "Board of Examinations • Apex Institute"
+      name: "Dr. K. N. Murthy",
+      title: "Controller of Examinations & Registrar",
+      dept: "Apex Institute of Technology & Management"
     },
     enclosures: [
-      { name: "Final_Datesheet_Spring_2025.pdf", size: "2.4 MB", type: "PDF Timetable" },
-      { name: "Exam_Hall_Bylaws_Instructions.pdf", size: "620 KB", type: "Instructions" }
+      { name: "Final_Datesheet_Even_Sem_2025.pdf", size: "1.8 MB", type: "PDF Schedule" },
+      { name: "Exam_Hall_Instructions_Students.pdf", size: "510 KB", type: "PDF Guidelines" }
     ]
   },
   {
     id: "apx-82",
-    circularRef: "APX/CIR/2024-82",
-    title: "Distinguished Lecture on AI & Kernel Architecture by Dr. Elena Rostova",
+    circularRef: "APX/CIR/2025/082",
+    title: "Distinguished Guest Lecture on Cloud Architecture & AI Systems",
     category: "events",
-    categoryBadge: "Events & Workshops",
-    badgeStyle: "bg-surface-container-high text-on-surface border border-[#c4c6cf]",
-    date: "19 May 2024 • 14:00:00 IST",
-    timeAgo: "5 days ago",
+    categoryLabel: "Guest Lecture & Seminar",
+    categoryBadgeStyle: "bg-purple-50 text-purple-700 border-purple-200",
+    date: "08 May 2025 &bull; 04:15 PM",
+    timeAgo: "4 days ago",
     isUnread: false,
     summary:
-      "Dean of Research announces an interactive session in the Turing Main Auditorium featuring foundational microkernel optimizations for distributed transformer workloads.",
-    subjectLine: "Distinguished Colloquium: Microkernels for High-Performance Distributed AI Systems",
-    actionRequired: "Seating is limited to 280 registrants. Reserve token via portal.",
-    authority: "Directorate of Research & Innovation",
-    addressedTo: "Faculty, Research Scholars, and Final/Pre-Final Engineering Undergraduates",
-    gazetteRecord: "#82",
+      "Department of CSE cordially invites students to an interactive industry session with Dr. Arvind Menon, Principal Systems Architect.",
+    subjectLine:
+      "Special Technical Session: Scalable Cloud Architecture & Distributed AI Workloads",
+    actionRequired: "Pre-registration required for seminar certificate of attendance",
+    authority: "Department of Computer Science & Engineering",
+    addressedTo: "2nd, 3rd, and 4th Year Computer Science & Engineering Students",
     bodyParagraphs: [
-      "We are delighted to host Dr. Elena Rostova, Principal Systems Architect at CERN / OpenKernel Labs, for a keynote colloquium examining hardware-software co-design in modern AI execution fabrics.",
-      "The session includes live benchmarking demonstrations on heterogeneous compute clusters, followed by an informal 45-minute Q&A with doctoral and undergraduate attendees."
+      "The Department of Computer Science & Engineering is organizing a distinguished technical guest lecture by Dr. Arvind Menon (Distinguished Cloud Architect at Apex Cloud Labs) on Saturday, 18 May 2025.",
+      "The lecture will explore the practical engineering of large-scale distributed systems, microservices architectures, and hardware acceleration for generative AI pipelines. A hands-on live demo on multi-region Kubernetes clusters will follow the presentation.",
+      "Attendance is strongly recommended for students enrolled in Operating Systems and Database Systems. E-certificates will be awarded to registered attendees."
     ],
     timeline: [
       {
-        date: "May 28 • 15:00 IST",
-        event: "Keynote Lecture & Architecture Telemetry",
-        venue: "Alan Turing Auditorium (North Campus)",
-        status: "Registration Open",
-        statusStyle: "bg-[#ecfdf5] text-[#047857]"
+        date: "18 May 2025 &bull; 10:30 AM",
+        event: "Welcome Address & Keynote Lecture",
+        venue: "Sir C.V. Raman Auditorium (Central Block)",
+        status: "Confirmed"
       },
       {
-        date: "May 28 • 16:30 IST",
-        event: "Interactive Q&A & Systems Research Mixer",
-        venue: "Innovation Hub Lounge",
-        status: "Tea Reception",
-        statusStyle: "bg-surface-container text-on-surface"
+        date: "18 May 2025 &bull; 12:00 PM",
+        event: "Interactive Q&A & Architecture Case Study",
+        venue: "Sir C.V. Raman Auditorium",
+        status: "Open Session"
       }
     ],
-    signatureKey: "APX-RES-KEY: 12F08-2024-RST",
     signatory: {
-      name: "Dr. Alan Turing Rao",
-      title: "Director of Research & Innovation",
+      name: "Dr. Meera Nambiar",
+      title: "Professor & Head of Department",
       dept: "Department of Computer Science & Engineering"
     },
     enclosures: [
-      { name: "Colloquium_Speaker_Abstract.pdf", size: "850 KB", type: "Abstract" }
+      { name: "Seminar_Flyer_Cloud_AI.pdf", size: "1.1 MB", type: "Poster / Flyer" }
     ]
   },
   {
     id: "apx-79",
-    circularRef: "APX/CIR/2024-79",
-    title: "Fall 2024 Semester Fee Installment #3 Submission Window & Late Fee Waiver",
-    category: "bursar",
-    categoryBadge: "Bursar Office // Finance",
-    badgeStyle: "bg-tertiary-container text-primary border border-[#93ccff]",
-    date: "15 May 2024 • 09:00:00 IST",
-    timeAgo: "9 days ago",
+    circularRef: "APX/CIR/2025/079",
+    title: "Semester Fee Installment #3 Payment Window & Schedule",
+    category: "fees",
+    categoryLabel: "Fee & Accounts",
+    categoryBadgeStyle: "bg-amber-50 text-amber-800 border-amber-200",
+    date: "02 May 2025 &bull; 10:00 AM",
+    timeAgo: "10 days ago",
     isUnread: false,
     summary:
-      "Official timeline for third tuition installment settlements, treasury clearing protocols, and conditional late charge relief parameters for eligible students.",
-    subjectLine: "Promulgation of Fee Installment #3 Submission Window & Concession Protocols",
-    actionRequired: "Payment Deadline: June 05, 2024 (Zero Late Penalty)",
-    authority: "Chief Bursar • Office of Financial Administration",
-    addressedTo: "All Students with Deferred or Installment Clearance Plans",
-    gazetteRecord: "#79",
+      "Finance Office announces payment schedule for remaining tuition installment (₹25,000) for Academic Year 2024–25.",
+    subjectLine:
+      "Notice for Submission of Semester Fee Installment #3 for Even Semester 2024–25",
+    actionRequired: "Due Date: 20 May 2025 (Standard Period without late fee)",
+    authority: "Office of the Finance Officer &bull; Mr. Rajesh Kumar",
+    addressedTo: "All Students with Pending Semester Fee Installments",
     bodyParagraphs: [
-      "The Bursar Office announces that the payment gateway for Installment #3 (AY 2024-25) is currently live on the Student Portal. Students may settle balances using RTGS, NEFT, Net Banking or generated challan at Punjab National Bank counter branches.",
-      "Accounts clearing dues prior to June 05 will automatically have the standard late fee surcharge waived on their ledger."
+      "Students who have opted for the installment payment schedule for the academic year 2024–25 are hereby reminded that Installment #3 (Final Semester Installment of ₹25,000) is due for clearance by 20 May 2025.",
+      "Online fee payments can be completed seamlessly via the Student Portal Fees Module using UPI, Net Banking, Credit/Debit Card, or via Challan at Punjab National Bank counter on campus.",
+      "Students clearing their dues on or before the due date will receive immediate digital fee clearance receipts for semester exam hall ticket generation."
     ],
-    signatureKey: "APX-FIN-KEY: 88A12-2024-BUR",
     signatory: {
       name: "Mr. Rajesh Kumar",
-      title: "Chief Bursar & Comptroller of Accounts",
-      dept: "Directorate of Financial Governance"
+      title: "Chief Accounts Officer",
+      dept: "Finance & Accounts Section &bull; Apex Institute"
     },
     enclosures: [
-      { name: "Challan_Counter_Instructions.pdf", size: "430 KB", type: "Payment Guide" }
+      { name: "Online_Fee_Payment_Step_Guide.pdf", size: "380 KB", type: "Payment Manual" },
+      { name: "Bank_Challan_Form_PNB.pdf", size: "290 KB", type: "Printable Challan" }
     ]
   },
   {
     id: "apx-74",
-    circularRef: "APX/CIR/2024-74",
-    title: "Scheduled Campus Cloud Server & Student LMS Maintenance Window",
+    circularRef: "APX/CIR/2025/074",
+    title: "Scheduled Campus Wi-Fi & Student Portal Maintenance Window",
     category: "advisory",
-    categoryBadge: "IT & Infrastructure",
-    badgeStyle: "bg-surface-container-high text-on-surface border border-[#c4c6cf]",
-    date: "10 May 2024 • 18:00:00 IST",
-    timeAgo: "14 days ago",
+    categoryLabel: "Campus Advisory",
+    categoryBadgeStyle: "bg-slate-100 text-slate-700 border-slate-200",
+    date: "28 April 2025 &bull; 05:00 PM",
+    timeAgo: "2 weeks ago",
     isUnread: false,
     summary:
-      "High-performance compute clusters and centralized academic learning databases will undergo quarterly kernel patching and failover validation.",
-    subjectLine: "Scheduled Infrastructure Maintenance & LMS Service Suspension",
-    actionRequired: "Planned Downtime: Sunday May 19, 02:00 AM – 04:00 AM IST",
+      "Central IT services routine infrastructure upgrade and server routine maintenance on Sunday early morning.",
+    subjectLine:
+      "Advisory Regarding Scheduled Server Upgrades & Temporary Portal Downtime",
+    actionRequired: "Maintenance Window: Sunday, 04 May 2025 &bull; 2:00 AM to 5:00 AM",
     authority: "Central IT & Campus Network Operations Center",
-    addressedTo: "Campus-Wide Faculty, Staff, and Students",
-    gazetteRecord: "#74",
+    addressedTo: "All Students, Faculty Members, and Campus Residents",
     bodyParagraphs: [
-      "Central IT will execute mandatory security kernel updates and storage replication failover drills across the campus virtualized cloud.",
-      "All services including Student Portal, LMS Moodle cluster, and campus Wi-Fi authentication radius nodes will experience intermittent brief pauses during this two-hour maintenance window."
+      "The Central IT Infrastructure Team will be carrying out scheduled network enhancements and server security updates on Sunday, 04 May 2025, between 2:00 AM and 5:00 AM IST.",
+      "During this short window of 3 hours, the Student Academic Portal, Campus Wi-Fi authentication services, and LMS library servers may experience brief intermittent disruptions.",
+      "All services will be fully restored before 5:30 AM. We apologize for any temporary inconvenience caused during this maintenance cycle."
     ],
-    signatureKey: "APX-IT-KEY: 77102-2024-NOC",
     signatory: {
       name: "Er. Vikram Sengupta",
-      title: "Chief Information Security Officer",
-      dept: "Central IT Infrastructure & Network Directorate"
+      title: "Head, Central IT Services",
+      dept: "Campus IT & Network Operations Center"
     },
     enclosures: [
-      { name: "Cloud_Status_Dashboard_Info.pdf", size: "290 KB", type: "Security Bulletin" }
+      { name: "IT_Services_Status_Guide.pdf", size: "210 KB", type: "Advisory Circular" }
     ]
   }
 ];
@@ -289,7 +289,6 @@ export default function StudentNoticesPage() {
   const [selectedNoticeId, setSelectedNoticeId] = useState<string>("apx-88");
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
-  const [feedView, setFeedView] = useState<"dual" | "condensed" | "chrono">("dual");
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   const showToast = (msg: string) => {
@@ -311,7 +310,8 @@ export default function StudentNoticesPage() {
         searchQuery === "" ||
         notice.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         notice.circularRef.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        notice.authority.toLowerCase().includes(searchQuery.toLowerCase());
+        notice.authority.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        notice.summary.toLowerCase().includes(searchQuery.toLowerCase());
       return matchesCategory && matchesSearch;
     });
   }, [notices, selectedCategory, searchQuery]);
@@ -321,428 +321,412 @@ export default function StudentNoticesPage() {
 
   const handleSelectNotice = (id: string) => {
     setSelectedNoticeId(id);
-    // Auto-mark as read
     setNotices((prev) =>
       prev.map((n) => (n.id === id ? { ...n, isUnread: false } : n))
     );
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-surface">
+    <div className="p-5 md:p-8 space-y-6 max-w-[1600px] w-full mx-auto font-sans text-slate-800">
+      {/* Print Specific CSS to isolate Selected Notice on 1 clean Page */}
+      <style>{`
+        @media print {
+          body * {
+            visibility: hidden;
+          }
+          #printable-circular, #printable-circular * {
+            visibility: visible;
+          }
+          #printable-circular {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            margin: 0;
+            padding: 20mm;
+            background: white !important;
+            box-shadow: none !important;
+            border: none !important;
+          }
+          .no-print {
+            display: none !important;
+          }
+        }
+      `}</style>
+
       {/* Toast Notification */}
       {toastMessage && (
-        <div className="fixed bottom-6 right-6 z-50 bg-primary text-on-primary px-4 py-3 rounded shadow-xl flex items-center gap-3 border border-secondary text-xs uppercase tracking-wider font-semibold animate-in fade-in slide-in-from-bottom-3 duration-200">
-          <CheckCircle2 className="h-4 w-4 text-[#047857]" />
+        <div className="fixed bottom-6 right-6 z-50 bg-[#3D405B] text-white px-5 py-3 rounded-xl shadow-xl flex items-center gap-3 border border-slate-700 text-sm font-medium animate-in slide-in-from-bottom no-print">
+          <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0" />
           <span>{toastMessage}</span>
-          <button onClick={() => setToastMessage(null)} className="ml-2 hover:opacity-75">
-            <X className="h-3.5 w-3.5" />
+          <button
+            onClick={() => setToastMessage(null)}
+            className="ml-2 text-slate-400 hover:text-white transition-colors cursor-pointer"
+          >
+            <X className="w-4 h-4" />
           </button>
         </div>
       )}
 
-      {/* Command Strip / Master Context Header */}
-      <div className="px-6 py-5 bg-surface-container-lowest border-b border-[#3D405B]/15 shadow-sm">
-        <div className="flex flex-wrap items-center justify-between gap-4">
-          <div>
-            <div className="flex items-center gap-2 mb-1">
-              <span className="text-[11px] font-mono text-on-surface-variant uppercase tracking-wider font-semibold">
-                Student Portal
-              </span>
-              <span className="text-[11px] text-outline">/</span>
-              <span className="text-[11px] font-mono text-secondary font-bold uppercase tracking-wider">
-                Official Notices
-              </span>
-              <span className="ml-2 px-1.5 py-0.5 bg-secondary-container text-primary font-mono text-[10px] uppercase font-bold tracking-tight rounded-sm">
-                Active Session
-              </span>
-            </div>
-            <h1 className="text-xl md:text-2xl font-bold uppercase tracking-tight text-primary">
-              Campus Notices, Circulars &amp; Student Bulletins
+      {/* Top Header & Master Action Bar */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-4 md:px-6 rounded-2xl border border-slate-200/80 shadow-xs no-print">
+        <div>
+          <div className="flex items-center gap-2">
+            <h1 className="text-xl md:text-2xl font-bold text-[#3D405B] tracking-tight">
+              Campus Notices &amp; Circulars
             </h1>
-            <p className="text-xs font-mono text-on-surface-variant mt-0.5">
-              Official institutional dispatches, examination datesheets, and student advisories.
-            </p>
+            <span className="px-2.5 py-0.5 bg-blue-50 text-[#355C7D] border border-blue-200 text-xs font-semibold rounded-full">
+              Even Semester 2024–25
+            </span>
           </div>
-
-          {/* Quick Telemetry & Feed Controls */}
-          <div className="flex items-center gap-2.5">
-            <div className="hidden sm:flex items-center bg-surface-container px-3 py-1.5 border border-[#cbd5e1] rounded-sm">
-              <ShieldCheck className="h-4 w-4 text-secondary mr-2" />
-              <span className="font-mono text-xs text-primary font-bold">LEDGER INTEGRITY: 100% OK</span>
-            </div>
-            <button
-              onClick={markAllRead}
-              className="flex items-center gap-1.5 px-3 py-1.5 bg-surface-container hover:bg-surface-container-high text-primary font-mono text-xs uppercase font-bold tracking-wider transition-colors border border-[#cbd5e1] shadow-sm rounded-sm"
-            >
-              <CheckCheck className="h-4 w-4 text-secondary" />
-              <span>Mark Visible As Read</span>
-            </button>
-          </div>
+          <p className="text-xs text-slate-500 mt-0.5">
+            Official university announcements, datesheets, and academic advisories &bull; Rahul Sharma (23CS042)
+          </p>
         </div>
 
-        {/* Live Search & Filtration Bar */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 pt-3 mt-3 border-t border-[#3D405B]/10 items-center">
-          <div className="lg:col-span-7 relative">
-            <Search className="absolute left-3 top-2.5 text-on-surface-variant h-4 w-4" />
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search notices by keyword, circular ref, or department..."
-              className="w-full pl-9 pr-20 py-2 bg-surface text-on-surface font-mono text-xs border border-[#cbd5e1] focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder:text-outline rounded-sm"
-            />
-            <span className="absolute right-3 top-2.5 font-mono text-[10px] text-outline uppercase tracking-wider hidden sm:inline-block">
-              CTRL + K
-            </span>
-          </div>
-
-          <div className="lg:col-span-5 flex items-center justify-start lg:justify-end gap-2 overflow-x-auto">
-            <span className="font-mono text-[11px] text-on-surface-variant uppercase whitespace-nowrap">
-              Feed View:
-            </span>
-            <button
-              onClick={() => setFeedView("dual")}
-              className={`px-2.5 py-1.5 font-mono text-[11px] tracking-wide uppercase font-semibold transition-colors rounded-sm ${
-                feedView === "dual"
-                  ? "bg-primary text-on-primary"
-                  : "bg-surface-container text-on-surface border border-[#cbd5e1]"
-              }`}
-            >
-              Dual Pane
-            </button>
-            <button
-              onClick={() => setFeedView("condensed")}
-              className={`px-2.5 py-1.5 font-mono text-[11px] tracking-wide uppercase font-semibold transition-colors rounded-sm ${
-                feedView === "condensed"
-                  ? "bg-primary text-on-primary"
-                  : "bg-surface-container text-on-surface border border-[#cbd5e1]"
-              }`}
-            >
-              Condensed
-            </button>
-            <button
-              onClick={() => setFeedView("chrono")}
-              className={`px-2.5 py-1.5 font-mono text-[11px] tracking-wide uppercase font-semibold transition-colors rounded-sm ${
-                feedView === "chrono"
-                  ? "bg-primary text-on-primary"
-                  : "bg-surface-container text-on-surface border border-[#cbd5e1]"
-              }`}
-            >
-              Chronological
-            </button>
-          </div>
+        <div className="flex flex-wrap items-center gap-2.5">
+          <button
+            onClick={markAllRead}
+            className="inline-flex items-center gap-2 px-3.5 py-2 bg-slate-100 hover:bg-slate-200 text-[#3D405B] text-xs font-semibold rounded-xl border border-slate-200 transition-all cursor-pointer shadow-xs"
+          >
+            <CheckCheck className="w-3.5 h-3.5 text-[#355C7D]" />
+            <span>Mark All as Read</span>
+          </button>
+          <button
+            onClick={() => window.print()}
+            className="inline-flex items-center gap-2 px-3.5 py-2 bg-[#355C7D] hover:bg-[#2A4963] text-white text-xs font-semibold rounded-xl transition-all cursor-pointer shadow-xs"
+          >
+            <Printer className="w-3.5 h-3.5" />
+            <span>Print Current Notice</span>
+          </button>
         </div>
       </div>
 
-      {/* Operational Status Bar & Filter Tabs */}
-      <div className="px-6 py-2 bg-surface-container-low border-b border-[#3D405B]/15 flex flex-wrap items-center justify-between gap-3">
-        {/* Category Pills */}
-        <div className="flex items-center gap-1.5 overflow-x-auto max-w-full py-0.5">
-          <button
-            onClick={() => setSelectedCategory("all")}
-            className={`px-3 py-1 font-mono text-xs uppercase tracking-wider whitespace-nowrap transition-colors rounded-sm font-bold ${
-              selectedCategory === "all"
-                ? "bg-violet-600 text-white shadow-sm"
-                : "bg-surface-container-lowest text-on-surface border border-[#cbd5e1] hover:bg-violet-50 hover:text-violet-800"
-            }`}
-          >
-            All Notices ({notices.length})
-          </button>
-          <button
-            onClick={() => setSelectedCategory("academic")}
-            className={`px-3 py-1 font-mono text-xs uppercase tracking-wider whitespace-nowrap transition-colors rounded-sm font-bold ${
-              selectedCategory === "academic"
-                ? "bg-violet-600 text-white shadow-sm"
-                : "bg-surface-container-lowest text-on-surface border border-[#cbd5e1] hover:bg-violet-50 hover:text-violet-800"
-            }`}
-          >
-            Academic &amp; Datesheet (2)
-          </button>
-          <button
-            onClick={() => setSelectedCategory("bursar")}
-            className={`px-3 py-1 font-mono text-xs uppercase tracking-wider whitespace-nowrap transition-colors rounded-sm font-bold ${
-              selectedCategory === "bursar"
-                ? "bg-violet-600 text-white shadow-sm"
-                : "bg-surface-container-lowest text-on-surface border border-[#cbd5e1] hover:bg-violet-50 hover:text-violet-800"
-            }`}
-          >
-            Bursar &amp; Fees (1)
-          </button>
-          <button
-            onClick={() => setSelectedCategory("events")}
-            className={`px-3 py-1 font-mono text-xs uppercase tracking-wider whitespace-nowrap transition-colors rounded-sm font-bold ${
-              selectedCategory === "events"
-                ? "bg-violet-600 text-white shadow-sm"
-                : "bg-surface-container-lowest text-on-surface border border-[#cbd5e1] hover:bg-violet-50 hover:text-violet-800"
-            }`}
-          >
-            Events &amp; Guest Lectures (1)
-          </button>
-          <button
-            onClick={() => setSelectedCategory("advisory")}
-            className={`px-3 py-1 font-mono text-xs uppercase tracking-wider whitespace-nowrap transition-colors rounded-sm font-bold ${
-              selectedCategory === "advisory"
-                ? "bg-violet-600 text-white shadow-sm"
-                : "bg-surface-container-lowest text-on-surface border border-[#cbd5e1] hover:bg-violet-50 hover:text-violet-800"
-            }`}
-          >
-            Emergency &amp; Advisories (1)
-          </button>
-        </div>
-
-        {/* Auxiliary Sync Timestamp */}
-        <div className="flex items-center gap-2 font-mono text-xs text-on-surface-variant">
-          <span className="w-2 h-2 rounded-full bg-[#047857] animate-pulse"></span>
-          <span className="text-[11px] uppercase tracking-wider">Sync: May 24, 2024 • 14:32:09 IST</span>
-        </div>
-      </div>
-
-      {/* Primary Operations Surface: 45/55 Dual-Pane Console */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 w-full flex-1">
-        {/* LEFT PANEL: Master Notice Feed (5 Cols) */}
-        <section className="lg:col-span-5 bg-surface-container-lowest border-r border-[#3D405B]/15 flex flex-col justify-between overflow-y-auto min-h-[500px]">
+      {/* 4 Summary / Metric Cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 no-print">
+        {/* Card 1: Total Circulars */}
+        <div className="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-xs flex items-center gap-3.5">
+          <div className="w-11 h-11 rounded-xl bg-blue-50 text-[#355C7D] flex items-center justify-center shrink-0">
+            <Bell className="w-5 h-5" />
+          </div>
           <div>
-            {/* Stream Header */}
-            <div className="px-5 py-2.5 bg-surface-container-high/60 border-b border-[#3D405B]/10 flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <Bell className="h-4 w-4 text-secondary" />
-                <span className="text-xs font-mono uppercase tracking-wider text-primary font-bold">
-                  Dispatch Feed
-                </span>
-                <span className="px-1.5 py-0.5 bg-secondary-container text-primary font-mono text-[10px] font-bold rounded-xs">
-                  {filteredNotices.length} ITEMS
-                </span>
-              </div>
-              <span className="font-mono text-[11px] text-outline">SORT: NEWEST FIRST</span>
-            </div>
+            <span className="text-[11px] font-medium text-slate-500 uppercase tracking-wider block">
+              Active Notices
+            </span>
+            <span className="text-base font-bold text-slate-800">{notices.length} Published</span>
+            <span className="text-[11px] text-slate-500 block">Session 2024–25</span>
+          </div>
+        </div>
 
-            {/* Feed List Items */}
-            <div className="divide-y divide-[#3D405B]/10">
-              {filteredNotices.map((notice) => {
-                const isSelected = selectedNotice.id === notice.id;
-                return (
-                  <article
-                    key={notice.id}
-                    onClick={() => handleSelectNotice(notice.id)}
-                    className={`cursor-pointer p-4 transition-all relative ${
-                      isSelected
-                        ? "bg-surface-container border-l-4 border-primary"
-                        : "bg-surface-container-lowest hover:bg-surface-container-low border-l-4 border-transparent"
+        {/* Card 2: Urgent Action */}
+        <div className="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-xs flex items-center gap-3.5">
+          <div className="w-11 h-11 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center shrink-0">
+            <BadgeAlert className="w-5 h-5" />
+          </div>
+          <div>
+            <span className="text-[11px] font-medium text-slate-500 uppercase tracking-wider block">
+              Action Required
+            </span>
+            <span className="text-base font-bold text-rose-600">2 Urgent</span>
+            <span className="text-[11px] text-slate-500 block">Project &amp; Exam Dates</span>
+          </div>
+        </div>
+
+        {/* Card 3: Academic Circulars */}
+        <div className="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-xs flex items-center gap-3.5">
+          <div className="w-11 h-11 rounded-xl bg-indigo-50 text-[#3D405B] flex items-center justify-center shrink-0">
+            <GraduationCap className="w-5 h-5" />
+          </div>
+          <div>
+            <span className="text-[11px] font-medium text-slate-500 uppercase tracking-wider block">
+              Academic &amp; Exams
+            </span>
+            <span className="text-base font-bold text-slate-800">2 Circulars</span>
+            <span className="text-[11px] text-emerald-600 font-medium block">Timetable Verified</span>
+          </div>
+        </div>
+
+        {/* Card 4: Financial & Admin */}
+        <div className="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-xs flex items-center gap-3.5">
+          <div className="w-11 h-11 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center shrink-0">
+            <Building className="w-5 h-5" />
+          </div>
+          <div>
+            <span className="text-[11px] font-medium text-slate-500 uppercase tracking-wider block">
+              Finance &amp; Admin
+            </span>
+            <span className="text-base font-bold text-slate-800">3 Notices</span>
+            <span className="text-[11px] text-slate-500 block">Fee Window &amp; IT Update</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Filter and Search Bar */}
+      <div className="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-xs flex flex-col md:flex-row items-center justify-between gap-4 no-print">
+        {/* Category Pills */}
+        <div className="flex items-center gap-1.5 overflow-x-auto w-full md:w-auto pb-1 md:pb-0">
+          {[
+            { id: "all", label: "All Notices", count: notices.length },
+            { id: "academic", label: "Academic & Exams", count: 2 },
+            { id: "fees", label: "Fees & Finance", count: 1 },
+            { id: "events", label: "Events & Seminars", count: 1 },
+            { id: "advisory", label: "Campus Advisories", count: 1 },
+          ].map((cat) => (
+            <button
+              key={cat.id}
+              onClick={() => setSelectedCategory(cat.id)}
+              className={`px-3 py-1.5 text-xs font-semibold rounded-xl whitespace-nowrap transition-all cursor-pointer ${
+                selectedCategory === cat.id
+                  ? "bg-[#355C7D] text-white shadow-xs"
+                  : "bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200"
+              }`}
+            >
+              {cat.label} ({cat.count})
+            </button>
+          ))}
+        </div>
+
+        {/* Search Input */}
+        <div className="relative w-full md:w-72">
+          <Search className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
+          <input
+            type="text"
+            placeholder="Search circulars, ref, or topic..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full pl-9 pr-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#355C7D] transition-all"
+          />
+        </div>
+      </div>
+
+      {/* Primary Split View: Left Notice Feed (5 Cols) + Right Official Letterhead (7 Cols) */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        {/* ========================================================== */}
+        {/* LEFT PANEL: Notice Dispatch Feed (5 Cols)                  */}
+        {/* ========================================================== */}
+        <div className="lg:col-span-5 bg-white rounded-2xl border border-slate-200/80 shadow-xs overflow-hidden no-print">
+          <div className="p-4 bg-slate-50 border-b border-slate-100 flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <FileText className="w-4 h-4 text-[#355C7D]" />
+              <span className="text-xs font-bold text-[#3D405B] uppercase tracking-wider">
+                Official Circular Feed
+              </span>
+            </div>
+            <span className="text-xs text-slate-500 font-medium">
+              Showing {filteredNotices.length} items
+            </span>
+          </div>
+
+          <div className="divide-y divide-slate-100 max-h-[720px] overflow-y-auto">
+            {filteredNotices.map((notice) => {
+              const isSelected = selectedNotice.id === notice.id;
+              return (
+                <div
+                  key={notice.id}
+                  onClick={() => handleSelectNotice(notice.id)}
+                  className={`p-4 transition-all cursor-pointer relative ${
+                    isSelected
+                      ? "bg-blue-50/60 border-l-4 border-[#355C7D]"
+                      : "hover:bg-slate-50 border-l-4 border-transparent"
+                  }`}
+                >
+                  <div className="flex items-start justify-between gap-2 mb-1.5">
+                    <div className="flex items-center gap-1.5 flex-wrap">
+                      <span
+                        className={`px-2 py-0.5 text-[10px] font-semibold rounded-full border ${notice.categoryBadgeStyle}`}
+                      >
+                        {notice.categoryLabel}
+                      </span>
+                      <span className="font-mono text-[10px] text-slate-500 font-semibold">
+                        {notice.circularRef}
+                      </span>
+                    </div>
+                    {notice.isUnread && (
+                      <span className="px-1.5 py-0.5 bg-rose-500 text-white text-[9px] font-bold rounded-full animate-pulse">
+                        New
+                      </span>
+                    )}
+                  </div>
+
+                  <h2
+                    className={`text-sm font-bold leading-snug line-clamp-2 ${
+                      isSelected ? "text-[#355C7D]" : "text-slate-800"
                     }`}
                   >
-                    <div className="flex items-start justify-between gap-2 mb-1.5">
-                      <div className="flex items-center gap-1.5 flex-wrap">
-                        <span
-                          className={`px-2 py-0.5 font-mono text-[10px] uppercase font-bold tracking-wider rounded-xs ${notice.badgeStyle}`}
-                        >
-                          {notice.categoryBadge}
-                        </span>
-                        <span className="font-mono text-[11px] text-outline font-semibold">
-                          {notice.circularRef}
-                        </span>
-                      </div>
-                      {notice.isUnread && (
-                        <span className="px-1.5 py-0.2 bg-error text-on-error font-mono text-[10px] uppercase font-bold tracking-wider animate-pulse rounded-xs">
-                          Unread
-                        </span>
-                      )}
+                    {notice.title}
+                  </h2>
+                  <p className="text-xs text-slate-500 mt-1 line-clamp-2 leading-relaxed">
+                    {notice.summary}
+                  </p>
+
+                  <div className="mt-2.5 pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-400">
+                    <div className="flex items-center gap-1">
+                      <Clock className="w-3 h-3 text-slate-400" />
+                      <span>{notice.timeAgo}</span>
                     </div>
-
-                    <h2
-                      className={`text-sm font-bold uppercase leading-snug tracking-tight ${
-                        isSelected ? "text-primary" : "text-on-surface hover:text-primary"
-                      }`}
-                    >
-                      {notice.title}
-                    </h2>
-                    <p className="text-xs text-on-surface-variant mt-1.5 line-clamp-2 leading-relaxed">
-                      {notice.summary}
-                    </p>
-
-                    <div className="mt-3 pt-2.5 border-t border-[#3D405B]/10 flex items-center justify-between text-outline font-mono text-[11px]">
-                      <div className="flex items-center gap-1.5">
-                        <Clock className="h-3.5 w-3.5 text-secondary" />
-                        <span>{notice.timeAgo}</span>
-                      </div>
-                      <div className="flex items-center gap-1 text-primary font-bold uppercase">
-                        <span>Inspect</span>
-                        <ArrowRight className="h-3 w-3" />
-                      </div>
+                    <div className="flex items-center gap-1 text-[#355C7D] font-semibold text-xs">
+                      <span>View Notice</span>
+                      <ArrowRight className="w-3 h-3" />
                     </div>
-                  </article>
-                );
-              })}
-
-              {filteredNotices.length === 0 && (
-                <div className="p-8 text-center text-xs font-mono text-outline">
-                  No circulars matched the specified keyword or category.
+                  </div>
                 </div>
-              )}
-            </div>
-          </div>
+              );
+            })}
 
-          {/* Feed Pagination */}
-          <div className="p-4 bg-surface-container-low border-t border-[#3D405B]/10 flex items-center justify-between">
-            <div className="font-mono text-xs text-on-surface-variant">
-              SHOWING <span className="font-bold text-primary">{filteredNotices.length}</span> OF 14 CIRCULARS
-            </div>
-            <div className="flex items-center gap-1">
-              <button
-                disabled
-                className="w-7 h-7 flex items-center justify-center bg-surface-container-lowest text-on-surface border border-[#cbd5e1] disabled:opacity-40 rounded-sm"
-              >
-                <ChevronLeft className="h-4 w-4" />
-              </button>
-              <span className="px-2 font-mono text-xs text-on-surface font-semibold">PAGE 01</span>
-              <button
-                disabled
-                className="w-7 h-7 flex items-center justify-center bg-surface-container-lowest text-on-surface border border-[#cbd5e1] disabled:opacity-40 rounded-sm"
-              >
-                <ChevronRight className="h-4 w-4" />
-              </button>
-            </div>
+            {filteredNotices.length === 0 && (
+              <div className="p-8 text-center text-xs text-slate-400">
+                No circulars found matching your search.
+              </div>
+            )}
           </div>
-        </section>
+        </div>
 
-        {/* RIGHT PANEL: Formal Institutional Notice Reader (7 Cols) */}
-        <main className="lg:col-span-7 bg-surface p-6 flex flex-col gap-6 overflow-y-auto">
-          {/* Action Toolbar */}
-          <div className="flex flex-wrap items-center justify-between gap-3 bg-surface-container-lowest p-4 border border-[#cbd5e1] shadow-sm">
+        {/* ========================================================== */}
+        {/* RIGHT PANEL: Official Circular Letterhead View (7 Cols)   */}
+        {/* ========================================================== */}
+        <div className="lg:col-span-7 space-y-4">
+          {/* Action Toolbar above letterhead */}
+          <div className="bg-white p-3.5 rounded-2xl border border-slate-200/80 shadow-xs flex flex-wrap items-center justify-between gap-3 no-print">
             <div className="flex items-center gap-2">
-              <span className="w-2.5 h-2.5 bg-secondary inline-block rounded-full animate-ping"></span>
-              <span className="font-mono text-xs text-primary font-bold uppercase tracking-wider">
-                OFFICIAL GAZETTE RECORD {selectedNotice.gazetteRecord}
+              <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
+              <span className="text-xs font-bold text-slate-700">
+                Official Gazette Ref: {selectedNotice.circularRef}
               </span>
             </div>
-            <div className="flex items-center gap-2 flex-wrap">
+            <div className="flex items-center gap-2">
               <button
-                onClick={() => showToast(`Downloading official signed circular: ${selectedNotice.circularRef}...`)}
-                className="flex items-center gap-1.5 px-3 py-1.5 bg-primary hover:bg-primary-container text-on-primary font-mono text-xs uppercase font-bold tracking-wider transition-colors shadow-sm rounded-sm"
+                onClick={() =>
+                  showToast(`Downloading official circular: ${selectedNotice.circularRef}...`)
+                }
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-[#3D405B] text-xs font-semibold rounded-xl border border-slate-200 transition-all cursor-pointer"
               >
-                <Download className="h-3.5 w-3.5" />
-                <span>Download Vector PDF</span>
+                <Download className="w-3.5 h-3.5 text-[#355C7D]" />
+                <span>Download PDF</span>
               </button>
               <button
                 onClick={() => window.print()}
-                className="flex items-center gap-1.5 px-3 py-1.5 bg-surface-container hover:bg-surface-container-high text-primary font-mono text-xs uppercase font-bold tracking-wider border border-[#cbd5e1] transition-colors rounded-sm"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#355C7D] hover:bg-[#2A4963] text-white text-xs font-semibold rounded-xl transition-all cursor-pointer shadow-xs"
               >
-                <Printer className="h-3.5 w-3.5" />
-                <span>Print Circular</span>
+                <Printer className="w-3.5 h-3.5" />
+                <span>Print</span>
               </button>
               <button
-                onClick={() => showToast("Directive milestone added to Academic Calendar.")}
-                className="flex items-center gap-1.5 px-3 py-1.5 bg-surface-container hover:bg-secondary-container text-secondary font-mono text-xs uppercase font-bold tracking-wider border border-[#cbd5e1] transition-colors rounded-sm"
+                onClick={() => showToast("Added to student academic calendar.")}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 hover:bg-blue-100 text-[#355C7D] border border-blue-200 text-xs font-semibold rounded-xl transition-all cursor-pointer"
               >
-                <CalendarPlus className="h-3.5 w-3.5" />
+                <CalendarPlus className="w-3.5 h-3.5" />
                 <span>Add to Calendar</span>
               </button>
             </div>
           </div>
 
-          {/* Institutional Letterhead Parchment Container */}
-          <article className="bg-surface-container-lowest p-8 border border-[#cbd5e1] shadow-sm relative">
-            {/* Top Blueprint Architectural Bar */}
-            <div className="h-1.5 bg-gradient-to-r from-primary via-secondary to-secondary-container -mt-8 -mx-8 mb-8"></div>
+          {/* Institutional Letterhead Container */}
+          <div
+            id="printable-circular"
+            className="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200/80 shadow-xs relative text-slate-800"
+          >
+            {/* Top Navy Accent Strip */}
+            <div className="h-2 bg-gradient-to-r from-[#355C7D] via-[#3D405B] to-[#2E3046] -mt-6 sm:-mt-8 -mx-6 sm:-mx-8 mb-6 rounded-t-2xl"></div>
 
             {/* Official Letterhead Header */}
-            <header className="pb-6 border-b-2 border-primary mb-6">
-              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-                {/* Crest and Identity */}
-                <div className="flex items-center gap-3.5">
-                  <div className="w-12 h-12 bg-primary text-on-primary flex items-center justify-center font-black text-xl rounded-sm shadow-md">
-                    A
-                  </div>
-                  <div>
-                    <div className="text-base uppercase font-bold tracking-tight text-primary">
-                      Apex Institute of Technology
-                    </div>
-                    <div className="font-mono text-[11px] text-on-surface-variant uppercase tracking-widest font-semibold">
-                      Autonomous Campus • Directorate of Academic Governance
-                    </div>
-                    <div className="text-[11px] text-outline font-mono">
-                      Sector 12, Academic Knowledge Corridor • Gazette Portal ID: APX-ACAD-2024
-                    </div>
-                  </div>
+            <div className="pb-5 border-b-2 border-slate-200 mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 rounded-xl bg-[#355C7D] text-white flex items-center justify-center font-bold text-xl shadow-xs shrink-0">
+                  AIT
                 </div>
-
-                {/* Verification Seal Chip */}
-                <div className="bg-surface-container px-3 py-2 text-right border border-[#cbd5e1] self-stretch sm:self-auto flex sm:flex-col justify-between sm:justify-center items-end rounded-sm">
-                  <span className="text-[10px] text-outline uppercase tracking-wider font-bold font-mono">
-                    DISPATCH REF
-                  </span>
-                  <span className="font-mono text-xs text-primary font-bold">{selectedNotice.circularRef}</span>
-                  <span className="font-mono text-[10px] text-secondary font-semibold">SHA-256 VERIFIED</span>
+                <div>
+                  <h2 className="text-base font-extrabold text-[#3D405B] uppercase tracking-wide leading-tight">
+                    Apex Institute of Technology &amp; Management
+                  </h2>
+                  <p className="text-[11px] text-slate-500 font-medium">
+                    Sector 12, Academic Knowledge Corridor &bull; Delhi-NCR, India
+                  </p>
+                  <p className="text-[10px] text-slate-400">
+                    Accredited Autonomous Institution &bull; Web: www.apex.edu.in
+                  </p>
                 </div>
               </div>
-            </header>
 
-            {/* Circular Metadata Ledger */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-surface-container-low p-4 border border-[#cbd5e1] mb-6 rounded-sm">
-              <div>
-                <span className="text-[10px] font-mono text-on-surface-variant uppercase tracking-wider block">
-                  Date of Promulgation:
+              <div className="bg-slate-50 p-2.5 rounded-xl border border-slate-200 text-right sm:text-right shrink-0">
+                <span className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block">
+                  Circular Reference
                 </span>
-                <span className="font-mono text-xs text-on-surface font-semibold">{selectedNotice.date}</span>
+                <span className="font-mono text-xs font-bold text-[#355C7D] block">
+                  {selectedNotice.circularRef}
+                </span>
+                <span className="text-[10px] text-emerald-600 font-medium">
+                  Verified Official Dispatch
+                </span>
+              </div>
+            </div>
+
+            {/* Circular Metadata Row */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 bg-slate-50 p-3.5 rounded-xl border border-slate-200 mb-6 text-xs">
+              <div>
+                <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider block">
+                  Date of Issue:
+                </span>
+                <span className="font-semibold text-slate-800">{selectedNotice.date}</span>
               </div>
               <div>
-                <span className="text-[10px] font-mono text-on-surface-variant uppercase tracking-wider block">
+                <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider block">
                   Issuing Authority:
                 </span>
-                <span className="text-xs text-primary font-semibold">{selectedNotice.authority}</span>
+                <span className="font-semibold text-[#355C7D]">{selectedNotice.authority}</span>
               </div>
-              <div className="sm:col-span-2 pt-2 border-t border-[#cbd5e1]">
-                <span className="text-[10px] font-mono text-on-surface-variant uppercase tracking-wider block">
-                  Addressed Cohort:
+              <div className="sm:col-span-2 pt-2 border-t border-slate-200">
+                <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider block">
+                  Addressed To:
                 </span>
-                <span className="text-xs text-on-surface">{selectedNotice.addressedTo}</span>
+                <span className="text-slate-700">{selectedNotice.addressedTo}</span>
               </div>
             </div>
 
             {/* Subject Line */}
             <div className="mb-6">
-              <span className="text-[10px] font-mono uppercase tracking-widest text-secondary font-bold">
-                Subject Matter //
+              <span className="text-[10px] font-bold uppercase tracking-wider text-[#355C7D]">
+                SUBJECT:
               </span>
-              <h2 className="text-lg md:text-xl font-bold text-primary tracking-tight mt-1 leading-snug">
+              <h3 className="text-base sm:text-lg font-bold text-[#3D405B] mt-0.5 leading-snug">
                 {selectedNotice.subjectLine}
-              </h2>
+              </h3>
             </div>
 
-            {/* Directive Callout Banner */}
+            {/* Urgent Action Callout */}
             {selectedNotice.actionRequired && (
-              <div className="bg-[#fef2f2] text-error p-4 border-l-4 border-error mb-6 flex items-start gap-3 rounded-r-sm">
-                <AlertTriangle className="h-5 w-5 text-error shrink-0 mt-0.5" />
+              <div className="bg-rose-50 border-l-4 border-rose-500 p-3.5 rounded-r-xl mb-6 flex items-start gap-3 text-xs">
+                <AlertTriangle className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
                 <div>
-                  <div className="text-xs font-bold uppercase tracking-wide text-error">
+                  <span className="font-bold text-rose-800 block">
                     {selectedNotice.actionRequired}
-                  </div>
-                  <div className="text-[11px] mt-0.5 text-on-surface-variant">
-                    Late repositories will not be granted evaluator access. System automations will lock git hashes at the exact cutoff timestamp.
-                  </div>
+                  </span>
+                  <span className="text-rose-700 text-[11px] mt-0.5 block">
+                    Please ensure strict adherence to the stated timelines to avoid academic delays.
+                  </span>
                 </div>
               </div>
             )}
 
-            {/* Body Copy */}
-            <div className="space-y-4 text-xs leading-relaxed text-on-surface mb-6">
+            {/* Body Paragraphs */}
+            <div className="space-y-3.5 text-xs text-slate-700 leading-relaxed mb-6">
               {selectedNotice.bodyParagraphs.map((para, idx) => (
                 <p key={idx}>{para}</p>
               ))}
 
-              {/* Structured Deliverables Matrix */}
+              {/* Deliverables Checklist if available */}
               {selectedNotice.deliverables && (
-                <div className="border border-[#cbd5e1] bg-surface-container-lowest mt-4 rounded-sm overflow-hidden">
-                  <div className="bg-surface-container px-4 py-2 font-mono text-[11px] uppercase font-bold text-primary tracking-wider border-b border-[#cbd5e1]">
-                    Mandatory Deliverable Matrix &amp; Verification Checks
+                <div className="mt-4 border border-slate-200 rounded-xl overflow-hidden bg-slate-50/50">
+                  <div className="bg-slate-100 px-4 py-2 text-xs font-bold text-[#3D405B] uppercase tracking-wider border-b border-slate-200">
+                    Mandatory Submission Checklist
                   </div>
-                  <div className="divide-y divide-[#cbd5e1]">
+                  <div className="divide-y divide-slate-200">
                     {selectedNotice.deliverables.map((item, dIdx) => (
-                      <div key={dIdx} className="p-2.5 flex items-start justify-between gap-4 text-xs">
+                      <div key={dIdx} className="p-2.5 px-4 flex items-center justify-between text-xs">
                         <div className="flex items-center gap-2">
-                          <span className="w-1.5 h-1.5 bg-primary rounded-full"></span>
-                          <span className="font-medium text-primary">{item.title}</span>
+                          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                          <span className="font-medium text-slate-800">{item.title}</span>
                         </div>
-                        <span className="font-mono text-[11px] text-on-surface-variant">{item.spec}</span>
+                        <span className="text-[11px] text-slate-500 font-mono">{item.spec}</span>
                       </div>
                     ))}
                   </div>
@@ -750,30 +734,32 @@ export default function StudentNoticesPage() {
               )}
             </div>
 
-            {/* Schedule Phase Table */}
+            {/* Schedule Timeline Table if available */}
             {selectedNotice.timeline && (
               <div className="mb-6">
-                <div className="font-mono text-xs uppercase tracking-wider text-primary font-bold mb-2">
-                  Phase-Wise Operational Timeline
-                </div>
-                <div className="overflow-x-auto border border-[#cbd5e1] rounded-sm">
+                <h4 className="text-xs font-bold text-[#3D405B] uppercase tracking-wider mb-2">
+                  Key Milestones &amp; Examination Schedule
+                </h4>
+                <div className="border border-slate-200 rounded-xl overflow-x-auto">
                   <table className="w-full text-left text-xs">
-                    <thead className="bg-surface-container font-mono text-[10px] text-primary uppercase border-b border-[#cbd5e1]">
+                    <thead className="bg-slate-100 text-slate-600 uppercase text-[10px] font-bold border-b border-slate-200">
                       <tr>
-                        <th className="py-2 px-3">Date Window</th>
-                        <th className="py-2 px-3">Protocol Event</th>
-                        <th className="py-2 px-3">Venue / Platform</th>
-                        <th className="py-2 px-3">Status</th>
+                        <th className="py-2.5 px-3.5">Date &amp; Time</th>
+                        <th className="py-2.5 px-3.5">Event / Subject</th>
+                        <th className="py-2.5 px-3.5">Venue</th>
+                        <th className="py-2.5 px-3.5">Status / Session</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-[#cbd5e1] font-mono text-[11px]">
+                    <tbody className="divide-y divide-slate-100 text-xs">
                       {selectedNotice.timeline.map((row, tIdx) => (
-                        <tr key={tIdx} className="hover:bg-surface-container-low transition-colors">
-                          <td className="py-2 px-3 font-semibold text-primary">{row.date}</td>
-                          <td className="py-2 px-3 text-on-surface">{row.event}</td>
-                          <td className="py-2 px-3 text-on-surface-variant">{row.venue}</td>
-                          <td className="py-2 px-3">
-                            <span className={`px-1.5 py-0.5 text-[10px] uppercase font-bold rounded-xs ${row.statusStyle}`}>
+                        <tr key={tIdx} className="hover:bg-slate-50 transition-colors">
+                          <td className="py-2.5 px-3.5 font-bold text-[#355C7D] whitespace-nowrap">
+                            {row.date}
+                          </td>
+                          <td className="py-2.5 px-3.5 text-slate-800 font-medium">{row.event}</td>
+                          <td className="py-2.5 px-3.5 text-slate-500">{row.venue}</td>
+                          <td className="py-2.5 px-3.5">
+                            <span className="px-2 py-0.5 bg-blue-50 text-[#355C7D] font-semibold text-[10px] rounded-full border border-blue-200">
                               {row.status}
                             </span>
                           </td>
@@ -785,88 +771,82 @@ export default function StudentNoticesPage() {
               </div>
             )}
 
-            {/* Verification, Digital Seal & Signatures Footer */}
-            <footer className="pt-6 border-t-2 border-primary mt-8 flex flex-col md:flex-row items-start md:items-end justify-between gap-6">
-              {/* Digital Watermark */}
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-surface-container text-secondary flex items-center justify-center border border-[#cbd5e1] rounded-sm">
-                  <ShieldCheck className="h-5 w-5 text-secondary" />
+            {/* Official Signatory Footer */}
+            <div className="pt-6 border-t-2 border-slate-200 flex flex-col sm:flex-row items-start sm:items-end justify-between gap-6">
+              <div>
+                <div className="flex items-center gap-2 text-emerald-600 font-semibold text-xs">
+                  <CheckCircle2 className="w-4 h-4" />
+                  <span>Officially Signed &amp; Ratified</span>
                 </div>
-                <div>
-                  <div className="font-mono text-[11px] font-bold text-primary">{selectedNotice.signatureKey}</div>
-                  <div className="font-mono text-[10px] text-outline">Digital Timestamp: {selectedNotice.date}</div>
-                  <div className="text-[10px] text-[#047857] font-mono uppercase font-bold flex items-center gap-1 mt-0.5">
-                    <CheckCircle2 className="h-3 w-3" />
-                    Valid Institutional Signature
-                  </div>
-                </div>
+                <p className="text-[10px] text-slate-400 mt-0.5">
+                  Internal Communications Registry &bull; Apex Academic Senate
+                </p>
               </div>
 
-              {/* Signatory Profile */}
-              <div className="text-left md:text-right">
-                <div className="text-sm text-primary font-bold">{selectedNotice.signatory.name}</div>
-                <div className="font-mono text-xs text-on-surface-variant">{selectedNotice.signatory.title}</div>
-                <div className="text-[11px] text-outline">{selectedNotice.signatory.dept}</div>
+              <div className="text-left sm:text-right">
+                <div className="h-6 flex items-center sm:justify-end font-serif italic text-[#355C7D] text-sm font-bold">
+                  {selectedNotice.signatory.name}
+                </div>
+                <div className="text-xs font-bold text-slate-800">{selectedNotice.signatory.name}</div>
+                <div className="text-[11px] text-slate-500">{selectedNotice.signatory.title}</div>
+                <div className="text-[10px] text-slate-400">{selectedNotice.signatory.dept}</div>
               </div>
-            </footer>
-          </article>
+            </div>
+          </div>
 
-          {/* Attached Enclosures Panel */}
-          <section className="bg-surface-container-lowest p-5 border border-[#cbd5e1] shadow-sm rounded-sm">
-            <div className="flex items-center justify-between mb-3">
-              <div className="flex items-center gap-2">
-                <Paperclip className="h-4 w-4 text-secondary" />
-                <span className="font-mono text-xs uppercase tracking-wider font-bold text-primary">
-                  Official Attached Enclosures ({selectedNotice.enclosures.length} Files)
-                </span>
-              </div>
-              <span className="font-mono text-[11px] text-outline">SECURITY SCANNED: CLEAN</span>
+          {/* Enclosures & Attachments Section */}
+          <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs no-print">
+            <div className="flex items-center gap-2 mb-3">
+              <Paperclip className="w-4 h-4 text-[#355C7D]" />
+              <h4 className="text-xs font-bold text-[#3D405B] uppercase tracking-wider">
+                Official Attachments ({selectedNotice.enclosures.length} Files)
+              </h4>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
               {selectedNotice.enclosures.map((enc, eIdx) => (
                 <div
                   key={eIdx}
-                  className="p-3 bg-surface-container-low border border-[#cbd5e1] flex items-center justify-between group hover:bg-surface-container transition-colors rounded-sm"
+                  className="p-3 bg-slate-50 hover:bg-slate-100 rounded-xl border border-slate-200 flex items-center justify-between transition-colors"
                 >
                   <div className="flex items-center gap-2.5 overflow-hidden">
-                    <FileText className="h-4 w-4 text-primary shrink-0" />
+                    <FileText className="w-4 h-4 text-[#355C7D] shrink-0" />
                     <div className="truncate">
-                      <div className="font-mono text-[11px] font-bold text-primary truncate">{enc.name}</div>
-                      <div className="font-mono text-[10px] text-outline">
-                        {enc.size} • {enc.type}
+                      <div className="text-xs font-bold text-slate-800 truncate">{enc.name}</div>
+                      <div className="text-[10px] text-slate-400">
+                        {enc.size} &bull; {enc.type}
                       </div>
                     </div>
                   </div>
                   <button
                     onClick={() => showToast(`Downloading ${enc.name}...`)}
-                    className="p-1 text-on-surface-variant hover:text-primary transition-colors shrink-0"
+                    className="p-1.5 text-slate-400 hover:text-[#355C7D] transition-colors shrink-0 cursor-pointer"
+                    title="Download"
                   >
-                    <Download className="h-4 w-4" />
+                    <Download className="w-4 h-4" />
                   </button>
                 </div>
               ))}
             </div>
-          </section>
+          </div>
 
-          {/* Help Desk Inquiry Bar */}
-          <div className="p-4 bg-surface-container border border-[#cbd5e1] flex flex-wrap items-center justify-between gap-3 rounded-sm">
-            <div className="flex items-center gap-2.5 text-xs">
-              <MessageSquare className="h-4 w-4 text-secondary" />
-              <span className="text-on-surface">
-                Questions regarding this circular? Contact the <strong>Academic Dispatch Liaison</strong> desk.
+          {/* Academic Helpdesk Quick Contact */}
+          <div className="p-4 bg-slate-100/80 rounded-2xl border border-slate-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs no-print">
+            <div className="flex items-center gap-2 text-slate-700">
+              <MessageSquare className="w-4 h-4 text-[#355C7D] shrink-0" />
+              <span>
+                Have questions regarding this circular? Contact the <strong>Academic Affairs Cell</strong>.
               </span>
             </div>
             <button
-              onClick={() => showToast("Direct liaison inquiry opened. Ticket #NOT-8819 created.")}
-              className="px-3.5 py-1.5 bg-primary hover:bg-primary-container text-on-primary font-mono text-xs uppercase font-bold tracking-wider transition-colors rounded-sm"
+              onClick={() => showToast("Academic Helpdesk query initiated (#TKT-9912).")}
+              className="px-3.5 py-1.5 bg-[#355C7D] hover:bg-[#2A4963] text-white text-xs font-semibold rounded-xl transition-all cursor-pointer shadow-xs whitespace-nowrap"
             >
               Contact Academic Desk
             </button>
           </div>
-        </main>
+        </div>
       </div>
     </div>
   );
 }
-
