@@ -179,7 +179,7 @@ export default function StudentDashboardPage() {
   ];
 
   return (
-    <div className="p-5 md:p-8 space-y-6 max-w-[1500px] mx-auto font-sans text-slate-800">
+    <div className="p-5 md:p-8 space-y-6 max-w-[1600px] w-full mx-auto font-sans text-slate-800">
       {/* Toast Notification */}
       {toastMessage && (
         <div className="fixed bottom-6 right-6 z-50 bg-[#3D405B] text-white px-5 py-3 rounded-xl shadow-xl flex items-center gap-3 border border-slate-700 text-sm font-medium animate-in slide-in-from-bottom">
