@@ -3,28 +3,24 @@
 import { useState } from "react";
 import Link from "next/link";
 import {
+  CreditCard,
   Download,
   Printer,
-  ChevronRight,
-  CreditCard,
-  CheckCircle,
+  CheckCircle2,
   Clock,
   Calendar,
   AlertCircle,
   HelpCircle,
   Search,
-  ExternalLink,
-  Shield,
-  ShieldCheck,
-  QrCode,
-  FileText,
-  X,
   Check,
-  Send,
-  Building
+  X,
+  FileText,
+  ShieldCheck,
+  Building,
+  ArrowRight
 } from "lucide-react";
 
-interface VoucherData {
+interface ReceiptVoucher {
   receiptNo: string;
   clearedDate: string;
   studentName: string;
@@ -34,162 +30,142 @@ interface VoucherData {
   method: string;
   bankBranch: string;
   reference: string;
-  operator: string;
-  sha256: string;
   items: { head: string; amount: string }[];
   subtotal: string;
 }
 
 export default function StudentFeesPage() {
-  const [activeReceiptId, setActiveReceiptId] = useState("REC-2024-4821");
+  const [activeReceiptId, setActiveReceiptId] = useState("REC-2024-5120");
   const [searchQuery, setSearchQuery] = useState("");
   const [showPayModal, setShowPayModal] = useState(false);
-  const [showDiscrepancyModal, setShowDiscrepancyModal] = useState(false);
+  const [showQueryModal, setShowQueryModal] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+
+  // Payment Form State
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("UPI");
 
   const triggerToast = (msg: string) => {
     setToastMessage(msg);
     setTimeout(() => {
       setToastMessage(null);
-    }, 4000);
+    }, 3500);
   };
 
-  const receiptsData: Record<string, VoucherData> = {
-    "REC-2024-4821": {
-      receiptNo: "REC-2024-4821",
-      clearedDate: "14-Nov-2024",
+  const receiptsData: Record<string, ReceiptVoucher> = {
+    "REC-2024-5120": {
+      receiptNo: "REC-2024-5120",
+      clearedDate: "14 Nov 2024",
       studentName: "Rahul Sharma",
-      rollNo: "APX-2023-CS-042",
-      program: "B.Tech Computer Science & Eng.",
-      semester: "Sem IV (AY 2024–25)",
-      method: "Bank Demand Draft (Counter Received)",
+      rollNo: "23CS042",
+      program: "B.Tech Computer Science & Engineering",
+      semester: "Semester IV (Even Term 2024–25)",
+      method: "Online NetBanking (HDFC Bank)",
+      bankBranch: "Apex Campus NetGateway",
+      reference: "TXN-88419204",
+      items: [
+        { head: "Tuition Fee (Semester IV)", amount: "₹32,000.00" },
+        { head: "Computing & Lab Infrastructure", amount: "₹5,000.00" },
+        { head: "Digital Library & Learning Resources", amount: "₹1,500.00" },
+        { head: "Semester Examination Fee", amount: "₹1,500.00" },
+      ],
+      subtotal: "₹40,000.00",
+    },
+    "REC-2024-2104": {
+      receiptNo: "REC-2024-2104",
+      clearedDate: "22 Jul 2024",
+      studentName: "Rahul Sharma",
+      rollNo: "23CS042",
+      program: "B.Tech Computer Science & Engineering",
+      semester: "Semester III (Odd Term 2024–25)",
+      method: "Online NEFT Transfer",
+      bankBranch: "State Bank of India (SBI)",
+      reference: "UTR-SBIN24072201",
+      items: [
+        { head: "Tuition Fee (Semester III)", amount: "₹35,000.00" },
+        { head: "Annual Laboratory & Tech Levy", amount: "₹6,500.00" },
+        { head: "Student Activity & Sports Council", amount: "₹2,000.00" },
+        { head: "Medical Group Insurance", amount: "₹1,500.00" },
+      ],
+      subtotal: "₹45,000.00",
+    },
+    "REC-2024-0842": {
+      receiptNo: "REC-2024-0842",
+      clearedDate: "10 Jan 2024",
+      studentName: "Rahul Sharma",
+      rollNo: "23CS042",
+      program: "B.Tech Computer Science & Engineering",
+      semester: "Semester II (Even Term 2023–24)",
+      method: "Bank Demand Draft",
       bankBranch: "HDFC Bank, K.G. Marg Branch",
       reference: "DD #098412",
-      operator: "APX-ACT-04",
-      sha256:
-        "9b2d88a1e2f41c4800e998a4d701ecda551328014582fcc02e096417fae2981b",
       items: [
-        { head: "Tuition Fee (Semester IV Academic)", amount: "$3,800.00" },
-        {
-          head: "Advanced Computing Lab & Cloud Infra",
-          amount: "$650.00",
-        },
-        {
-          head: "Library & Digital Research Repositories",
-          amount: "$150.00",
-        },
-        {
-          head: "Semester End Examination & Assessment",
-          amount: "$150.00",
-        },
+        { head: "Tuition Fee (Semester II)", amount: "₹35,000.00" },
+        { head: "Lab Consumables & Systems Access", amount: "₹5,000.00" },
       ],
-      subtotal: "$4,750.00",
+      subtotal: "₹40,000.00",
     },
-    "REC-2024-1109": {
-      receiptNo: "REC-2024-1109",
-      clearedDate: "22-Jul-2024",
+    "REC-2023-0199": {
+      receiptNo: "REC-2023-0199",
+      clearedDate: "05 Aug 2023",
       studentName: "Rahul Sharma",
-      rollNo: "APX-2023-CS-042",
-      program: "B.Tech Computer Science & Eng.",
-      semester: "Sem III (AY 2024–25)",
-      method: "NEFT/RTGS Online Wire",
-      bankBranch: "State Bank of India (SBI Core)",
-      reference: "UTR: SBIN2420391840",
-      operator: "APX-ACT-02",
-      sha256:
-        "4a7c88b2e1f41d9900e888a4c701ecda441328014582faa02e096417fae1209a",
+      rollNo: "23CS042",
+      program: "B.Tech Computer Science & Engineering",
+      semester: "Semester I (Admission 2023–24)",
+      method: "Online Gateway",
+      bankBranch: "ICICI Payment Portal",
+      reference: "PAY-2023-99120",
       items: [
-        { head: "Tuition Fee (Semester III Academic)", amount: "$3,800.00" },
-        { head: "Annual Campus Tech & Infrastructure Levy", amount: "$650.00" },
-        { head: "Students Activity & Sports Council", amount: "$150.00" },
-        { head: "Medical Health Group Insurance", amount: "$150.00" },
+        { head: "One-Time Admission & Registration Fee", amount: "₹15,000.00" },
+        { head: "Tuition Fee (Semester I)", amount: "₹35,000.00" },
+        { head: "Refundable Caution Security Deposit", amount: "₹5,000.00" },
       ],
-      subtotal: "$4,750.00",
-    },
-    "REC-2023-9031": {
-      receiptNo: "REC-2023-9031",
-      clearedDate: "18-Jan-2024",
-      studentName: "Rahul Sharma",
-      rollNo: "APX-2023-CS-042",
-      program: "B.Tech Computer Science & Eng.",
-      semester: "Sem II (AY 2023–24)",
-      method: "Counter Cash Slip",
-      bankBranch: "Apex Treasury Cash Window #2",
-      reference: "SLIP: CS-CTR-8812",
-      operator: "APX-ACT-01",
-      sha256:
-        "3d1f88c3e1e21b8800e777b4d701ebda331328014582fbb02e096417fae8901c",
-      items: [
-        { head: "Tuition Fee (Semester II Academic)", amount: "$3,700.00" },
-        { head: "Lab Consumables & Workstation Access", amount: "$500.00" },
-        { head: "Annual Security & ID Badge Replacement", amount: "$300.00" },
-      ],
-      subtotal: "$4,500.00",
-    },
-    "REC-2023-0182": {
-      receiptNo: "REC-2023-0182",
-      clearedDate: "05-Aug-2023",
-      studentName: "Rahul Sharma",
-      rollNo: "APX-2023-CS-042",
-      program: "B.Tech Computer Science & Eng.",
-      semester: "Sem I (AY 2023–24)",
-      method: "Banker's Cheque",
-      bankBranch: "ICICI Bank, Connaught Place",
-      reference: "CHQ #441092",
-      operator: "APX-REG-03",
-      sha256:
-        "1c8e99a4e2f31a7700e666a4c701eada221328014582fcc02e096417fae4567d",
-      items: [
-        { head: "One-time Admission & Matriculation Fee", amount: "$1,500.00" },
-        { head: "Tuition Fee (Semester I Academic)", amount: "$3,500.00" },
-        { head: "Refundable Caution Security Deposit", amount: "$500.00" },
-      ],
-      subtotal: "$5,500.00",
+      subtotal: "₹55,000.00",
     },
   };
 
-  const currentVoucher = receiptsData[activeReceiptId] || receiptsData["REC-2024-4821"];
+  const currentVoucher =
+    receiptsData[activeReceiptId] || receiptsData["REC-2024-5120"];
 
   const ledgerList = [
     {
-      date: "14-Nov-2024",
-      receiptNo: "REC-2024-4821",
-      head: "Term IV Regular Fees",
-      subHead: "Tuition + Lab + Exams",
-      mode: "Bank Demand Draft",
-      ref: "DD #098412 (HDFC)",
-      amount: "$4,750.00",
-      status: "Verified",
+      date: "14 Nov 2024",
+      receiptNo: "REC-2024-5120",
+      head: "Semester IV Regular Fee",
+      subHead: "Tuition + Lab + Exam",
+      mode: "Online NetBanking",
+      ref: "TXN-88419204",
+      amount: "₹40,000.00",
+      status: "Paid",
     },
     {
-      date: "22-Jul-2024",
-      receiptNo: "REC-2024-1109",
-      head: "Term III Regular Fees",
-      subHead: "Tuition + Campus Levy",
-      mode: "NEFT/RTGS Transfer",
-      ref: "UTR: SBIN2420391840",
-      amount: "$4,750.00",
-      status: "Verified",
+      date: "22 Jul 2024",
+      receiptNo: "REC-2024-2104",
+      head: "Semester III Regular Fee",
+      subHead: "Tuition + Annual Tech Fee",
+      mode: "NEFT Wire Transfer",
+      ref: "UTR-SBIN24072201",
+      amount: "₹45,000.00",
+      status: "Paid",
     },
     {
-      date: "18-Jan-2024",
-      receiptNo: "REC-2023-9031",
-      head: "Term II Regular Fees",
-      subHead: "Tuition + Annual Security",
-      mode: "Counter Cash Slip",
-      ref: "SLIP: CS-CTR-8812",
-      amount: "$4,500.00",
-      status: "Verified",
+      date: "10 Jan 2024",
+      receiptNo: "REC-2024-0842",
+      head: "Semester II Regular Fee",
+      subHead: "Tuition + Lab Fee",
+      mode: "Demand Draft",
+      ref: "DD #098412",
+      amount: "₹40,000.00",
+      status: "Paid",
     },
     {
-      date: "05-Aug-2023",
-      receiptNo: "REC-2023-0182",
-      head: "Admission & Term I",
+      date: "05 Aug 2023",
+      receiptNo: "REC-2023-0199",
+      head: "Admission & Semester I",
       subHead: "Registration + Tuition",
-      mode: "Banker's Cheque",
-      ref: "CHQ #441092 (ICICI)",
-      amount: "$5,500.00",
-      status: "Verified",
+      mode: "Online Gateway",
+      ref: "PAY-2023-99120",
+      amount: "₹55,000.00",
+      status: "Paid",
     },
   ];
 
@@ -201,892 +177,723 @@ export default function StudentFeesPage() {
   );
 
   return (
-    <div className="flex flex-col w-full pb-10">
+    <div className="p-5 md:p-8 space-y-6 max-w-[1600px] w-full mx-auto font-sans text-slate-800">
       {/* Toast Notification */}
       {toastMessage && (
-        <div className="fixed bottom-6 right-6 z-50 bg-primary text-on-primary px-4 py-3 shadow-[2px_2px_0_0_#3D405B] border-l-4 border-secondary-container flex items-center gap-3 animate-in fade-in slide-in-from-bottom-2">
-          <span className="material-symbols-outlined text-secondary-container text-[20px]">
-            info
-          </span>
-          <span className="font-mono text-xs">{toastMessage}</span>
+        <div className="fixed bottom-6 right-6 z-50 bg-[#3D405B] text-white px-5 py-3 rounded-xl shadow-xl flex items-center gap-3 border border-slate-700 text-sm font-medium animate-in slide-in-from-bottom">
+          <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0" />
+          <span>{toastMessage}</span>
           <button
             onClick={() => setToastMessage(null)}
-            className="text-primary-fixed-dim hover:text-white ml-2"
+            className="ml-2 text-slate-400 hover:text-white transition-colors cursor-pointer"
           >
             <X className="w-4 h-4" />
           </button>
         </div>
       )}
 
-      {/* Command Banner / Header */}
-      <div className="px-6 py-4 bg-surface-container-lowest border-b border-[#d5e3fc] shadow-sm flex flex-col md:flex-row md:items-end justify-between gap-4">
-        <div className="flex flex-col gap-1">
-          <div className="flex items-center gap-2 text-xs text-on-surface-variant uppercase tracking-wider font-semibold">
-            <Link href="/student" className="hover:text-primary">
-              Student Portal
-            </Link>
-            <ChevronRight className="w-3.5 h-3.5 text-outline" />
-            <span className="text-primary font-bold">My Fees &amp; Receipts</span>
+      {/* Top Header & Quick Actions Bar */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-4 md:px-6 rounded-2xl border border-slate-200/80 shadow-xs">
+        <div>
+          <div className="flex items-center gap-2">
+            <h1 className="text-xl md:text-2xl font-bold text-[#3D405B] tracking-tight">
+              Fees &amp; Receipts
+            </h1>
+            <span className="px-2.5 py-0.5 bg-amber-50 text-amber-700 border border-amber-200 text-xs font-semibold rounded-full">
+              ₹25,000 Due
+            </span>
           </div>
-          <h1 className="font-headline text-xl text-primary font-bold tracking-tight">
-            Tuition Fees &amp; Financial Receipts Register
-          </h1>
-          <p className="text-xs text-on-surface-variant max-w-3xl">
-            Official campus ledger for academic year fees, installment schedule,
-            and digital receipt registry. Maintained directly by the Office of
-            the Bursar.
+          <p className="text-xs text-slate-500 mt-0.5">
+            Academic Year 2024–25 &bull; Rahul Sharma (23CS042)
           </p>
         </div>
 
-        <div className="flex items-center gap-2.5 self-start md:self-auto shrink-0">
+        <div className="flex flex-wrap items-center gap-2.5">
           <button
-            onClick={() => window.print()}
-            className="flex items-center gap-2 px-3.5 py-2 bg-surface-container text-on-surface text-xs font-semibold uppercase tracking-wider hover:bg-surface-container-high transition-colors border border-[#c4c6cf] shadow-xs"
+            onClick={() => triggerToast("Generating complete fee statement (PDF)...")}
+            className="inline-flex items-center gap-2 px-3.5 py-2 bg-slate-100 hover:bg-slate-200 text-[#3D405B] text-xs font-semibold rounded-xl border border-slate-200 transition-all cursor-pointer shadow-xs"
           >
-            <Printer className="w-4 h-4" />
-            <span>Print Ledger</span>
+            <Download className="w-3.5 h-3.5" />
+            <span>Download Statement</span>
           </button>
+
           <button
-            onClick={() =>
-              triggerToast(
-                "Compiling certified complete financial ledger statement (PDF)..."
-              )
-            }
-            className="flex items-center gap-2 px-4 py-2 bg-primary text-white text-xs font-semibold uppercase tracking-wider hover:bg-primary-container transition-colors shadow-sm"
+            onClick={() => setShowPayModal(true)}
+            className="inline-flex items-center gap-2 px-4 py-2 bg-[#355C7D] hover:opacity-95 text-white text-xs font-semibold rounded-xl shadow-xs transition-all cursor-pointer"
           >
-            <Download className="w-4 h-4" />
-            <span>Download Statement (PDF)</span>
+            <CreditCard className="w-3.5 h-3.5" />
+            <span>Pay Due Fee (₹25,000)</span>
           </button>
         </div>
       </div>
 
-      <div className="p-6 flex flex-col gap-6">
-        {/* Financial Telemetry 4-Metric Grid */}
-        <section className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6">
-          {/* Card 1: Total Course Fees */}
-          <div className="bg-surface-container-lowest p-5 shadow-sm border border-[#d5e3fc] flex flex-col justify-between relative overflow-hidden">
-            <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary"></div>
-            <div className="flex flex-col pl-1">
-              <span className="text-[11px] uppercase tracking-wider text-on-surface-variant font-bold">
-                Total Course Fees • AY 2024-25
-              </span>
-              <div className="font-headline text-2xl font-bold text-on-surface mt-2 tabular-nums">
-                $12,500.00
-              </div>
-            </div>
-            <div className="pt-3 mt-3 border-t border-[#d5e3fc]/60 flex flex-wrap gap-1 pl-1">
-              <span className="font-mono text-[10px] uppercase px-1.5 py-0.5 bg-surface-container text-on-surface-variant font-medium">
-                Tuition
-              </span>
-              <span className="font-mono text-[10px] uppercase px-1.5 py-0.5 bg-surface-container text-on-surface-variant font-medium">
-                Lab Fee
-              </span>
-              <span className="font-mono text-[10px] uppercase px-1.5 py-0.5 bg-surface-container text-on-surface-variant font-medium">
-                Campus Ops
-              </span>
-              <span className="font-mono text-[10px] uppercase px-1.5 py-0.5 bg-surface-container text-on-surface-variant font-medium">
-                Exam Assess
-              </span>
+      {/* 4 Financial Summary KPI Cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {/* Card 1: Total Course Fee */}
+        <div className="bg-white p-4 rounded-xl border border-slate-200/80 shadow-xs flex flex-col justify-between">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-medium text-slate-500">Annual Course Fee</span>
+            <div className="w-8 h-8 rounded-lg bg-slate-100 text-[#3D405B] flex items-center justify-center shrink-0">
+              <Building className="w-4 h-4" />
             </div>
           </div>
-
-          {/* Card 2: Total Paid to Date */}
-          <div className="bg-surface-container-lowest p-5 shadow-sm border border-[#d5e3fc] flex flex-col justify-between relative overflow-hidden">
-            <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#047857]"></div>
-            <div className="flex flex-col pl-1">
-              <div className="flex items-center justify-between">
-                <span className="text-[11px] uppercase tracking-wider text-on-surface-variant font-bold">
-                  Paid To Date
-                </span>
-                <span className="inline-flex items-center gap-1 text-[10px] font-bold text-[#047857] bg-[#ECFDF5] px-1.5 py-0.5 uppercase tracking-wider border border-[#a7f3d0]">
-                  <CheckCircle className="w-3 h-3" />
-                  76.0% Cleared
-                </span>
-              </div>
-              <div className="font-headline text-2xl font-bold text-on-surface mt-2 tabular-nums">
-                $9,500.00
-              </div>
+          <div className="mt-2">
+            <div className="flex items-baseline gap-2">
+              <span className="text-2xl font-bold text-[#3D405B] font-mono">₹1,10,000</span>
             </div>
-            <div className="pl-1 pt-2 flex items-center gap-2">
-              <div className="w-full bg-surface-container h-1.5 overflow-hidden">
-                <div className="bg-[#047857] h-full" style={{ width: "76%" }}></div>
-              </div>
-              <span className="font-mono text-[11px] text-on-surface-variant shrink-0 font-medium">
-                2/3 Installments
-              </span>
-            </div>
-          </div>
-
-          {/* Card 3: Pending Balance Due */}
-          <div className="bg-surface-container-lowest p-5 shadow-sm border border-[#d5e3fc] flex flex-col justify-between relative overflow-hidden">
-            <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#B45309]"></div>
-            <div className="flex flex-col pl-1">
-              <div className="flex items-center justify-between">
-                <span className="text-[11px] uppercase tracking-wider text-on-surface-variant font-bold">
-                  Pending Balance Due
-                </span>
-                <span className="text-[10px] font-bold text-[#B45309] bg-[#FFFBEB] px-1.5 py-0.5 uppercase tracking-wider border border-[#fde68a]">
-                  Installment #3 of 3
-                </span>
-              </div>
-              <div className="font-headline text-2xl font-bold text-error mt-2 tabular-nums">
-                $3,000.00
-              </div>
-            </div>
-            <div className="pl-1 pt-2 flex items-center justify-between font-mono text-[11px] text-on-surface-variant">
-              <span className="flex items-center gap-1 text-[#B45309] font-semibold">
-                <Clock className="w-3.5 h-3.5" /> Due: Apr 30, 2025
-              </span>
-              <button
-                onClick={() => setShowPayModal(true)}
-                className="text-xs uppercase font-bold text-primary hover:underline"
-              >
-                Pay Now →
-              </button>
-            </div>
-          </div>
-
-          {/* Card 4: Concession & Scholarship */}
-          <div className="bg-surface-container-lowest p-5 shadow-sm border border-[#d5e3fc] flex flex-col justify-between relative overflow-hidden">
-            <div className="absolute left-0 top-0 bottom-0 w-1 bg-secondary"></div>
-            <div className="flex flex-col pl-1">
-              <div className="flex items-center justify-between">
-                <span className="text-[11px] uppercase tracking-wider text-on-surface-variant font-bold">
-                  Applied Concession
-                </span>
-                <span className="font-mono text-[10px] text-secondary font-bold uppercase tracking-wider">
-                  BURSAR ID #8841
-                </span>
-              </div>
-              <div className="font-headline text-base font-bold text-primary mt-2 leading-tight">
-                Academic Merit (15% Waiver)
-              </div>
-            </div>
-            <div className="pl-1 pt-2 flex items-center gap-1.5 font-mono text-[11px] text-on-surface-variant">
-              <ShieldCheck className="w-3.5 h-3.5 text-secondary" />
-              <span>Reconciled • Official Dean Waiver</span>
-            </div>
-          </div>
-        </section>
-
-        {/* Payment Schedule & Installment Breakdown Pipeline */}
-        <section className="bg-surface-container-lowest p-5 shadow-sm border border-[#d5e3fc] flex flex-col gap-4">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#d5e3fc] pb-3">
-            <div className="flex items-center gap-2">
-              <span className="material-symbols-outlined text-primary text-[20px]">
-                calendar_view_week
-              </span>
-              <h2 className="font-headline text-sm font-bold text-on-surface uppercase tracking-tight">
-                Official AY 2024-25 Installment Disbursement Track
-              </h2>
-            </div>
-            <span className="font-mono text-xs text-on-surface-variant">
-              Currency Base: USD ($) • Policy Rev: 2024.03
+            <span className="text-[11px] text-slate-400 mt-1 block">
+              Tuition, Lab &amp; Assessment (AY 2024–25)
             </span>
           </div>
+        </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {/* Installment 1 */}
-            <div className="p-4 bg-surface-container-low border border-[#d5e3fc] flex flex-col justify-between">
-              <div className="flex flex-col gap-1">
-                <div className="flex items-center justify-between">
-                  <span className="text-[11px] uppercase tracking-wider text-on-surface-variant font-bold">
-                    Installment 01 / 03
-                  </span>
-                  <span className="inline-flex items-center gap-1 text-[10px] font-bold text-[#047857] bg-[#ECFDF5] px-1.5 py-0.5 uppercase border border-[#a7f3d0]">
-                    <Check className="w-3 h-3" /> Paid
-                  </span>
-                </div>
-                <div className="font-headline text-xl font-bold text-on-surface mt-1 tabular-nums">
-                  $4,750.00
-                </div>
-                <p className="text-xs text-on-surface-variant">
-                  Term Initiation &amp; Core Lab Operations
-                </p>
-              </div>
-
-              <div className="mt-4 pt-3 bg-surface-container-lowest p-2.5 border border-[#d5e3fc] flex flex-col gap-1">
-                <div className="flex items-center justify-between font-mono text-xs text-on-surface">
-                  <span className="text-on-surface-variant">Cleared Date:</span>
-                  <span className="font-semibold">Jul 22, 2024</span>
-                </div>
-                <div className="flex items-center justify-between font-mono text-xs text-on-surface">
-                  <span className="text-on-surface-variant">Receipt ID:</span>
-                  <button
-                    onClick={() => setActiveReceiptId("REC-2024-1109")}
-                    className="text-secondary font-bold hover:underline"
-                  >
-                    REC-2024-1109
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            {/* Installment 2 */}
-            <div className="p-4 bg-surface-container-low border border-[#d5e3fc] flex flex-col justify-between">
-              <div className="flex flex-col gap-1">
-                <div className="flex items-center justify-between">
-                  <span className="text-[11px] uppercase tracking-wider text-on-surface-variant font-bold">
-                    Installment 02 / 03
-                  </span>
-                  <span className="inline-flex items-center gap-1 text-[10px] font-bold text-[#047857] bg-[#ECFDF5] px-1.5 py-0.5 uppercase border border-[#a7f3d0]">
-                    <Check className="w-3 h-3" /> Paid
-                  </span>
-                </div>
-                <div className="font-headline text-xl font-bold text-on-surface mt-1 tabular-nums">
-                  $4,750.00
-                </div>
-                <p className="text-xs text-on-surface-variant">
-                  Mid-Term Infrastructure &amp; Exam Overhead
-                </p>
-              </div>
-
-              <div className="mt-4 pt-3 bg-surface-container-lowest p-2.5 border border-[#d5e3fc] flex flex-col gap-1">
-                <div className="flex items-center justify-between font-mono text-xs text-on-surface">
-                  <span className="text-on-surface-variant">Cleared Date:</span>
-                  <span className="font-semibold">Nov 14, 2024</span>
-                </div>
-                <div className="flex items-center justify-between font-mono text-xs text-on-surface">
-                  <span className="text-on-surface-variant">Receipt ID:</span>
-                  <button
-                    onClick={() => setActiveReceiptId("REC-2024-4821")}
-                    className="text-secondary font-bold hover:underline"
-                  >
-                    REC-2024-4821
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            {/* Installment 3 */}
-            <div className="p-4 bg-amber-50/60 border border-amber-200 flex flex-col justify-between">
-              <div className="flex flex-col gap-1">
-                <div className="flex items-center justify-between">
-                  <span className="text-[11px] uppercase tracking-wider text-[#B45309] font-bold">
-                    Installment 03 / 03
-                  </span>
-                  <span className="inline-flex items-center gap-1 text-[10px] font-bold text-[#B45309] bg-[#FFFBEB] px-1.5 py-0.5 uppercase border border-[#fde68a]">
-                    <Clock className="w-3 h-3" /> Scheduled
-                  </span>
-                </div>
-                <div className="font-headline text-xl font-bold text-[#B45309] mt-1 tabular-nums">
-                  $3,000.00
-                </div>
-                <p className="text-xs text-on-surface-variant">
-                  Final Term Closing &amp; Assessment Ledger
-                </p>
-              </div>
-
-              <div className="mt-4 pt-3 bg-surface-container-lowest p-2.5 border border-[#d5e3fc] flex flex-col gap-1">
-                <div className="flex items-center justify-between font-mono text-xs text-on-surface">
-                  <span className="text-on-surface-variant">Due Date:</span>
-                  <span className="font-bold text-[#B45309]">Apr 30, 2025</span>
-                </div>
-                <div className="flex items-center justify-between font-mono text-xs text-on-surface-variant">
-                  <span>Method:</span>
-                  <button
-                    onClick={() => setShowPayModal(true)}
-                    className="text-xs uppercase font-bold text-primary hover:underline"
-                  >
-                    Pay Online Now →
-                  </button>
-                </div>
-              </div>
+        {/* Card 2: Total Paid to Date */}
+        <div className="bg-white p-4 rounded-xl border border-slate-200/80 shadow-xs flex flex-col justify-between">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-medium text-slate-500">Total Paid</span>
+            <div className="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
+              <CheckCircle2 className="w-4 h-4" />
             </div>
           </div>
-
-          <div className="bg-surface-container p-3 flex items-start gap-2 border border-[#d5e3fc]">
-            <AlertCircle className="w-4 h-4 text-secondary shrink-0 mt-0.5" />
-            <p className="text-xs text-on-surface-variant leading-relaxed">
-              <strong className="text-on-surface font-semibold">
-                Institutional Compliance Notice:
-              </strong>{" "}
-              Per Apex Institute Financial Governance Policy, all final semester
-              settlement transactions can be cleared via online verified gateway
-              or stamped at the central Registrar Accounts Desk via physical Bank
-              Demand Draft / Treasury Cash.
-            </p>
+          <div className="mt-2">
+            <div className="flex items-baseline gap-2">
+              <span className="text-2xl font-bold text-emerald-600 font-mono">₹85,000</span>
+              <span className="text-[11px] text-emerald-700 font-medium bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
+                77.3% Paid
+              </span>
+            </div>
+            <div className="w-full bg-slate-100 h-1.5 mt-2 rounded-full overflow-hidden">
+              <div className="bg-emerald-500 h-full rounded-full" style={{ width: "77.3%" }}></div>
+            </div>
+            <span className="text-[10px] text-slate-400 mt-1 block">
+              2 of 3 installments cleared
+            </span>
           </div>
-        </section>
+        </div>
 
-        {/* Asymmetric Two-Column Ledger and Real-Time Voucher Display */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-          {/* Left Column: 7 cols Ledger Registry */}
-          <section className="lg:col-span-7 flex flex-col gap-4">
-            <div className="bg-surface-container-lowest p-5 shadow-sm border border-[#d5e3fc]">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-[#d5e3fc]">
-                <div>
-                  <h2 className="font-headline text-sm font-bold text-on-surface uppercase tracking-tight">
-                    Transaction Ledger &amp; Cleared Slips
-                  </h2>
-                  <p className="text-xs text-on-surface-variant">
-                    Showing audited institutional receipts for student
-                    #APX-2023-CS-042
-                  </p>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="bg-surface-container px-2.5 py-1 flex items-center gap-1.5 font-mono text-xs border border-[#c4c6cf]">
-                    <Search className="w-3.5 h-3.5 text-on-surface-variant" />
-                    <input
-                      type="text"
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                      placeholder="Filter receipt or UTR..."
-                      className="bg-transparent border-0 outline-none text-on-surface w-36 placeholder:text-on-surface-variant/50"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              {/* Tabular Ledger */}
-              <div className="overflow-x-auto w-full mt-3">
-                <table className="w-full text-left border-collapse">
-                  <thead>
-                    <tr className="bg-surface-container-low border-b border-[#d5e3fc]">
-                      <th className="py-2.5 px-3 text-[11px] uppercase tracking-wider text-on-surface-variant font-semibold">
-                        Date
-                      </th>
-                      <th className="py-2.5 px-3 text-[11px] uppercase tracking-wider text-on-surface-variant font-semibold">
-                        Receipt No
-                      </th>
-                      <th className="py-2.5 px-3 text-[11px] uppercase tracking-wider text-on-surface-variant font-semibold">
-                        Fee Head
-                      </th>
-                      <th className="py-2.5 px-3 text-[11px] uppercase tracking-wider text-on-surface-variant font-semibold">
-                        Instrument
-                      </th>
-                      <th className="py-2.5 px-3 text-[11px] uppercase tracking-wider text-on-surface-variant text-right font-semibold">
-                        Amount
-                      </th>
-                      <th className="py-2.5 px-3 text-[11px] uppercase tracking-wider text-on-surface-variant text-center font-semibold">
-                        Status
-                      </th>
-                      <th className="py-2.5 px-3 text-[11px] uppercase tracking-wider text-on-surface-variant text-right font-semibold">
-                        Action
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody className="font-mono text-xs">
-                    {filteredLedger.map((row) => {
-                      const isSelected = activeReceiptId === row.receiptNo;
-                      return (
-                        <tr
-                          key={row.receiptNo}
-                          className={`border-b border-[#e6eeff] transition-colors ${
-                            isSelected
-                              ? "bg-primary-container/10 font-medium"
-                              : "hover:bg-surface-container"
-                          }`}
-                        >
-                          <td className="py-3 px-3 text-on-surface font-semibold">
-                            {row.date}
-                          </td>
-                          <td className="py-3 px-3 text-secondary font-bold">
-                            {row.receiptNo}
-                          </td>
-                          <td className="py-3 px-3">
-                            <span className="block font-sans font-medium text-xs text-on-surface">
-                              {row.head}
-                            </span>
-                            <span className="text-[10px] text-on-surface-variant uppercase">
-                              {row.subHead}
-                            </span>
-                          </td>
-                          <td className="py-3 px-3 text-on-surface">
-                            <span className="block">{row.mode}</span>
-                            <span className="text-[10px] text-on-surface-variant">
-                              {row.ref}
-                            </span>
-                          </td>
-                          <td className="py-3 px-3 text-right font-bold text-on-surface tabular-nums">
-                            {row.amount}
-                          </td>
-                          <td className="py-3 px-3 text-center">
-                            <span className="inline-block text-[10px] uppercase px-1.5 py-0.5 bg-[#ECFDF5] text-[#047857] font-bold border border-[#a7f3d0]">
-                              {row.status}
-                            </span>
-                          </td>
-                          <td className="py-3 px-3 text-right">
-                            <button
-                              onClick={() => {
-                                setActiveReceiptId(row.receiptNo);
-                                triggerToast(
-                                  `Inspecting voucher ${row.receiptNo} on preview deck`
-                                );
-                              }}
-                              className={`px-2.5 py-1 text-xs uppercase font-semibold transition-colors ${
-                                isSelected
-                                  ? "bg-violet-600 text-white"
-                                  : "bg-surface-container text-on-surface hover:bg-surface-container-high"
-                              }`}
-                            >
-                              {isSelected ? "Viewing" : "Inspect"}
-                            </button>
-                          </td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
-              </div>
-
-              {/* Ledger Table Footer */}
-              <div className="mt-4 pt-3 border-t border-[#d5e3fc] flex flex-col sm:flex-row sm:items-center justify-between text-on-surface-variant gap-2 font-mono text-xs">
-                <span>
-                  Cumulative Verified Receipts:{" "}
-                  <strong className="text-on-surface font-bold">
-                    04 Ledger Postings
-                  </strong>
-                </span>
-                <div className="flex items-center gap-4">
-                  <span>
-                    Audited Historical Gross:{" "}
-                    <strong className="text-primary font-bold">
-                      $19,500.00
-                    </strong>
-                  </span>
-                </div>
-              </div>
+        {/* Card 3: Pending Balance Due */}
+        <div className="bg-white p-4 rounded-xl border border-slate-200/80 shadow-xs flex flex-col justify-between">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-medium text-slate-500">Pending Due Fee</span>
+            <div className="w-8 h-8 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center shrink-0">
+              <Clock className="w-4 h-4" />
             </div>
-
-            {/* Instructions & Tax Notice */}
-            <div className="p-4 bg-surface-container-low border border-[#d5e3fc] flex flex-col gap-2">
-              <div className="flex items-center gap-2 text-primary">
-                <span className="material-symbols-outlined text-[18px]">
-                  gavel
-                </span>
-                <span className="text-xs uppercase tracking-wider font-bold">
-                  Financial Regulation &amp; Tax Deduction Notice
-                </span>
-              </div>
-              <p className="text-xs text-on-surface-variant leading-relaxed">
-                All tuition charges qualify under Section 80C Higher Educational
-                Exemption norms. Official digital stamp hashes can be scanned via
-                government audit scanners. To request physical wet-ink duplicate
-                vouchers for employer sponsorship verification, present this
-                register at Room 104, Admin Wing.
-              </p>
+          </div>
+          <div className="mt-2">
+            <div className="flex items-baseline gap-2">
+              <span className="text-2xl font-bold text-amber-600 font-mono">₹25,000</span>
+              <span className="text-[11px] text-amber-700 font-medium bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200">
+                Installment 3
+              </span>
             </div>
-          </section>
-
-          {/* Right Column: 5 cols Live Voucher Preview */}
-          <section className="lg:col-span-5 flex flex-col gap-4 sticky top-20">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <span className="w-2.5 h-2.5 bg-[#047857] inline-block"></span>
-                <span className="text-xs uppercase tracking-wider text-on-surface font-bold">
-                  Live Receipt Voucher Preview
-                </span>
-              </div>
-              <div className="flex items-center gap-2">
-                <button
-                  onClick={() => window.print()}
-                  className="p-1 text-on-surface-variant hover:text-primary transition-colors"
-                  title="Print this receipt"
-                >
-                  <Printer className="w-4 h-4" />
-                </button>
-                <button
-                  onClick={() =>
-                    triggerToast(
-                      `Downloading official vector PDF for ${currentVoucher.receiptNo}...`
-                    )
-                  }
-                  className="p-1 text-on-surface-variant hover:text-primary transition-colors"
-                  title="Download PDF format"
-                >
-                  <Download className="w-4 h-4" />
-                </button>
-              </div>
+            <div className="w-full bg-slate-100 h-1.5 mt-2 rounded-full overflow-hidden">
+              <div className="bg-amber-500 h-full rounded-full" style={{ width: "100%" }}></div>
             </div>
-
-            {/* Realistic A4 Voucher Canvas */}
-            <div className="bg-surface-container-lowest p-6 shadow-md border-2 border-primary/20 relative overflow-hidden flex flex-col">
-              {/* Top Watermark Bar */}
-              <div className="bg-primary text-white px-3 py-1.5 flex items-center justify-between text-[11px] font-mono">
-                <span className="uppercase tracking-widest font-semibold">
-                  Official Payment Voucher
-                </span>
-                <span className="text-secondary-fixed-dim">
-                  DUPLICATE FOR STUDENT FILE
-                </span>
-              </div>
-
-              {/* Institutional Header Block */}
-              <div className="pt-4 pb-3 border-b border-[#e6eeff] flex flex-col gap-1">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <span className="font-headline text-base uppercase tracking-tight text-primary font-bold block">
-                      Apex Institute
-                    </span>
-                    <span className="text-[10px] uppercase tracking-widest text-on-surface-variant block font-medium">
-                      Of Technology &amp; Management
-                    </span>
-                  </div>
-                  <div className="text-right">
-                    <span className="font-mono text-[10px] text-on-surface-variant uppercase block">
-                      Treasury Division
-                    </span>
-                    <span className="font-mono text-xs font-bold text-on-surface block">
-                      Office of the Bursar
-                    </span>
-                  </div>
-                </div>
-                <p className="font-mono text-[9px] text-on-surface-variant mt-1">
-                  Sector 12, Academic District, New Delhi • GSTIN:
-                  07AAAAP8812C1Z4
-                </p>
-              </div>
-
-              {/* Receipt Primary Meta Grid */}
-              <div className="grid grid-cols-2 gap-y-2 gap-x-4 py-3 border-b border-[#e6eeff] font-mono text-xs">
-                <div>
-                  <span className="text-on-surface-variant uppercase text-[9px] block">
-                    Receipt Number
-                  </span>
-                  <span className="text-primary font-bold text-sm leading-tight">
-                    {currentVoucher.receiptNo}
-                  </span>
-                </div>
-                <div className="text-right">
-                  <span className="text-on-surface-variant uppercase text-[9px] block">
-                    Clearing Date
-                  </span>
-                  <span className="text-on-surface font-bold text-sm leading-tight">
-                    {currentVoucher.clearedDate}
-                  </span>
-                </div>
-                <div>
-                  <span className="text-on-surface-variant uppercase text-[9px] block">
-                    Student Name
-                  </span>
-                  <span className="text-on-surface font-semibold">
-                    {currentVoucher.studentName}
-                  </span>
-                </div>
-                <div className="text-right">
-                  <span className="text-on-surface-variant uppercase text-[9px] block">
-                    Roll / Reg Number
-                  </span>
-                  <span className="text-on-surface font-semibold">
-                    {currentVoucher.rollNo}
-                  </span>
-                </div>
-                <div className="col-span-2 bg-surface-container-low px-2 py-1 text-[11px] flex justify-between border border-[#d5e3fc]">
-                  <span>
-                    Program:{" "}
-                    <strong className="text-on-surface">
-                      {currentVoucher.program}
-                    </strong>
-                  </span>
-                  <span>
-                    Semester:{" "}
-                    <strong className="text-on-surface">
-                      {currentVoucher.semester}
-                    </strong>
-                  </span>
-                </div>
-              </div>
-
-              {/* Itemized Breakdown Table */}
-              <div className="py-3">
-                <span className="text-[10px] uppercase tracking-wider text-on-surface-variant font-bold mb-2 block">
-                  Fee Heads Breakdown
-                </span>
-                <table className="w-full text-left font-mono text-xs">
-                  <thead>
-                    <tr className="border-b border-[#d5e3fc] text-on-surface-variant text-[10px] uppercase">
-                      <th className="py-1">Head Particulars</th>
-                      <th className="py-1 text-right">Amount (USD)</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-[#e6eeff]">
-                    {currentVoucher.items.map((it) => (
-                      <tr key={it.head}>
-                        <td className="py-1.5 text-on-surface">{it.head}</td>
-                        <td className="py-1.5 text-right text-on-surface tabular-nums">
-                          {it.amount}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                  <tfoot>
-                    <tr className="border-t-2 border-primary font-bold text-on-surface">
-                      <td className="py-2 uppercase text-xs tracking-wider">
-                        Subtotal Cleared
-                      </td>
-                      <td className="py-2 text-right tabular-nums text-sm text-primary">
-                        {currentVoucher.subtotal}
-                      </td>
-                    </tr>
-                  </tfoot>
-                </table>
-              </div>
-
-              {/* Instrument Specification */}
-              <div className="bg-surface-container-low p-2.5 border border-[#d5e3fc] flex flex-col gap-1 font-mono text-[11px] text-on-surface mt-1">
-                <div className="flex justify-between">
-                  <span className="text-on-surface-variant">
-                    Settlement Method:
-                  </span>
-                  <span className="font-bold">{currentVoucher.method}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-on-surface-variant">Drawn On:</span>
-                  <span>{currentVoucher.bankBranch}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-on-surface-variant">Reference:</span>
-                  <span className="font-bold text-secondary">
-                    {currentVoucher.reference}
-                  </span>
-                </div>
-              </div>
-
-              {/* Cryptographic Validation & Stamp Area */}
-              <div className="mt-4 pt-3 border-t border-[#e6eeff] grid grid-cols-12 gap-2 items-center">
-                {/* QR Code */}
-                <div className="col-span-3 flex flex-col items-center">
-                  <div className="w-14 h-14 bg-surface-container-high p-1 border border-[#c4c6cf] flex items-center justify-center">
-                    <QrCode className="w-12 h-12 text-primary" />
-                  </div>
-                  <span className="font-mono text-[8px] uppercase tracking-tighter text-on-surface-variant mt-0.5">
-                    SCAN TO VERIFY
-                  </span>
-                </div>
-
-                {/* Hash String & Stamp */}
-                <div className="col-span-9 flex flex-col gap-1 pl-1">
-                  <div className="flex items-center justify-between">
-                    <div className="border-2 border-[#047857] px-2 py-0.5 text-center transform -rotate-1">
-                      <span className="font-mono text-[9px] uppercase font-bold text-[#047857] block tracking-wider leading-none">
-                        BURSAR ACCOUNTS DESK
-                      </span>
-                      <span className="font-mono text-[8px] uppercase text-[#047857] font-semibold leading-none">
-                        FEES CLEARED &amp; RECONCILED
-                      </span>
-                    </div>
-                    <span className="font-mono text-[10px] text-on-surface-variant font-bold">
-                      OPERATOR: {currentVoucher.operator}
-                    </span>
-                  </div>
-                  <div className="font-mono text-[8px] text-on-surface-variant truncate mt-1">
-                    SHA256: {currentVoucher.sha256}
-                  </div>
-                </div>
-              </div>
-
-              {/* Bottom Action Deck */}
-              <div className="mt-4 pt-3 border-t border-[#d5e3fc] flex items-center justify-end gap-2">
-                <button
-                  onClick={() => window.print()}
-                  className="px-3.5 py-1.5 bg-surface-container text-on-surface text-xs font-semibold uppercase tracking-wider hover:bg-surface-container-high transition-colors flex items-center gap-1.5 border border-[#c4c6cf]"
-                >
-                  <Printer className="w-3.5 h-3.5" />
-                  <span>Print Voucher</span>
-                </button>
-                <button
-                  onClick={() =>
-                    triggerToast(
-                      `Downloaded official signed PDF voucher ${currentVoucher.receiptNo}`
-                    )
-                  }
-                  className="px-3.5 py-1.5 bg-primary text-white text-xs font-semibold uppercase tracking-wider hover:bg-primary-container transition-colors flex items-center gap-1.5"
-                >
-                  <Download className="w-3.5 h-3.5" />
-                  <span>Download PDF</span>
-                </button>
-              </div>
-            </div>
-
-            {/* Bursar Desk Help Box */}
-            <div className="bg-surface-container p-3 flex items-center justify-between text-on-surface-variant font-mono text-xs border border-[#d5e3fc]">
-              <div className="flex items-center gap-2">
-                <HelpCircle className="w-4 h-4 text-secondary" />
-                <span className="text-xs">Encountered a payment discrepancy?</span>
-              </div>
+            <div className="flex items-center justify-between mt-1 text-[11px]">
+              <span className="text-slate-500">Due: May 02, 2025</span>
               <button
-                onClick={() => setShowDiscrepancyModal(true)}
-                className="text-secondary font-bold text-xs uppercase hover:underline"
+                onClick={() => setShowPayModal(true)}
+                className="text-[#355C7D] font-bold hover:underline cursor-pointer"
               >
-                Raise Ledger Query →
+                Pay Now &rarr;
               </button>
             </div>
-          </section>
+          </div>
+        </div>
+
+        {/* Card 4: Scholarship / Concession */}
+        <div className="bg-white p-4 rounded-xl border border-slate-200/80 shadow-xs flex flex-col justify-between">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-medium text-slate-500">Scholarship / Waiver</span>
+            <div className="w-8 h-8 rounded-lg bg-violet-50 text-violet-600 flex items-center justify-center shrink-0">
+              <ShieldCheck className="w-4 h-4" />
+            </div>
+          </div>
+          <div className="mt-2">
+            <div className="flex items-baseline gap-2">
+              <span className="text-2xl font-bold text-violet-700 font-mono">₹15,000</span>
+            </div>
+            <span className="text-[11px] text-slate-400 mt-1 block">
+              Academic Merit Concession (15% applied)
+            </span>
+          </div>
         </div>
       </div>
 
-      {/* MODAL 1: Make Installment Payment Modal */}
+      {/* Installment Disbursement Pipeline */}
+      <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs">
+        <div className="flex items-center justify-between border-b border-slate-200/80 pb-3 mb-4">
+          <div>
+            <h2 className="text-sm font-bold text-[#3D405B]">
+              Installment Schedule &bull; AY 2024–25
+            </h2>
+            <p className="text-[11px] text-slate-400">
+              Semester fee distribution and settlement schedule
+            </p>
+          </div>
+          <span className="text-xs text-slate-500 font-medium">
+            3 Equal Installments
+          </span>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {/* Installment 1 */}
+          <div className="p-4 bg-slate-50 rounded-xl border border-slate-200/80 flex flex-col justify-between">
+            <div>
+              <div className="flex items-center justify-between">
+                <span className="text-[11px] font-bold text-slate-500 uppercase">
+                  Installment 01 / 03
+                </span>
+                <span className="px-2 py-0.5 bg-emerald-50 text-emerald-700 text-[10px] font-bold rounded-md border border-emerald-200 flex items-center gap-1">
+                  <Check className="w-3 h-3" /> Paid
+                </span>
+              </div>
+              <div className="text-xl font-bold font-mono text-slate-900 mt-2">
+                ₹45,000.00
+              </div>
+              <p className="text-xs text-slate-500 mt-0.5">
+                Semester III Regular &amp; Lab Fee
+              </p>
+            </div>
+            <div className="mt-4 pt-3 border-t border-slate-200 text-xs flex justify-between items-center text-slate-600">
+              <span>Paid on: 22 Jul 2024</span>
+              <button
+                onClick={() => setActiveReceiptId("REC-2024-2104")}
+                className="text-[#355C7D] font-mono font-semibold hover:underline cursor-pointer"
+              >
+                #REC-2024-2104
+              </button>
+            </div>
+          </div>
+
+          {/* Installment 2 */}
+          <div className="p-4 bg-slate-50 rounded-xl border border-slate-200/80 flex flex-col justify-between">
+            <div>
+              <div className="flex items-center justify-between">
+                <span className="text-[11px] font-bold text-slate-500 uppercase">
+                  Installment 02 / 03
+                </span>
+                <span className="px-2 py-0.5 bg-emerald-50 text-emerald-700 text-[10px] font-bold rounded-md border border-emerald-200 flex items-center gap-1">
+                  <Check className="w-3 h-3" /> Paid
+                </span>
+              </div>
+              <div className="text-xl font-bold font-mono text-slate-900 mt-2">
+                ₹40,000.00
+              </div>
+              <p className="text-xs text-slate-500 mt-0.5">
+                Semester IV Mid-Term Fee
+              </p>
+            </div>
+            <div className="mt-4 pt-3 border-t border-slate-200 text-xs flex justify-between items-center text-slate-600">
+              <span>Paid on: 14 Nov 2024</span>
+              <button
+                onClick={() => setActiveReceiptId("REC-2024-5120")}
+                className="text-[#355C7D] font-mono font-semibold hover:underline cursor-pointer"
+              >
+                #REC-2024-5120
+              </button>
+            </div>
+          </div>
+
+          {/* Installment 3 */}
+          <div className="p-4 bg-amber-50/60 rounded-xl border border-amber-200 flex flex-col justify-between">
+            <div>
+              <div className="flex items-center justify-between">
+                <span className="text-[11px] font-bold text-amber-800 uppercase">
+                  Installment 03 / 03
+                </span>
+                <span className="px-2 py-0.5 bg-amber-100 text-amber-800 text-[10px] font-bold rounded-md border border-amber-300 flex items-center gap-1">
+                  <Clock className="w-3 h-3" /> Due Soon
+                </span>
+              </div>
+              <div className="text-xl font-bold font-mono text-amber-900 mt-2">
+                ₹25,000.00
+              </div>
+              <p className="text-xs text-amber-700 mt-0.5">
+                Final Term Closing &amp; Exam Assessment
+              </p>
+            </div>
+            <div className="mt-4 pt-3 border-t border-amber-200 text-xs flex justify-between items-center text-amber-900">
+              <span className="font-semibold">Due: May 02, 2025</span>
+              <button
+                onClick={() => setShowPayModal(true)}
+                className="text-xs font-bold bg-[#355C7D] text-white px-2.5 py-1 rounded-md hover:opacity-90 cursor-pointer shadow-xs"
+              >
+                Pay Now
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Main 2 Columns: Payment Records (Left 7 Cols) & Receipt Preview (Right 5 Cols) */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        {/* Left Column: Transaction Ledger Table */}
+        <div className="lg:col-span-7 bg-white rounded-2xl border border-slate-200/80 shadow-xs overflow-hidden">
+          <div className="p-4 border-b border-slate-200/80 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+              <h2 className="text-sm font-bold text-[#3D405B]">
+                Payment Receipts History
+              </h2>
+              <p className="text-[11px] text-slate-400">
+                Click any receipt to preview and print official voucher
+              </p>
+            </div>
+
+            <div className="relative">
+              <Search className="w-3.5 h-3.5 absolute left-2.5 top-2.5 text-slate-400" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search receipt # or fee..."
+                className="pl-8 pr-3 py-1.5 bg-slate-50 text-slate-800 text-xs rounded-lg border border-slate-200 focus:outline-none focus:border-[#355C7D] w-48"
+              />
+            </div>
+          </div>
+
+          <div className="overflow-x-auto">
+            <table className="w-full text-left text-xs">
+              <thead className="bg-slate-50 text-slate-600 font-bold border-b border-slate-200/80 text-[11px]">
+                <tr>
+                  <th className="py-2.5 px-4">Date</th>
+                  <th className="py-2.5 px-4 font-mono">Receipt No</th>
+                  <th className="py-2.5 px-4">Description</th>
+                  <th className="py-2.5 px-4 text-right">Amount</th>
+                  <th className="py-2.5 px-4 text-center">Status</th>
+                  <th className="py-2.5 px-4 text-right">Action</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-100">
+                {filteredLedger.map((row) => {
+                  const isSelected = activeReceiptId === row.receiptNo;
+                  return (
+                    <tr
+                      key={row.receiptNo}
+                      className={`hover:bg-slate-50/60 transition-colors ${
+                        isSelected ? "bg-violet-50/40" : ""
+                      }`}
+                    >
+                      <td className="py-3 px-4 font-medium text-slate-700">
+                        {row.date}
+                      </td>
+                      <td className="py-3 px-4 font-mono font-bold text-[#355C7D]">
+                        {row.receiptNo}
+                      </td>
+                      <td className="py-3 px-4">
+                        <span className="block font-medium text-slate-900">
+                          {row.head}
+                        </span>
+                        <span className="text-[10px] text-slate-400">
+                          {row.mode}
+                        </span>
+                      </td>
+                      <td className="py-3 px-4 text-right font-mono font-bold text-slate-900">
+                        {row.amount}
+                      </td>
+                      <td className="py-3 px-4 text-center">
+                        <span className="px-2 py-0.5 bg-emerald-50 text-emerald-700 text-[10px] font-semibold rounded-md border border-emerald-200">
+                          {row.status}
+                        </span>
+                      </td>
+                      <td className="py-3 px-4 text-right">
+                        <button
+                          onClick={() => {
+                            setActiveReceiptId(row.receiptNo);
+                            triggerToast(`Loaded receipt #${row.receiptNo}`);
+                          }}
+                          className={`px-2.5 py-1 text-xs font-semibold rounded-lg transition-colors cursor-pointer ${
+                            isSelected
+                              ? "bg-[#355C7D] text-white shadow-xs"
+                              : "bg-slate-100 text-slate-700 hover:bg-slate-200"
+                          }`}
+                        >
+                          {isSelected ? "Viewing" : "View"}
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+
+          <div className="p-3.5 bg-slate-50 border-t border-slate-200/80 flex items-center justify-between text-xs text-slate-500">
+            <span>{filteredLedger.length} verified receipts found</span>
+            <button
+              onClick={() => setShowQueryModal(true)}
+              className="text-[#355C7D] font-medium hover:underline flex items-center gap-1 cursor-pointer"
+            >
+              <HelpCircle className="w-3.5 h-3.5" />
+              <span>Report a discrepancy</span>
+            </button>
+          </div>
+        </div>
+
+        {/* Right Column: Live Receipt Voucher Preview */}
+        <div className="lg:col-span-5 bg-white rounded-2xl border border-slate-200/80 shadow-xs overflow-hidden flex flex-col">
+          <div className="px-5 py-3.5 bg-slate-50 border-b border-slate-200/80 flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <FileText className="w-4 h-4 text-[#355C7D]" />
+              <h2 className="text-xs font-bold uppercase tracking-wider text-[#3D405B]">
+                Receipt Preview &bull; {currentVoucher.receiptNo}
+              </h2>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <button
+                onClick={() => window.print()}
+                className="p-1.5 hover:bg-slate-200 rounded-lg text-slate-600 transition-colors cursor-pointer"
+                title="Print Receipt"
+              >
+                <Printer className="w-4 h-4" />
+              </button>
+              <button
+                onClick={() =>
+                  triggerToast(`Downloading PDF for receipt #${currentVoucher.receiptNo}...`)
+                }
+                className="p-1.5 hover:bg-slate-200 rounded-lg text-slate-600 transition-colors cursor-pointer"
+                title="Download Receipt"
+              >
+                <Download className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+
+          {/* Clean Receipt Slip Box */}
+          <div className="p-5 font-sans text-xs space-y-4">
+            {/* Header */}
+            <div className="border-b border-slate-200 pb-3 text-center">
+              <h3 className="font-bold text-sm text-slate-900 uppercase">
+                Apex Institute of Technology
+              </h3>
+              <p className="text-[11px] text-slate-500">
+                Office of the Accounts &amp; Finance Desk
+              </p>
+              <div className="mt-1.5 inline-block px-2.5 py-0.5 bg-[#355C7D] text-white text-[10px] font-bold uppercase rounded-md tracking-wider">
+                Official Fee Receipt
+              </div>
+            </div>
+
+            {/* Receipt Details Grid */}
+            <div className="grid grid-cols-2 gap-2 text-[11px] bg-slate-50 p-3 rounded-xl border border-slate-200/80">
+              <div>
+                <span className="text-slate-400 block text-[10px]">Receipt No</span>
+                <span className="font-mono font-bold text-[#355C7D]">
+                  {currentVoucher.receiptNo}
+                </span>
+              </div>
+              <div className="text-right">
+                <span className="text-slate-400 block text-[10px]">Payment Date</span>
+                <span className="font-medium text-slate-800">
+                  {currentVoucher.clearedDate}
+                </span>
+              </div>
+              <div>
+                <span className="text-slate-400 block text-[10px]">Student Name</span>
+                <span className="font-semibold text-slate-900">
+                  {currentVoucher.studentName}
+                </span>
+              </div>
+              <div className="text-right">
+                <span className="text-slate-400 block text-[10px]">Roll Number</span>
+                <span className="font-mono font-bold text-slate-800">
+                  {currentVoucher.rollNo}
+                </span>
+              </div>
+              <div className="col-span-2 pt-1 border-t border-slate-200">
+                <span className="text-slate-400 block text-[10px]">Academic Program</span>
+                <span className="text-slate-800 font-medium">
+                  {currentVoucher.program} &bull; {currentVoucher.semester}
+                </span>
+              </div>
+            </div>
+
+            {/* Itemized Heads */}
+            <div>
+              <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 block mb-1.5">
+                Particulars Breakdown
+              </span>
+              <table className="w-full text-left text-xs">
+                <thead>
+                  <tr className="border-b border-slate-200 text-slate-400 text-[10px] uppercase">
+                    <th className="pb-1 font-semibold">Fee Particulars</th>
+                    <th className="pb-1 text-right font-semibold">Amount</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-100">
+                  {currentVoucher.items.map((it) => (
+                    <tr key={it.head}>
+                      <td className="py-1.5 text-slate-700">{it.head}</td>
+                      <td className="py-1.5 text-right font-mono font-semibold text-slate-900">
+                        {it.amount}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+                <tfoot>
+                  <tr className="border-t-2 border-slate-300 font-bold text-xs">
+                    <td className="py-2 text-[#3D405B] uppercase">Total Paid</td>
+                    <td className="py-2 text-right font-mono text-sm text-[#355C7D]">
+                      {currentVoucher.subtotal}
+                    </td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+
+            {/* Payment Mode */}
+            <div className="p-2.5 bg-slate-50 rounded-xl border border-slate-200 text-[11px] space-y-1">
+              <div className="flex justify-between">
+                <span className="text-slate-500">Payment Mode:</span>
+                <span className="font-medium text-slate-800">
+                  {currentVoucher.method}
+                </span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-slate-500">Transaction Ref:</span>
+                <span className="font-mono font-semibold text-slate-700">
+                  {currentVoucher.reference}
+                </span>
+              </div>
+            </div>
+
+            {/* Receipt Actions */}
+            <div className="pt-2 flex items-center justify-end gap-2 border-t border-slate-100">
+              <button
+                onClick={() => window.print()}
+                className="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-lg flex items-center gap-1.5 cursor-pointer transition-colors"
+              >
+                <Printer className="w-3.5 h-3.5" />
+                <span>Print</span>
+              </button>
+              <button
+                onClick={() =>
+                  triggerToast(`Downloading PDF voucher ${currentVoucher.receiptNo}...`)
+                }
+                className="px-4 py-1.5 bg-[#355C7D] hover:opacity-95 text-white text-xs font-semibold rounded-lg flex items-center gap-1.5 cursor-pointer shadow-xs transition-all"
+              >
+                <Download className="w-3.5 h-3.5" />
+                <span>Download PDF</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* MODAL 1: Pay Due Fee Modal */}
       {showPayModal && (
         <div className="fixed inset-0 z-50 bg-[#3D405B]/60 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-surface-container-lowest border border-[#d5e3fc] shadow-2xl max-w-md w-full p-6 animate-in fade-in zoom-in-95 duration-150">
-            <div className="flex items-center justify-between pb-3 border-b border-[#d5e3fc]">
+          <div className="bg-white rounded-2xl border border-slate-300 shadow-2xl max-w-md w-full p-6 animate-in fade-in zoom-in-95 duration-150">
+            <div className="flex items-center justify-between pb-3.5 border-b border-slate-200">
               <div className="flex items-center gap-2">
-                <CreditCard className="w-5 h-5 text-primary" />
-                <h3 className="font-headline text-base font-bold text-primary uppercase">
-                  Institutional Fee Clearance
+                <CreditCard className="w-5 h-5 text-[#355C7D]" />
+                <h3 className="text-base font-bold text-[#3D405B]">
+                  Online Fee Payment
                 </h3>
               </div>
               <button
                 onClick={() => setShowPayModal(false)}
-                className="text-on-surface-variant hover:text-primary p-1"
+                className="text-slate-400 hover:text-slate-700 p-1 rounded-lg transition-colors cursor-pointer"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
             <div className="py-4 space-y-4">
-              <div className="bg-surface-container-low p-3.5 border border-[#d5e3fc]">
-                <div className="text-[11px] uppercase text-on-surface-variant font-semibold">
-                  Pending Installment #03 (Final Term)
-                </div>
-                <div className="text-2xl font-bold font-headline text-primary mt-1">
-                  $3,000.00
-                </div>
-                <div className="text-[10px] text-on-surface-variant font-mono mt-0.5">
-                  Due: April 30, 2025 • Student: Rahul Sharma (APX-2023-CS-042)
-                </div>
+              <div className="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                <span className="text-xs text-slate-500 font-medium block">
+                  Pending Due &bull; Installment 3 (Final Term)
+                </span>
+                <span className="text-3xl font-bold font-mono text-[#3D405B] mt-1 block">
+                  ₹25,000.00
+                </span>
+                <span className="text-[11px] text-slate-400 mt-1 block">
+                  Due Date: May 02, 2025 &bull; Rahul Sharma (23CS042)
+                </span>
               </div>
 
               <div>
-                <label className="text-xs uppercase font-bold text-on-surface block mb-2">
-                  Payment Channel
+                <label className="text-xs font-bold text-slate-700 block mb-2">
+                  Select Payment Option
                 </label>
                 <div className="space-y-2 text-xs">
-                  <label className="flex items-center gap-3 p-2.5 border border-primary bg-primary/5 cursor-pointer">
+                  <label
+                    onClick={() => setSelectedPaymentMethod("UPI")}
+                    className={`flex items-center gap-3 p-3 rounded-xl border cursor-pointer transition-colors ${
+                      selectedPaymentMethod === "UPI"
+                        ? "border-[#355C7D] bg-violet-50/40"
+                        : "border-slate-200 hover:bg-slate-50"
+                    }`}
+                  >
                     <input
                       type="radio"
-                      name="payment-method"
-                      defaultChecked
-                      className="text-primary"
+                      name="pay-opt"
+                      checked={selectedPaymentMethod === "UPI"}
+                      onChange={() => setSelectedPaymentMethod("UPI")}
+                      className="text-[#355C7D]"
                     />
                     <div>
-                      <div className="font-semibold text-primary">
-                        HDFC Integrated Campus Gateway
-                      </div>
-                      <div className="text-[11px] text-on-surface-variant">
-                        Credit / Debit Card, NetBanking, Instant UPI
-                      </div>
+                      <span className="font-semibold text-slate-900 block">
+                        Instant UPI / QR
+                      </span>
+                      <span className="text-[11px] text-slate-500">
+                        Google Pay, PhonePe, Paytm, BHIM UPI
+                      </span>
                     </div>
                   </label>
-                  <label className="flex items-center gap-3 p-2.5 border border-[#c4c6cf] hover:border-primary cursor-pointer">
+
+                  <label
+                    onClick={() => setSelectedPaymentMethod("CARD")}
+                    className={`flex items-center gap-3 p-3 rounded-xl border cursor-pointer transition-colors ${
+                      selectedPaymentMethod === "CARD"
+                        ? "border-[#355C7D] bg-violet-50/40"
+                        : "border-slate-200 hover:bg-slate-50"
+                    }`}
+                  >
                     <input
                       type="radio"
-                      name="payment-method"
-                      className="text-primary"
+                      name="pay-opt"
+                      checked={selectedPaymentMethod === "CARD"}
+                      onChange={() => setSelectedPaymentMethod("CARD")}
+                      className="text-[#355C7D]"
                     />
                     <div>
-                      <div className="font-semibold text-primary">
-                        Generate Bank Demand Draft Challan
-                      </div>
-                      <div className="text-[11px] text-on-surface-variant">
-                        Download pre-filled challan slip for counter deposit
-                      </div>
+                      <span className="font-semibold text-slate-900 block">
+                        Credit / Debit Card
+                      </span>
+                      <span className="text-[11px] text-slate-500">
+                        Visa, MasterCard, RuPay
+                      </span>
+                    </div>
+                  </label>
+
+                  <label
+                    onClick={() => setSelectedPaymentMethod("NETBANKING")}
+                    className={`flex items-center gap-3 p-3 rounded-xl border cursor-pointer transition-colors ${
+                      selectedPaymentMethod === "NETBANKING"
+                        ? "border-[#355C7D] bg-violet-50/40"
+                        : "border-slate-200 hover:bg-slate-50"
+                    }`}
+                  >
+                    <input
+                      type="radio"
+                      name="pay-opt"
+                      checked={selectedPaymentMethod === "NETBANKING"}
+                      onChange={() => setSelectedPaymentMethod("NETBANKING")}
+                      className="text-[#355C7D]"
+                    />
+                    <div>
+                      <span className="font-semibold text-slate-900 block">
+                        Internet Banking
+                      </span>
+                      <span className="text-[11px] text-slate-500">
+                        All major Indian public &amp; private banks
+                      </span>
                     </div>
                   </label>
                 </div>
               </div>
 
-              <div className="text-[11px] text-on-surface-variant flex items-center gap-1.5 font-mono">
-                <ShieldCheck className="w-4 h-4 text-[#047857]" />
-                <span>256-bit SSL encrypted institutional payment pipeline</span>
+              <div className="flex items-center gap-1.5 text-[11px] text-slate-400">
+                <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
+                <span>Secure payment gateway with instant receipt generation.</span>
               </div>
             </div>
 
-            <div className="flex items-center justify-end gap-3 pt-3 border-t border-[#d5e3fc]">
+            <div className="flex items-center justify-end gap-2.5 pt-3 border-t border-slate-200">
               <button
+                type="button"
                 onClick={() => setShowPayModal(false)}
-                className="px-4 py-2 border border-[#c4c6cf] text-xs font-semibold uppercase tracking-wider text-on-surface-variant hover:bg-surface-container"
+                className="px-4 py-2 border border-slate-300 text-xs font-semibold text-slate-700 hover:bg-slate-100 rounded-xl transition-colors cursor-pointer"
               >
                 Cancel
               </button>
               <button
+                type="button"
                 onClick={() => {
                   setShowPayModal(false);
-                  triggerToast(
-                    "Connecting to HDFC Payment Gateway for $3,000.00..."
-                  );
+                  triggerToast("Redirecting to secure payment gateway for ₹25,000...");
                 }}
-                className="px-4 py-2 bg-primary text-white text-xs font-semibold uppercase tracking-wider hover:bg-primary-container"
+                className="px-5 py-2 bg-[#355C7D] hover:opacity-95 text-white text-xs font-semibold rounded-xl shadow-xs transition-all cursor-pointer"
               >
-                Proceed to Pay $3,000.00
+                Proceed to Pay ₹25,000
               </button>
             </div>
           </div>
         </div>
       )}
 
-      {/* MODAL 2: Raise Ledger Query / Discrepancy Ticket Modal */}
-      {showDiscrepancyModal && (
+      {/* MODAL 2: Fee Discrepancy Query Modal */}
+      {showQueryModal && (
         <div className="fixed inset-0 z-50 bg-[#3D405B]/60 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-surface-container-lowest border border-[#d5e3fc] shadow-2xl max-w-md w-full p-6 animate-in fade-in zoom-in-95 duration-150">
-            <div className="flex items-center justify-between pb-3 border-b border-[#d5e3fc]">
+          <div className="bg-white rounded-2xl border border-slate-300 shadow-2xl max-w-md w-full p-6 animate-in fade-in zoom-in-95 duration-150">
+            <div className="flex items-center justify-between pb-3.5 border-b border-slate-200">
               <div className="flex items-center gap-2">
-                <HelpCircle className="w-5 h-5 text-primary" />
-                <h3 className="font-headline text-base font-bold text-primary uppercase">
-                  Raise Ledger Query to Bursar Desk
+                <HelpCircle className="w-5 h-5 text-[#355C7D]" />
+                <h3 className="text-base font-bold text-[#3D405B]">
+                  Report Fee Discrepancy
                 </h3>
               </div>
               <button
-                onClick={() => setShowDiscrepancyModal(false)}
-                className="text-on-surface-variant hover:text-primary p-1"
+                onClick={() => setShowQueryModal(false)}
+                className="text-slate-400 hover:text-slate-700 p-1 rounded-lg transition-colors cursor-pointer"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
-            <div className="py-4 space-y-3.5">
+            <div className="py-4 space-y-3.5 text-xs">
               <div>
-                <label className="text-xs uppercase font-bold text-on-surface block mb-1">
-                  Query Type
+                <label className="font-bold text-slate-700 block mb-1.5">
+                  Select Issue Type
                 </label>
-                <select className="w-full border border-[#c4c6cf] p-2 text-xs bg-surface text-on-surface focus:outline-none focus:border-primary">
-                  <option>Payment Debited but Receipt Not Generated</option>
-                  <option>Concession / Scholarship Not Reflected</option>
-                  <option>Duplicate Transaction Dispute</option>
-                  <option>Request for Section 80C Tax Exemption Dossier</option>
-                  <option>Bank Demand Draft Reconciliation Delay</option>
+                <select className="w-full border border-slate-300 rounded-xl p-2.5 bg-slate-50 text-slate-800 focus:outline-none focus:border-[#355C7D]">
+                  <option>Payment debited but receipt not generated</option>
+                  <option>Scholarship / Fee concession not reflected</option>
+                  <option>Duplicate deduction issue</option>
+                  <option>Need Section 80C fee receipt duplicate</option>
+                  <option>Other payment inquiry</option>
                 </select>
               </div>
 
               <div>
-                <label className="text-xs uppercase font-bold text-on-surface block mb-1">
-                  Transaction Reference / UTR (if any)
+                <label className="font-bold text-slate-700 block mb-1.5">
+                  Transaction Reference / UTR
                 </label>
                 <input
                   type="text"
-                  placeholder="e.g. UTR: SBIN2420391840 or DD #098412"
-                  className="w-full border border-[#c4c6cf] p-2 text-xs bg-surface text-on-surface focus:outline-none focus:border-primary font-mono"
+                  placeholder="e.g. UTR-24072201 or NetBanking Ref"
+                  className="w-full border border-slate-300 rounded-xl p-2.5 font-mono text-slate-800 focus:outline-none focus:border-[#355C7D]"
                 />
               </div>
 
               <div>
-                <label className="text-xs uppercase font-bold text-on-surface block mb-1">
-                  Detailed Explanation
+                <label className="font-bold text-slate-700 block mb-1.5">
+                  Explanation &amp; Details
                 </label>
                 <textarea
                   rows={3}
-                  placeholder="Describe the discrepancy with payment date, bank account debit timestamp, and amount..."
-                  className="w-full border border-[#c4c6cf] p-2 text-xs bg-surface text-on-surface focus:outline-none focus:border-primary"
+                  placeholder="Describe your payment details, date, and bank account deduction..."
+                  className="w-full border border-slate-300 rounded-xl p-2.5 text-slate-800 focus:outline-none focus:border-[#355C7D] resize-none"
                 ></textarea>
               </div>
             </div>
 
-            <div className="flex items-center justify-end gap-3 pt-3 border-t border-[#d5e3fc]">
+            <div className="flex items-center justify-end gap-2.5 pt-3 border-t border-slate-200">
               <button
-                onClick={() => setShowDiscrepancyModal(false)}
-                className="px-4 py-2 border border-[#c4c6cf] text-xs font-semibold uppercase tracking-wider text-on-surface-variant hover:bg-surface-container"
+                type="button"
+                onClick={() => setShowQueryModal(false)}
+                className="px-4 py-2 border border-slate-300 text-xs font-semibold text-slate-700 hover:bg-slate-100 rounded-xl transition-colors cursor-pointer"
               >
                 Cancel
               </button>
               <button
+                type="button"
                 onClick={() => {
-                  setShowDiscrepancyModal(false);
-                  triggerToast(
-                    "Ledger query lodged with Bursar. Ticket: #BUR-2025-089"
-                  );
+                  setShowQueryModal(false);
+                  triggerToast("Discrepancy query registered. Support Ticket: #FEE-2025-042");
                 }}
-                className="px-4 py-2 bg-primary text-white text-xs font-semibold uppercase tracking-wider hover:bg-primary-container"
+                className="px-5 py-2 bg-[#355C7D] hover:opacity-95 text-white text-xs font-semibold rounded-xl shadow-xs transition-all cursor-pointer"
               >
                 Submit Query
               </button>
@@ -1097,4 +904,3 @@ export default function StudentFeesPage() {
     </div>
   );
 }
-
