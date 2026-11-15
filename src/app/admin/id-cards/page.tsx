@@ -404,8 +404,8 @@ export default function IdCardManagementPage() {
               onClick={() => setActiveTab("all")}
               className={`px-space-md py-2.5 font-label-md text-label-md uppercase tracking-wider border-r border-outline-variant/40 transition-colors ${
                 activeTab === "all"
-                  ? "bg-emerald-600 text-white font-bold"
-                  : "text-on-surface-variant hover:bg-emerald-50 hover:text-emerald-800"
+                  ? "bg-[#3D405B] text-white font-bold"
+                  : "text-on-surface-variant hover:bg-[#3D405B]/10 hover:text-[#3D405B]"
               }`}
             >
               All Cardholders (3,892)
@@ -414,8 +414,8 @@ export default function IdCardManagementPage() {
               onClick={() => setActiveTab("student")}
               className={`px-space-md py-2.5 font-label-md text-label-md uppercase tracking-wider border-r border-outline-variant/40 transition-colors ${
                 activeTab === "student"
-                  ? "bg-emerald-600 text-white font-bold"
-                  : "text-on-surface-variant hover:bg-emerald-50 hover:text-emerald-800"
+                  ? "bg-[#3D405B] text-white font-bold"
+                  : "text-on-surface-variant hover:bg-[#3D405B]/10 hover:text-[#3D405B]"
               }`}
             >
               Student Cards <span className="ml-1 inline-block w-2 h-2 bg-[#173b65]"></span>
@@ -424,8 +424,8 @@ export default function IdCardManagementPage() {
               onClick={() => setActiveTab("faculty")}
               className={`px-space-md py-2.5 font-label-md text-label-md uppercase tracking-wider border-r border-outline-variant/40 transition-colors ${
                 activeTab === "faculty"
-                  ? "bg-emerald-600 text-white font-bold"
-                  : "text-on-surface-variant hover:bg-emerald-50 hover:text-emerald-800"
+                  ? "bg-[#3D405B] text-white font-bold"
+                  : "text-on-surface-variant hover:bg-[#3D405B]/10 hover:text-[#3D405B]"
               }`}
             >
               Faculty &amp; Staff <span className="ml-1 inline-block w-2 h-2 bg-[#7b1113]"></span>
@@ -434,8 +434,8 @@ export default function IdCardManagementPage() {
               onClick={() => setActiveTab("queue")}
               className={`px-space-md py-2.5 font-label-md text-label-md uppercase tracking-wider border-r border-outline-variant/40 transition-colors ${
                 activeTab === "queue"
-                  ? "bg-emerald-600 text-white font-bold"
-                  : "text-on-surface-variant hover:bg-emerald-50 hover:text-emerald-800"
+                  ? "bg-[#3D405B] text-white font-bold"
+                  : "text-on-surface-variant hover:bg-[#3D405B]/10 hover:text-[#3D405B]"
               }`}
             >
               Print Batch Queue (68)
@@ -444,8 +444,8 @@ export default function IdCardManagementPage() {
               onClick={() => setActiveTab("reissue")}
               className={`px-space-md py-2.5 font-label-md text-label-md uppercase tracking-wider transition-colors ${
                 activeTab === "reissue"
-                  ? "bg-emerald-600 text-white font-bold"
-                  : "text-on-surface-variant hover:bg-emerald-50 hover:text-emerald-800"
+                  ? "bg-[#3D405B] text-white font-bold"
+                  : "text-on-surface-variant hover:bg-[#3D405B]/10 hover:text-[#3D405B]"
               }`}
             >
               Re-Issue / Lost (12)

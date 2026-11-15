@@ -45,14 +45,14 @@ export default function AdminSidebar() {
       <div className="flex flex-col min-h-0 flex-1">
         {/* Brand Header */}
         <div className="h-16 px-4 flex items-center gap-3 bg-white text-[#3D405B] border-b border-slate-200 shrink-0">
-          <div className="w-9 h-9 bg-emerald-100 text-emerald-700 font-bold flex items-center justify-center rounded-xl shadow-xs shrink-0">
-            <Shield className="w-5 h-5 text-emerald-700" />
+          <div className="w-9 h-9 bg-[#3D405B]/10 text-[#3D405B] font-bold flex items-center justify-center rounded-xl shadow-xs shrink-0">
+            <Shield className="w-5 h-5 text-[#3D405B]" />
           </div>
           <div className="flex flex-col min-w-0">
             <span className="font-headline text-sm font-bold tracking-tight text-[#3D405B] leading-tight truncate">
               Apex Institute
             </span>
-            <span className="text-[10px] tracking-wider uppercase text-emerald-700 font-semibold truncate">
+            <span className="text-[10px] tracking-wider uppercase text-[#3D405B] font-semibold truncate">
               Admin Console
             </span>
           </div>
@@ -74,8 +74,8 @@ export default function AdminSidebar() {
                 href={item.href}
                 className={`flex items-center gap-3 px-3.5 py-2.5 text-xs font-semibold transition-all rounded-xl ${
                   isActive
-                    ? "bg-emerald-600 text-white font-bold shadow-sm"
-                    : "text-slate-600 hover:bg-emerald-50 hover:text-emerald-800"
+                    ? "bg-[#3D405B] text-white font-bold shadow-sm"
+                    : "text-slate-600 hover:bg-[#3D405B]/10 hover:text-[#3D405B]"
                 }`}
               >
                 <IconComponent

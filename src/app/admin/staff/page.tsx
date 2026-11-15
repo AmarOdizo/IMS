@@ -437,7 +437,7 @@ export default function StaffDirectoryPage() {
                   onClick={() => setSelectedTab("all")}
                   className={`px-3 py-1.5 font-semibold uppercase tracking-wider whitespace-nowrap transition-colors rounded-xs ${
                     selectedTab === "all"
-                      ? "bg-emerald-600 text-white"
+                      ? "bg-[#3D405B] text-white"
                       : "bg-surface-container-low text-on-surface-variant hover:text-on-surface"
                   }`}
                 >
@@ -447,7 +447,7 @@ export default function StaffDirectoryPage() {
                   onClick={() => setSelectedTab("teaching")}
                   className={`px-3 py-1.5 font-semibold uppercase tracking-wider whitespace-nowrap transition-colors rounded-xs ${
                     selectedTab === "teaching"
-                      ? "bg-emerald-600 text-white"
+                      ? "bg-[#3D405B] text-white"
                       : "bg-surface-container-low text-on-surface-variant hover:text-on-surface"
                   }`}
                 >

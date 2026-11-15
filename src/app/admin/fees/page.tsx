@@ -378,7 +378,7 @@ export default function FeesManagementPage() {
                 onClick={() => setActiveTab("all")}
                 className={`px-space-md py-1.5 font-label-md uppercase tracking-wider text-label-sm font-semibold transition-all rounded-xs ${
                   activeTab === "all"
-                    ? "bg-emerald-600 text-white font-bold shadow-xs"
+                    ? "bg-[#3D405B] text-white font-bold shadow-xs"
                     : "text-on-surface-variant hover:text-on-surface"
                 }`}
               >
@@ -391,7 +391,7 @@ export default function FeesManagementPage() {
                 }}
                 className={`px-space-md py-1.5 font-label-md uppercase tracking-wider text-label-sm font-semibold transition-all rounded-xs ${
                   activeTab === "defaulters"
-                    ? "bg-emerald-600 text-white font-bold shadow-xs"
+                    ? "bg-[#3D405B] text-white font-bold shadow-xs"
                     : "text-on-surface-variant hover:text-on-surface"
                 }`}
               >
@@ -401,7 +401,7 @@ export default function FeesManagementPage() {
                 onClick={() => setActiveTab("schedule")}
                 className={`px-space-md py-1.5 font-label-md uppercase tracking-wider text-label-sm font-semibold transition-all rounded-xs ${
                   activeTab === "schedule"
-                    ? "bg-emerald-600 text-white font-bold shadow-xs"
+                    ? "bg-[#3D405B] text-white font-bold shadow-xs"
                     : "text-on-surface-variant hover:text-on-surface"
                 }`}
               >
@@ -414,7 +414,7 @@ export default function FeesManagementPage() {
                 }}
                 className={`px-space-md py-1.5 font-label-md uppercase tracking-wider text-label-sm font-semibold transition-all rounded-xs ${
                   activeTab === "reconcile"
-                    ? "bg-emerald-600 text-white font-bold shadow-xs"
+                    ? "bg-[#3D405B] text-white font-bold shadow-xs"
                     : "text-on-surface-variant hover:text-on-surface"
                 }`}
               >

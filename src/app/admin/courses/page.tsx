@@ -576,7 +576,7 @@ export default function CoursesPage() {
                     onClick={() => setActiveCategory(tab.id)}
                     className={`px-3 py-1.5 font-label-md text-label-md uppercase tracking-wider whitespace-nowrap transition-colors ${
                       activeCategory === tab.id
-                        ? "bg-emerald-600 text-white font-semibold shadow-sm"
+                        ? "bg-[#3D405B] text-white font-semibold shadow-sm"
                         : "bg-surface-container text-on-surface-variant hover:text-emerald-700"
                     }`}
                   >

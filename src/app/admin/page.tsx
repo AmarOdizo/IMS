@@ -80,7 +80,7 @@ export default function AdminDashboardPage() {
           <div className="flex items-center flex-wrap gap-2.5">
             <Link
               href="/admin/students"
-              className="inline-flex items-center gap-2 px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-xl shadow-sm hover:shadow transition-all"
+              className="inline-flex items-center gap-2 px-4 py-2.5 bg-[#3D405B] hover:bg-[#2E3046] text-white text-xs font-semibold rounded-xl shadow-sm hover:shadow transition-all"
             >
               <UserPlus className="w-4 h-4" />
               <span>New Admission</span>
@@ -210,7 +210,7 @@ export default function AdminDashboardPage() {
                     onClick={() => setSelectedMonth(m)}
                     className={`px-2.5 py-1 text-xs font-semibold rounded-md transition-all ${
                       selectedMonth === m
-                        ? "bg-emerald-600 text-white shadow-xs font-bold"
+                        ? "bg-[#3D405B] text-white shadow-xs font-bold"
                         : "text-slate-600 hover:text-[#3D405B]"
                     }`}
                   >
@@ -274,14 +274,14 @@ export default function AdminDashboardPage() {
               <text className="text-[11px] font-sans fill-slate-500 font-medium" textAnchor="middle" x="364" y="208">FEB</text>
 
               {/* MAR (Active) */}
-              <rect fill="#ecfdf5" height="185" rx="8" width="76" x="420" y="10" />
+              <rect fill="#f4f4f7" height="185" rx="8" width="76" x="420" y="10" />
               <rect fill="#94a3b8" height="160" rx="3" width="22" x="428" y="30" />
-              <rect fill="#059669" height="142" rx="3" width="22" x="454" y="48" />
-              <text className="text-[11px] font-sans fill-emerald-800 font-bold" textAnchor="middle" x="452" y="208">MAR</text>
+              <rect fill="#3D405B" height="142" rx="3" width="22" x="454" y="48" />
+              <text className="text-[11px] font-sans fill-[#3D405B] font-bold" textAnchor="middle" x="452" y="208">MAR</text>
 
               {/* Hover Badge */}
               <g transform="translate(412, 4)">
-                <rect fill="#059669" height="30" rx="6" width="102" x="0" y="0" />
+                <rect fill="#3D405B" height="30" rx="6" width="102" x="0" y="0" />
                 <text className="text-[9px] font-sans font-bold" fill="#FFFFFF" textAnchor="middle" x="51" y="13">
                   REAL: ₹48.60L
                 </text>

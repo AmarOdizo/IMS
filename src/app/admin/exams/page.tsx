@@ -436,7 +436,7 @@ export default function ExamsPage() {
                 onClick={() => setActiveTab("all")}
                 className={`px-4 py-2 font-label-md text-label-md uppercase tracking-wider transition-colors rounded-md ${
                   activeTab === "all"
-                    ? "bg-emerald-600 text-white font-bold shadow-sm"
+                    ? "bg-[#3D405B] text-white font-bold shadow-sm"
                     : "text-on-surface-variant hover:text-emerald-700 hover:bg-emerald-50"
                 }`}
               >
@@ -446,7 +446,7 @@ export default function ExamsPage() {
                 onClick={() => setActiveTab("ledger")}
                 className={`px-4 py-2 font-label-md text-label-md uppercase tracking-wider transition-colors flex items-center gap-1.5 rounded-md ${
                   activeTab === "ledger"
-                    ? "bg-emerald-600 text-white font-bold shadow-sm"
+                    ? "bg-[#3D405B] text-white font-bold shadow-sm"
                     : "text-on-surface-variant hover:text-emerald-700 hover:bg-emerald-50"
                 }`}
               >
@@ -457,7 +457,7 @@ export default function ExamsPage() {
                 onClick={() => setActiveTab("moderation")}
                 className={`px-4 py-2 font-label-md text-label-md uppercase tracking-wider transition-colors flex items-center gap-1.5 rounded-md ${
                   activeTab === "moderation"
-                    ? "bg-emerald-600 text-white font-bold shadow-sm"
+                    ? "bg-[#3D405B] text-white font-bold shadow-sm"
                     : "text-on-surface-variant hover:text-emerald-700 hover:bg-emerald-50"
                 }`}
               >
@@ -470,7 +470,7 @@ export default function ExamsPage() {
                 onClick={() => setActiveTab("archive")}
                 className={`px-4 py-2 font-label-md text-label-md uppercase tracking-wider transition-colors rounded-md ${
                   activeTab === "archive"
-                    ? "bg-emerald-600 text-white font-bold shadow-sm"
+                    ? "bg-[#3D405B] text-white font-bold shadow-sm"
                     : "text-on-surface-variant hover:text-emerald-700 hover:bg-emerald-50"
                 }`}
               >

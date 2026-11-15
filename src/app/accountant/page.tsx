@@ -202,7 +202,7 @@ export default function AccountantDashboardPage() {
           <div className="flex items-center flex-wrap gap-2.5">
             <Link
               href="/accountant/record-payment"
-              className="inline-flex items-center gap-2 px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-xl shadow-sm hover:shadow transition-all"
+              className="inline-flex items-center gap-2 px-4 py-2.5 bg-amber-600 hover:bg-amber-700 text-white text-xs font-semibold rounded-xl shadow-sm hover:shadow transition-all"
             >
               <PlusCircle className="w-4 h-4" />
               <span>Record Fee Payment</span>
@@ -427,7 +427,7 @@ export default function AccountantDashboardPage() {
                       onClick={() => setModeFilter(mode)}
                       className={`px-2.5 py-1 text-xs font-semibold rounded-lg transition-all ${
                         modeFilter.toLowerCase() === mode.toLowerCase()
-                          ? "bg-emerald-600 text-white shadow-xs font-bold"
+                          ? "bg-amber-600 text-white shadow-xs font-bold"
                           : "text-slate-600 hover:text-[#3D405B]"
                       }`}
                     >
@@ -671,7 +671,7 @@ export default function AccountantDashboardPage() {
             <button
               onClick={() => setIsTillLockModalOpen(true)}
               disabled={tillLocked}
-              className="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-xl transition-all shadow-sm cursor-pointer disabled:opacity-50"
+              className="w-full py-2.5 bg-amber-600 hover:bg-amber-700 text-white text-xs font-semibold rounded-xl transition-all shadow-sm cursor-pointer disabled:opacity-50"
             >
               {tillLocked ? "Till Locked for Today" : "Lock Counter & Print Day-End Scroll"}
             </button>
@@ -754,7 +754,7 @@ export default function AccountantDashboardPage() {
                   handlePrintReceipt(selectedReceipt);
                   setSelectedReceipt(null);
                 }}
-                className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-lg flex items-center gap-1.5 transition-all shadow-xs cursor-pointer"
+                className="px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white text-xs font-semibold rounded-lg flex items-center gap-1.5 transition-all shadow-xs cursor-pointer"
               >
                 <Printer className="w-4 h-4" />
                 <span>Print Receipt</span>
@@ -805,7 +805,7 @@ export default function AccountantDashboardPage() {
               </button>
               <button
                 onClick={handleLockTill}
-                className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-lg flex items-center gap-1.5 transition-all shadow-xs cursor-pointer"
+                className="px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white text-xs font-semibold rounded-lg flex items-center gap-1.5 transition-all shadow-xs cursor-pointer"
               >
                 <Lock className="w-4 h-4" />
                 <span>Confirm Lock &amp; Print</span>
