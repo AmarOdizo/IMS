@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
   Calendar,
   Bell,
@@ -17,10 +18,48 @@ interface StudentHeaderProps {
   breadcrumbTitle?: string;
 }
 
+const routeTitleMap: Record<string, string> = {
+  "/student": "Dashboard",
+  "/student/profile": "Profile",
+  "/student/attendance": "Attendance",
+  "/student/fees": "Fees",
+  "/student/results": "Results",
+  "/student/certificates": "Certificates",
+  "/student/id-card": "ID Card",
+  "/student/notices": "Notices",
+};
+
 export default function StudentHeader({
-  breadcrumbTitle = "Academic Operations",
+  breadcrumbTitle,
 }: StudentHeaderProps) {
   const [showNotifications, setShowNotifications] = useState(false);
+  const pathname = usePathname();
+
+  const getPageTitle = () => {
+    if (breadcrumbTitle && breadcrumbTitle !== "Academic Operations") {
+      return breadcrumbTitle;
+    }
+    if (routeTitleMap[pathname]) {
+      return routeTitleMap[pathname];
+    }
+    const matched = Object.keys(routeTitleMap)
+      .filter((k) => k !== "/student")
+      .find((k) => pathname.startsWith(k));
+    if (matched) {
+      return routeTitleMap[matched];
+    }
+    const segments = pathname.split("/").filter(Boolean);
+    const last = segments[segments.length - 1];
+    if (last && last !== "student") {
+      return last
+        .split("-")
+        .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+        .join(" ");
+    }
+    return "Dashboard";
+  };
+
+  const currentTitle = getPageTitle();
 
   const mockNotices = [
     {
@@ -44,18 +83,19 @@ export default function StudentHeader({
   ];
 
   return (
-    <header className="fixed top-0 left-64 right-0 h-16 bg-surface-container-lowest/90 backdrop-blur-md border-b border-[#d5e3fc] z-40 flex items-center justify-between px-6">
-      {/* Left: Breadcrumbs */}
+    <header className="fixed top-0 left-64 right-0 h-16 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-2xs z-40 flex items-center justify-between px-6">
+      {/* Left: Dynamic Breadcrumbs */}
       <div className="flex items-center gap-2">
         <Link
           href="/student"
-          className="text-xs uppercase tracking-wider text-on-surface-variant hover:text-primary font-semibold"
+          className="text-xs uppercase tracking-wider text-slate-500 hover:text-violet-700 font-semibold transition-colors"
         >
           Student Portal
         </Link>
-        <ChevronRight className="w-4 h-4 text-outline" />
-        <span className="font-mono text-xs text-primary font-bold">
-          {breadcrumbTitle}
+        <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
+        <span className="font-semibold text-xs text-violet-700 bg-violet-50 px-2.5 py-1 rounded-md border border-violet-200/60 flex items-center gap-1.5 shadow-2xs">
+          <span className="w-1.5 h-1.5 rounded-full bg-violet-600"></span>
+          {currentTitle}
         </span>
       </div>
 
@@ -158,7 +198,7 @@ export default function StudentHeader({
             className="relative group"
             title="View Student Profile"
           >
-            <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white shadow-sm group-hover:ring-2 group-hover:ring-secondary transition-all">
+            <div className="w-8 h-8 rounded-full bg-violet-600 flex items-center justify-center text-white shadow-sm group-hover:ring-2 group-hover:ring-violet-300 transition-all">
               <User className="w-4 h-4 text-white" />
             </div>
             <span
