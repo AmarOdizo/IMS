@@ -4,830 +4,508 @@ import { useState } from "react";
 import Link from "next/link";
 import {
   User,
-  ShieldCheck,
-  CheckCircle,
-  FileText,
-  Download,
-  Edit,
+  GraduationCap,
+  Calendar,
   Mail,
   Phone,
-  Building,
-  Key,
-  Lock,
-  Heart,
-  Globe,
-  Award,
-  BookOpen,
-  Calendar,
-  AlertTriangle,
-  ChevronRight,
-  ExternalLink,
   MapPin,
+  Heart,
+  ShieldCheck,
+  CheckCircle2,
+  Download,
+  Edit3,
+  BookOpen,
+  Award,
+  Users,
   Clock,
   X,
+  Upload,
   Send,
-  Upload
+  FileText
 } from "lucide-react";
 
 export default function StudentProfilePage() {
   const [showCorrectionModal, setShowCorrectionModal] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
+  // Form states for update request
+  const [targetField, setTargetField] = useState("Phone Number");
+  const [newDetails, setNewDetails] = useState("");
+  const [reason, setReason] = useState("");
+
   const triggerToast = (msg: string) => {
     setToastMessage(msg);
     setTimeout(() => {
       setToastMessage(null);
-    }, 4000);
+    }, 3500);
   };
 
-  const clearances = [
-    {
-      lab: "Turing Advanced Computing Lab (B-12)",
-      level: "Level 3 (Supervised)",
-      window: "08:00 – 22:00",
-      authority: "Dept Head CS",
-      status: "Active",
-      statusColor: "bg-[#ecfdf5] text-[#047857] border-[#a7f3d0]",
-    },
-    {
-      lab: "North Tower Central Library Stacks",
-      level: "Level 1 (General Public)",
-      window: "24/7 RFID Turnstile",
-      authority: "Chief Librarian",
-      status: "Active",
-      statusColor: "bg-[#ecfdf5] text-[#047857] border-[#a7f3d0]",
-    },
-    {
-      lab: "Robotics & Autonomous Hardware Bay",
-      level: "Level 4 (High Voltage)",
-      window: "Course Slot Specific",
-      authority: "Prof. V. Raman",
-      status: "Permit Pending",
-      statusColor: "bg-[#fffbeb] text-[#b45309] border-[#fde68a]",
-    },
-    {
-      lab: "Aquila Sports Complex & Gymnasium",
-      level: "Campus Life",
-      window: "06:00 – 21:00",
-      authority: "Dean of Student Affairs",
-      status: "Active",
-      statusColor: "bg-[#ecfdf5] text-[#047857] border-[#a7f3d0]",
-    },
-    {
-      lab: "Embedded Systems & IoT Workstation",
-      level: "Level 2 (Departmental)",
-      window: "09:00 – 19:00",
-      authority: "Lab Director",
-      status: "Active",
-      statusColor: "bg-[#ecfdf5] text-[#047857] border-[#a7f3d0]",
-    },
+  const handleUpdateSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newDetails.trim()) {
+      triggerToast("Please enter the updated details before submitting.");
+      return;
+    }
+    setShowCorrectionModal(false);
+    triggerToast(`Update request for "${targetField}" submitted successfully.`);
+    setNewDetails("");
+    setReason("");
+  };
+
+  const currentCourses = [
+    { code: "CS-401", title: "Database Management Systems", credits: 4, type: "Core Theory" },
+    { code: "CS-402", title: "Operating Systems", credits: 4, type: "Core Theory" },
+    { code: "CS-403", title: "Design & Analysis of Algorithms", credits: 4, type: "Core Theory" },
+    { code: "CS-404", title: "Automata & Formal Languages", credits: 4, type: "Core Theory" },
+    { code: "CS-405L", title: "Systems Engineering Laboratory", credits: 2, type: "Practical / Lab" },
   ];
 
   return (
-    <div className="flex flex-col w-full pb-10">
+    <div className="p-5 md:p-8 space-y-6 max-w-[1600px] w-full mx-auto font-sans text-slate-800">
       {/* Toast Notification */}
       {toastMessage && (
-        <div className="fixed bottom-6 right-6 z-50 bg-primary text-on-primary px-4 py-3 shadow-[2px_2px_0_0_#3D405B] border-l-4 border-secondary-container flex items-center gap-3 animate-in fade-in slide-in-from-bottom-2">
-          <span className="material-symbols-outlined text-secondary-container text-[20px]">
-            info
-          </span>
-          <span className="font-mono text-xs">{toastMessage}</span>
+        <div className="fixed bottom-6 right-6 z-50 bg-[#3D405B] text-white px-5 py-3 rounded-xl shadow-xl flex items-center gap-3 border border-slate-700 text-sm font-medium animate-in slide-in-from-bottom">
+          <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0" />
+          <span>{toastMessage}</span>
           <button
             onClick={() => setToastMessage(null)}
-            className="text-primary-fixed-dim hover:text-white ml-2"
+            className="ml-2 text-slate-400 hover:text-white transition-colors cursor-pointer"
           >
             <X className="w-4 h-4" />
           </button>
         </div>
       )}
 
-      {/* Dynamic Operational Sub-Header Bar */}
-      <section className="bg-surface-container-low px-6 py-3.5 border-b border-[#d5e3fc] flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div className="flex flex-col gap-0.5">
-          <div className="flex items-center gap-2">
-            <span className="text-[11px] uppercase tracking-wider text-on-surface-variant font-medium">
-              Academic Registry
-            </span>
-            <ChevronRight className="w-3.5 h-3.5 text-outline" />
-            <span className="text-[11px] uppercase tracking-wider text-primary font-bold">
-              Dossier APX-2023-CS-042
-            </span>
-            <span className="px-2 py-0.5 bg-[#ecfdf5] text-[#047857] border border-[#a7f3d0] text-[10px] font-bold uppercase ml-2 flex items-center gap-1">
-              <span className="w-1.5 h-1.5 bg-[#047857] inline-block"></span>{" "}
-              Verified File
-            </span>
-          </div>
-          <h1 className="font-headline text-xl text-primary font-bold tracking-tight">
-            Student Profile &amp; Academic Dossier
+      {/* Top Action Bar */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-4 md:px-6 rounded-2xl border border-slate-200/80 shadow-xs">
+        <div>
+          <h1 className="text-xl md:text-2xl font-bold text-[#3D405B] tracking-tight">
+            Student Profile
           </h1>
+          <p className="text-xs text-slate-500 mt-0.5">
+            Manage your personal, academic, and contact details
+          </p>
         </div>
 
-        {/* Telemetry Actions */}
-        <div className="flex items-center gap-2.5 self-start md:self-auto">
+        <div className="flex items-center gap-2.5">
           <button
             onClick={() => setShowCorrectionModal(true)}
-            className="bg-surface-container-lowest text-primary hover:bg-surface-container px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wider border border-[#c4c6cf] flex items-center gap-2 transition-all shadow-xs"
+            className="inline-flex items-center gap-2 px-3.5 py-2 bg-slate-100 hover:bg-slate-200 text-[#3D405B] text-xs font-semibold rounded-xl border border-slate-200 transition-all cursor-pointer shadow-xs"
           >
-            <span className="material-symbols-outlined text-[18px]">
-              edit_document
-            </span>
-            <span>Request Information Update</span>
+            <Edit3 className="w-3.5 h-3.5" />
+            <span>Request Update</span>
           </button>
           <button
-            onClick={() =>
-              triggerToast("Compiling secure signed PDF Dossier for Rahul Sharma...")
-            }
-            className="bg-primary text-white hover:bg-primary-container px-4 py-1.5 text-xs font-semibold uppercase tracking-wider flex items-center gap-2 transition-all shadow-sm"
+            onClick={() => triggerToast("Downloading Student Profile Summary (PDF)...")}
+            className="inline-flex items-center gap-2 px-4 py-2 bg-[#355C7D] hover:opacity-95 text-white text-xs font-semibold rounded-xl shadow-xs transition-all cursor-pointer"
           >
-            <Download className="w-4 h-4" />
-            <span>Download Profile Dossier (PDF)</span>
+            <Download className="w-3.5 h-3.5" />
+            <span>Download Profile PDF</span>
           </button>
         </div>
-      </section>
-
-      {/* Main Technical Canvas */}
-      <div className="p-6 flex flex-col gap-6">
-        {/* Top Identity Command Banner */}
-        <section className="bg-surface-container-lowest border border-[#d5e3fc] shadow-sm flex flex-col lg:flex-row relative">
-          <div className="absolute top-0 left-0 bottom-0 w-1.5 bg-primary"></div>
-
-          {/* Student Badge & Visual Artifact */}
-          <div className="p-6 lg:w-80 flex flex-col items-center sm:items-start text-left border-b lg:border-b-0 lg:border-r border-[#d5e3fc] bg-surface-container-lowest">
-            <div className="relative group">
-              <div className="w-28 h-32 bg-primary/10 border border-[#c4c6cf] flex items-center justify-center overflow-hidden">
-                <div className="w-full h-full bg-gradient-to-br from-primary-container via-secondary to-primary flex items-center justify-center text-white">
-                  <span className="material-symbols-outlined text-[64px] text-white/80">
-                    person
-                  </span>
-                </div>
-              </div>
-              <div
-                className="absolute -bottom-2 -right-2 bg-primary text-white p-1 border-2 border-white"
-                title="Official Bio-Metric Verified"
-              >
-                <span className="material-symbols-outlined text-[18px] block">
-                  verified
-                </span>
-              </div>
-            </div>
-
-            <div className="mt-4 flex flex-col items-center sm:items-start">
-              <span className="font-mono text-sm text-primary font-bold">
-                APX-2023-CS-042
-              </span>
-              <span className="text-[11px] uppercase tracking-widest text-on-surface-variant mt-0.5 font-medium">
-                UID: 9884-0012-7819
-              </span>
-              <div className="mt-3 flex items-center gap-1.5 px-2 py-0.5 bg-[#ecfdf5] text-[#047857] border border-[#a7f3d0] text-[10px] font-bold">
-                <CheckCircle className="w-3.5 h-3.5" />
-                <span className="uppercase">Active • Regular Student</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Core Curricular Readout */}
-          <div className="p-6 flex-1 flex flex-col justify-between border-b lg:border-b-0 border-[#d5e3fc]">
-            <div>
-              <div className="flex flex-wrap items-center gap-2 mb-1.5">
-                <span className="px-2 py-0.5 bg-surface-container font-mono text-xs text-primary font-semibold tracking-wide">
-                  Dept of Computer Science &amp; Engineering
-                </span>
-                <span className="px-2 py-0.5 bg-secondary-fixed text-on-secondary-fixed text-[10px] uppercase font-bold">
-                  Tier-1 Autonomous
-                </span>
-              </div>
-              <h2 className="font-headline text-2xl text-primary font-bold tracking-tight">
-                Rahul Sharma
-              </h2>
-              <p className="text-sm text-secondary font-medium mt-1">
-                Bachelor of Technology (B.Tech) — Computer Science &amp; Engineering
-              </p>
-            </div>
-
-            {/* Academic Matrix Ribbon */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6 pt-4 border-t border-[#d5e3fc]">
-              <div>
-                <div className="text-[10px] uppercase tracking-wider text-on-surface-variant font-medium">
-                  Batch Cohort
-                </div>
-                <div className="font-mono text-xs text-primary font-semibold mt-0.5">
-                  2023–2027 (Sec A)
-                </div>
-              </div>
-              <div>
-                <div className="text-[10px] uppercase tracking-wider text-on-surface-variant font-medium">
-                  Progression
-                </div>
-                <div className="font-mono text-xs text-primary font-semibold mt-0.5">
-                  Year 2 • Sem IV
-                </div>
-              </div>
-              <div>
-                <div className="text-[10px] uppercase tracking-wider text-on-surface-variant font-medium">
-                  Cumulative GPA
-                </div>
-                <div className="font-mono text-xs text-[#047857] font-bold mt-0.5 flex items-center gap-1">
-                  <span>3.82 / 4.00</span>
-                  <span className="text-[9px] bg-[#ecfdf5] px-1 border border-[#a7f3d0] font-bold">
-                    Top 3%
-                  </span>
-                </div>
-              </div>
-              <div>
-                <div className="text-[10px] uppercase tracking-wider text-on-surface-variant font-medium">
-                  Standing Class
-                </div>
-                <div className="font-mono text-xs text-primary font-semibold mt-0.5">
-                  Distinction Honors
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Quick Institutional Points of Contact */}
-          <div className="p-6 lg:w-96 bg-surface-container-low border-t lg:border-t-0 lg:border-l border-[#d5e3fc] flex flex-col justify-between">
-            <div>
-              <span className="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold block mb-3">
-                Institutional Telemetry
-              </span>
-              <div className="flex flex-col gap-3 text-xs">
-                <div className="flex items-start gap-2.5">
-                  <Mail className="w-4 h-4 text-secondary shrink-0 mt-0.5" />
-                  <div className="min-w-0">
-                    <div className="text-[10px] text-on-surface-variant uppercase font-medium">
-                      Institutional Email
-                    </div>
-                    <a
-                      className="font-mono text-xs text-primary hover:underline truncate block"
-                      href="mailto:rahul.sharma23@apex.edu.in"
-                    >
-                      rahul.sharma23@apex.edu.in
-                    </a>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-2.5">
-                  <Phone className="w-4 h-4 text-secondary shrink-0 mt-0.5" />
-                  <div className="min-w-0">
-                    <div className="text-[10px] text-on-surface-variant uppercase font-medium">
-                      Direct Handset
-                    </div>
-                    <div className="font-mono text-xs text-primary">
-                      +91 98765 43210
-                    </div>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-2.5">
-                  <Building className="w-4 h-4 text-secondary shrink-0 mt-0.5" />
-                  <div className="min-w-0">
-                    <div className="text-[10px] text-on-surface-variant uppercase font-medium">
-                      Campus Residential Allocation
-                    </div>
-                    <div className="text-xs text-on-surface leading-tight">
-                      Hall of Residence Block C, Room 314, North Campus HQ
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="mt-4 pt-3 border-t border-[#d5e3fc] flex items-center justify-between text-on-surface-variant font-mono text-[11px]">
-              <span>
-                RFID KEY: <strong className="text-primary font-bold">8819-B4</strong>
-              </span>
-              <span className="text-[#047857] flex items-center gap-1 font-semibold">
-                <span className="w-1.5 h-1.5 bg-[#047857]"></span> HOSTEL PERMIT
-                GRANTED
-              </span>
-            </div>
-          </div>
-        </section>
-
-        {/* Visual Ledger Tabs & Structured Cards Grid (3 Columns) */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
-          {/* Column 1: Personal & Bio Details */}
-          <section className="bg-surface-container-lowest border border-[#d5e3fc] shadow-sm flex flex-col">
-            <div className="px-5 py-3 bg-surface-container flex items-center justify-between border-b border-[#d5e3fc]">
-              <div className="flex items-center gap-2">
-                <span className="material-symbols-outlined text-primary text-[18px]">
-                  badge
-                </span>
-                <h3 className="font-headline text-xs font-bold text-primary uppercase">
-                  Demographic &amp; Bio
-                </h3>
-              </div>
-              <span className="font-mono text-[10px] text-on-surface-variant font-semibold">
-                SEC: 01
-              </span>
-            </div>
-
-            <div className="p-4 flex flex-col divide-y divide-surface-container text-xs">
-              <div className="py-2.5 flex items-center justify-between">
-                <span className="text-[11px] uppercase tracking-wide text-on-surface-variant font-medium">
-                  Date of Birth
-                </span>
-                <span className="font-mono text-primary font-medium">
-                  14 August 2004{" "}
-                  <span className="text-on-surface-variant">(Age 20)</span>
-                </span>
-              </div>
-              <div className="py-2.5 flex items-center justify-between">
-                <span className="text-[11px] uppercase tracking-wide text-on-surface-variant font-medium">
-                  Gender
-                </span>
-                <span className="text-primary font-medium">Male</span>
-              </div>
-              <div className="py-2.5 flex items-center justify-between">
-                <span className="text-[11px] uppercase tracking-wide text-on-surface-variant font-medium">
-                  Blood Group
-                </span>
-                <span className="font-mono text-red-700 font-bold px-2 py-0.5 bg-red-50 border border-red-300">
-                  O+ (Positive)
-                </span>
-              </div>
-              <div className="py-2.5 flex items-center justify-between">
-                <span className="text-[11px] uppercase tracking-wide text-on-surface-variant font-medium">
-                  Nationality
-                </span>
-                <span className="text-primary flex items-center gap-1.5 font-medium">
-                  <span className="w-3 h-2 bg-[#d5e3fc] inline-block border border-[#74777f]"></span>{" "}
-                  Indian
-                </span>
-              </div>
-              <div className="py-2.5 flex items-center justify-between">
-                <span className="text-[11px] uppercase tracking-wide text-on-surface-variant font-medium">
-                  National ID (Aadhaar)
-                </span>
-                <span className="font-mono text-primary tracking-wider font-semibold">
-                  XXXX-XXXX-4912
-                </span>
-              </div>
-              <div className="py-2.5 flex items-center justify-between">
-                <span className="text-[11px] uppercase tracking-wide text-on-surface-variant font-medium">
-                  Mother Tongue / Dialect
-                </span>
-                <span className="text-primary font-medium">
-                  Hindi / English (Bilingual)
-                </span>
-              </div>
-              <div className="py-2.5 flex items-center justify-between">
-                <span className="text-[11px] uppercase tracking-wide text-on-surface-variant font-medium">
-                  Admission Category
-                </span>
-                <span className="font-mono text-primary font-medium">
-                  General Academic Merit
-                </span>
-              </div>
-            </div>
-
-            <div className="p-3 bg-surface-container-low border-t border-[#d5e3fc] flex items-center gap-2 text-on-surface-variant font-mono text-[11px]">
-              <Lock className="w-3.5 h-3.5" />
-              <span>Encrypted under National Privacy Directive UIDAI/2022</span>
-            </div>
-          </section>
-
-          {/* Column 2: Guardian & Emergency Contacts */}
-          <section className="bg-surface-container-lowest border border-[#d5e3fc] shadow-sm flex flex-col">
-            <div className="px-5 py-3 bg-surface-container flex items-center justify-between border-b border-[#d5e3fc]">
-              <div className="flex items-center gap-2">
-                <span className="material-symbols-outlined text-primary text-[18px]">
-                  family_restroom
-                </span>
-                <h3 className="font-headline text-xs font-bold text-primary uppercase">
-                  Kinship &amp; Emergency
-                </h3>
-              </div>
-              <span className="font-mono text-[10px] text-on-surface-variant font-semibold">
-                SEC: 02
-              </span>
-            </div>
-
-            <div className="p-4 flex flex-col divide-y divide-surface-container text-xs">
-              <div className="py-2.5 flex flex-col gap-0.5">
-                <span className="text-[11px] uppercase tracking-wide text-on-surface-variant font-medium">
-                  Primary Guardian / Father
-                </span>
-                <div className="flex items-center justify-between">
-                  <span className="font-headline text-sm font-bold text-primary">
-                    Mr. Rameshwar Sharma
-                  </span>
-                  <span className="text-[10px] px-1.5 py-0.5 bg-surface-container text-on-surface uppercase font-medium">
-                    Father
-                  </span>
-                </div>
-                <span className="text-[11px] text-on-surface-variant">
-                  Senior Structural Engineer • L&amp;T Infrastructure
-                </span>
-              </div>
-
-              <div className="py-2.5 flex items-center justify-between">
-                <span className="text-[11px] uppercase tracking-wide text-on-surface-variant font-medium">
-                  Guardian Phone
-                </span>
-                <a
-                  className="font-mono text-primary hover:underline font-semibold"
-                  href="tel:+919811122334"
-                >
-                  +91 98111 22334
-                </a>
-              </div>
-
-              <div className="py-2.5 flex items-center justify-between">
-                <span className="text-[11px] uppercase tracking-wide text-on-surface-variant font-medium">
-                  Guardian Email
-                </span>
-                <a
-                  className="font-mono text-primary hover:underline"
-                  href="mailto:rameshwar.sharma@gmail.com"
-                >
-                  rameshwar.sharma@gmail.com
-                </a>
-              </div>
-
-              <div className="py-2.5 flex flex-col gap-1">
-                <span className="text-[11px] uppercase tracking-wide text-on-surface-variant font-medium">
-                  Permanent Domicile Address
-                </span>
-                <p className="text-xs text-on-surface leading-normal">
-                  Flat 402, Greenview Heights, Sector 14, Gurugram, Haryana –
-                  122001, India
-                </p>
-              </div>
-
-              <div className="py-2.5 flex flex-col gap-2 bg-surface-container-low p-2.5 border border-[#d5e3fc]">
-                <span className="text-[10px] uppercase tracking-wider text-error font-bold flex items-center gap-1">
-                  <span className="material-symbols-outlined text-[14px]">
-                    emergency
-                  </span>{" "}
-                  Active Escalation Hierarchy
-                </span>
-                <div className="text-[11px] font-mono flex flex-col gap-1">
-                  <div className="flex justify-between items-center text-on-surface">
-                    <span>1. Mr. Rameshwar Sharma (Father)</span>
-                    <span className="font-bold">+91 98111 22334</span>
-                  </div>
-                  <div className="flex justify-between items-center text-on-surface-variant">
-                    <span>2. Dr. A. K. Verma (Campus Guardian)</span>
-                    <span>+91 98450 11223</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="p-3 bg-surface-container-low border-t border-[#d5e3fc] flex items-center justify-between font-mono text-[11px] text-on-surface-variant">
-              <span>COUNCIL DISPATCH STATUS</span>
-              <span className="text-[#047857] font-semibold">
-                VERIFIED VIA SMS OTP
-              </span>
-            </div>
-          </section>
-
-          {/* Column 3: Academic Standing & Audit */}
-          <section className="bg-surface-container-lowest border border-[#d5e3fc] shadow-sm flex flex-col">
-            <div className="px-5 py-3 bg-surface-container flex items-center justify-between border-b border-[#d5e3fc]">
-              <div className="flex items-center gap-2">
-                <span className="material-symbols-outlined text-primary text-[18px]">
-                  school
-                </span>
-                <h3 className="font-headline text-xs font-bold text-primary uppercase">
-                  Academic Standing &amp; Audit
-                </h3>
-              </div>
-              <span className="font-mono text-[10px] text-on-surface-variant font-semibold">
-                SEC: 03
-              </span>
-            </div>
-
-            <div className="p-4 flex flex-col divide-y divide-surface-container text-xs">
-              <div className="py-2.5 flex items-center justify-between">
-                <span className="text-[11px] uppercase tracking-wide text-on-surface-variant font-medium">
-                  Program Identifier
-                </span>
-                <span className="font-mono text-primary font-bold">
-                  CS-BTECH (4Y / 8 Sem)
-                </span>
-              </div>
-
-              <div className="py-2.5 flex items-center justify-between">
-                <span className="text-[11px] uppercase tracking-wide text-on-surface-variant font-medium">
-                  Matriculation Date
-                </span>
-                <span className="font-mono text-primary">01 August 2023</span>
-              </div>
-
-              <div className="py-2.5 flex items-center justify-between">
-                <span className="text-[11px] uppercase tracking-wide text-on-surface-variant font-medium">
-                  Admission Quota Merit
-                </span>
-                <span className="font-mono text-primary">
-                  JEE Rank: 14,280
-                </span>
-              </div>
-
-              <div className="py-2.5 flex items-center justify-between">
-                <span className="text-[11px] uppercase tracking-wide text-on-surface-variant font-medium">
-                  Appointed Academic Mentor
-                </span>
-                <div className="text-right">
-                  <span className="text-xs text-primary font-medium block">
-                    Dr. Alistair Chen
-                  </span>
-                  <span className="text-[10px] text-on-surface-variant">
-                    Dept of Computer Science
-                  </span>
-                </div>
-              </div>
-
-              {/* Registered Credits Breakdown Progress Bar */}
-              <div className="py-2.5 flex flex-col gap-1.5">
-                <div className="flex justify-between items-center">
-                  <span className="text-[11px] uppercase tracking-wide text-on-surface-variant font-medium">
-                    Degree Credit Pipeline
-                  </span>
-                  <span className="font-mono text-primary font-bold">
-                    68 / 160 Credits (42.5%)
-                  </span>
-                </div>
-                <div className="w-full h-2 bg-surface-container border border-[#c4c6cf] overflow-hidden flex">
-                  <div className="bg-primary h-full w-[42.5%]"></div>
-                  <div
-                    className="bg-secondary-container h-full w-[13.75%]"
-                    title="Current Sem In-Flight"
-                  ></div>
-                </div>
-                <div className="flex justify-between text-[10px] font-mono text-on-surface-variant">
-                  <span>Earned: 68 Credits</span>
-                  <span>Enrolled Now: 22 Credits</span>
-                </div>
-              </div>
-
-              <div className="py-2.5 flex items-center justify-between">
-                <span className="text-[11px] uppercase tracking-wide text-on-surface-variant font-medium">
-                  Library System Pass
-                </span>
-                <div className="flex items-center gap-2">
-                  <span className="font-mono text-primary">APX-LIB-8841</span>
-                  <span className="px-1.5 py-0.5 bg-[#ecfdf5] text-[#047857] text-[9px] font-bold">
-                    0 FINES
-                  </span>
-                </div>
-              </div>
-
-              <div className="py-2.5 flex items-center justify-between">
-                <span className="text-[11px] uppercase tracking-wide text-on-surface-variant font-medium">
-                  Directory SSO
-                </span>
-                <span className="text-[10px] uppercase tracking-wider text-[#047857] font-semibold flex items-center gap-1">
-                  <span className="material-symbols-outlined text-[14px]">
-                    cloud_done
-                  </span>{" "}
-                  Google Workspace
-                </span>
-              </div>
-            </div>
-
-            <div className="p-3 bg-surface-container-low border-t border-[#d5e3fc] flex items-center justify-between font-mono text-[11px] text-on-surface-variant">
-              <span>CURRICULAR STATUS</span>
-              <span className="text-primary font-bold">
-                CLEAR OF CONDITIONAL PROBATION
-              </span>
-            </div>
-          </section>
-        </div>
-
-        {/* Secondary Tabular Diagnostics & Facility Clearance Map */}
-        <section className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-          {/* Facility & Access Clearance Matrix (8 cols) */}
-          <div className="lg:col-span-8 bg-surface-container-lowest border border-[#d5e3fc] shadow-sm p-5">
-            <div className="flex items-center justify-between mb-4 pb-2 border-b border-[#d5e3fc]">
-              <div>
-                <h4 className="font-headline text-sm font-bold text-primary uppercase">
-                  Institutional Facility Clearances
-                </h4>
-                <span className="text-xs text-on-surface-variant">
-                  Active access tokens tied directly to RFID Smartcard APX-2023-CS-042
-                </span>
-              </div>
-              <span className="px-2 py-1 bg-surface-container font-mono text-on-surface uppercase text-[10px] font-semibold border border-[#c4c6cf]">
-                Sync: Automated T-0
-              </span>
-            </div>
-
-            <div className="overflow-x-auto">
-              <table className="w-full text-left text-xs">
-                <thead className="bg-surface-container text-on-surface-variant text-[11px] uppercase tracking-wider border-b border-[#d5e3fc]">
-                  <tr>
-                    <th className="py-2.5 px-3 font-semibold">Laboratory / Zone</th>
-                    <th className="py-2.5 px-3 font-semibold">Security Level</th>
-                    <th className="py-2.5 px-3 font-semibold">Operating Window</th>
-                    <th className="py-2.5 px-3 font-semibold">Approving Authority</th>
-                    <th className="py-2.5 px-3 text-right font-semibold">Clearance State</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-[#d5e3fc]/60 font-mono text-xs">
-                  {clearances.map((c) => (
-                    <tr
-                      key={c.lab}
-                      className="hover:bg-surface-container-low transition-colors"
-                    >
-                      <td className="py-2.5 px-3 font-semibold text-primary font-sans">
-                        {c.lab}
-                      </td>
-                      <td className="py-2.5 px-3 text-on-surface">{c.level}</td>
-                      <td className="py-2.5 px-3 text-on-surface-variant">
-                        {c.window}
-                      </td>
-                      <td className="py-2.5 px-3 text-on-surface-variant font-sans">
-                        {c.authority}
-                      </td>
-                      <td className="py-2.5 px-3 text-right">
-                        <span
-                          className={`px-2 py-0.5 text-[10px] uppercase font-bold border ${c.statusColor}`}
-                        >
-                          {c.status}
-                        </span>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          {/* Campus Location Context View (4 cols) */}
-          <div className="lg:col-span-4 bg-surface-container-lowest border border-[#d5e3fc] shadow-sm p-5 flex flex-col justify-between">
-            <div>
-              <div className="flex items-center justify-between mb-3">
-                <h4 className="font-headline text-sm font-bold text-primary uppercase">
-                  Assigned Hub
-                </h4>
-                <span className="font-mono text-[11px] text-secondary font-semibold">
-                  CAMPUS NORTH GRID
-                </span>
-              </div>
-
-              {/* Map Canvas Visual Placeholder */}
-              <div className="w-full h-40 bg-gradient-to-br from-primary-container via-slate-800 to-primary border border-[#c4c6cf] relative overflow-hidden flex items-center justify-center">
-                <div className="text-center p-3">
-                  <MapPin className="w-8 h-8 text-secondary-container mx-auto mb-1 animate-bounce" />
-                  <div className="font-headline text-xs font-bold text-white uppercase">
-                    Apex North Perimeter
-                  </div>
-                  <div className="text-[10px] text-white/70">
-                    Faculty of Engineering • Block 3
-                  </div>
-                </div>
-                <div className="absolute bottom-2 left-2 bg-primary text-white px-2 py-0.5 font-mono text-[9px] uppercase tracking-wider">
-                  LAT: 28.4595° N • LON: 77.0266° E
-                </div>
-              </div>
-
-              <div className="mt-3">
-                <span className="text-[10px] uppercase tracking-wider text-on-surface-variant font-semibold block">
-                  Primary Operational Node
-                </span>
-                <p className="text-xs text-on-surface mt-0.5 leading-relaxed">
-                  Faculty of Engineering • Block 3, North Perimeter Rd, Apex
-                  Autonomous Campus
-                </p>
-              </div>
-            </div>
-
-            <div className="pt-3 border-t border-[#d5e3fc] flex items-center justify-between text-on-surface-variant font-mono text-[11px]">
-              <span>
-                EVAC ZONE: <strong className="text-primary font-bold">ASSEMBLY-NORTH-4</strong>
-              </span>
-              <button
-                onClick={() =>
-                  triggerToast("Launching interactive campus GIS navigational overlay...")
-                }
-                className="text-secondary hover:underline flex items-center gap-0.5 font-semibold"
-              >
-                Campus Map →
-              </button>
-            </div>
-          </div>
-        </section>
-
-        {/* Autonomous Regulatory Footer Banner */}
-        <footer className="bg-surface-container p-5 border border-[#d5e3fc] flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-          <div className="flex items-start gap-3">
-            <div className="p-2 bg-primary text-white mt-0.5 shrink-0">
-              <span className="material-symbols-outlined text-[20px] block">
-                gavel
-              </span>
-            </div>
-            <div>
-              <div className="text-xs uppercase tracking-wider text-primary font-bold">
-                Statutory Notice on Demographic &amp; Academic Integrity
-              </div>
-              <p className="text-xs text-on-surface-variant max-w-4xl mt-0.5 leading-relaxed">
-                All official demographic records, kinship dependencies, and
-                enrollment codes are synchronized with the{" "}
-                <strong>Registrar Autonomous Council</strong>. Under Institute
-                By-Law IV-C, modifications to permanent residential address,
-                national identifier records, or guardian credentials require
-                submission of an Official Correction Ticket accompanied by
-                sworn documentary verification.
-              </p>
-            </div>
-          </div>
-          <button
-            onClick={() => setShowCorrectionModal(true)}
-            className="bg-surface-container-lowest hover:bg-surface-container text-primary px-4 py-2 text-xs font-semibold uppercase tracking-wider border border-[#c4c6cf] whitespace-nowrap shrink-0 transition-all flex items-center gap-1.5 shadow-xs"
-          >
-            <span className="material-symbols-outlined text-[16px]">
-              open_in_new
-            </span>
-            <span>Submit Correction Ticket</span>
-          </button>
-        </footer>
       </div>
 
-      {/* MODAL: Submit Profile Correction Ticket */}
+      {/* 1. Main Student Identity Hero Card */}
+      <div className="bg-white rounded-2xl p-6 border border-slate-200/80 shadow-xs flex flex-col lg:flex-row items-center lg:items-start justify-between gap-6">
+        <div className="flex flex-col sm:flex-row items-center sm:items-start gap-5 text-center sm:text-left">
+          {/* Candidate Photograph */}
+          <div className="relative shrink-0">
+            <div className="w-24 h-28 sm:w-28 sm:h-32 rounded-xl overflow-hidden border-2 border-slate-200 shadow-xs bg-slate-50">
+              <img
+                src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=400&q=80"
+                alt="Rahul Sharma"
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <div
+              className="absolute -bottom-2 -right-2 bg-emerald-600 text-white p-1 rounded-full border-2 border-white shadow-xs"
+              title="Verified Student Identity"
+            >
+              <ShieldCheck className="w-3.5 h-3.5" />
+            </div>
+          </div>
+
+          {/* Core Info */}
+          <div>
+            <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2">
+              <h2 className="text-xl md:text-2xl font-bold text-[#3D405B] tracking-tight">
+                Rahul Sharma
+              </h2>
+              <span className="px-2.5 py-0.5 bg-emerald-50 text-emerald-700 text-xs font-semibold rounded-full border border-emerald-200">
+                Active Student
+              </span>
+            </div>
+
+            <p className="text-xs font-medium text-slate-600 mt-1">
+              B.Tech Computer Science &amp; Engineering &bull; Semester IV (Batch 2023–27)
+            </p>
+
+            <div className="mt-2.5 flex flex-wrap items-center justify-center sm:justify-start gap-x-4 gap-y-1 text-xs text-slate-500">
+              <span>
+                Roll No: <strong className="font-mono text-[#355C7D]">23CS042</strong>
+              </span>
+              <span>&bull;</span>
+              <span>
+                Reg No: <strong className="font-mono text-slate-700">APX-2023-CS-042</strong>
+              </span>
+              <span>&bull;</span>
+              <span>
+                Department: <strong className="text-slate-700">Computer Science</strong>
+              </span>
+            </div>
+
+            <div className="mt-3 flex items-center justify-center sm:justify-start gap-2">
+              <Link
+                href="/student"
+                className="text-xs text-violet-700 hover:underline font-medium"
+              >
+                &larr; Back to Dashboard
+              </Link>
+              <span className="text-slate-300">|</span>
+              <Link
+                href="/student/id-card"
+                className="text-xs text-violet-700 hover:underline font-medium"
+              >
+                View ID Card &rarr;
+              </Link>
+            </div>
+          </div>
+        </div>
+
+        {/* 3 Quick Performance Highlights */}
+        <div className="grid grid-cols-3 gap-3 w-full lg:w-auto shrink-0 border-t lg:border-t-0 lg:border-l border-slate-200/80 pt-4 lg:pt-0 lg:pl-6">
+          <div className="bg-slate-50/80 p-3 rounded-xl border border-slate-200/60 text-center">
+            <span className="text-[11px] font-medium text-slate-500 block">CGPA</span>
+            <span className="text-lg font-bold text-[#3D405B] font-mono mt-0.5 block">8.42</span>
+            <span className="text-[10px] text-emerald-600 font-semibold bg-emerald-50 px-1.5 py-0.2 rounded-full border border-emerald-200 inline-block">
+              First Class
+            </span>
+          </div>
+
+          <div className="bg-slate-50/80 p-3 rounded-xl border border-slate-200/60 text-center">
+            <span className="text-[11px] font-medium text-slate-500 block">Attendance</span>
+            <span className="text-lg font-bold text-emerald-600 font-mono mt-0.5 block">88.4%</span>
+            <span className="text-[10px] text-slate-500 font-medium block">Regular</span>
+          </div>
+
+          <div className="bg-slate-50/80 p-3 rounded-xl border border-slate-200/60 text-center">
+            <span className="text-[11px] font-medium text-slate-500 block">Credits</span>
+            <span className="text-lg font-bold text-violet-700 font-mono mt-0.5 block">108</span>
+            <span className="text-[10px] text-slate-500 font-medium block">of 160 Total</span>
+          </div>
+        </div>
+      </div>
+
+      {/* 2. Structured Information Cards Grid (4 Sections) */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+        {/* Card 1: Personal Details */}
+        <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs overflow-hidden flex flex-col justify-between">
+          <div className="px-5 py-3.5 bg-slate-50 border-b border-slate-200/80 flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <User className="w-4 h-4 text-[#355C7D]" />
+              <h3 className="font-bold text-xs uppercase tracking-wider text-[#3D405B]">
+                Personal Information
+              </h3>
+            </div>
+            <span className="text-[10px] text-slate-400 font-medium">Official Record</span>
+          </div>
+
+          <div className="p-5 divide-y divide-slate-100 text-xs">
+            <div className="py-2.5 flex items-center justify-between">
+              <span className="text-slate-500 font-medium">Full Name</span>
+              <span className="font-semibold text-slate-900">Rahul Sharma</span>
+            </div>
+            <div className="py-2.5 flex items-center justify-between">
+              <span className="text-slate-500 font-medium">Date of Birth</span>
+              <span className="font-medium text-slate-800">14 August 2004 (Age 20)</span>
+            </div>
+            <div className="py-2.5 flex items-center justify-between">
+              <span className="text-slate-500 font-medium">Gender</span>
+              <span className="font-medium text-slate-800">Male</span>
+            </div>
+            <div className="py-2.5 flex items-center justify-between">
+              <span className="text-slate-500 font-medium">Blood Group</span>
+              <span className="font-bold text-rose-700 bg-rose-50 px-2 py-0.5 rounded-md border border-rose-200">
+                O+ (Positive)
+              </span>
+            </div>
+            <div className="py-2.5 flex items-center justify-between">
+              <span className="text-slate-500 font-medium">Nationality</span>
+              <span className="font-medium text-slate-800">Indian</span>
+            </div>
+            <div className="py-2.5 flex items-center justify-between">
+              <span className="text-slate-500 font-medium">Admission Category</span>
+              <span className="font-medium text-slate-800">General Merit</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Card 2: Academic Program Information */}
+        <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs overflow-hidden flex flex-col justify-between">
+          <div className="px-5 py-3.5 bg-slate-50 border-b border-slate-200/80 flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <GraduationCap className="w-4 h-4 text-[#355C7D]" />
+              <h3 className="font-bold text-xs uppercase tracking-wider text-[#3D405B]">
+                Academic Details
+              </h3>
+            </div>
+            <span className="text-[10px] text-slate-400 font-medium">AY 2024–25</span>
+          </div>
+
+          <div className="p-5 divide-y divide-slate-100 text-xs">
+            <div className="py-2.5 flex items-center justify-between">
+              <span className="text-slate-500 font-medium">Program</span>
+              <span className="font-semibold text-slate-900">B.Tech (CSE)</span>
+            </div>
+            <div className="py-2.5 flex items-center justify-between">
+              <span className="text-slate-500 font-medium">Current Semester</span>
+              <span className="font-medium text-slate-800">Semester IV (Even Term)</span>
+            </div>
+            <div className="py-2.5 flex items-center justify-between">
+              <span className="text-slate-500 font-medium">Batch / Cohort</span>
+              <span className="font-medium text-slate-800">2023 – 2027</span>
+            </div>
+            <div className="py-2.5 flex items-center justify-between">
+              <span className="text-slate-500 font-medium">Enrollment Type</span>
+              <span className="font-medium text-slate-800">Regular / Full-Time</span>
+            </div>
+            <div className="py-2.5 flex items-center justify-between">
+              <span className="text-slate-500 font-medium">Faculty Mentor</span>
+              <span className="font-semibold text-slate-900">Dr. Alistair Chen</span>
+            </div>
+            <div className="py-2.5 flex items-center justify-between">
+              <span className="text-slate-500 font-medium">Academic Status</span>
+              <span className="font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200">
+                Good Standing
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {/* Card 3: Contact Details */}
+        <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs overflow-hidden flex flex-col justify-between">
+          <div className="px-5 py-3.5 bg-slate-50 border-b border-slate-200/80 flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <Mail className="w-4 h-4 text-[#355C7D]" />
+              <h3 className="font-bold text-xs uppercase tracking-wider text-[#3D405B]">
+                Contact Information
+              </h3>
+            </div>
+            <span className="text-[10px] text-slate-400 font-medium">Verified</span>
+          </div>
+
+          <div className="p-5 divide-y divide-slate-100 text-xs">
+            <div className="py-2.5 flex items-center justify-between">
+              <span className="text-slate-500 font-medium">College Email</span>
+              <a
+                href="mailto:rahul.sharma23@apex.edu.in"
+                className="font-mono text-violet-700 hover:underline"
+              >
+                rahul.sharma23@apex.edu.in
+              </a>
+            </div>
+            <div className="py-2.5 flex items-center justify-between">
+              <span className="text-slate-500 font-medium">Mobile Number</span>
+              <span className="font-mono font-medium text-slate-800">+91 98765 43210</span>
+            </div>
+            <div className="py-2.5 flex flex-col gap-1">
+              <span className="text-slate-500 font-medium">Hostel / Campus Address</span>
+              <span className="text-slate-800">
+                Room 314, Block C, Campus Hostel, Apex Institute
+              </span>
+            </div>
+            <div className="py-2.5 flex flex-col gap-1">
+              <span className="text-slate-500 font-medium">Permanent Address</span>
+              <span className="text-slate-800">
+                Flat 402, Greenview Heights, Sector 14, Gurugram, Haryana – 122001
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {/* Card 4: Parent & Guardian Details */}
+        <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs overflow-hidden flex flex-col justify-between">
+          <div className="px-5 py-3.5 bg-slate-50 border-b border-slate-200/80 flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <Users className="w-4 h-4 text-[#355C7D]" />
+              <h3 className="font-bold text-xs uppercase tracking-wider text-[#3D405B]">
+                Parent / Guardian Details
+              </h3>
+            </div>
+            <span className="text-[10px] text-slate-400 font-medium">Primary Contact</span>
+          </div>
+
+          <div className="p-5 divide-y divide-slate-100 text-xs">
+            <div className="py-2.5 flex items-center justify-between">
+              <span className="text-slate-500 font-medium">Father / Guardian</span>
+              <span className="font-semibold text-slate-900">Mr. Rameshwar Sharma</span>
+            </div>
+            <div className="py-2.5 flex items-center justify-between">
+              <span className="text-slate-500 font-medium">Relationship</span>
+              <span className="font-medium text-slate-800">Father</span>
+            </div>
+            <div className="py-2.5 flex items-center justify-between">
+              <span className="text-slate-500 font-medium">Guardian Phone</span>
+              <a
+                href="tel:+919811122334"
+                className="font-mono font-medium text-violet-700 hover:underline"
+              >
+                +91 98111 22334
+              </a>
+            </div>
+            <div className="py-2.5 flex items-center justify-between">
+              <span className="text-slate-500 font-medium">Guardian Email</span>
+              <a
+                href="mailto:rameshwar.sharma@gmail.com"
+                className="font-mono text-slate-700 hover:underline"
+              >
+                rameshwar.sharma@gmail.com
+              </a>
+            </div>
+            <div className="py-2.5 flex items-center justify-between">
+              <span className="text-slate-500 font-medium">Emergency Contact</span>
+              <span className="font-mono text-slate-800 font-medium">+91 98111 22334</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* 3. Registered Courses (Semester IV) Table */}
+      <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs overflow-hidden">
+        <div className="px-5 py-4 border-b border-slate-200/80 flex items-center justify-between">
+          <div className="flex items-center gap-2.5">
+            <BookOpen className="w-4 h-4 text-[#355C7D]" />
+            <div>
+              <h3 className="text-sm font-bold text-[#3D405B]">
+                Enrolled Courses &bull; Semester IV
+              </h3>
+              <p className="text-[11px] text-slate-500">
+                5 Active Courses &bull; Total 18 Registered Credits
+              </p>
+            </div>
+          </div>
+          <span className="px-2.5 py-0.5 bg-emerald-50 text-emerald-700 text-xs font-semibold rounded-full border border-emerald-200">
+            Enrolled
+          </span>
+        </div>
+
+        <div className="overflow-x-auto">
+          <table className="w-full text-left text-xs">
+            <thead className="bg-slate-50 text-slate-600 font-bold border-b border-slate-200/80 text-[11px]">
+              <tr>
+                <th className="py-3 px-4 w-12 text-center">#</th>
+                <th className="py-3 px-4 w-28 font-mono">Course Code</th>
+                <th className="py-3 px-4">Subject Title</th>
+                <th className="py-3 px-4 w-28 text-center">Credits</th>
+                <th className="py-3 px-4 w-36">Course Type</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-100">
+              {currentCourses.map((c, i) => (
+                <tr key={c.code} className="hover:bg-slate-50/60 transition-colors">
+                  <td className="py-3 px-4 text-center font-mono text-slate-400">{i + 1}</td>
+                  <td className="py-3 px-4 font-mono font-bold text-[#355C7D]">{c.code}</td>
+                  <td className="py-3 px-4 font-medium text-slate-900">{c.title}</td>
+                  <td className="py-3 px-4 text-center font-mono font-semibold text-slate-700">
+                    {c.credits}
+                  </td>
+                  <td className="py-3 px-4">
+                    <span className="px-2 py-0.5 bg-slate-100 text-slate-700 rounded-md text-[10px] font-medium border border-slate-200">
+                      {c.type}
+                    </span>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      {/* MODAL: Request Profile Information Update */}
       {showCorrectionModal && (
         <div className="fixed inset-0 z-50 bg-[#3D405B]/60 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-surface-container-lowest border border-[#d5e3fc] shadow-2xl max-w-lg w-full p-6 animate-in fade-in zoom-in-95 duration-150">
-            <div className="flex items-center justify-between pb-3 border-b border-[#d5e3fc]">
+          <div className="bg-white rounded-2xl border border-slate-300 shadow-2xl max-w-lg w-full p-6 animate-in fade-in zoom-in-95 duration-150">
+            <div className="flex items-center justify-between pb-3.5 border-b border-slate-200">
               <div className="flex items-center gap-2">
-                <Edit className="w-5 h-5 text-primary" />
-                <h3 className="font-headline text-base font-bold text-primary uppercase">
-                  Submit Official Dossier Correction Ticket
+                <Edit3 className="w-5 h-5 text-[#355C7D]" />
+                <h3 className="text-base font-bold text-[#3D405B]">
+                  Request Profile Information Update
                 </h3>
               </div>
               <button
                 onClick={() => setShowCorrectionModal(false)}
-                className="text-on-surface-variant hover:text-primary p-1"
+                className="text-slate-400 hover:text-slate-700 p-1 rounded-lg transition-colors cursor-pointer"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
-            <div className="py-4 space-y-3.5">
+            <form onSubmit={handleUpdateSubmit} className="py-4 space-y-4">
               <div>
-                <label className="text-xs uppercase font-bold text-on-surface block mb-1">
-                  Target Field for Modification
+                <label className="text-xs font-bold text-slate-700 block mb-1.5">
+                  Select Field to Update
                 </label>
-                <select className="w-full border border-[#c4c6cf] p-2 text-xs bg-surface text-on-surface focus:outline-none focus:border-primary">
-                  <option>Permanent Residential Domicile Address</option>
+                <select
+                  value={targetField}
+                  onChange={(e) => setTargetField(e.target.value)}
+                  className="w-full border border-slate-300 rounded-xl p-2.5 text-xs bg-slate-50 text-slate-800 focus:outline-none focus:border-[#355C7D] focus:bg-white"
+                >
+                  <option>Mobile Number</option>
+                  <option>Permanent Residential Address</option>
+                  <option>Hostel / Local Address</option>
                   <option>Guardian Contact Number / Email</option>
-                  <option>Emergency Contact Hierarchy Order</option>
-                  <option>Spelling Correction in Legal Full Name</option>
-                  <option>Blood Group / Medical Flag Update</option>
+                  <option>Blood Group</option>
+                  <option>Name Spelling Correction</option>
+                  <option>Other Details</option>
                 </select>
               </div>
 
               <div>
-                <label className="text-xs uppercase font-bold text-on-surface block mb-1">
-                  Proposed New Information
+                <label className="text-xs font-bold text-slate-700 block mb-1.5">
+                  New / Updated Information
                 </label>
                 <textarea
                   rows={3}
-                  placeholder="Enter exact updated details here..."
-                  className="w-full border border-[#c4c6cf] p-2 text-xs bg-surface text-on-surface focus:outline-none focus:border-primary"
+                  value={newDetails}
+                  onChange={(e) => setNewDetails(e.target.value)}
+                  placeholder="Enter the correct and updated information..."
+                  className="w-full border border-slate-300 rounded-xl p-2.5 text-xs text-slate-800 focus:outline-none focus:border-[#355C7D] resize-none"
+                  required
                 ></textarea>
               </div>
 
               <div>
-                <label className="text-xs uppercase font-bold text-on-surface block mb-1">
-                  Supporting Verification Document (PDF / Scan)
+                <label className="text-xs font-bold text-slate-700 block mb-1.5">
+                  Reason for Update (Optional)
                 </label>
-                <div className="border-2 border-dashed border-[#c4c6cf] p-4 text-center cursor-pointer hover:border-primary transition-colors bg-surface/30">
-                  <Upload className="w-6 h-6 text-primary mx-auto mb-1" />
-                  <div className="text-xs text-primary font-medium">
-                    Click to browse or drop affidavit / identity proof
-                  </div>
-                  <div className="text-[10px] text-on-surface-variant mt-0.5">
-                    Accepted: PDF, PNG, JPG (Max 5MB)
-                  </div>
-                </div>
+                <input
+                  type="text"
+                  value={reason}
+                  onChange={(e) => setReason(e.target.value)}
+                  placeholder="e.g. Changed address, new phone number..."
+                  className="w-full border border-slate-300 rounded-xl p-2.5 text-xs text-slate-800 focus:outline-none focus:border-[#355C7D]"
+                />
               </div>
-            </div>
 
-            <div className="flex items-center justify-end gap-3 pt-3 border-t border-[#d5e3fc]">
-              <button
-                onClick={() => setShowCorrectionModal(false)}
-                className="px-4 py-2 border border-[#c4c6cf] text-xs font-semibold uppercase tracking-wider text-on-surface-variant hover:bg-surface-container"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={() => {
-                  setShowCorrectionModal(false);
-                  triggerToast(
-                    "Correction ticket registered. Tracking Token: #COR-2025-019"
-                  );
-                }}
-                className="px-4 py-2 bg-primary text-white text-xs font-semibold uppercase tracking-wider hover:bg-primary-container"
-              >
-                Submit to Registrar
-              </button>
-            </div>
+              <div className="flex items-center justify-end gap-2.5 pt-3 border-t border-slate-200">
+                <button
+                  type="button"
+                  onClick={() => setShowCorrectionModal(false)}
+                  className="px-4 py-2 border border-slate-300 text-xs font-semibold text-slate-700 hover:bg-slate-100 rounded-xl transition-colors cursor-pointer"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="px-5 py-2 bg-[#355C7D] hover:opacity-95 text-white text-xs font-semibold rounded-xl shadow-xs transition-all cursor-pointer"
+                >
+                  Submit Request
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       )}
     </div>
   );
 }
-
