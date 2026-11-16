@@ -56,6 +56,7 @@
 /* Student & Staff Portal 80% scale presentation on 100% browser zoom */
 .student-zoom-wrapper,
 .staff-zoom-wrapper,
+.admin-zoom-wrapper,
 .portal-zoom-wrapper {
   zoom: 0.8;
 }

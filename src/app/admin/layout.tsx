@@ -18,7 +18,9 @@ export default function AdminLayout({
       <div className="pl-64">
         <AdminHeader />
         <main className="w-full pt-16 bg-surface min-h-[calc(100vh-4rem)]">
-          {children}
+          <div className="w-full admin-zoom-wrapper portal-zoom-wrapper" style={{ zoom: "80%" }}>
+            {children}
+          </div>
         </main>
       </div>
     </div>
