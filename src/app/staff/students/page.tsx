@@ -616,9 +616,6 @@ export default function StaffStudentsPage() {
               <h1 className="text-2xl md:text-3xl font-bold text-[#3D405B] tracking-tight">
                 Assigned Students Directory &amp; Dossiers
               </h1>
-              <p className="text-sm text-slate-500 mt-1 max-w-2xl">
-                Comprehensive roster of 184 active students across your 4 teaching cohorts. Monitor biometric attendance percentages, continuous assessment (ICA), and dispatch academic advisories.
-              </p>
             </div>
           </div>
 

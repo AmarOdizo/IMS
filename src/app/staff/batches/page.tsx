@@ -302,7 +302,7 @@ export default function StaffBatchesPage() {
   const [formatFilter, setFormatFilter] = useState<"ALL" | "Core Theory" | "Practical Lab" | "PG Elective">("ALL");
   const [slotFilter, setSlotFilter] = useState<"ALL" | "MORNING" | "AFTERNOON">("ALL");
   const [viewMode, setViewMode] = useState<"grid" | "table">("grid");
-  
+
   // Modals & Drawers
   const [activeDrawerBatch, setActiveDrawerBatch] = useState<BatchItem | null>(null);
   const [activeSyllabusBatch, setActiveSyllabusBatch] = useState<BatchItem | null>(null);
@@ -539,31 +539,28 @@ export default function StaffBatchesPage() {
           <div className="flex items-center bg-slate-50 p-1 rounded-xl border border-slate-200 text-xs font-medium">
             <button
               onClick={() => setLevelFilter("ALL")}
-              className={`px-3 py-1.5 rounded-lg transition-colors cursor-pointer ${
-                levelFilter === "ALL"
-                  ? "bg-white text-[#355C7D] font-bold shadow-xs border border-slate-200/60"
-                  : "text-slate-600 hover:text-slate-900"
-              }`}
+              className={`px-3 py-1.5 rounded-lg transition-colors cursor-pointer ${levelFilter === "ALL"
+                ? "bg-white text-[#355C7D] font-bold shadow-xs border border-slate-200/60"
+                : "text-slate-600 hover:text-slate-900"
+                }`}
             >
               All Levels ({batches.length})
             </button>
             <button
               onClick={() => setLevelFilter("UG")}
-              className={`px-3 py-1.5 rounded-lg transition-colors cursor-pointer ${
-                levelFilter === "UG"
-                  ? "bg-white text-[#355C7D] font-bold shadow-xs border border-slate-200/60"
-                  : "text-slate-600 hover:text-slate-900"
-              }`}
+              className={`px-3 py-1.5 rounded-lg transition-colors cursor-pointer ${levelFilter === "UG"
+                ? "bg-white text-[#355C7D] font-bold shadow-xs border border-slate-200/60"
+                : "text-slate-600 hover:text-slate-900"
+                }`}
             >
               UG (3)
             </button>
             <button
               onClick={() => setLevelFilter("PG")}
-              className={`px-3 py-1.5 rounded-lg transition-colors cursor-pointer ${
-                levelFilter === "PG"
-                  ? "bg-white text-[#355C7D] font-bold shadow-xs border border-slate-200/60"
-                  : "text-slate-600 hover:text-slate-900"
-              }`}
+              className={`px-3 py-1.5 rounded-lg transition-colors cursor-pointer ${levelFilter === "PG"
+                ? "bg-white text-[#355C7D] font-bold shadow-xs border border-slate-200/60"
+                : "text-slate-600 hover:text-slate-900"
+                }`}
             >
               PG (1)
             </button>
@@ -584,22 +581,20 @@ export default function StaffBatchesPage() {
           <div className="flex items-center bg-slate-100 p-1 rounded-xl border border-slate-200 text-xs font-semibold">
             <button
               onClick={() => setViewMode("grid")}
-              className={`px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition-all cursor-pointer ${
-                viewMode === "grid"
-                  ? "bg-white text-[#355C7D] shadow-xs font-bold"
-                  : "text-slate-500 hover:text-slate-800"
-              }`}
+              className={`px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition-all cursor-pointer ${viewMode === "grid"
+                ? "bg-white text-[#355C7D] shadow-xs font-bold"
+                : "text-slate-500 hover:text-slate-800"
+                }`}
             >
               <Grid className="h-3.5 w-3.5" />
               <span>Grid</span>
             </button>
             <button
               onClick={() => setViewMode("table")}
-              className={`px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition-all cursor-pointer ${
-                viewMode === "table"
-                  ? "bg-white text-[#355C7D] shadow-xs font-bold"
-                  : "text-slate-500 hover:text-slate-800"
-              }`}
+              className={`px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition-all cursor-pointer ${viewMode === "table"
+                ? "bg-white text-[#355C7D] shadow-xs font-bold"
+                : "text-slate-500 hover:text-slate-800"
+                }`}
             >
               <TableIcon className="h-3.5 w-3.5" />
               <span>Table</span>
@@ -629,13 +624,12 @@ export default function StaffBatchesPage() {
                         {batch.level === "UG" ? "Undergraduate" : "Postgraduate"}
                       </span>
                       <span
-                        className={`text-xs font-semibold px-2.5 py-1 rounded-lg border ${
-                          batch.format === "Practical Lab"
-                            ? "bg-emerald-50 text-emerald-700 border-emerald-200"
-                            : batch.format === "PG Elective"
+                        className={`text-xs font-semibold px-2.5 py-1 rounded-lg border ${batch.format === "Practical Lab"
+                          ? "bg-emerald-50 text-emerald-700 border-emerald-200"
+                          : batch.format === "PG Elective"
                             ? "bg-purple-50 text-purple-700 border-purple-200"
                             : "bg-blue-50 text-blue-700 border-blue-200"
-                        }`}
+                          }`}
                       >
                         {batch.format}
                       </span>
@@ -1027,26 +1021,24 @@ export default function StaffBatchesPage() {
                             </td>
                             <td className="py-2.5 px-3 text-center">
                               <span
-                                className={`font-bold font-mono ${
-                                  stu.attendance >= 85
-                                    ? "text-emerald-600"
-                                    : stu.attendance >= 75
+                                className={`font-bold font-mono ${stu.attendance >= 85
+                                  ? "text-emerald-600"
+                                  : stu.attendance >= 75
                                     ? "text-blue-600"
                                     : "text-rose-600"
-                                }`}
+                                  }`}
                               >
                                 {stu.attendance}%
                               </span>
                             </td>
                             <td className="py-2.5 px-3 text-right">
                               <span
-                                className={`px-2 py-0.5 text-[10px] font-bold rounded-full ${
-                                  stu.status === "Active"
-                                    ? "bg-emerald-50 text-emerald-700"
-                                    : stu.status === "At Risk"
+                                className={`px-2 py-0.5 text-[10px] font-bold rounded-full ${stu.status === "Active"
+                                  ? "bg-emerald-50 text-emerald-700"
+                                  : stu.status === "At Risk"
                                     ? "bg-amber-50 text-amber-700"
                                     : "bg-rose-50 text-rose-700"
-                                }`}
+                                  }`}
                               >
                                 {stu.status}
                               </span>
@@ -1170,13 +1162,12 @@ export default function StaffBatchesPage() {
                           {unit.lecturesTaken}/{unit.lecturesPlanned} Lecs
                         </span>
                         <span
-                          className={`px-2 py-0.5 text-[10px] font-bold uppercase rounded-md ${
-                            unit.status === "completed"
-                              ? "bg-emerald-50 text-emerald-700"
-                              : unit.status === "in-progress"
+                          className={`px-2 py-0.5 text-[10px] font-bold uppercase rounded-md ${unit.status === "completed"
+                            ? "bg-emerald-50 text-emerald-700"
+                            : unit.status === "in-progress"
                               ? "bg-blue-50 text-blue-700"
                               : "bg-slate-100 text-slate-500"
-                          }`}
+                            }`}
                         >
                           {unit.status === "in-progress" ? "In Progress" : unit.status}
                         </span>
@@ -1300,22 +1291,20 @@ export default function StaffBatchesPage() {
               <div className="flex items-center bg-slate-100 p-1 rounded-xl border border-slate-200/80">
                 <button
                   onClick={() => setTimetableTab("matrix")}
-                  className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
-                    timetableTab === "matrix"
-                      ? "bg-white text-[#355C7D] shadow-xs"
-                      : "text-slate-600 hover:text-slate-900"
-                  }`}
+                  className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${timetableTab === "matrix"
+                    ? "bg-white text-[#355C7D] shadow-xs"
+                    : "text-slate-600 hover:text-slate-900"
+                    }`}
                 >
                   <Grid className="h-3.5 w-3.5" />
                   Weekly Matrix Grid
                 </button>
                 <button
                   onClick={() => setTimetableTab("agenda")}
-                  className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
-                    timetableTab === "agenda"
-                      ? "bg-white text-[#355C7D] shadow-xs"
-                      : "text-slate-600 hover:text-slate-900"
-                  }`}
+                  className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${timetableTab === "agenda"
+                    ? "bg-white text-[#355C7D] shadow-xs"
+                    : "text-slate-600 hover:text-slate-900"
+                    }`}
                 >
                   <Calendar className="h-3.5 w-3.5" />
                   Day-by-Day Agenda
@@ -1328,11 +1317,10 @@ export default function StaffBatchesPage() {
                   <button
                     key={day}
                     onClick={() => setTimetableDay(day)}
-                    className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all cursor-pointer border ${
-                      timetableDay === day
-                        ? "bg-[#355C7D] text-white border-[#355C7D] shadow-xs"
-                        : "bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100"
-                    }`}
+                    className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all cursor-pointer border ${timetableDay === day
+                      ? "bg-[#355C7D] text-white border-[#355C7D] shadow-xs"
+                      : "bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100"
+                      }`}
                   >
                     {day === "ALL" ? "All Days (Mon–Fri)" : day}
                   </button>
@@ -1588,17 +1576,16 @@ export default function StaffBatchesPage() {
                               return (
                                 <div
                                   key={session.id}
-                                  className={`p-4 rounded-xl border transition-all ${
-                                    session.code === "CS-401"
-                                      ? "bg-blue-50/40 border-blue-200/80 hover:bg-blue-50/70"
-                                      : session.code === "CS-405L"
+                                  className={`p-4 rounded-xl border transition-all ${session.code === "CS-401"
+                                    ? "bg-blue-50/40 border-blue-200/80 hover:bg-blue-50/70"
+                                    : session.code === "CS-405L"
                                       ? "bg-emerald-50/40 border-emerald-200/80 hover:bg-emerald-50/70"
                                       : session.code === "CS-602"
-                                      ? "bg-purple-50/40 border-purple-200/80 hover:bg-purple-50/70"
-                                      : session.code === "CS-202"
-                                      ? "bg-amber-50/40 border-amber-200/80 hover:bg-amber-50/70"
-                                      : "bg-slate-50/60 border-slate-200 hover:bg-slate-100/60"
-                                  }`}
+                                        ? "bg-purple-50/40 border-purple-200/80 hover:bg-purple-50/70"
+                                        : session.code === "CS-202"
+                                          ? "bg-amber-50/40 border-amber-200/80 hover:bg-amber-50/70"
+                                          : "bg-slate-50/60 border-slate-200 hover:bg-slate-100/60"
+                                    }`}
                                 >
                                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                                     <div className="space-y-1.5 flex-1">
@@ -1609,15 +1596,14 @@ export default function StaffBatchesPage() {
                                         </span>
                                         <span className="text-xs text-slate-500 font-medium">({session.duration})</span>
                                         <span
-                                          className={`px-2 py-0.5 rounded-md text-[11px] font-bold uppercase tracking-wider ${
-                                            session.type === "lecture"
-                                              ? "bg-blue-100 text-blue-800"
-                                              : session.type === "lab"
+                                          className={`px-2 py-0.5 rounded-md text-[11px] font-bold uppercase tracking-wider ${session.type === "lecture"
+                                            ? "bg-blue-100 text-blue-800"
+                                            : session.type === "lab"
                                               ? "bg-emerald-100 text-emerald-800"
                                               : session.type === "office"
-                                              ? "bg-slate-200 text-slate-700"
-                                              : "bg-indigo-100 text-indigo-800"
-                                          }`}
+                                                ? "bg-slate-200 text-slate-700"
+                                                : "bg-indigo-100 text-indigo-800"
+                                            }`}
                                         >
                                           {session.period} &bull; {session.code}
                                         </span>
