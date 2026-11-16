@@ -4,36 +4,29 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
-  Calendar,
   Bell,
   ChevronRight,
-  Search,
   Clock,
   X,
-  User,
-  GraduationCap,
-  BookOpen,
-  CheckCircle2,
-  ExternalLink,
 } from "lucide-react";
 
 interface StaffHeaderProps {
   breadcrumbTitle?: string;
 }
 
+// Short tab names matching StaffSidebar exactly
 const routeTitleMap: Record<string, string> = {
-  "/staff": "Faculty Dashboard",
-  "/staff/profile": "Faculty Profile",
-  "/staff/batches": "My Batches & Classes",
-  "/staff/students": "Student Directory",
-  "/staff/attendance": "Attendance Management",
-  "/staff/exams": "Marks Entry & Evaluation",
-  "/staff/notices": "Notices & Circulars",
+  "/staff": "Dashboard",
+  "/staff/profile": "Profile",
+  "/staff/batches": "Batches",
+  "/staff/students": "Students",
+  "/staff/attendance": "Attendance",
+  "/staff/exams": "Marks Entry",
+  "/staff/notices": "Notices",
 };
 
 export default function StaffHeader({ breadcrumbTitle }: StaffHeaderProps) {
   const [showNotifications, setShowNotifications] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
   const pathname = usePathname();
 
   const getPageTitle = () => {
@@ -57,7 +50,7 @@ export default function StaffHeader({ breadcrumbTitle }: StaffHeaderProps) {
         .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
         .join(" ");
     }
-    return "Faculty Dashboard";
+    return "Dashboard";
   };
 
   const currentTitle = getPageTitle();
@@ -85,46 +78,27 @@ export default function StaffHeader({ breadcrumbTitle }: StaffHeaderProps) {
 
   return (
     <header className="fixed top-0 left-64 right-0 h-16 bg-white/95 backdrop-blur-md border-b border-slate-200 z-40 flex items-center justify-between px-6 shadow-xs select-none">
-      {/* Left: Dynamic Breadcrumb Navigation */}
-      <div className="flex items-center gap-2.5">
+      {/* Left: Faculty Portal / Short Tab Name from Sidebar */}
+      <div className="flex items-center gap-2">
         <Link
           href="/staff"
-          className="text-xs uppercase tracking-wider text-slate-500 hover:text-[#355C7D] font-bold transition-colors"
+          className="text-xs uppercase tracking-wider text-slate-500 hover:text-slate-800 font-semibold transition-colors"
         >
           Faculty Portal
         </Link>
         <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
-        <span className="font-semibold text-xs text-[#355C7D] bg-blue-50/80 px-2.5 py-1 rounded-lg border border-blue-200/60 flex items-center gap-1.5 shadow-2xs">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#355C7D]"></span>
+        <span className="text-xs font-bold text-slate-800 bg-slate-100 px-2.5 py-1 rounded-md border border-slate-200/80">
           {currentTitle}
         </span>
       </div>
 
-      {/* Center/Search: Search for Batches, Students or Courses */}
-      <div className="hidden xl:flex items-center relative w-72">
-        <Search className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
-        <input
-          type="text"
-          placeholder="Search batches, students, subjects..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          className="w-full pl-9 pr-3 py-1.5 bg-slate-50 hover:bg-slate-100/70 focus:bg-white border border-slate-200 rounded-xl text-xs text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#355C7D] transition-all"
-        />
-      </div>
-
-      {/* Right: Academic Session, Notifications, Profile */}
-      <div className="flex items-center gap-3.5">
-        {/* Academic Session Badge */}
-        <div className="hidden lg:flex items-center gap-1.5 px-3 py-1 bg-slate-100 text-[#3D405B] font-medium text-xs rounded-xl border border-slate-200">
-          <Calendar className="w-3.5 h-3.5 text-[#355C7D]" />
-          <span>AY 2024–25 &bull; Even Semester</span>
-        </div>
-
+      {/* Right: Notifications & Faculty Profile Chip */}
+      <div className="flex items-center gap-3">
         {/* Notifications Dropdown */}
         <div className="relative">
           <button
             onClick={() => setShowNotifications(!showNotifications)}
-            className="relative p-2 text-slate-600 hover:text-[#355C7D] hover:bg-slate-100 rounded-xl transition-colors cursor-pointer"
+            className="relative p-2 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-xl transition-colors cursor-pointer"
             title="Faculty Memos & Bulletins"
           >
             <Bell className="w-5 h-5" />
@@ -135,10 +109,10 @@ export default function StaffHeader({ breadcrumbTitle }: StaffHeaderProps) {
             <div className="absolute right-0 mt-2 w-80 sm:w-88 bg-white border border-slate-200 rounded-2xl shadow-xl p-4 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
               <div className="flex items-center justify-between pb-2.5 border-b border-slate-100">
                 <div className="flex items-center gap-2">
-                  <span className="text-xs font-bold uppercase tracking-wider text-[#3D405B]">
+                  <span className="text-xs font-bold uppercase tracking-wider text-slate-800">
                     Faculty Bulletins
                   </span>
-                  <span className="px-1.5 py-0.5 bg-blue-50 text-[#355C7D] text-[10px] font-bold rounded-full border border-blue-200">
+                  <span className="px-1.5 py-0.5 bg-blue-50 text-blue-700 text-[10px] font-bold rounded-full border border-blue-200">
                     3 New
                   </span>
                 </div>
@@ -172,11 +146,11 @@ export default function StaffHeader({ breadcrumbTitle }: StaffHeaderProps) {
                         {n.priority}
                       </span>
                     </div>
-                    <span className="text-xs font-semibold text-[#3D405B] line-clamp-2 leading-snug">
+                    <span className="text-xs font-semibold text-slate-800 line-clamp-2 leading-snug">
                       {n.title}
                     </span>
                     <span className="text-[10px] text-slate-400 flex items-center gap-1">
-                      <Clock className="w-3 h-3 text-[#355C7D]" />
+                      <Clock className="w-3 h-3 text-slate-500" />
                       <span>{n.time}</span>
                     </span>
                   </Link>
@@ -186,7 +160,7 @@ export default function StaffHeader({ breadcrumbTitle }: StaffHeaderProps) {
               <Link
                 href="/staff/notices"
                 onClick={() => setShowNotifications(false)}
-                className="mt-3 block text-center py-2 bg-slate-50 hover:bg-slate-100 text-[#355C7D] text-xs font-bold rounded-xl transition-colors border border-slate-200"
+                className="mt-3 block text-center py-2 bg-slate-50 hover:bg-slate-100 text-slate-700 text-xs font-bold rounded-xl transition-colors border border-slate-200"
               >
                 View All Circulars &rarr;
               </Link>
@@ -199,15 +173,15 @@ export default function StaffHeader({ breadcrumbTitle }: StaffHeaderProps) {
           href="/staff/profile"
           className="flex items-center gap-2.5 pl-2.5 py-1 hover:bg-slate-100 rounded-xl transition-colors border-l border-slate-200 cursor-pointer"
         >
-          <div className="w-8 h-8 rounded-full bg-[#355C7D] text-white flex items-center justify-center font-bold text-xs shadow-xs shrink-0">
+          <div className="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-xs shadow-xs shrink-0">
             RS
           </div>
           <div className="hidden sm:flex flex-col text-left">
-            <span className="text-xs font-bold text-[#3D405B] leading-tight">
+            <span className="text-xs font-bold text-slate-800 leading-tight">
               Prof. Rajesh Sharma
             </span>
             <span className="text-[10px] text-slate-400 leading-tight">
-              Senior Faculty &bull; Dept of CSE
+              EMP-CS-2018-842
             </span>
           </div>
         </Link>
