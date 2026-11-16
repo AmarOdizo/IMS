@@ -28,7 +28,8 @@ import {
   Sparkles,
   Zap,
   Eye,
-  Plus
+  Plus,
+  Check
 } from "lucide-react";
 
 interface CertificateRecord {
@@ -49,19 +50,20 @@ interface CertificateRecord {
   cgpa: string;
 }
 
-const initialCertificates: CertificateRecord[] = [
+const INITIAL_CERTIFICATES: CertificateRecord[] = [
   {
     id: "cert-1",
-    serial: "APX-CC-2024-8841",
+    serial: "APX-CC-2025-8841",
     sha256: "e8f12a39bc80129f",
     studentName: "Devina Mukherjee",
-    rollId: "APX-CS-2020-002",
+    rollId: "APX-CS-2021-002",
     dept: "Computer Science & Engineering",
-    avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&auto=format&fit=crop&q=80",
+    avatar:
+      "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&auto=format&fit=crop&q=80",
     type: "Course Completion",
-    typeBadgeClass: "bg-primary-container text-on-primary",
-    issuedDate: "18 Jun 2024",
-    session: "AY 2023-24 (Sem VIII)",
+    typeBadgeClass: "bg-indigo-50 text-indigo-700 border-indigo-200",
+    issuedDate: "18 Mar 2025",
+    session: "AY 2024-25 (Sem VIII)",
     status: "Verified",
     ledgerBlock: "#44921",
     grade: "First Class with Distinction",
@@ -69,15 +71,16 @@ const initialCertificates: CertificateRecord[] = [
   },
   {
     id: "cert-2",
-    serial: "APX-BN-2024-4190",
+    serial: "APX-BN-2025-4190",
     sha256: "d4a93c7104928bfa",
     studentName: "Rohan Senapati",
-    rollId: "APX-ME-2021-084",
+    rollId: "APX-ME-2022-084",
     dept: "Mechanical Engineering",
-    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&auto=format&fit=crop&q=80",
+    avatar:
+      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&auto=format&fit=crop&q=80",
     type: "Bonafide Certificate",
-    typeBadgeClass: "bg-secondary-container text-on-secondary-container",
-    issuedDate: "17 Jun 2024",
+    typeBadgeClass: "bg-emerald-50 text-emerald-700 border-emerald-200",
+    issuedDate: "17 Mar 2025",
     session: "AY 2024-25 (Passport Visa)",
     status: "Verified",
     ledgerBlock: "#44910",
@@ -86,15 +89,16 @@ const initialCertificates: CertificateRecord[] = [
   },
   {
     id: "cert-3",
-    serial: "APX-MH-2024-0012",
+    serial: "APX-MH-2025-0012",
     sha256: "b321f0084729cdea",
     studentName: "Ananya Swaminathan",
-    rollId: "APX-DS-2020-011",
+    rollId: "APX-DS-2021-011",
     dept: "Data Science & AI",
-    avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&auto=format&fit=crop&q=80",
+    avatar:
+      "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&auto=format&fit=crop&q=80",
     type: "Merit & Honor",
-    typeBadgeClass: "bg-surface-container-high text-primary font-bold",
-    issuedDate: "15 Jun 2024",
+    typeBadgeClass: "bg-amber-50 text-amber-700 border-amber-200",
+    issuedDate: "15 Mar 2025",
     session: "Institute Gold Medallist",
     status: "Verified",
     ledgerBlock: "#44890",
@@ -103,16 +107,17 @@ const initialCertificates: CertificateRecord[] = [
   },
   {
     id: "cert-4",
-    serial: "APX-TC-2023-0104",
+    serial: "APX-TC-2024-0104",
     sha256: "TAMPERED_HASH",
     studentName: "Tariq Khan",
-    rollId: "APX-CE-2020-044",
+    rollId: "APX-CE-2021-044",
     dept: "Civil Engineering",
-    avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&auto=format&fit=crop&q=80",
+    avatar:
+      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&auto=format&fit=crop&q=80",
     type: "Transfer Cert",
-    typeBadgeClass: "bg-surface-container text-on-surface",
-    issuedDate: "04 Oct 2023",
-    session: "Revoked 12 Nov 2023",
+    typeBadgeClass: "bg-slate-100 text-slate-700 border-slate-200",
+    issuedDate: "04 Oct 2024",
+    session: "Revoked Disciplinary",
     status: "Revoked",
     ledgerBlock: "Disciplinary #09",
     grade: "Revoked Credential",
@@ -120,16 +125,17 @@ const initialCertificates: CertificateRecord[] = [
   },
   {
     id: "cert-5",
-    serial: "APX-CC-2024-8840",
+    serial: "APX-CC-2025-8840",
     sha256: "71f0ea18492048dd",
     studentName: "Marcus D'Silva",
-    rollId: "APX-EE-2020-032",
+    rollId: "APX-EE-2021-032",
     dept: "Electrical & Electronics",
-    avatar: "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=400&auto=format&fit=crop&q=80",
+    avatar:
+      "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=400&auto=format&fit=crop&q=80",
     type: "Course Completion",
-    typeBadgeClass: "bg-primary-container text-on-primary",
-    issuedDate: "18 Jun 2024",
-    session: "AY 2023-24 (First Class)",
+    typeBadgeClass: "bg-indigo-50 text-indigo-700 border-indigo-200",
+    issuedDate: "14 Mar 2025",
+    session: "AY 2024-25 (First Class)",
     status: "Verified",
     ledgerBlock: "#44920",
     grade: "First Class",
@@ -138,8 +144,8 @@ const initialCertificates: CertificateRecord[] = [
 ];
 
 export default function CertificatesPage() {
-  const [certificates, setCertificates] = useState<CertificateRecord[]>(initialCertificates);
-  const [selectedCertId, setSelectedCertId] = useState<string>("APX-CC-2024-8841");
+  const [certificates, setCertificates] = useState<CertificateRecord[]>(INITIAL_CERTIFICATES);
+  const [selectedCertId, setSelectedCertId] = useState<string>("APX-CC-2025-8841");
   const [filterType, setFilterType] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [isIssueModalOpen, setIsIssueModalOpen] = useState(false);
@@ -150,11 +156,11 @@ export default function CertificatesPage() {
   const activeCert =
     certificates.find((c) => c.serial === selectedCertId) || certificates[0];
 
-  const triggerToast = (msg: string) => {
+  const showToast = (msg: string) => {
     setToastMessage(msg);
     setTimeout(() => {
       setToastMessage(null);
-    }, 3800);
+    }, 3200);
   };
 
   const handleCopyLink = () => {
@@ -163,7 +169,7 @@ export default function CertificatesPage() {
         `https://verify.apexinstitute.edu/cert/${activeCert.serial}`
       );
     }
-    triggerToast(`Verification link copied for ${activeCert.serial}`);
+    showToast(`Verification link copied for ${activeCert.serial}`);
   };
 
   const handleRevokeConfirm = () => {
@@ -175,7 +181,7 @@ export default function CertificatesPage() {
             : c
         )
       );
-      triggerToast(`Credential ${certToRevoke} revoked & broadcast to ledger.`);
+      showToast(`Credential ${certToRevoke} revoked & broadcast to ledger.`);
     }
     setIsRevokeModalOpen(false);
   };
@@ -198,351 +204,325 @@ export default function CertificatesPage() {
   });
 
   return (
-    <div className="flex flex-col w-full font-body-md text-on-surface">
-      {/* Command Header & Breadcrumbs Strip */}
-      <div className="px-margin-desktop py-space-md bg-surface-container-lowest shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-space-md border-b border-outline-variant/30">
-        <div className="flex flex-col gap-1 min-w-0">
-          <div className="flex items-center gap-space-xs font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">
-            <span>Institutional Command</span>
-            <ChevronRight className="w-3.5 h-3.5" />
-            <span>Registrar &amp; Academic Credentials</span>
-            <ChevronRight className="w-3.5 h-3.5" />
-            <span className="text-primary font-semibold">Certification Register</span>
-          </div>
-          <div className="flex items-center gap-space-sm">
-            <h1 className="font-headline-lg text-headline-lg text-primary tracking-tight font-bold">
-              Certificates Registry &amp; Credential Generator
-            </h1>
-            <span className="inline-flex items-center gap-1 px-space-xs py-0.5 bg-surface-container-high text-primary font-mono-data text-body-sm font-semibold">
-              v3.4.2-BLOCKCHAIN
-            </span>
-          </div>
+    <div className="min-h-screen bg-slate-50/60 pb-16">
+      {/* Toast Notification */}
+      {toastMessage && (
+        <div className="fixed bottom-6 right-6 bg-slate-900 text-white px-4 py-3 rounded-xl shadow-xl flex items-center gap-3 z-50 animate-in fade-in slide-in-from-bottom-2 border border-slate-700">
+          <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0" />
+          <span className="text-sm font-medium">{toastMessage}</span>
         </div>
+      )}
 
-        {/* Action Buttons */}
-        <div className="flex items-center flex-wrap gap-space-sm shrink-0 font-mono-data">
-          <button
-            onClick={() => triggerToast("Opening Visual Certificate Template Designer...")}
-            className="inline-flex items-center gap-1.5 px-space-md py-2 bg-surface-container-low text-primary hover:bg-surface-container font-label-md text-label-md uppercase tracking-wider transition-colors shadow-sm"
-          >
-            <Sliders className="w-4 h-4 text-secondary" />
-            <span>Template Designer</span>
-          </button>
-          <button
-            onClick={() => triggerToast("Initiated bulk issuance for graduating class of 2024...")}
-            className="inline-flex items-center gap-1.5 px-space-md py-2 bg-secondary text-on-secondary hover:bg-secondary/90 font-label-md text-label-md uppercase tracking-wider transition-colors shadow-sm"
-          >
-            <Layers className="w-4 h-4" />
-            <span>Bulk Batch Issuance</span>
-          </button>
-          <button
-            onClick={() => setIsIssueModalOpen(true)}
-            className="inline-flex items-center gap-1.5 px-space-md py-2 bg-primary-container text-on-primary hover:bg-primary font-label-md text-label-md uppercase tracking-wider transition-colors shadow-sm font-semibold"
-          >
-            <Plus className="w-4 h-4" />
-            <span>+ Issue New Certificate</span>
-          </button>
-        </div>
-      </div>
-
-      {/* Operational Canvas */}
-      <div className="p-margin-desktop flex flex-col gap-space-lg">
-        {/* KPI Metric Telemetry Tiles (4 Cards) */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-gutter-desktop">
-          {/* KPI 1 */}
-          <div className="bg-surface-container-lowest p-space-md shadow-sm relative overflow-hidden flex flex-col justify-between border border-outline-variant/30">
-            <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-secondary"></div>
-            <div className="flex items-center justify-between pl-space-xs">
-              <span className="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-bold">
-                Total Issued Credentials
+      {/* Main Container */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 space-y-6">
+        {/* Header Hero Section */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <div className="flex items-center gap-2">
+              <h1 className="text-2xl font-bold tracking-tight text-slate-900">Certificates &amp; Credentials</h1>
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                Cryptographic Anchor Active
               </span>
-              <ShieldCheck className="w-5 h-5 text-secondary" />
             </div>
-            <div className="pl-space-xs my-space-sm">
-              <div className="font-headline-xl text-headline-xl text-primary font-bold tracking-tight">
+            <p className="text-sm text-slate-500 mt-1">
+              Issue, verify, revoke, and manage tamper-proof academic credentials and completion certificates.
+            </p>
+          </div>
+
+          <div className="flex items-center gap-2.5 flex-wrap">
+            <button
+              onClick={() => showToast("Opening Visual Certificate Template Designer...")}
+              className="inline-flex items-center gap-2 px-3.5 py-2 text-xs font-semibold text-slate-700 bg-white border border-slate-200 rounded-xl hover:bg-slate-50 hover:border-slate-300 shadow-xs transition-all"
+            >
+              <Sliders className="w-4 h-4 text-indigo-600" />
+              <span>Template Designer</span>
+            </button>
+            <button
+              onClick={() => showToast("Initiated bulk certificate issuance for graduating class of 2025...")}
+              className="inline-flex items-center gap-2 px-3.5 py-2 text-xs font-semibold text-slate-700 bg-white border border-slate-200 rounded-xl hover:bg-slate-50 hover:border-slate-300 shadow-xs transition-all"
+            >
+              <Layers className="w-4 h-4 text-emerald-600" />
+              <span>Batch Issuance</span>
+            </button>
+            <button
+              onClick={() => setIsIssueModalOpen(true)}
+              className="inline-flex items-center gap-2 px-4 py-2 text-xs font-semibold text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl shadow-xs transition-all"
+            >
+              <Plus className="w-4 h-4" />
+              <span>Issue Certificate</span>
+            </button>
+          </div>
+        </div>
+
+        {/* 4 Standard Redesigned KPI Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {/* Card 1: Total Issued Credentials */}
+          <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-5">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                Total Credentials Issued
+              </span>
+              <div className="w-10 h-10 rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600">
+                <ShieldCheck className="w-5 h-5" />
+              </div>
+            </div>
+            <div className="mt-3">
+              <div className="text-2xl font-bold tracking-tight text-slate-900 tabular-nums">
                 1,428
               </div>
-              <p className="font-body-sm text-body-sm text-on-surface-variant mt-0.5">
-                Verified &amp; Cryptographically Anchored
-              </p>
-            </div>
-            <div className="pl-space-xs pt-space-xs flex items-center justify-between text-body-sm border-t border-outline-variant/20">
-              <span className="inline-flex items-center gap-0.5 text-secondary font-mono-data font-bold">
-                <Sparkles className="w-3.5 h-3.5" /> +14.2% YoY
-              </span>
-              <span className="text-on-surface-variant font-mono-data text-body-sm">
-                AY 2024-25
-              </span>
+              <div className="mt-2 flex items-center gap-1.5 text-xs font-medium text-emerald-600">
+                <Sparkles className="w-3.5 h-3.5" />
+                <span>+14.2% YoY • AY 2024–25</span>
+              </div>
             </div>
           </div>
 
-          {/* KPI 2 */}
-          <div className="bg-surface-container-lowest p-space-md shadow-sm relative overflow-hidden flex flex-col justify-between border border-outline-variant/30">
-            <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-primary-container"></div>
-            <div className="flex items-center justify-between pl-space-xs">
-              <span className="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-bold">
-                Active Templates
+          {/* Card 2: Active Templates */}
+          <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-5">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                Approved Formats
               </span>
-              <Award className="w-5 h-5 text-primary" />
-            </div>
-            <div className="pl-space-xs my-space-sm">
-              <div className="font-headline-xl text-headline-xl text-primary font-bold tracking-tight">
-                05
+              <div className="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600">
+                <Award className="w-5 h-5" />
               </div>
-              <p className="font-body-sm text-body-sm text-on-surface-variant mt-0.5">
-                Approved Institutional Formats
-              </p>
             </div>
-            <div className="pl-space-xs pt-space-xs flex items-center gap-1 text-body-sm text-on-surface-variant font-mono-data border-t border-outline-variant/20">
-              <span className="h-2 w-2 bg-secondary inline-block"></span>
-              <span className="truncate">CC, TC, Bonafide, Character, Merit</span>
+            <div className="mt-3">
+              <div className="text-2xl font-bold tracking-tight text-slate-900 tabular-nums">
+                05 <span className="text-xs font-normal text-slate-500">Templates</span>
+              </div>
+              <div className="mt-2 flex items-center gap-1.5 text-xs text-slate-500 font-medium truncate">
+                <span>CC, Bonafide, Merit, Transfer, Honor</span>
+              </div>
             </div>
           </div>
 
-          {/* KPI 3 */}
-          <div className="bg-surface-container-lowest p-space-md shadow-sm relative overflow-hidden flex flex-col justify-between border border-outline-variant/30">
-            <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-secondary"></div>
-            <div className="flex items-center justify-between pl-space-xs">
-              <span className="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-bold">
-                Pending Issue Queue
+          {/* Card 3: Pending Issue Queue */}
+          <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-5">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                Pending Approval Queue
               </span>
-              <FileCheck className="w-5 h-5 text-secondary" />
-            </div>
-            <div className="pl-space-xs my-space-sm">
-              <div className="font-headline-xl text-headline-xl text-primary font-bold tracking-tight">
-                42
+              <div className="w-10 h-10 rounded-xl bg-amber-50 flex items-center justify-center text-amber-600">
+                <FileCheck className="w-5 h-5" />
               </div>
-              <p className="font-body-sm text-body-sm text-on-surface-variant mt-0.5">
-                36 Batch Approvals · 6 Expedited
-              </p>
             </div>
-            <div className="pl-space-xs pt-space-xs flex items-center justify-between text-body-sm border-t border-outline-variant/20">
-              <span className="inline-flex items-center gap-1 text-on-surface-variant font-mono-data">
-                <span className="inline-block h-1.5 w-1.5 bg-rose-600"></span> 4 urgent audits
-              </span>
-              <button
-                onClick={() => triggerToast("Loading 42 pending approvals queue...")}
-                className="text-secondary font-label-sm text-label-sm uppercase font-semibold hover:underline"
-              >
-                Review Queue
-              </button>
+            <div className="mt-3">
+              <div className="flex items-baseline gap-2">
+                <span className="text-2xl font-bold tracking-tight text-slate-900 tabular-nums">42</span>
+                <span className="text-xs font-semibold px-2 py-0.5 rounded-md bg-amber-50 text-amber-700 border border-amber-200">
+                  36 Batch • 6 Urgent
+                </span>
+              </div>
+              <div className="mt-2 flex items-center justify-between text-xs font-medium">
+                <span className="text-slate-500">Awaiting Dean Stamp</span>
+                <button
+                  onClick={() => showToast("Loading 42 pending approvals queue...")}
+                  className="text-indigo-600 hover:text-indigo-700 hover:underline font-semibold"
+                >
+                  Review Queue
+                </button>
+              </div>
             </div>
           </div>
 
-          {/* KPI 4 */}
-          <div className="bg-surface-container-lowest p-space-md shadow-sm relative overflow-hidden flex flex-col justify-between border border-outline-variant/30">
-            <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-rose-700"></div>
-            <div className="flex items-center justify-between pl-space-xs">
-              <span className="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-bold">
-                Revoked / Disciplinary
+          {/* Card 4: Revoked / Invalidation */}
+          <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-5">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                Revoked Credentials
               </span>
-              <Ban className="w-5 h-5 text-rose-700" />
-            </div>
-            <div className="pl-space-xs my-space-sm">
-              <div className="font-headline-xl text-headline-xl text-rose-700 font-bold tracking-tight">
-                04
+              <div className="w-10 h-10 rounded-xl bg-rose-50 flex items-center justify-center text-rose-600">
+                <Ban className="w-5 h-5" />
               </div>
-              <p className="font-body-sm text-body-sm text-on-surface-variant mt-0.5">
-                Tamper/Disciplinary Invalidation
-              </p>
             </div>
-            <div className="pl-space-xs pt-space-xs flex items-center justify-between text-body-sm border-t border-outline-variant/20">
-              <span className="text-on-surface-variant font-mono-data text-body-sm">
-                Immutable Ledger Audit
-              </span>
-              <span className="font-mono-data text-body-sm text-primary font-semibold">
-                100% Retained
-              </span>
+            <div className="mt-3">
+              <div className="flex items-baseline gap-2">
+                <span className="text-2xl font-bold tracking-tight text-rose-600 tabular-nums">04</span>
+                <span className="text-xs font-semibold px-2 py-0.5 rounded-md bg-rose-50 text-rose-700 border border-rose-200">
+                  Disciplinary Null
+                </span>
+              </div>
+              <div className="mt-2 flex items-center justify-between text-xs text-slate-500 font-medium">
+                <span>Immutable ledger audit</span>
+                <span className="text-slate-900 font-semibold">100% Retained</span>
+              </div>
             </div>
           </div>
         </div>
 
         {/* Template Filter Bar & Ribbon */}
-        <div className="bg-surface-container-lowest p-space-md shadow-sm flex flex-col gap-space-md border border-outline-variant/30">
-          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-space-md">
+        <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-5 space-y-4">
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
             {/* Filter Pills */}
-            <div className="flex items-center gap-1.5 overflow-x-auto pb-1 lg:pb-0 font-mono-data">
-              <span className="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant mr-1">
-                Filter:
-              </span>
+            <div className="inline-flex rounded-xl bg-slate-100 p-1 text-xs font-medium overflow-x-auto">
               <button
                 onClick={() => setFilterType("all")}
-                className={`px-space-sm py-1 font-label-sm text-label-sm uppercase tracking-wider whitespace-nowrap shadow-sm transition-colors ${
+                className={`px-3 py-1.5 rounded-lg font-semibold transition-all whitespace-nowrap ${
                   filterType === "all"
-                    ? "bg-[#3D405B] text-white font-bold"
-                    : "bg-surface-container text-on-surface hover:bg-surface-container-high"
+                    ? "bg-white text-slate-900 shadow-xs"
+                    : "text-slate-600 hover:text-slate-900"
                 }`}
               >
                 All Templates (1,428)
               </button>
               <button
                 onClick={() => setFilterType("completion")}
-                className={`px-space-sm py-1 font-label-sm text-label-sm uppercase tracking-wider whitespace-nowrap transition-colors ${
+                className={`px-3 py-1.5 rounded-lg font-semibold transition-all whitespace-nowrap ${
                   filterType === "completion"
-                    ? "bg-[#3D405B] text-white font-bold"
-                    : "bg-surface-container text-on-surface hover:bg-surface-container-high"
+                    ? "bg-white text-indigo-700 shadow-xs"
+                    : "text-slate-600 hover:text-slate-900"
                 }`}
               >
                 Course Completion (842)
               </button>
               <button
                 onClick={() => setFilterType("bonafide")}
-                className={`px-space-sm py-1 font-label-sm text-label-sm uppercase tracking-wider whitespace-nowrap transition-colors ${
+                className={`px-3 py-1.5 rounded-lg font-semibold transition-all whitespace-nowrap ${
                   filterType === "bonafide"
-                    ? "bg-[#3D405B] text-white font-bold"
-                    : "bg-surface-container text-on-surface hover:bg-surface-container-high"
+                    ? "bg-white text-emerald-700 shadow-xs"
+                    : "text-slate-600 hover:text-slate-900"
                 }`}
               >
-                Bonafide Certificate (310)
+                Bonafide (310)
               </button>
               <button
                 onClick={() => setFilterType("merit")}
-                className={`px-space-sm py-1 font-label-sm text-label-sm uppercase tracking-wider whitespace-nowrap transition-colors ${
+                className={`px-3 py-1.5 rounded-lg font-semibold transition-all whitespace-nowrap ${
                   filterType === "merit"
-                    ? "bg-[#3D405B] text-white font-bold"
-                    : "bg-surface-container text-on-surface hover:bg-surface-container-high"
+                    ? "bg-white text-amber-700 shadow-xs"
+                    : "text-slate-600 hover:text-slate-900"
                 }`}
               >
                 Merit &amp; Honor (33)
               </button>
               <button
                 onClick={() => setFilterType("transfer")}
-                className={`px-space-sm py-1 font-label-sm text-label-sm uppercase tracking-wider whitespace-nowrap transition-colors ${
+                className={`px-3 py-1.5 rounded-lg font-semibold transition-all whitespace-nowrap ${
                   filterType === "transfer"
-                    ? "bg-[#3D405B] text-white font-bold"
-                    : "bg-surface-container text-on-surface hover:bg-surface-container-high"
+                    ? "bg-white text-slate-900 shadow-xs"
+                    : "text-slate-600 hover:text-slate-900"
                 }`}
               >
-                Transfer &amp; Migration (98)
+                Transfer / Migration (98)
               </button>
             </div>
 
             {/* Search Bar */}
-            <div className="relative min-w-[280px] lg:w-96">
-              <Search className="w-4 h-4 text-on-surface-variant absolute left-space-sm top-2.5" />
+            <div className="relative w-full sm:w-72">
+              <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search Serial (APX-CC-...), Name, or Roll ID..."
-                className="w-full bg-surface-container-low pl-9 pr-space-sm py-1.5 font-mono-data text-body-sm text-on-surface focus:outline-none focus:bg-surface-container-lowest shadow-sm placeholder:text-on-surface-variant/60 border border-outline-variant/40"
+                placeholder="Search Serial, Name, Roll ID..."
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl pl-9 pr-3 py-1.5 text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white transition-all"
               />
             </div>
           </div>
 
-          {/* Batch Issuance Selector Ribbon */}
-          <div className="pt-space-sm bg-surface p-space-sm flex flex-col md:flex-row items-stretch md:items-center justify-between gap-space-sm text-body-sm border border-outline-variant/20 font-mono-data">
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-space-sm flex-1">
-              <div className="flex flex-col">
-                <label className="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant mb-0.5">
-                  Target Batch Cohort
+          {/* Quick Batch Issuance Ribbon */}
+          <div className="p-4 bg-slate-50/80 rounded-xl border border-slate-100 flex flex-col md:flex-row items-stretch md:items-end justify-between gap-3 text-xs">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 flex-1">
+              <div>
+                <label className="block text-[11px] font-semibold text-slate-500 uppercase tracking-wider mb-1">
+                  Target Cohort
                 </label>
-                <select className="bg-surface-container-lowest px-2 py-1.5 font-body-sm text-on-surface focus:outline-none shadow-sm border border-outline-variant/40">
-                  <option>B.Tech CS 2020-2024 (Final Year)</option>
-                  <option>MBA Exec 2022-2024</option>
-                  <option>M.Tech AI &amp; Robotics 2022-2024</option>
-                  <option>BBA FinTech 2021-2024</option>
+                <select className="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 text-xs font-medium text-slate-800 focus:outline-none focus:ring-1 focus:ring-indigo-500 cursor-pointer">
+                  <option>B.Tech CS 2021-2025 (Final Year)</option>
+                  <option>MBA Executive 2023-2025</option>
+                  <option>M.Tech AI &amp; Robotics 2023-2025</option>
+                  <option>B.Des Interaction Design 2021-2025</option>
                 </select>
               </div>
-              <div className="flex flex-col">
-                <label className="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant mb-0.5">
+              <div>
+                <label className="block text-[11px] font-semibold text-slate-500 uppercase tracking-wider mb-1">
                   Credential Format
                 </label>
-                <select className="bg-surface-container-lowest px-2 py-1.5 font-body-sm text-on-surface focus:outline-none shadow-sm border border-outline-variant/40">
+                <select className="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 text-xs font-medium text-slate-800 focus:outline-none focus:ring-1 focus:ring-indigo-500 cursor-pointer">
                   <option>Course Completion &amp; Degree Grant</option>
                   <option>Institutional Bonafide</option>
                   <option>Academic Merit Citation</option>
                   <option>Transfer &amp; Clearance Certificate</option>
                 </select>
               </div>
-              <div className="flex flex-col">
-                <label className="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant mb-0.5">
-                  Seal &amp; Issue Date
+              <div>
+                <label className="block text-[11px] font-semibold text-slate-500 uppercase tracking-wider mb-1">
+                  Issue Date
                 </label>
                 <input
                   type="date"
-                  defaultValue="2024-06-18"
-                  className="bg-surface-container-lowest px-2 py-1.5 font-mono-data text-body-sm text-on-surface focus:outline-none shadow-sm border border-outline-variant/40"
+                  defaultValue="2025-03-24"
+                  className="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 text-xs font-mono text-slate-800"
                 />
               </div>
-              <div className="flex flex-col">
-                <label className="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant mb-0.5">
-                  Authorized Signatory
+              <div>
+                <label className="block text-[11px] font-semibold text-slate-500 uppercase tracking-wider mb-1">
+                  Signatory Authority
                 </label>
-                <select className="bg-surface-container-lowest px-2 py-1.5 font-body-sm text-on-surface focus:outline-none shadow-sm border border-outline-variant/40">
+                <select className="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 text-xs font-medium text-slate-800 focus:outline-none focus:ring-1 focus:ring-indigo-500 cursor-pointer">
                   <option>Dean Dr. Margaret Vance &amp; Registrar</option>
-                  <option>Registrar Kenneth Thorne</option>
                   <option>Controller of Exams Dr. S. Nair</option>
+                  <option>Registrar Kenneth Thorne</option>
                 </select>
               </div>
             </div>
-            <div className="shrink-0 flex items-end">
-              <button
-                onClick={() => triggerToast("Batch Dispatch queued for 128 graduating students.")}
-                className="w-full md:w-auto px-space-md py-2 bg-secondary text-on-secondary hover:bg-secondary/90 font-label-md text-label-md uppercase tracking-wider transition-colors shadow-sm flex items-center justify-center gap-1.5 font-bold"
-              >
-                <Zap className="w-4 h-4" />
-                <span>Batch Dispatch (128)</span>
-              </button>
-            </div>
+            <button
+              onClick={() => showToast("Batch Dispatch queued for 128 graduating students.")}
+              className="py-2 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs flex items-center justify-center gap-1.5 shadow-xs transition-colors shrink-0"
+            >
+              <Zap className="w-4 h-4" />
+              <span>Batch Dispatch (128)</span>
+            </button>
           </div>
         </div>
 
-        {/* Split Two-Column Production Layout (60% / 40%) */}
-        <div className="grid grid-cols-1 xl:grid-cols-12 gap-gutter-desktop items-start">
-          {/* Left Column: Issued Certificate Audit Register Table (7 cols) */}
-          <div className="xl:col-span-7 flex flex-col gap-space-md">
-            <div className="bg-surface-container-lowest shadow-sm flex flex-col border border-outline-variant/30">
-              {/* Table Controls Header */}
-              <div className="p-space-md flex items-center justify-between bg-surface-container-lowest border-b border-outline-variant/30">
-                <div className="flex items-center gap-space-sm">
-                  <FileCheck className="w-5 h-5 text-primary" />
-                  <span className="font-headline-sm text-headline-sm text-primary uppercase font-bold">
-                    Cryptographic Audit Register
-                  </span>
-                  <span className="px-space-xs py-0.5 bg-surface-container font-mono-data text-body-sm text-secondary font-bold">
-                    1,428 RECORDS
+        {/* Split Screen (7 Cols Table vs 5 Cols A4 Preview) */}
+        <div className="grid grid-cols-1 xl:grid-cols-12 gap-6 items-start">
+          {/* LEFT: Issued Certificate Audit Register Table (7 cols) */}
+          <div className="xl:col-span-7 space-y-4">
+            <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs overflow-hidden">
+              {/* Header */}
+              <div className="p-4 border-b border-slate-100 flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <h2 className="text-base font-bold text-slate-900">Certificate Audit Register</h2>
+                  <span className="px-2 py-0.5 rounded-full text-xs font-semibold bg-slate-100 text-slate-700">
+                    {filteredCertificates.length} of 1,428
                   </span>
                 </div>
-                <div className="flex items-center gap-space-xs">
+                <div className="flex items-center gap-1">
                   <button
-                    onClick={() => triggerToast("Exporting cryptographic registry as CSV...")}
-                    className="p-1.5 hover:bg-surface text-on-surface-variant hover:text-on-surface"
+                    onClick={() => showToast("Exporting cryptographic registry as CSV...")}
+                    className="p-1.5 rounded-lg text-slate-500 hover:text-slate-700 hover:bg-slate-100 transition-colors"
                     title="Export CSV"
                   >
                     <Download className="w-4 h-4" />
                   </button>
                   <button
-                    onClick={() => triggerToast("Audit ledger refreshed with latest blocks.")}
-                    className="p-1.5 hover:bg-surface text-on-surface-variant hover:text-on-surface"
-                    title="Refresh Register"
+                    onClick={() => showToast("Audit ledger refreshed with latest blocks.")}
+                    className="p-1.5 rounded-lg text-slate-500 hover:text-slate-700 hover:bg-slate-100 transition-colors"
+                    title="Refresh Ledger"
                   >
                     <RefreshCw className="w-4 h-4" />
-                  </button>
-                  <button
-                    onClick={() => triggerToast("View settings opened.")}
-                    className="p-1.5 hover:bg-surface text-on-surface-variant hover:text-on-surface"
-                    title="Table View Settings"
-                  >
-                    <Sliders className="w-4 h-4" />
                   </button>
                 </div>
               </div>
 
-              {/* Table Wrapper */}
-              <div className="overflow-x-auto w-full">
-                <table className="w-full text-left border-collapse font-mono-data text-[0.75rem]">
+              {/* Table */}
+              <div className="overflow-x-auto">
+                <table className="w-full text-left border-collapse text-xs">
                   <thead>
-                    <tr className="bg-surface font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant select-none border-b border-outline-variant/30">
-                      <th className="py-2.5 px-space-md font-semibold">Certificate ID</th>
-                      <th className="py-2.5 px-space-md font-semibold">Recipient Student</th>
-                      <th className="py-2.5 px-space-md font-semibold">Type</th>
-                      <th className="py-2.5 px-space-md font-semibold">Issued &amp; Session</th>
-                      <th className="py-2.5 px-space-md font-semibold">Verification &amp; Status</th>
-                      <th className="py-2.5 px-space-md font-semibold text-right">Actions</th>
+                    <tr className="bg-slate-50/80 border-b border-slate-200/80 text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
+                      <th className="py-3 px-4">Certificate ID</th>
+                      <th className="py-3 px-4">Recipient Student</th>
+                      <th className="py-3 px-4">Type</th>
+                      <th className="py-3 px-4">Issued &amp; Session</th>
+                      <th className="py-3 px-4">Status</th>
+                      <th className="py-3 px-4 text-right">Actions</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-surface-container">
+                  <tbody className="divide-y divide-slate-100">
                     {filteredCertificates.map((cert) => {
                       const isSelected = cert.serial === selectedCertId;
                       const isRevoked = cert.status === "Revoked";
@@ -551,21 +531,16 @@ export default function CertificatesPage() {
                         <tr
                           key={cert.id}
                           onClick={() => setSelectedCertId(cert.serial)}
-                          className={`transition-colors cursor-pointer group ${
+                          className={`cursor-pointer transition-colors ${
                             isSelected
-                              ? "bg-primary/10 border-l-2 border-l-primary"
-                              : "hover:bg-surface-container-low"
+                              ? "bg-indigo-50/50 hover:bg-indigo-50/70 border-l-4 border-l-indigo-600"
+                              : "hover:bg-slate-50/80"
                           }`}
                         >
-                          <td className="py-3 px-space-md">
-                            <div className="flex items-center gap-1 font-semibold">
-                              <span
-                                className={
-                                  isRevoked
-                                    ? "text-rose-700 line-through"
-                                    : "text-primary"
-                                }
-                              >
+                          {/* Serial & Hash */}
+                          <td className="py-3 px-4">
+                            <div className="flex items-center gap-1 font-mono font-bold text-indigo-700">
+                              <span className={isRevoked ? "text-rose-600 line-through" : ""}>
                                 {cert.serial}
                               </span>
                               <button
@@ -574,94 +549,87 @@ export default function CertificatesPage() {
                                   if (typeof navigator !== "undefined") {
                                     navigator.clipboard.writeText(cert.serial);
                                   }
-                                  triggerToast(`Copied ${cert.serial}`);
+                                  showToast(`Copied ${cert.serial}`);
                                 }}
-                                className="opacity-0 group-hover:opacity-100 text-on-surface-variant hover:text-primary transition-opacity"
+                                className="text-slate-400 hover:text-indigo-600"
                                 title="Copy ID"
                               >
                                 <Copy className="w-3 h-3" />
                               </button>
                             </div>
-                            <span
-                              className={`font-label-sm text-[0.625rem] uppercase block ${
-                                isRevoked ? "text-rose-700 font-bold" : "text-on-surface-variant"
-                              }`}
-                            >
+                            <span className="text-[10px] text-slate-400 font-mono">
                               SHA256: {cert.sha256.slice(0, 8)}...
                             </span>
                           </td>
-                          <td className="py-3 px-space-md">
-                            <div className="flex items-center gap-space-sm">
+
+                          {/* Student */}
+                          <td className="py-3 px-4">
+                            <div className="flex items-center gap-2.5">
                               <img
                                 src={cert.avatar}
                                 alt={cert.studentName}
-                                className="w-8 h-8 rounded-full object-cover shrink-0 border border-outline-variant/40"
+                                className="w-8 h-8 rounded-full object-cover border border-slate-200 shrink-0"
                               />
-                              <div className="flex flex-col min-w-0">
-                                <span
-                                  className={`font-semibold truncate ${
-                                    isRevoked
-                                      ? "text-rose-700 line-through"
-                                      : "text-primary"
+                              <div>
+                                <div
+                                  className={`font-semibold ${
+                                    isRevoked ? "text-rose-600 line-through" : "text-slate-900"
                                   }`}
                                 >
                                   {cert.studentName}
-                                </span>
-                                <span className="text-on-surface-variant text-[0.6875rem]">
-                                  {cert.rollId}
-                                </span>
+                                </div>
+                                <div className="text-[11px] text-slate-500 font-mono">{cert.rollId}</div>
                               </div>
                             </div>
                           </td>
-                          <td className="py-3 px-space-md">
+
+                          {/* Type */}
+                          <td className="py-3 px-4 whitespace-nowrap">
                             <span
-                              className={`px-2 py-0.5 font-label-sm text-[0.625rem] uppercase tracking-wider whitespace-nowrap ${cert.typeBadgeClass}`}
+                              className={`inline-block px-2 py-0.5 rounded-full text-[11px] font-semibold border ${cert.typeBadgeClass}`}
                             >
                               {cert.type}
                             </span>
                           </td>
-                          <td className="py-3 px-space-md">
-                            <div className="flex flex-col">
-                              <span className="font-semibold text-primary">{cert.issuedDate}</span>
-                              <span className="text-on-surface-variant text-[0.6875rem]">
-                                {cert.session}
-                              </span>
-                            </div>
+
+                          {/* Issued Date & Session */}
+                          <td className="py-3 px-4 whitespace-nowrap">
+                            <div className="font-semibold text-slate-800">{cert.issuedDate}</div>
+                            <div className="text-[11px] text-slate-500">{cert.session}</div>
                           </td>
-                          <td className="py-3 px-space-md">
-                            <div className="flex items-center gap-2">
+
+                          {/* Status */}
+                          <td className="py-3 px-4 whitespace-nowrap">
+                            <span
+                              className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold border ${
+                                isRevoked
+                                  ? "bg-rose-50 text-rose-700 border-rose-200"
+                                  : "bg-emerald-50 text-emerald-700 border-emerald-200"
+                              }`}
+                            >
                               {isRevoked ? (
-                                <AlertTriangle className="w-4 h-4 text-rose-700 shrink-0" />
+                                <AlertTriangle className="w-3 h-3" />
                               ) : (
-                                <CheckCircle2 className="w-4 h-4 text-secondary shrink-0" />
+                                <CheckCircle2 className="w-3 h-3" />
                               )}
-                              <div className="flex flex-col">
-                                <span
-                                  className={`font-bold uppercase tracking-wider text-[0.6875rem] ${
-                                    isRevoked ? "text-rose-700" : "text-secondary"
-                                  }`}
-                                >
-                                  {cert.status}
-                                </span>
-                                <span className="text-on-surface-variant text-[0.6875rem]">
-                                  Ledger {cert.ledgerBlock}
-                                </span>
-                              </div>
-                            </div>
+                              <span>{cert.status}</span>
+                            </span>
                           </td>
-                          <td className="py-3 px-space-md text-right" onClick={(e) => e.stopPropagation()}>
+
+                          {/* Actions */}
+                          <td className="py-3 px-4 text-right whitespace-nowrap" onClick={(e) => e.stopPropagation()}>
                             <div className="inline-flex items-center gap-1">
                               <button
                                 onClick={() => setSelectedCertId(cert.serial)}
-                                className="p-1 hover:bg-surface-container text-primary font-semibold"
-                                title="A4 Live Studio Preview"
+                                className="p-1.5 rounded-lg text-slate-500 hover:text-indigo-600 hover:bg-slate-100 transition-colors"
+                                title="View in Studio"
                               >
                                 <Eye className="w-4 h-4" />
                               </button>
                               <button
-                                onClick={() => triggerToast(`Downloading High-Res PDF for ${cert.serial}...`)}
-                                className="p-1 hover:bg-surface-container text-on-surface-variant hover:text-primary"
-                                title="Download High-Res PDF"
+                                onClick={() => showToast(`Downloading High-Res PDF for ${cert.serial}...`)}
+                                className="p-1.5 rounded-lg text-slate-500 hover:text-emerald-600 hover:bg-slate-100 transition-colors"
+                                title="Download PDF"
                               >
                                 <Download className="w-4 h-4" />
                               </button>
@@ -671,13 +639,13 @@ export default function CertificatesPage() {
                                     setCertToRevoke(cert.serial);
                                     setIsRevokeModalOpen(true);
                                   }}
-                                  className="p-1 hover:bg-surface-container text-on-surface-variant hover:text-rose-700"
+                                  className="p-1.5 rounded-lg text-slate-500 hover:text-rose-600 hover:bg-slate-100 transition-colors"
                                   title="Revoke Credential"
                                 >
                                   <Ban className="w-4 h-4" />
                                 </button>
                               ) : (
-                                <span className="p-1 text-on-surface-variant/40" title="Locked">
+                                <span className="p-1.5 text-slate-300" title="Revoked">
                                   <Lock className="w-4 h-4" />
                                 </span>
                               )}
@@ -690,300 +658,205 @@ export default function CertificatesPage() {
                 </table>
               </div>
 
-              {/* Pagination Bar */}
-              <div className="p-space-sm bg-surface flex flex-col sm:flex-row items-center justify-between gap-space-sm font-mono-data text-body-sm border-t border-outline-variant/20">
-                <span className="text-on-surface-variant text-[0.75rem]">
-                  Showing record <span className="font-semibold text-primary">1 to 5</span> of 1,428
-                </span>
-                <div className="flex items-center gap-1 text-[0.75rem]">
-                  <button className="px-2 py-1 bg-surface-container-lowest text-on-surface hover:bg-surface-container disabled:opacity-40" disabled>
-                    Previous
+              {/* Pagination */}
+              <div className="p-4 bg-slate-50/80 border-t border-slate-200/80 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-slate-500 font-medium">
+                <div>Showing 1 to {filteredCertificates.length} of 1,428 verified credentials</div>
+                <div className="flex items-center gap-1">
+                  <button className="px-2.5 py-1 rounded-lg border border-slate-200 bg-white text-slate-600 hover:bg-slate-50">
+                    Prev
                   </button>
-                  <button className="px-2 py-1 bg-primary text-on-primary font-bold">1</button>
-                  <button className="px-2 py-1 bg-surface-container-lowest text-on-surface hover:bg-surface-container">2</button>
-                  <button className="px-2 py-1 bg-surface-container-lowest text-on-surface hover:bg-surface-container">3</button>
-                  <span className="px-1 text-on-surface-variant">...</span>
-                  <button className="px-2 py-1 bg-surface-container-lowest text-on-surface hover:bg-surface-container">286</button>
-                  <button className="px-2 py-1 bg-surface-container-lowest text-on-surface hover:bg-surface-container">
+                  <span className="px-2.5 py-1 rounded-lg bg-indigo-50 text-indigo-700 font-semibold border border-indigo-100">
+                    1
+                  </span>
+                  <button className="px-2.5 py-1 rounded-lg border border-slate-200 bg-white text-slate-600 hover:bg-slate-50">
                     Next
                   </button>
                 </div>
               </div>
             </div>
 
-            {/* Security & Ledger Verification Subpanel */}
-            <div className="bg-surface-container-lowest p-space-md shadow-sm flex flex-col gap-space-sm border border-outline-variant/30">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-space-xs font-label-sm text-label-sm uppercase tracking-wider text-primary font-bold">
-                  <ShieldCheck className="w-4 h-4 text-secondary" />
-                  <span>Decentralized Credential Ledger &amp; Key Infrastructure</span>
+            {/* Cryptographic Key Infrastructure Card */}
+            <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-5">
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center gap-2">
+                  <ShieldCheck className="w-5 h-5 text-indigo-600" />
+                  <h3 className="text-sm font-bold text-slate-900">Cryptographic Signing Infrastructure</h3>
                 </div>
-                <span className="px-space-xs py-0.5 bg-surface-container text-secondary font-mono-data text-body-sm font-semibold">
-                  SYNCHRONIZED (BLOCK #981,042)
+                <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                  ONLINE • BLOCK #981,042
                 </span>
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-space-sm pt-space-xs text-body-sm">
-                <div className="p-space-sm bg-surface border border-outline-variant/20">
-                  <span className="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">
-                    KMS HSM Key Vault
-                  </span>
-                  <p className="font-mono-data text-primary font-semibold mt-1">
-                    APX-ED-RSA-4096-LIVE
-                  </p>
-                  <span className="text-secondary font-label-sm text-label-sm uppercase font-semibold">
-                    Active &amp; HSM Backed
-                  </span>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+                <div className="p-3 bg-slate-50 rounded-xl border border-slate-200/70">
+                  <div className="text-slate-400 text-[10px] uppercase font-semibold">Key Vault</div>
+                  <div className="font-mono font-bold text-slate-900 mt-1">APX-ED-RSA-4096</div>
+                  <div className="text-emerald-600 text-[11px] font-medium mt-0.5">HSM Hardware Backed</div>
                 </div>
-                <div className="p-space-sm bg-surface border border-outline-variant/20">
-                  <span className="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">
-                    W3C DID Issuer DID
-                  </span>
-                  <p className="font-mono-data text-primary font-semibold mt-1 truncate">
-                    did:apex:inst:reg-v1
-                  </p>
-                  <span className="text-on-surface-variant font-label-sm text-label-sm uppercase">
-                    Anchor: Polygon POS
-                  </span>
+                <div className="p-3 bg-slate-50 rounded-xl border border-slate-200/70">
+                  <div className="text-slate-400 text-[10px] uppercase font-semibold">Decentralized DID</div>
+                  <div className="font-mono font-bold text-slate-900 mt-1 truncate">did:apex:inst:reg-v1</div>
+                  <div className="text-slate-500 text-[11px] mt-0.5">Anchor: Polygon POS</div>
                 </div>
-                <div className="p-space-sm bg-surface border border-outline-variant/20">
-                  <span className="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">
-                    Public Verification Gateway
-                  </span>
-                  <p className="font-mono-data text-primary font-semibold mt-1 truncate">
-                    verify.apexinstitute.edu
-                  </p>
-                  <span className="text-secondary font-label-sm text-label-sm uppercase font-semibold">
-                    99.99% TLS 1.3 Uptime
-                  </span>
+                <div className="p-3 bg-slate-50 rounded-xl border border-slate-200/70">
+                  <div className="text-slate-400 text-[10px] uppercase font-semibold">Public Verification URL</div>
+                  <div className="font-mono font-bold text-slate-900 mt-1 truncate">verify.apexinstitute.edu</div>
+                  <div className="text-emerald-600 text-[11px] font-medium mt-0.5">TLS 1.3 Certified</div>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Right Column: A4 Printable Certificate Studio & Live Preview (5 cols) */}
-          <div className="xl:col-span-5 flex flex-col gap-space-md sticky top-20">
-            <div className="bg-surface-container-lowest shadow-sm flex flex-col overflow-hidden border border-outline-variant/30">
-              {/* Studio Header Bar */}
-              <div className="p-space-md bg-primary-container text-on-primary flex items-center justify-between">
-                <div className="flex items-center gap-space-xs">
-                  <Eye className="w-4 h-4 text-secondary-fixed-dim" />
-                  <span className="font-headline-sm text-headline-sm uppercase tracking-wide font-bold">
-                    Live A4 Studio Canvas
-                  </span>
-                </div>
+          {/* RIGHT: A4 Printable Certificate Studio & Live Preview (5 cols) */}
+          <div className="xl:col-span-5 space-y-4 sticky top-6">
+            <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs overflow-hidden">
+              {/* Studio Header */}
+              <div className="p-4 bg-indigo-600 text-white flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <span className="font-mono-data text-body-sm bg-primary px-2 py-0.5 text-primary-fixed">
-                    SCALE: 75% (A4 300DPI)
-                  </span>
+                  <Eye className="w-4 h-4 text-indigo-200" />
+                  <span className="text-sm font-bold">A4 Certificate Studio</span>
                 </div>
+                <span className="px-2 py-0.5 rounded-full bg-white/20 text-white text-[10px] font-bold uppercase tracking-wider">
+                  Full Bleed 300 DPI
+                </span>
               </div>
 
-              {/* Certificate Viewport Background Canvas */}
-              <div className="p-space-lg bg-surface flex items-center justify-center overflow-auto max-h-[720px]">
-                {/* High-Fidelity A4 Certificate Paper Sheet */}
+              {/* Certificate Viewport Canvas */}
+              <div className="p-4 bg-slate-100 flex items-center justify-center overflow-auto">
                 <div
-                  className={`w-full max-w-[540px] aspect-[1/1.414] bg-surface-container-lowest shadow-xl p-6 relative flex flex-col justify-between text-on-surface select-none border border-slate-300 ${
+                  className={`w-full max-w-[480px] aspect-[1/1.414] bg-white shadow-xl p-6 relative flex flex-col justify-between text-slate-900 select-none border border-slate-300 rounded-sm ${
                     activeCert.status === "Revoked" ? "opacity-75 grayscale" : ""
                   }`}
                 >
-                  {/* Geometric Institutional Borders */}
-                  <div className="absolute inset-2 pointer-events-none bg-transparent shadow-[inset_0_0_0_2px_#3D405B]"></div>
-                  <div className="absolute inset-3 pointer-events-none bg-transparent shadow-[inset_0_0_0_1px_#c4c6cf]"></div>
-                  <div className="absolute inset-5 pointer-events-none bg-transparent shadow-[inset_0_0_0_1px_#3D405B]"></div>
+                  {/* Decorative Borders */}
+                  <div className="absolute inset-2 pointer-events-none border-2 border-indigo-900/80" />
+                  <div className="absolute inset-3 pointer-events-none border border-slate-300" />
 
-                  {/* Revoked Watermark Stamp if Revoked */}
+                  {/* Revoked Stamp */}
                   {activeCert.status === "Revoked" && (
                     <div className="absolute inset-0 z-30 flex items-center justify-center pointer-events-none">
-                      <span className="text-red-600/40 font-black text-6xl tracking-widest rotate-[-30deg] border-4 border-red-600/40 p-4 uppercase">
+                      <span className="text-rose-600/50 font-black text-4xl tracking-widest rotate-[-30deg] border-4 border-rose-600/50 px-4 py-2 uppercase">
                         REVOKED &amp; VOID
                       </span>
                     </div>
                   )}
 
-                  {/* Top Security Barcode & Tracking Identifier */}
-                  <div className="relative z-10 flex items-center justify-between text-[0.625rem] font-mono-data tracking-widest text-on-surface-variant uppercase">
-                    <span>SEC-HASH: SHA256//{activeCert.sha256.slice(0, 6).toUpperCase()}</span>
-                    <span className="font-bold text-primary">CREDENTIAL SERIAL: {activeCert.serial}</span>
+                  {/* Top Security Line */}
+                  <div className="relative z-10 flex items-center justify-between text-[8px] font-mono tracking-widest text-slate-400 uppercase">
+                    <span>HASH: SHA256//{activeCert.sha256.slice(0, 6).toUpperCase()}</span>
+                    <span className="font-bold text-slate-900">SERIAL: {activeCert.serial}</span>
                     <span>AUTHENTIC RECORD</span>
                   </div>
 
-                  {/* Institutional Header & Crest */}
+                  {/* Crest & Title */}
                   <div className="relative z-10 flex flex-col items-center text-center mt-2">
-                    <div className="w-14 h-14 bg-primary-container text-surface flex items-center justify-center relative mb-2 shadow-sm">
-                      <span className="font-serif font-black text-2xl text-cyan-200">A</span>
-                      <div className="absolute -bottom-1 w-4 h-4 bg-secondary rotate-45 flex items-center justify-center">
-                        <Sparkles className="w-2.5 h-2.5 text-on-secondary -rotate-45" />
-                      </div>
+                    <div className="w-10 h-10 rounded-full bg-indigo-900 text-white flex items-center justify-center font-serif font-black text-lg mb-1.5 shadow-xs">
+                      A
                     </div>
-                    <h2 className="font-headline-sm text-headline-sm uppercase tracking-widest text-primary font-bold">
+                    <h3 className="font-serif text-xs uppercase tracking-widest text-indigo-950 font-bold">
                       Apex Institute of Technology &amp; Management
-                    </h2>
-                    <span className="font-label-sm text-label-sm uppercase tracking-widest text-on-surface-variant font-medium mt-0.5">
-                      Autonomous Institution · Statutory University Directorate
+                    </h3>
+                    <span className="text-[8px] uppercase tracking-wider text-slate-500 font-medium">
+                      Autonomous Academic Council • Estd. Under Statutory Act
                     </span>
-                    <div className="w-32 h-0.5 bg-primary-container my-3 mx-auto"></div>
-                    <span className="font-label-md text-label-md uppercase tracking-[0.25em] text-secondary font-bold">
-                      {activeCert.type.toUpperCase()} &amp; DEGREE COMPLETION
+                    <div className="w-24 h-0.5 bg-indigo-900 my-2 mx-auto" />
+                    <span className="text-[10px] uppercase tracking-[0.2em] text-indigo-800 font-bold">
+                      {activeCert.type.toUpperCase()}
                     </span>
                   </div>
 
-                  {/* Verbatim Academic Certificate Copy */}
-                  <div className="relative z-10 text-center px-4 my-2 flex flex-col items-center">
-                    <p className="font-body-sm text-body-sm text-on-surface-variant italic">
-                      This is to solemnly certify that
-                    </p>
-                    <div className="my-2 border-b-2 border-primary-container pb-0.5 px-4 inline-block">
-                      <span className="font-headline-lg text-headline-lg text-primary tracking-tight font-bold">
+                  {/* Certificate Prose */}
+                  <div className="relative z-10 text-center px-2 my-1 flex flex-col items-center space-y-1">
+                    <p className="text-[10px] text-slate-500 italic">This is to solemnly certify that</p>
+                    <div className="border-b-2 border-indigo-900 pb-0.5 px-3 inline-block">
+                      <span className="font-serif text-base text-indigo-950 font-bold tracking-tight">
                         {activeCert.studentName}
                       </span>
                     </div>
-                    <p className="font-mono-data text-body-sm font-semibold text-primary">
+                    <p className="font-mono text-[9px] font-semibold text-slate-700">
                       Roll Registration ID: {activeCert.rollId}
                     </p>
-                    <p className="font-body-sm text-body-sm text-on-surface leading-relaxed max-w-sm mt-3">
-                      having fulfilled all prescribed curriculum requisites, academic examinations,
-                      and thesis regulations with distinction, is awarded this Certificate in
+                    <p className="text-[9px] text-slate-600 leading-relaxed max-w-xs mt-1">
+                      having fulfilled all prescribed curriculum requisites, examinations, and thesis regulations with distinction, is awarded this Certificate in
                     </p>
-                    <div className="mt-2 bg-surface-container-low px-4 py-1.5 shadow-sm border border-outline-variant/30">
-                      <span className="font-headline-sm text-headline-sm text-primary uppercase font-bold tracking-tight">
+                    <div className="bg-slate-50 px-3 py-1 border border-slate-200 mt-1">
+                      <span className="font-bold text-[10px] uppercase text-indigo-900 tracking-tight">
                         {activeCert.dept}
                       </span>
                     </div>
-                    <span className="font-label-sm text-label-sm uppercase tracking-widest text-secondary font-bold mt-2">
+                    <span className="text-[9px] font-bold text-emerald-700 mt-1">
                       Awarded with {activeCert.grade} (CGPA: {activeCert.cgpa})
                     </span>
                   </div>
 
-                  {/* Authentication Footer & Signatories */}
-                  <div className="relative z-10 mt-auto pt-4 flex flex-col gap-3">
-                    {/* Security Elements Row */}
-                    <div className="flex items-center justify-between px-3">
-                      {/* QR Cryptographic Node */}
-                      <div className="flex items-center gap-2">
-                        <div className="w-14 h-14 bg-surface p-1 shadow-sm flex items-center justify-center border border-slate-300">
-                          <svg className="w-full h-full text-primary" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M2 2h8v8H2V2zm2 2v4h4V4H4zm10-2h8v8h-8V2zm2 2v4h4V4h-4zM2 14h8v8H2v-8zm2 2v4h4v-4H4zm14-2h4v2h-4v-2zm-4 0h2v4h-2v-4zm2 4h4v4h-4v-4zm-4 2h2v2h-2v-2zm4-12h2v2h-2V6zm-8 4h2v2H10v-2zm-4 4h2v2H6v-2zm8 0h2v2h-2v-2z"></path>
-                          </svg>
+                  {/* Signatories & QR */}
+                  <div className="relative z-10 mt-auto pt-2 flex flex-col gap-2">
+                    <div className="flex items-center justify-between px-2">
+                      {/* QR */}
+                      <div className="flex items-center gap-1.5">
+                        <div className="w-10 h-10 bg-white p-0.5 border border-slate-300 flex items-center justify-center">
+                          <QrCode className="w-8 h-8 text-slate-900" />
                         </div>
-                        <div className="flex flex-col text-left">
-                          <span className="font-label-sm text-[0.625rem] uppercase font-bold text-primary">
-                            Scan To Verify
-                          </span>
-                          <span className="font-mono-data text-[0.5625rem] text-on-surface-variant">
-                            verify.apexinstitute.edu
-                          </span>
-                          <span className="font-mono-data text-[0.5625rem] text-secondary">
-                            ID: {activeCert.serial.slice(-4)}-POLYPOS
-                          </span>
+                        <div className="text-[8px] text-left leading-tight text-slate-500">
+                          <div className="font-bold text-slate-900">Scan to Verify</div>
+                          <div>verify.apexinstitute.edu</div>
                         </div>
                       </div>
 
-                      {/* Hologram Seal Badge */}
-                      <div className="relative w-14 h-14 bg-gradient-to-br from-secondary-fixed-dim via-primary-container to-secondary flex items-center justify-center shadow-md">
-                        <div className="w-11 h-11 bg-surface-container-lowest/90 flex flex-col items-center justify-center p-0.5 text-center">
-                          <ShieldCheck className="w-4 h-4 text-primary" />
-                          <span className="font-label-sm text-[0.5rem] uppercase tracking-tighter text-primary font-bold leading-none mt-0.5">
-                            OFFICIAL SEAL
-                          </span>
-                        </div>
+                      {/* Seal */}
+                      <div className="w-10 h-10 rounded-full border-2 border-dashed border-indigo-900 flex flex-col items-center justify-center text-[7px] text-indigo-900 font-bold">
+                        <span>OFFICIAL</span>
+                        <span>SEAL</span>
                       </div>
                     </div>
 
-                    {/* Dual Signatory Sign-off with Vector Signatures */}
-                    <div className="grid grid-cols-2 gap-4 pt-2 px-2">
-                      <div className="flex flex-col items-center text-center">
-                        <div className="h-8 flex items-end justify-center w-full">
-                          <svg className="h-6 text-primary w-24" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 120 30">
-                            <path d="M5,22 Q25,5 45,20 T80,10 T115,22 M30,12 L32,28 M70,5 L72,25"></path>
-                          </svg>
-                        </div>
-                        <div className="w-32 h-px bg-on-surface-variant/40 my-1"></div>
-                        <span className="font-label-sm text-label-sm uppercase font-bold text-primary">
-                          Dr. S. Nair
-                        </span>
-                        <span className="font-label-sm text-[0.625rem] text-on-surface-variant uppercase">
-                          Controller of Examinations
-                        </span>
+                    {/* Dual Signatures */}
+                    <div className="grid grid-cols-2 gap-4 pt-1 px-2 border-t border-slate-200 text-center">
+                      <div>
+                        <div className="font-serif italic text-xs text-slate-800">Dr. S. Nair</div>
+                        <div className="text-[8px] uppercase text-slate-500 font-semibold">Controller of Exams</div>
                       </div>
-                      <div className="flex flex-col items-center text-center">
-                        <div className="h-8 flex items-end justify-center w-full">
-                          <svg className="h-6 text-primary w-24" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 120 30">
-                            <path d="M10,25 Q35,2 60,18 Q85,28 105,12 M40,8 L40,24 M85,15 L95,28"></path>
-                          </svg>
-                        </div>
-                        <div className="w-32 h-px bg-on-surface-variant/40 my-1"></div>
-                        <span className="font-label-sm text-label-sm uppercase font-bold text-primary">
-                          Dr. Margaret Vance
-                        </span>
-                        <span className="font-label-sm text-[0.625rem] text-on-surface-variant uppercase">
-                          Dean of Academic Affairs
-                        </span>
+                      <div>
+                        <div className="font-serif italic text-xs text-slate-800">Dr. Margaret Vance</div>
+                        <div className="text-[8px] uppercase text-slate-500 font-semibold">Dean of Academic Affairs</div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
 
-              {/* Action Command Bar Below Preview */}
-              <div className="p-space-md bg-surface-container-lowest flex flex-col gap-space-sm border-t border-outline-variant/30 font-mono-data">
-                <div className="grid grid-cols-2 gap-space-sm">
+              {/* Actions Footer */}
+              <div className="p-4 bg-slate-50/80 border-t border-slate-200/80 space-y-2">
+                <div className="grid grid-cols-2 gap-2">
                   <button
                     onClick={() => {
-                      triggerToast("Spooling A4 full bleed output to institutional certificate printer...");
+                      showToast("Spooling full bleed A4 output to printer...");
                       if (typeof window !== "undefined") window.print();
                     }}
-                    className="inline-flex items-center justify-center gap-1.5 px-space-md py-2 bg-primary-container text-on-primary hover:bg-primary font-label-md text-label-md uppercase tracking-wider transition-colors shadow-sm font-bold"
+                    className="py-2 px-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs flex items-center justify-center gap-1.5 shadow-xs transition-colors"
                   >
                     <Printer className="w-4 h-4" />
-                    <span>Print A4 (Full Bleed)</span>
+                    <span>Print A4 Slip</span>
                   </button>
                   <button
-                    onClick={() => triggerToast(`Exporting High-Res PDF for ${activeCert.serial}...`)}
-                    className="inline-flex items-center justify-center gap-1.5 px-space-md py-2 bg-secondary text-on-secondary hover:bg-secondary/90 font-label-md text-label-md uppercase tracking-wider transition-colors shadow-sm font-bold"
+                    onClick={() => showToast(`Exporting High-Res PDF for ${activeCert.serial}...`)}
+                    className="py-2 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs flex items-center justify-center gap-1.5 shadow-xs transition-colors"
                   >
                     <Download className="w-4 h-4" />
-                    <span>Export High-Res PDF</span>
+                    <span>Download PDF</span>
                   </button>
                 </div>
-                <div className="grid grid-cols-2 gap-space-sm">
-                  <button
-                    onClick={() => triggerToast(`Dispatched credential copy to ${activeCert.studentName}'s portal.`)}
-                    className="inline-flex items-center justify-center gap-1.5 px-space-sm py-1.5 bg-surface text-primary hover:bg-surface-container font-label-sm text-label-sm uppercase tracking-wider transition-colors shadow-sm border border-outline-variant/40"
-                  >
-                    <Mail className="w-3.5 h-3.5" />
-                    <span>Send via Portal</span>
-                  </button>
-                  <button
-                    onClick={() => triggerToast("Re-generated cryptographic ED25519 signature keys.")}
-                    className="inline-flex items-center justify-center gap-1.5 px-space-sm py-1.5 bg-surface text-primary hover:bg-surface-container font-label-sm text-label-sm uppercase tracking-wider transition-colors shadow-sm border border-outline-variant/40"
-                  >
-                    <Key className="w-3.5 h-3.5" />
-                    <span>Regenerate Keys &amp; QR</span>
-                  </button>
-                </div>
-              </div>
-            </div>
 
-            {/* Fast Verification Simulator */}
-            <div className="bg-surface-container-lowest p-space-md shadow-sm flex flex-col gap-space-xs border border-outline-variant/30 font-mono-data">
-              <div className="flex items-center justify-between">
-                <span className="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-bold">
-                  Public Verification Link Test
-                </span>
-                <span className="inline-flex items-center gap-1 text-secondary font-mono-data text-body-sm font-semibold">
-                  <span className="h-1.5 w-1.5 bg-secondary rounded-full"></span> 200 OK
-                </span>
-              </div>
-              <div className="bg-surface p-space-xs flex items-center justify-between gap-space-sm border border-outline-variant/30">
-                <code className="font-mono-data text-[0.75rem] text-primary truncate select-all">
-                  https://verify.apexinstitute.edu/cert/{activeCert.serial}
-                </code>
-                <button
-                  onClick={handleCopyLink}
-                  className="px-2 py-1 bg-surface-container hover:bg-surface-container-high text-primary font-label-sm text-label-sm uppercase tracking-wider shrink-0 font-bold"
-                >
-                  COPY
-                </button>
+                <div className="p-2.5 bg-white rounded-xl border border-slate-200 flex items-center justify-between text-xs font-mono">
+                  <span className="text-slate-500 truncate mr-2">
+                    https://verify.apexinstitute.edu/cert/{activeCert.serial}
+                  </span>
+                  <button
+                    onClick={handleCopyLink}
+                    className="px-2.5 py-1 rounded-lg bg-indigo-50 text-indigo-700 font-semibold hover:bg-indigo-100 transition-colors shrink-0"
+                  >
+                    Copy URL
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -992,42 +865,38 @@ export default function CertificatesPage() {
 
       {/* MODAL: Issue New Certificate */}
       {isIssueModalOpen && (
-        <div className="fixed inset-0 z-50 bg-primary/40 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-surface-container-lowest w-full max-w-2xl shadow-2xl flex flex-col overflow-hidden border border-outline-variant/40 font-mono-data">
-            {/* Header */}
-            <div className="p-space-md bg-primary-container text-on-primary flex items-center justify-between">
-              <div className="flex items-center gap-space-sm">
-                <Award className="w-5 h-5 text-secondary-container" />
-                <h3 className="font-headline-sm text-headline-sm uppercase tracking-wide font-bold">
-                  Generate New Academic Credential
-                </h3>
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-xs">
+          <div className="bg-white rounded-2xl shadow-xl border border-slate-200/80 max-w-xl w-full overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+            <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/70">
+              <div className="flex items-center gap-2">
+                <Award className="w-5 h-5 text-indigo-600" />
+                <h3 className="font-bold text-base text-slate-900">Issue Academic Credential</h3>
               </div>
               <button
                 onClick={() => setIsIssueModalOpen(false)}
-                className="text-on-primary hover:opacity-80"
+                className="w-8 h-8 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 flex items-center justify-center"
               >
-                <X className="w-5 h-5" />
+                <X className="w-4 h-4" />
               </button>
             </div>
 
-            {/* Form */}
-            <div className="p-space-lg flex flex-col gap-space-md max-h-[75vh] overflow-y-auto">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-space-md">
-                <div className="flex flex-col">
-                  <label className="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant mb-1">
-                    Student Roll Number *
+            <div className="p-6 space-y-4 text-xs text-slate-700">
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">
+                    Student Roll No *
                   </label>
                   <input
                     type="text"
-                    defaultValue="APX-CS-2020-002"
-                    className="bg-surface px-space-sm py-2 font-mono-data text-body-sm text-on-surface focus:outline-none focus:bg-surface-container-low shadow-sm border border-outline-variant/40"
+                    defaultValue="APX-CS-2021-002"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs font-mono font-semibold text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white"
                   />
                 </div>
-                <div className="flex flex-col">
-                  <label className="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant mb-1">
+                <div>
+                  <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">
                     Certificate Type *
                   </label>
-                  <select className="bg-surface px-space-sm py-2 font-body-sm text-on-surface focus:outline-none shadow-sm border border-outline-variant/40">
+                  <select className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 cursor-pointer">
                     <option>Course Completion &amp; Degree Grant</option>
                     <option>Bonafide Certificate</option>
                     <option>Character &amp; Conduct</option>
@@ -1037,79 +906,74 @@ export default function CertificatesPage() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-space-md">
-                <div className="flex flex-col">
-                  <label className="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant mb-1">
-                    Academic Session / Cohort
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">
+                    Academic Cohort
                   </label>
                   <input
                     type="text"
-                    defaultValue="AY 2020-2024 (Class of 2024)"
-                    className="bg-surface px-space-sm py-2 font-body-sm text-on-surface focus:outline-none shadow-sm border border-outline-variant/40"
+                    defaultValue="AY 2021-2025 (Class of 2025)"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-900"
                   />
                 </div>
-                <div className="flex flex-col">
-                  <label className="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant mb-1">
-                    Division / Award Grade
+                <div>
+                  <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">
+                    Division &amp; Grade
                   </label>
                   <input
                     type="text"
                     defaultValue="First Class with Distinction (9.64 CGPA)"
-                    className="bg-surface px-space-sm py-2 font-body-sm text-on-surface focus:outline-none shadow-sm border border-outline-variant/40"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-900"
                   />
                 </div>
               </div>
 
-              <div className="flex flex-col">
-                <label className="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant mb-1">
-                  Custom Endorsement Statement (Optional)
+              <div>
+                <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">
+                  Custom Endorsement Statement
                 </label>
                 <textarea
-                  rows={3}
+                  rows={2}
                   placeholder="Having satisfied all prerequisites, laboratory vivas, and departmental clearances..."
-                  className="bg-surface p-space-sm font-body-sm text-on-surface focus:outline-none shadow-sm placeholder:text-on-surface-variant/60 border border-outline-variant/40"
-                ></textarea>
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white resize-none"
+                />
               </div>
 
-              <div className="p-space-sm bg-surface-container-low flex items-center justify-between border border-outline-variant/30">
-                <div className="flex items-center gap-space-sm">
+              <div className="p-3 bg-indigo-50/60 rounded-xl border border-indigo-100 flex items-center justify-between">
+                <label className="flex items-center gap-2 cursor-pointer select-none">
                   <input
                     type="checkbox"
-                    id="signBlockchain"
                     defaultChecked
-                    className="w-4 h-4 text-primary rounded-none accent-primary"
+                    className="w-4 h-4 rounded text-indigo-600 focus:ring-indigo-500 border-slate-300"
                   />
-                  <label
-                    htmlFor="signBlockchain"
-                    className="font-label-sm text-label-sm uppercase tracking-wider text-primary font-bold cursor-pointer"
-                  >
-                    Anchor to Blockchain Ledger &amp; Generate Cryptographic DID
-                  </label>
-                </div>
-                <span className="font-mono-data text-body-sm text-secondary font-semibold">
-                  ED25519-SIG
-                </span>
+                  <span className="font-semibold text-indigo-900 text-xs">
+                    Anchor to Blockchain &amp; Generate Cryptographic Hash
+                  </span>
+                </label>
+                <span className="font-mono font-bold text-indigo-700 text-[11px]">ED25519</span>
               </div>
-            </div>
 
-            {/* Footer */}
-            <div className="p-space-md bg-surface flex items-center justify-end gap-space-sm border-t border-outline-variant/30">
-              <button
-                onClick={() => setIsIssueModalOpen(false)}
-                className="px-space-md py-2 bg-surface-container text-on-surface hover:bg-surface-container-high font-label-md text-label-md uppercase tracking-wider transition-colors"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={() => {
-                  setIsIssueModalOpen(false);
-                  triggerToast("New Academic Credential minted and cryptographically signed.");
-                }}
-                className="px-space-md py-2 bg-primary-container text-on-primary hover:bg-primary font-label-md text-label-md uppercase tracking-wider transition-colors shadow-sm flex items-center gap-1.5 font-bold"
-              >
-                <ShieldCheck className="w-4 h-4" />
-                <span>Sign &amp; Issue Credential</span>
-              </button>
+              <div className="pt-3 flex items-center justify-end gap-2 border-t border-slate-100">
+                <button
+                  type="button"
+                  onClick={() => setIsIssueModalOpen(false)}
+                  className="py-2 px-4 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 font-semibold"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsIssueModalOpen(false);
+                    showToast("New Academic Credential minted and cryptographically signed.");
+                  }}
+                  className="py-2 px-5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold flex items-center gap-1.5 shadow-xs transition-colors"
+                >
+                  <ShieldCheck className="w-4 h-4" />
+                  <span>Sign &amp; Issue Credential</span>
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -1117,72 +981,61 @@ export default function CertificatesPage() {
 
       {/* MODAL: Revocation Confirmation */}
       {isRevokeModalOpen && (
-        <div className="fixed inset-0 z-50 bg-primary/40 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-surface-container-lowest w-full max-w-lg shadow-2xl flex flex-col overflow-hidden border border-rose-300 font-mono-data">
-            <div className="p-space-md bg-rose-700 text-white flex items-center justify-between">
-              <div className="flex items-center gap-space-sm">
-                <AlertTriangle className="w-5 h-5" />
-                <span className="font-headline-sm text-headline-sm uppercase tracking-wide font-bold">
-                  Revoke Credential &amp; Nullify Key
-                </span>
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-xs">
+          <div className="bg-white rounded-2xl shadow-xl border border-rose-200 max-w-md w-full overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+            <div className="px-6 py-4 border-b border-rose-100 flex items-center justify-between bg-rose-50/70">
+              <div className="flex items-center gap-2 text-rose-700">
+                <AlertTriangle className="w-5 h-5 shrink-0" />
+                <h3 className="font-bold text-base">Revoke &amp; Invalidate Credential</h3>
               </div>
               <button
                 onClick={() => setIsRevokeModalOpen(false)}
-                className="text-white hover:opacity-80"
+                className="w-8 h-8 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 flex items-center justify-center"
               >
-                <X className="w-5 h-5" />
+                <X className="w-4 h-4" />
               </button>
             </div>
 
-            <div className="p-space-lg flex flex-col gap-space-sm text-body-sm text-on-surface">
-              <p className="font-bold text-primary">
-                Are you sure you want to invalidate credential{" "}
-                <span className="font-mono-data text-rose-700">{certToRevoke}</span>?
+            <div className="p-6 space-y-3 text-xs text-slate-600">
+              <p className="font-semibold text-slate-900">
+                Are you sure you want to invalidate credential <span className="font-mono text-rose-600 font-bold">{certToRevoke}</span>?
               </p>
-              <p className="text-on-surface-variant leading-relaxed text-[0.8125rem]">
-                This operation records an immutable Revocation Entry on the distributed ledger. The
-                public verification URL and QR code will permanently return{" "}
-                <strong className="text-rose-700">REVOKED &amp; INVALID</strong>.
+              <p className="leading-relaxed">
+                This operation records an immutable Revocation Entry on the distributed ledger. The public verification URL and QR code will permanently return <strong className="text-rose-600">REVOKED &amp; INVALID</strong>.
               </p>
-              <div className="flex flex-col mt-2">
-                <label className="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant mb-1">
+
+              <div>
+                <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">
                   Reason for Invalidation *
                 </label>
-                <select className="bg-surface px-space-sm py-2 font-body-sm text-on-surface focus:outline-none shadow-sm border border-outline-variant/40">
+                <select className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 cursor-pointer">
                   <option>Academic Misconduct / Plagiarism Finding</option>
                   <option>Administrative Clerical Data Correction</option>
-                  <option>Court Order or Disciplinary Committee Directive</option>
+                  <option>Disciplinary Committee Directive</option>
                   <option>Duplicate Issuance Superseded</option>
                 </select>
               </div>
-            </div>
 
-            <div className="p-space-md bg-surface flex items-center justify-end gap-space-sm border-t border-outline-variant/20">
-              <button
-                onClick={() => setIsRevokeModalOpen(false)}
-                className="px-space-md py-2 bg-surface-container text-on-surface hover:bg-surface-container-high font-label-md text-label-md uppercase tracking-wider"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleRevokeConfirm}
-                className="px-space-md py-2 bg-rose-700 text-white hover:bg-rose-800 font-label-md text-label-md uppercase tracking-wider shadow-sm font-bold"
-              >
-                Confirm Invalidation
-              </button>
+              <div className="pt-3 flex items-center justify-end gap-2 border-t border-slate-100">
+                <button
+                  type="button"
+                  onClick={() => setIsRevokeModalOpen(false)}
+                  className="py-2 px-4 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 font-semibold"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  onClick={handleRevokeConfirm}
+                  className="py-2 px-5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-semibold shadow-xs transition-colors"
+                >
+                  Confirm Invalidation
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      )}
-
-      {/* Floating Toast Notification */}
-      {toastMessage && (
-        <div className="fixed bottom-6 right-6 z-50 bg-primary text-on-primary px-space-md py-space-sm shadow-xl flex items-center gap-space-sm border border-outline-variant/40">
-          <CheckCircle2 className="w-5 h-5 text-secondary-container" />
-          <span className="font-mono-data text-body-sm">{toastMessage}</span>
         </div>
       )}
     </div>
   );
 }
-
