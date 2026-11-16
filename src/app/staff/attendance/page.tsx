@@ -300,10 +300,6 @@ export default function StaffAttendancePage() {
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="space-y-1.5">
             <div className="flex flex-wrap items-center gap-2">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-blue-50 text-[#355C7D] text-xs font-semibold rounded-full border border-blue-200/60">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#355C7D]"></span>
-                Prof. Rajesh Sharma &bull; EMP-CS-2018-842
-              </span>
               <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-50 text-emerald-700 text-xs font-semibold rounded-full border border-emerald-200/60">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse"></span>
                 Daily Attendance Register &bull; Even Semester 2024–25
