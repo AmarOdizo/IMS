@@ -30,7 +30,9 @@ import {
   ChevronLeft,
   ChevronRight,
   Gavel,
-  Check
+  Check,
+  BarChart2,
+  Sparkles
 } from "lucide-react";
 
 interface CandidateExamResult {
@@ -54,13 +56,13 @@ interface CandidateExamResult {
   classification: string;
 }
 
-const initialCandidates: CandidateExamResult[] = [
+const INITIAL_CANDIDATES: CandidateExamResult[] = [
   {
     id: "c-01",
     rollNo: "APX-CS-2023-014",
     name: "Aarav S. Patel",
     avatar:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuAHlmD72uSAq5bqlqIxisYAbaboO1LKC08LcPOjkLnBNbXlW_o7qzL70uy4440Gdjo8A6Jh1cXphgHek1Jk3igxQpMErViMZKqqh9XQpnllrSAFtDkO8EcBAKz6NKo42TcvMWtpufJNX2kkQVImkBatN4jHCtWvXfFJjz848VfdsTyKCwrh_Kv86TRHDsIQHvdhIboc2LQu92gw-hS21Au5wbyWaXjQnaqWc4wad538",
+      "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80",
     theoryMarks: 64,
     internalMarks: 28,
     totalMarks: 92,
@@ -80,7 +82,7 @@ const initialCandidates: CandidateExamResult[] = [
     rollNo: "APX-CS-2023-018",
     name: "Elena Chen",
     avatar:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuAS0RvEjb_G17d9AqJS1mZreNKYj1UO6EkpKR3YWDdUZ58Avj6x53HNS6yIcswY4h6uSXb3XGBFS8O3bUc_r8cIppHtYeOPTSqI7oWf3hJNekNQs4E5Fh6sdMULMS9YcYmGpt0GkOwTZTLg4w8knjv3faZ5VtoOKBQYj-cYsdZeINDsMj0otN4embrHpmyo7buKL_ONr4Y4VbfJSosNPd2XpIYIMGc4c-LGeS86X8g8",
+      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&auto=format&fit=crop&q=80",
     theoryMarks: 58,
     internalMarks: 26,
     totalMarks: 84,
@@ -100,7 +102,7 @@ const initialCandidates: CandidateExamResult[] = [
     rollNo: "APX-CS-2023-027",
     name: "Marcus Sterling",
     avatar:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuA9riMvcCn2b_b4-WdWNzCb47SRVR66KGpwSoNBopD_55A6CcTVBsaatSPSg3BQ880TW8RLkOaeJ7IUaEOVwBfBMut-e4lJaFl8411HtLBDJrHCpKRdOacxHH2OwbMP_cuIZ-wM6P_8_btBewI-DBVlm2-alBRjUoRScDlVhWuF8u-AySI-T9eXEWoiC-TAEBMv3lzEasP5wvroYwkaQ6l1Chb9KX6cPeewBZHddi5P",
+      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80",
     theoryMarks: 48,
     internalMarks: 23,
     totalMarks: 71,
@@ -120,7 +122,7 @@ const initialCandidates: CandidateExamResult[] = [
     rollNo: "APX-CS-2023-033",
     name: "Chloe Davenport",
     avatar:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuDXh5e4KT_cK1Hoc2FMl7Exo4IYruCWW7mckAtj_FWqwANRxkejzddN6UGPC9akZrNbPtLtzf43KTQtBLTbAGTgFwlBgkKdIEenb1VSn-O2v9gV0hUonip8EJeovAQbnIZFODjCSnmxkCKY2srbPgDzsCYqe5cX3XKdMTfm9oOyGABwGDPN32qWgTMOhgD_82N42nx4Q4BEz3LlL4cXzxiC37ovO8zjA_k8rhBNA-Kd",
+      "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=150&auto=format&fit=crop&q=80",
     theoryMarks: 26,
     internalMarks: 12,
     totalMarks: "40*",
@@ -139,7 +141,7 @@ const initialCandidates: CandidateExamResult[] = [
     id: "c-05",
     rollNo: "APX-CS-2023-042",
     name: "Kavita Narang",
-    initials: "NA",
+    initials: "KN",
     theoryMarks: "AB",
     internalMarks: 22,
     totalMarks: "--",
@@ -153,12 +155,31 @@ const initialCandidates: CandidateExamResult[] = [
     sgpa: 4.8,
     cgpa: 5.9,
     classification: "SUPPLEMENTARY"
+  },
+  {
+    id: "c-06",
+    rollNo: "APX-CS-2023-048",
+    name: "Rishi Verma",
+    initials: "RV",
+    theoryMarks: 52,
+    internalMarks: 25,
+    totalMarks: 77,
+    gradePct: "77.0%",
+    gradeLabel: "B+ Good",
+    graceMarks: 0,
+    resultStatus: "Pass",
+    auditStatus: "Verified",
+    program: "B.Tech Computer Science",
+    enrollId: "ENR2023CSE1022",
+    sgpa: 8.1,
+    cgpa: 7.95,
+    classification: "FIRST CLASS"
   }
 ];
 
 export default function ExamsPage() {
-  const [candidates, setCandidates] = useState<CandidateExamResult[]>(initialCandidates);
-  const [selectedCandidate, setSelectedCandidate] = useState<CandidateExamResult>(initialCandidates[0]);
+  const [candidates, setCandidates] = useState<CandidateExamResult[]>(INITIAL_CANDIDATES);
+  const [selectedCandidate, setSelectedCandidate] = useState<CandidateExamResult>(INITIAL_CANDIDATES[0]);
   const [activeTab, setActiveTab] = useState<"all" | "ledger" | "moderation" | "archive">("ledger");
   const [searchQuery, setSearchQuery] = useState("");
   const [toastMessage, setToastMessage] = useState<string | null>(null);
@@ -168,8 +189,8 @@ export default function ExamsPage() {
   // New exam form state
   const [newExamTitle, setNewExamTitle] = useState("");
   const [newExamType, setNewExamType] = useState("End-Semester Regular");
-  const [newExamStartDate, setNewExamStartDate] = useState("2024-05-20");
-  const [newExamEndDate, setNewExamEndDate] = useState("2024-06-05");
+  const [newExamStartDate, setNewExamStartDate] = useState("2025-05-15");
+  const [newExamEndDate, setNewExamEndDate] = useState("2025-05-30");
   const [newExamBatch, setNewExamBatch] = useState("Batch 2023-27 · Sem IV");
 
   const showToast = (msg: string) => {
@@ -182,7 +203,7 @@ export default function ExamsPage() {
   // Helper to re-calculate grades when theory or internal changes
   const handleScoreChange = (id: string, field: "theory" | "internal", val: string) => {
     if (isLocked) {
-      showToast("Cannot edit: Marks entry ledger is locked. Click 'Lock Marks Entry' to unlock.");
+      showToast("Cannot edit: Marks entry ledger is locked. Click 'Unlock Marks Entry' first.");
       return;
     }
 
@@ -277,177 +298,177 @@ export default function ExamsPage() {
   });
 
   return (
-    <div className="flex flex-col w-full pb-16">
+    <div className="min-h-screen bg-slate-50/60 pb-16">
       {/* Toast Notification */}
       {toastMessage && (
-        <div className="fixed bottom-6 right-6 bg-primary text-on-primary px-4 py-3 shadow-2xl border-l-4 border-secondary flex items-center gap-3 z-50 animate-in fade-in slide-in-from-bottom-2">
-          <FileCheck className="w-5 h-5 text-secondary-container" />
-          <span className="font-mono-data text-xs tracking-wide">{toastMessage}</span>
+        <div className="fixed bottom-6 right-6 bg-slate-900 text-white px-4 py-3 rounded-xl shadow-xl flex items-center gap-3 z-50 animate-in fade-in slide-in-from-bottom-2 border border-slate-700">
+          <FileCheck className="w-5 h-5 text-emerald-400 shrink-0" />
+          <span className="text-sm font-medium">{toastMessage}</span>
         </div>
       )}
 
-      {/* Command Header & Breadcrumb Strip */}
-      <div className="px-6 py-4 bg-surface-container-lowest shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-outline-variant/30">
-        <div className="flex flex-col gap-1 min-w-0">
-          <div className="flex items-center gap-1.5 font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">
-            <span>Institutional Command</span>
-            <span className="text-[0.75rem] text-outline-variant">/</span>
-            <span>Examination Controller</span>
-            <span className="text-[0.75rem] text-outline-variant">/</span>
-            <span className="text-secondary font-semibold">AY 2024-25 Series</span>
+      {/* Main Container */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 space-y-6">
+        {/* Header Hero Section */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <div className="flex items-center gap-2">
+              <h1 className="text-2xl font-bold tracking-tight text-slate-900">Exams &amp; Results Controller</h1>
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                Examination Cycle Active
+              </span>
+            </div>
+            <p className="text-sm text-slate-500 mt-1">
+              Marks moderation, grade ledger entry, official transcript rendering, and university gazette publication.
+            </p>
           </div>
-          <h1 className="font-headline-lg text-headline-lg text-primary tracking-tight font-bold">
-            Exams & Results Central Controller
-          </h1>
+
+          <div className="flex items-center gap-2.5 flex-wrap">
+            <button
+              onClick={() => showToast("Exporting bulk transcript PDF bundles (1,240 records)...")}
+              className="inline-flex items-center gap-2 px-3.5 py-2 text-xs font-semibold text-slate-700 bg-white border border-slate-200 rounded-xl hover:bg-slate-50 hover:border-slate-300 shadow-xs transition-all"
+            >
+              <Download className="w-4 h-4 text-slate-600" />
+              <span>Bulk Marksheets</span>
+            </button>
+            <button
+              onClick={() => showToast("Results dispatch successfully broadcast to Student & Guardian Portals.")}
+              className="inline-flex items-center gap-2 px-3.5 py-2 text-xs font-semibold text-emerald-700 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 rounded-xl shadow-xs transition-all"
+            >
+              <Send className="w-4 h-4 text-emerald-600" />
+              <span>Publish Dispatch</span>
+            </button>
+            <button
+              onClick={() => setIsCreateExamModalOpen(true)}
+              className="inline-flex items-center gap-2 px-4 py-2 text-xs font-semibold text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl shadow-xs transition-all"
+            >
+              <Plus className="w-4 h-4" />
+              <span>Create Examination</span>
+            </button>
+          </div>
         </div>
 
-        {/* Global Exam Actions */}
-        <div className="flex items-center flex-wrap gap-2">
-          <button
-            onClick={() => showToast("Exporting bulk transcript PDF bundles (1,240 records)...")}
-            className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-surface-container text-primary font-label-md text-label-md uppercase tracking-wider hover:bg-surface-container-high transition-colors border border-outline-variant/30 shadow-sm"
-          >
-            <Download className="w-4 h-4 text-secondary" />
-            <span>Bulk Marksheet Export</span>
-          </button>
-          <button
-            onClick={() => showToast("Results dispatch successfully broadcast to Student & Guardian Portals.")}
-            className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-secondary text-on-secondary font-label-md text-label-md uppercase tracking-wider hover:bg-primary transition-colors shadow-sm"
-          >
-            <Send className="w-4 h-4" />
-            <span>Publish Results Dispatch</span>
-          </button>
-          <button
-            onClick={() => setIsCreateExamModalOpen(true)}
-            className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-primary-container text-on-primary font-label-md text-label-md uppercase tracking-wider hover:bg-primary transition-colors shadow-sm"
-          >
-            <Plus className="w-4 h-4" />
-            <span>+ Create New Examination</span>
-          </button>
-        </div>
-      </div>
-
-      <div className="px-6 py-6 flex flex-col gap-6">
-        {/* Metric KPI Row (4 brutalist telemetry tiles) */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
-          {/* KPI 1 */}
-          <div className="relative bg-surface-container-lowest p-4 shadow-sm flex flex-col justify-between overflow-hidden border border-outline-variant/30">
-            <div className="absolute left-0 top-0 bottom-0 w-1 bg-secondary" />
-            <div className="flex items-center justify-between pb-1">
-              <span className="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-semibold">
+        {/* 4 Standard Redesigned KPI Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {/* Card 1: Scheduled Exams */}
+          <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-5">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
                 Scheduled Exams
               </span>
-              <Calendar className="w-4 h-4 text-secondary" />
-            </div>
-            <div className="my-2">
-              <div className="font-headline-lg text-headline-lg text-primary font-bold">18 Active</div>
-              <div className="font-body-sm text-xs text-on-surface-variant mt-0.5">
-                8 Completed · 6 Ongoing · 4 Upcoming
+              <div className="w-10 h-10 rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600">
+                <Calendar className="w-5 h-5" />
               </div>
             </div>
-            <div className="w-full bg-surface-container h-1.5 mt-2 flex">
-              <div className="bg-secondary h-full" style={{ width: "44.4%" }} />
-              <div className="bg-secondary-container h-full" style={{ width: "33.3%" }} />
-              <div className="bg-outline-variant h-full" style={{ width: "22.3%" }} />
+            <div className="mt-3">
+              <div className="text-2xl font-bold tracking-tight text-slate-900">
+                18 <span className="text-xs font-normal text-slate-500">Active Series</span>
+              </div>
+              <div className="mt-2 flex items-center gap-1.5 text-xs font-medium text-slate-500">
+                <span className="text-emerald-600 font-semibold">8 Done</span>
+                <span>•</span>
+                <span className="text-indigo-600 font-semibold">6 Ongoing</span>
+                <span>•</span>
+                <span>4 Upcoming</span>
+              </div>
             </div>
           </div>
 
-          {/* KPI 2 */}
-          <div className="relative bg-surface-container-lowest p-4 shadow-sm flex flex-col justify-between overflow-hidden border border-outline-variant/30">
-            <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary-container" />
-            <div className="flex items-center justify-between pb-1">
-              <span className="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-semibold">
-                Paper Evaluation Velocity
+          {/* Card 2: Paper Evaluation Velocity */}
+          <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-5">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                Evaluation Velocity
               </span>
-              <FileCheck className="w-4 h-4 text-primary-container" />
+              <div className="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600">
+                <FileCheck className="w-5 h-5" />
+              </div>
             </div>
-            <div className="my-2">
-              <div className="font-headline-lg text-headline-lg text-primary font-bold flex items-baseline gap-2">
-                <span>4,820</span>
-                <span className="font-mono-data text-mono-data text-on-surface-variant font-normal text-sm">
-                  / 5,100
+            <div className="mt-3">
+              <div className="flex items-baseline gap-2">
+                <span className="text-2xl font-bold tracking-tight text-slate-900 tabular-nums">4,820</span>
+                <span className="text-xs text-slate-500 font-normal">/ 5,100</span>
+                <span className="text-xs font-semibold px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-700 border border-emerald-200 ml-auto">
+                  94.5%
                 </span>
               </div>
-              <div className="font-body-sm text-xs text-on-surface-variant mt-0.5">94.5% Evaluation Complete</div>
-            </div>
-            <div className="w-full bg-surface-container h-1.5 mt-2">
-              <div className="bg-primary-container h-full" style={{ width: "94.5%" }} />
+              <div className="w-full bg-slate-100 rounded-full h-1.5 mt-2.5 overflow-hidden">
+                <div className="bg-emerald-500 h-full rounded-full" style={{ width: "94.5%" }} />
+              </div>
             </div>
           </div>
 
-          {/* KPI 3 */}
-          <div className="relative bg-surface-container-lowest p-4 shadow-sm flex flex-col justify-between overflow-hidden border border-outline-variant/30">
-            <div className="absolute left-0 top-0 bottom-0 w-1 bg-secondary-container" />
-            <div className="flex items-center justify-between pb-1">
-              <span className="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-semibold">
+          {/* Card 3: Institutional Average */}
+          <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-5">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
                 Institutional Average
               </span>
-              <TrendingUp className="w-4 h-4 text-secondary" />
+              <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600">
+                <TrendingUp className="w-5 h-5" />
+              </div>
             </div>
-            <div className="my-2">
-              <div className="font-headline-lg text-headline-lg text-primary font-bold flex items-baseline gap-2">
-                <span>78.4%</span>
-                <span className="inline-flex items-center text-xs font-mono-data text-secondary font-bold">
+            <div className="mt-3">
+              <div className="flex items-baseline gap-2">
+                <span className="text-2xl font-bold tracking-tight text-slate-900">78.4%</span>
+                <span className="text-xs font-semibold px-2 py-0.5 rounded-md bg-blue-50 text-blue-700 border border-blue-200">
                   GPA 3.42
                 </span>
               </div>
-              <div className="font-body-sm text-xs text-secondary mt-0.5 font-medium flex items-center gap-1">
+              <div className="mt-2 flex items-center gap-1.5 text-xs font-medium text-emerald-600">
                 <TrendingUp className="w-3.5 h-3.5" />
                 <span>+2.1% YoY across all faculties</span>
               </div>
             </div>
-            <div className="w-full bg-surface-container h-1.5 mt-2">
-              <div className="bg-secondary h-full" style={{ width: "78.4%" }} />
-            </div>
           </div>
 
-          {/* KPI 4 */}
-          <div className="relative bg-surface-container-lowest p-4 shadow-sm flex flex-col justify-between overflow-hidden border border-outline-variant/30">
-            <div className="absolute left-0 top-0 bottom-0 w-1 bg-error" />
-            <div className="flex items-center justify-between pb-1">
-              <span className="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-semibold">
-                Publishing Dispatch Queue
+          {/* Card 4: Publishing Queue */}
+          <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-5">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                Publishing Queue
               </span>
-              <AlertCircle className="w-4 h-4 text-error" />
-            </div>
-            <div className="my-2">
-              <div className="font-headline-lg text-headline-lg text-error font-bold flex items-baseline gap-2">
-                <span>3 Batches</span>
-              </div>
-              <div className="font-body-sm text-xs text-on-surface-variant mt-0.5">
-                Ready for Dean Sign-off & Portal Sync
+              <div className="w-10 h-10 rounded-xl bg-amber-50 flex items-center justify-center text-amber-600">
+                <AlertCircle className="w-5 h-5" />
               </div>
             </div>
-            <div className="flex items-center gap-2 mt-2">
-              <span className="px-1.5 py-0.5 bg-error-container text-on-error-container font-label-sm text-[0.625rem] font-semibold uppercase">
-                Pending Dean Stamp
-              </span>
-              <span className="font-mono-data text-[0.6875rem] text-on-surface-variant">1,240 Transcripts</span>
+            <div className="mt-3">
+              <div className="flex items-baseline gap-2">
+                <span className="text-2xl font-bold tracking-tight text-slate-900">3 Batches</span>
+                <span className="text-xs font-semibold px-2 py-0.5 rounded-md bg-amber-50 text-amber-700 border border-amber-200">
+                  1,240 Slips
+                </span>
+              </div>
+              <div className="mt-2 flex items-center justify-between text-xs text-slate-500 font-medium">
+                <span>Pending Dean Sign-off</span>
+                <span className="text-indigo-600 font-semibold">Ready to Sync</span>
+              </div>
             </div>
           </div>
         </div>
 
         {/* Navigation Tabs & Controller Filters */}
-        <div className="bg-surface-container-lowest shadow-sm p-4 flex flex-col gap-4 border border-outline-variant/30">
-          {/* Tabs Strip */}
-          <div className="flex items-center justify-between border-b border-surface-container overflow-x-auto">
-            <div className="flex items-center gap-2">
+        <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-5 space-y-4">
+          {/* Tabs */}
+          <div className="flex items-center justify-between border-b border-slate-100 pb-3 flex-wrap gap-3">
+            <div className="inline-flex rounded-xl bg-slate-100 p-1 text-xs font-medium">
               <button
                 onClick={() => setActiveTab("all")}
-                className={`px-4 py-2 font-label-md text-label-md uppercase tracking-wider transition-colors rounded-md ${
+                className={`px-3 py-1.5 rounded-lg font-semibold transition-all ${
                   activeTab === "all"
-                    ? "bg-[#3D405B] text-white font-bold shadow-sm"
-                    : "text-on-surface-variant hover:text-emerald-700 hover:bg-emerald-50"
+                    ? "bg-white text-slate-900 shadow-xs"
+                    : "text-slate-600 hover:text-slate-900"
                 }`}
               >
                 All Examinations (18)
               </button>
               <button
                 onClick={() => setActiveTab("ledger")}
-                className={`px-4 py-2 font-label-md text-label-md uppercase tracking-wider transition-colors flex items-center gap-1.5 rounded-md ${
+                className={`px-3 py-1.5 rounded-lg font-semibold transition-all flex items-center gap-1.5 ${
                   activeTab === "ledger"
-                    ? "bg-[#3D405B] text-white font-bold shadow-sm"
-                    : "text-on-surface-variant hover:text-emerald-700 hover:bg-emerald-50"
+                    ? "bg-white text-indigo-700 shadow-xs"
+                    : "text-slate-600 hover:text-slate-900"
                 }`}
               >
                 <Edit className="w-3.5 h-3.5" />
@@ -455,186 +476,181 @@ export default function ExamsPage() {
               </button>
               <button
                 onClick={() => setActiveTab("moderation")}
-                className={`px-4 py-2 font-label-md text-label-md uppercase tracking-wider transition-colors flex items-center gap-1.5 rounded-md ${
+                className={`px-3 py-1.5 rounded-lg font-semibold transition-all flex items-center gap-1.5 ${
                   activeTab === "moderation"
-                    ? "bg-[#3D405B] text-white font-bold shadow-sm"
-                    : "text-on-surface-variant hover:text-emerald-700 hover:bg-emerald-50"
+                    ? "bg-white text-amber-700 shadow-xs"
+                    : "text-slate-600 hover:text-slate-900"
                 }`}
               >
-                <span>Moderation & Approvals</span>
-                <span className="px-1.5 py-0.2 bg-secondary text-on-secondary font-label-sm text-[0.625rem] rounded">
+                <span>Moderation &amp; Approvals</span>
+                <span className="px-1.5 py-0.2 rounded-full bg-amber-100 text-amber-800 text-[10px] font-bold">
                   3 Pending
                 </span>
               </button>
               <button
                 onClick={() => setActiveTab("archive")}
-                className={`px-4 py-2 font-label-md text-label-md uppercase tracking-wider transition-colors rounded-md ${
+                className={`px-3 py-1.5 rounded-lg font-semibold transition-all ${
                   activeTab === "archive"
-                    ? "bg-[#3D405B] text-white font-bold shadow-sm"
-                    : "text-on-surface-variant hover:text-emerald-700 hover:bg-emerald-50"
+                    ? "bg-white text-slate-900 shadow-xs"
+                    : "text-slate-600 hover:text-slate-900"
                 }`}
               >
                 Published Results Archive
               </button>
             </div>
-            <div className="hidden lg:flex items-center gap-2 py-1 font-mono-data text-mono-data text-on-surface-variant text-xs">
-              <span className="h-2 w-2 bg-secondary animate-pulse rounded-full" />
-              <span>LEDGER ENGINE: SECURE WRITE-ENABLED</span>
+
+            <div className="flex items-center gap-2 text-xs font-medium text-slate-500">
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+              <span>Marks Ledger Secure Mode</span>
             </div>
           </div>
 
-          {/* Advanced Filter Controls */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 bg-surface-container-low p-3 border border-outline-variant/30">
-            <div className="flex flex-col gap-1">
-              <label className="font-label-sm text-[0.6875rem] uppercase tracking-wider text-on-surface-variant font-semibold">
+          {/* Filter dropdowns */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+            <div>
+              <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1.5">
                 Program / Department
               </label>
-              <select className="w-full bg-surface-container-lowest text-primary px-3 py-2 font-mono-data text-xs border border-outline-variant/30 focus:outline-none">
-                <option>B.Tech Computer Science & Eng.</option>
-                <option>B.Tech Electronics & Comm.</option>
+              <select className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 cursor-pointer">
+                <option>B.Tech Computer Science &amp; Eng.</option>
+                <option>B.Tech Electronics &amp; Comm.</option>
                 <option>M.Tech Artificial Intelligence</option>
                 <option>MBA Systems Management</option>
               </select>
             </div>
-            <div className="flex flex-col gap-1">
-              <label className="font-label-sm text-[0.6875rem] uppercase tracking-wider text-on-surface-variant font-semibold">
+            <div>
+              <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1.5">
                 Cohort / Term
               </label>
-              <select className="w-full bg-surface-container-lowest text-primary px-3 py-2 font-mono-data text-xs border border-outline-variant/30 focus:outline-none">
+              <select className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 cursor-pointer">
                 <option>Batch 2023-27 · Semester IV</option>
                 <option>Batch 2022-26 · Semester VI</option>
-                <option>Batch 2021-25 · Semester VIII (Final)</option>
+                <option>Batch 2021-25 · Semester VIII</option>
               </select>
             </div>
-            <div className="flex flex-col gap-1">
-              <label className="font-label-sm text-[0.6875rem] uppercase tracking-wider text-on-surface-variant font-semibold">
+            <div>
+              <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1.5">
                 Course Unit
               </label>
-              <select className="w-full bg-surface-container-lowest text-primary px-3 py-2 font-mono-data text-xs border border-outline-variant/30 focus:outline-none">
+              <select className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 cursor-pointer">
                 <option>CS401: Database Management Systems</option>
-                <option>CS402: Design & Analysis of Algorithms</option>
+                <option>CS402: Design &amp; Analysis of Algorithms</option>
                 <option>CS403: Operating Systems Architecture</option>
                 <option>CS404: Theory of Computation</option>
               </select>
             </div>
-            <div className="flex flex-col gap-1">
-              <label className="font-label-sm text-[0.6875rem] uppercase tracking-wider text-on-surface-variant font-semibold">
+            <div>
+              <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1.5">
                 Assessment Series
               </label>
-              <select className="w-full bg-surface-container-lowest text-primary px-3 py-2 font-mono-data text-xs border border-outline-variant/30 focus:outline-none">
-                <option>End-Semester Regular Examination (May 2024)</option>
-                <option>Mid-Term Comprehensive Assessment</option>
-                <option>Practical Viva & Laboratory Review</option>
+              <select className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 cursor-pointer">
+                <option>End-Semester Regular (Spring 2025)</option>
+                <option>Mid-Term Assessment</option>
+                <option>Practical Viva &amp; Lab Review</option>
                 <option>Remedial / Supplementary</option>
               </select>
             </div>
           </div>
         </div>
 
-        {/* Split Screen Two-Column Administrative Layout */}
+        {/* Split Screen 8 Cols vs 4 Cols */}
         <div className="grid grid-cols-1 xl:grid-cols-12 gap-6 items-start">
-          {/* LEFT / MAIN AREA (8 cols) */}
-          <div className="xl:col-span-8 flex flex-col gap-4">
-            {/* Interactive Ledger Header & Control Ribbon */}
-            <div className="bg-surface-container-lowest shadow-sm p-4 flex flex-col gap-3 border border-outline-variant/30">
-              <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-2 border-b border-surface-container">
+          {/* LEFT AREA: Marks Entry Ledger & Distribution (8 Cols) */}
+          <div className="xl:col-span-8 space-y-4">
+            <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs overflow-hidden">
+              {/* Unit Header */}
+              <div className="p-4 border-b border-slate-100 flex flex-col md:flex-row md:items-center justify-between gap-3">
                 <div>
                   <div className="flex items-center gap-2">
-                    <span className="px-2 py-0.5 bg-primary-container text-on-primary font-mono-data text-mono-data uppercase font-bold text-xs">
+                    <span className="px-2 py-0.5 rounded-md bg-indigo-50 text-indigo-700 font-mono font-bold text-xs border border-indigo-100">
                       CS401
                     </span>
-                    <span className="font-headline-sm text-headline-sm text-primary font-bold">
-                      Database Management Systems
-                    </span>
-                    <span className="px-2 py-0.5 bg-surface-container text-secondary font-mono-data text-[0.6875rem] font-bold">
-                      4.0 CREDITS
+                    <h2 className="text-base font-bold text-slate-900">Database Management Systems</h2>
+                    <span className="px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 text-xs font-semibold">
+                      4.0 Credits
                     </span>
                   </div>
-                  <p className="font-body-sm text-xs text-on-surface-variant mt-1">
-                    Max Marks: <strong className="text-primary font-mono-data">100</strong> (Theory: 70 · Continuous
-                    Assessment/Lab: 30) · Passing Cutoff: 40% aggregate
+                  <p className="text-xs text-slate-500 mt-1">
+                    Max Marks: <strong className="text-slate-900">100</strong> (Theory: 70 • Internal/Lab: 30) • Passing Cutoff: 40% aggregate
                   </p>
                 </div>
-                <div className="flex items-center gap-2">
-                  <span className="inline-flex items-center gap-1 text-[0.75rem] font-mono-data text-on-surface-variant bg-surface-container-low px-2 py-1 border border-outline-variant/30">
-                    <CheckCircle className="w-3.5 h-3.5 text-secondary" />
-                    <span>AUDIT: 42/45 Verified</span>
-                  </span>
+
+                <div className="flex items-center gap-2 text-xs font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-200">
+                  <CheckCircle className="w-3.5 h-3.5" />
+                  <span>42/45 Verified</span>
                 </div>
               </div>
 
-              {/* Quick Action Bar */}
-              <div className="flex flex-wrap items-center justify-between gap-3 pt-1">
+              {/* Action Toolbar */}
+              <div className="p-3 bg-slate-50/60 border-b border-slate-100 flex flex-wrap items-center justify-between gap-2.5">
                 <div className="flex items-center gap-2 flex-wrap">
                   <button
                     onClick={() => {
                       setIsLocked(!isLocked);
                       showToast(isLocked ? "Marks Entry UNLOCKED for edit." : "Marks Entry LOCKED & timestamped.");
                     }}
-                    className={`inline-flex items-center gap-1.5 px-3 py-1.5 font-label-md text-label-md uppercase tracking-wider transition-colors border border-outline-variant/30 ${
+                    className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
                       isLocked
-                        ? "bg-error text-on-error"
-                        : "bg-surface-container text-primary hover:bg-surface-container-high"
+                        ? "bg-rose-600 hover:bg-rose-700 text-white"
+                        : "bg-white border border-slate-200 text-slate-700 hover:bg-slate-50"
                     }`}
                   >
                     <Lock className="w-3.5 h-3.5" />
-                    <span>{isLocked ? "Unlock Marks Entry" : "Lock Marks Entry"}</span>
+                    <span>{isLocked ? "Unlock Ledger" : "Lock Ledger"}</span>
                   </button>
                   <button
                     onClick={() => showToast("CSV Marks Template loaded into staging memory.")}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-surface-container text-primary font-label-md text-label-md uppercase tracking-wider hover:bg-surface-container-high transition-colors border border-outline-variant/30"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 transition-colors"
                   >
-                    <Upload className="w-3.5 h-3.5" />
-                    <span>Import CSV Marks</span>
+                    <Upload className="w-3.5 h-3.5 text-slate-500" />
+                    <span>Import CSV</span>
                   </button>
                   <button
-                    onClick={() => showToast("Auto-calculated Semester SGPA & CGPA for all 45 enrolled candidates.")}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-secondary text-on-secondary font-label-md text-label-md uppercase tracking-wider hover:bg-primary transition-colors shadow-sm"
+                    onClick={() => showToast("Auto-calculated Semester SGPA & CGPA for all candidates.")}
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-indigo-50 border border-indigo-200 text-indigo-700 hover:bg-indigo-100 transition-colors"
                   >
                     <FileCheck className="w-3.5 h-3.5" />
-                    <span>Auto-Calculate GPA</span>
+                    <span>Calculate GPA</span>
                   </button>
                 </div>
 
                 <div className="flex items-center gap-2">
                   <button
-                    onClick={() => showToast("Official Examination Gazette Exported (PDF/Print).")}
-                    className="inline-flex items-center gap-1 px-3 py-1.5 bg-surface-container text-primary font-label-md text-label-md uppercase tracking-wider hover:bg-surface-container-high transition-colors border border-outline-variant/30"
+                    onClick={() => showToast("Official Examination Gazette exported (PDF).")}
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 transition-colors"
                   >
-                    <Printer className="w-3.5 h-3.5" />
-                    <span>Export Gazette</span>
+                    <Printer className="w-3.5 h-3.5 text-slate-500" />
+                    <span>Gazette</span>
                   </button>
-                  <div className="relative w-48">
-                    <Search className="w-3.5 h-3.5 text-on-surface-variant absolute left-2 top-2" />
+                  <div className="relative w-44">
+                    <Search className="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-1/2 -translate-y-1/2" />
                     <input
                       type="text"
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
-                      placeholder="Filter Candidate..."
-                      className="w-full bg-surface-container-low text-primary px-3 py-1 pl-7 font-body-sm text-xs focus:outline-none border border-outline-variant/30"
+                      placeholder="Search student..."
+                      className="w-full bg-white border border-slate-200 rounded-lg pl-8 pr-2.5 py-1 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-indigo-500"
                     />
                   </div>
                 </div>
               </div>
-            </div>
 
-            {/* Rich Interactive Data Table */}
-            <div className="bg-surface-container-lowest shadow-sm overflow-hidden border border-outline-variant/30">
+              {/* Data Table */}
               <div className="overflow-x-auto">
-                <table className="w-full text-left border-collapse">
+                <table className="w-full text-left border-collapse text-xs">
                   <thead>
-                    <tr className="bg-surface-container-low border-b border-surface-container font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">
-                      <th className="py-2.5 px-3">Roll & Candidate</th>
-                      <th className="py-2.5 px-2 text-center w-24">Theory (70)</th>
-                      <th className="py-2.5 px-2 text-center w-24">Internal (30)</th>
-                      <th className="py-2.5 px-2 text-center w-20">Total (100)</th>
-                      <th className="py-2.5 px-3 text-center">Grade & Performance</th>
-                      <th className="py-2.5 px-2 text-center">Grace</th>
-                      <th className="py-2.5 px-2 text-center">Result Status</th>
-                      <th className="py-2.5 px-3 text-right">Audit</th>
+                    <tr className="bg-slate-50/80 border-b border-slate-200/80 text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
+                      <th className="py-3 px-3">Roll &amp; Candidate</th>
+                      <th className="py-3 px-2 text-center w-24">Theory (70)</th>
+                      <th className="py-3 px-2 text-center w-24">Internal (30)</th>
+                      <th className="py-3 px-2 text-center w-20">Total (100)</th>
+                      <th className="py-3 px-3 text-center">Grade &amp; Score</th>
+                      <th className="py-3 px-2 text-center">Grace</th>
+                      <th className="py-3 px-2 text-center">Status</th>
+                      <th className="py-3 px-3 text-right">Audit</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-surface-container font-body-md text-sm text-on-surface">
+                  <tbody className="divide-y divide-slate-100">
                     {filteredCandidates.map((c) => {
                       const isSelected = selectedCandidate.id === c.id;
 
@@ -644,109 +660,114 @@ export default function ExamsPage() {
                           onClick={() => setSelectedCandidate(c)}
                           className={`cursor-pointer transition-colors ${
                             isSelected
-                              ? "bg-surface-container-high/40 hover:bg-surface-container-high border-l-4 border-l-secondary"
-                              : "hover:bg-surface-container-low"
+                              ? "bg-indigo-50/50 hover:bg-indigo-50/70 border-l-4 border-l-indigo-600"
+                              : "hover:bg-slate-50/80"
                           }`}
                         >
+                          {/* Roll & Candidate */}
                           <td className="py-2.5 px-3">
-                            <div className="flex items-center gap-2">
+                            <div className="flex items-center gap-2.5">
                               {c.avatar ? (
                                 <img
                                   src={c.avatar}
                                   alt={c.name}
-                                  className="w-7 h-7 object-cover grayscale contrast-125 border border-outline-variant/30"
+                                  className="w-7 h-7 rounded-full object-cover border border-slate-200 shrink-0"
                                 />
                               ) : (
-                                <div className="w-7 h-7 bg-surface-container-high flex items-center justify-center font-mono-data text-[0.625rem] font-bold text-on-surface-variant border border-outline-variant/30">
+                                <div className="w-7 h-7 rounded-full bg-indigo-50 border border-indigo-100 flex items-center justify-center font-mono text-[10px] font-bold text-indigo-700 shrink-0">
                                   {c.initials}
                                 </div>
                               )}
-                              <div className="flex flex-col min-w-0">
-                                <span className="font-mono-data text-mono-data font-bold text-primary truncate text-xs">
-                                  {c.rollNo}
-                                </span>
-                                <span className="text-[0.75rem] text-on-surface-variant truncate font-medium">
-                                  {c.name}
-                                </span>
+                              <div>
+                                <div className="font-semibold text-slate-900">{c.name}</div>
+                                <div className="font-mono text-[11px] text-slate-500">{c.rollNo}</div>
                               </div>
                             </div>
                           </td>
+
+                          {/* Theory Marks */}
                           <td className="py-2.5 px-2 text-center">
                             <input
                               type="text"
                               value={c.theoryMarks}
                               onChange={(e) => handleScoreChange(c.id, "theory", e.target.value)}
                               disabled={isLocked}
-                              className={`w-16 text-center font-mono-data text-mono-data font-bold bg-surface-container-lowest py-1 border-b text-xs focus:outline-none ${
-                                isSelected ? "border-secondary" : "border-outline-variant"
-                              } ${c.theoryMarks === "AB" ? "text-error" : "text-primary"}`}
+                              className={`w-16 text-center font-mono font-bold bg-slate-50 border border-slate-200 rounded-md py-1 text-xs focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:bg-white ${
+                                c.theoryMarks === "AB" ? "text-rose-600 bg-rose-50" : "text-slate-900"
+                              }`}
                             />
                           </td>
+
+                          {/* Internal Marks */}
                           <td className="py-2.5 px-2 text-center">
                             <input
                               type="text"
                               value={c.internalMarks}
                               onChange={(e) => handleScoreChange(c.id, "internal", e.target.value)}
                               disabled={isLocked}
-                              className="w-16 text-center font-mono-data text-mono-data font-bold bg-surface-container-lowest text-primary py-1 border-b border-outline-variant text-xs focus:outline-none"
+                              className="w-16 text-center font-mono font-bold bg-slate-50 border border-slate-200 rounded-md py-1 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:bg-white"
                             />
                           </td>
-                          <td className="py-2.5 px-2 text-center">
-                            <span
-                              className={`font-mono-data text-mono-data font-bold text-xs ${
-                                c.totalMarks === "--" ? "text-error" : "text-primary"
-                              }`}
-                            >
+
+                          {/* Total Marks */}
+                          <td className="py-2.5 px-2 text-center font-mono font-bold text-xs">
+                            <span className={c.totalMarks === "--" ? "text-rose-600" : "text-slate-900"}>
                               {c.totalMarks}
                             </span>
                           </td>
+
+                          {/* Grade & Score */}
                           <td className="py-2.5 px-3 text-center">
                             <span
-                              className={`inline-flex items-center gap-1 px-2 py-0.5 font-mono-data text-[0.6875rem] font-bold shadow-sm ${
+                              className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full font-mono text-[11px] font-bold border ${
                                 c.resultStatus === "Absent"
-                                  ? "bg-error-container text-on-error-container"
-                                  : "bg-surface-container-lowest text-secondary"
+                                  ? "bg-rose-50 text-rose-700 border-rose-200"
+                                  : "bg-emerald-50 text-emerald-700 border-emerald-200"
                               }`}
                             >
-                              {c.resultStatus !== "Absent" && (
-                                <span className="h-1.5 w-1.5 rounded-full bg-secondary" />
-                              )}
-                              <span>
-                                {c.gradePct} [{c.gradeLabel}]
-                              </span>
+                              <span>{c.gradePct}</span>
+                              <span>[{c.gradeLabel.split(" ")[0]}]</span>
                             </span>
                           </td>
-                          <td className="py-2.5 px-2 text-center font-mono-data text-[0.75rem] text-on-surface-variant">
+
+                          {/* Grace */}
+                          <td className="py-2.5 px-2 text-center font-mono text-[11px]">
                             {c.graceMarks > 0 ? (
-                              <span className="px-1.5 py-0.2 bg-secondary-container text-primary font-mono-data text-[0.625rem] font-bold">
-                                +{c.graceMarks} Grace
+                              <span className="px-1.5 py-0.5 rounded bg-amber-50 text-amber-800 font-bold border border-amber-200">
+                                +{c.graceMarks}
                               </span>
                             ) : (
-                              "0"
+                              <span className="text-slate-400">0</span>
                             )}
                           </td>
+
+                          {/* Status */}
                           <td className="py-2.5 px-2 text-center">
                             <span
-                              className={`px-2 py-0.5 font-label-sm text-[0.625rem] font-bold uppercase ${
-                                c.resultStatus === "Absent"
-                                  ? "bg-error-container text-on-error-container"
-                                  : "bg-surface-container-low text-secondary"
+                              className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase border ${
+                                c.resultStatus === "Pass"
+                                  ? "bg-emerald-50 text-emerald-700 border-emerald-200"
+                                  : c.resultStatus === "Pass (Mod)"
+                                  ? "bg-blue-50 text-blue-700 border-blue-200"
+                                  : "bg-rose-50 text-rose-700 border-rose-200"
                               }`}
                             >
                               {c.resultStatus}
                             </span>
                           </td>
+
+                          {/* Audit */}
                           <td className="py-2.5 px-3 text-right">
                             <span
-                              className={`inline-flex items-center font-mono-data text-[0.6875rem] font-medium ${
+                              className={`inline-flex items-center gap-1 font-mono text-[11px] font-semibold ${
                                 c.auditStatus === "Verified"
-                                  ? "text-secondary"
+                                  ? "text-emerald-700"
                                   : c.auditStatus === "Flagged"
-                                  ? "text-error"
-                                  : "text-on-surface-variant"
+                                  ? "text-rose-600"
+                                  : "text-amber-700"
                               }`}
                             >
-                              <CheckCircle className="w-3.5 h-3.5 mr-0.5" />
+                              <CheckCircle className="w-3.5 h-3.5" />
                               <span>{c.auditStatus}</span>
                             </span>
                           </td>
@@ -757,320 +778,259 @@ export default function ExamsPage() {
                 </table>
               </div>
 
-              {/* Table Ledger Footer Pagination & Quick Aggregate */}
-              <div className="px-4 py-2.5 bg-surface-container-low flex flex-col sm:flex-row sm:items-center justify-between gap-3 font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant border-t border-outline-variant/30">
-                <div className="flex items-center gap-4 text-xs">
-                  <span>Showing 1-{filteredCandidates.length} of 45 Enrolled Candidates</span>
-                  <span className="hidden md:inline font-mono-data text-primary">
-                    Class Average: <strong>76.8/100</strong>
-                  </span>
-                  <span className="hidden md:inline font-mono-data text-secondary">
-                    Pass Rate: <strong>97.7%</strong>
-                  </span>
+              {/* Footer */}
+              <div className="p-4 bg-slate-50/80 border-t border-slate-200/80 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-slate-500 font-medium">
+                <div className="flex items-center gap-3">
+                  <span>Showing {filteredCandidates.length} of 45 Enrolled Candidates</span>
+                  <span className="text-slate-300">•</span>
+                  <span className="text-slate-900 font-semibold">Class Avg: 76.8/100</span>
+                  <span className="text-slate-300">•</span>
+                  <span className="text-emerald-700 font-semibold">Pass Rate: 97.7%</span>
                 </div>
-                <div className="flex items-center gap-1 font-mono-data text-xs">
-                  <button className="px-2 py-1 bg-surface-container-lowest text-primary hover:bg-surface-container-high transition-colors shadow-sm border border-outline-variant/30">
-                    PREV
+                <div className="flex items-center gap-1">
+                  <button className="px-2.5 py-1 rounded-lg border border-slate-200 bg-white text-slate-600 hover:bg-slate-50">
+                    Prev
                   </button>
-                  <button className="px-2 py-1 bg-primary text-on-primary font-bold">1</button>
-                  <button className="px-2 py-1 bg-surface-container-lowest text-primary hover:bg-surface-container-high transition-colors shadow-sm border border-outline-variant/30">
-                    2
-                  </button>
-                  <button className="px-2 py-1 bg-surface-container-lowest text-primary hover:bg-surface-container-high transition-colors shadow-sm border border-outline-variant/30">
-                    3
-                  </button>
-                  <button className="px-2 py-1 bg-surface-container-lowest text-primary hover:bg-surface-container-high transition-colors shadow-sm border border-outline-variant/30">
-                    NEXT
+                  <span className="px-2.5 py-1 rounded-lg bg-indigo-50 text-indigo-700 font-semibold border border-indigo-100">
+                    1
+                  </span>
+                  <button className="px-2.5 py-1 rounded-lg border border-slate-200 bg-white text-slate-600 hover:bg-slate-50">
+                    Next
                   </button>
                 </div>
               </div>
             </div>
 
-            {/* Grade Distribution Chart Module */}
-            <div className="bg-surface-container-lowest p-4 shadow-sm border border-outline-variant/30">
-              <div className="flex items-center justify-between mb-2">
-                <div className="flex flex-col">
-                  <span className="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-semibold">
-                    Statistical Cohort Telemetry
-                  </span>
-                  <span className="font-headline-sm text-headline-sm text-primary font-bold">
-                    CS401 Marks Curve & Grade Spread
-                  </span>
+            {/* Marks Curve & Grade Spread Histogram */}
+            <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-5">
+              <div className="flex items-center justify-between mb-3">
+                <div>
+                  <h3 className="text-sm font-bold text-slate-900">CS401 Marks Curve &amp; Grade Spread</h3>
+                  <p className="text-xs text-slate-500">Cohort Gaussian distribution breakdown</p>
                 </div>
-                <span className="font-mono-data text-mono-data text-secondary font-semibold text-xs">
-                  GAUSSIAN DISTRIBUTION FIT: 98.2%
+                <span className="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                  98.2% Fit
                 </span>
               </div>
 
-              {/* Inline Technical SVG Histogram */}
-              <div className="w-full bg-surface-container-low p-4 border border-outline-variant/30">
+              {/* Clean Histogram Bar View */}
+              <div className="bg-slate-50 rounded-xl p-4 border border-slate-100">
                 <div className="flex items-end justify-between gap-2 h-28 pt-4 px-2">
                   <div className="flex-1 flex flex-col items-center gap-1 h-full justify-end">
-                    <span className="font-mono-data text-[0.625rem] text-on-surface-variant font-bold">1</span>
-                    <div className="w-full bg-error-container" style={{ height: "8%" }} />
-                    <span className="font-mono-data text-[0.6875rem] text-primary">F (&lt;40)</span>
+                    <span className="text-[10px] font-bold text-slate-500">1</span>
+                    <div className="w-full rounded-t-md bg-rose-400" style={{ height: "10%" }} />
+                    <span className="text-[10px] font-medium text-slate-600">F (&lt;40)</span>
                   </div>
                   <div className="flex-1 flex flex-col items-center gap-1 h-full justify-end">
-                    <span className="font-mono-data text-[0.625rem] text-on-surface-variant font-bold">3</span>
-                    <div className="w-full bg-outline-variant" style={{ height: "18%" }} />
-                    <span className="font-mono-data text-[0.6875rem] text-primary">P (40-49)</span>
+                    <span className="text-[10px] font-bold text-slate-500">3</span>
+                    <div className="w-full rounded-t-md bg-amber-400" style={{ height: "20%" }} />
+                    <span className="text-[10px] font-medium text-slate-600">P (40-49)</span>
                   </div>
                   <div className="flex-1 flex flex-col items-center gap-1 h-full justify-end">
-                    <span className="font-mono-data text-[0.625rem] text-on-surface-variant font-bold">7</span>
-                    <div className="w-full bg-surface-container-high" style={{ height: "38%" }} />
-                    <span className="font-mono-data text-[0.6875rem] text-primary">C (50-59)</span>
+                    <span className="text-[10px] font-bold text-slate-500">7</span>
+                    <div className="w-full rounded-t-md bg-blue-400" style={{ height: "40%" }} />
+                    <span className="text-[10px] font-medium text-slate-600">C (50-59)</span>
                   </div>
                   <div className="flex-1 flex flex-col items-center gap-1 h-full justify-end">
-                    <span className="font-mono-data text-[0.625rem] text-on-surface-variant font-bold">12</span>
-                    <div className="w-full bg-secondary-container" style={{ height: "64%" }} />
-                    <span className="font-mono-data text-[0.6875rem] text-primary">B (60-69)</span>
+                    <span className="text-[10px] font-bold text-slate-500">12</span>
+                    <div className="w-full rounded-t-md bg-indigo-400" style={{ height: "65%" }} />
+                    <span className="text-[10px] font-medium text-slate-600">B (60-69)</span>
                   </div>
                   <div className="flex-1 flex flex-col items-center gap-1 h-full justify-end">
-                    <span className="font-mono-data text-[0.625rem] text-on-surface-variant font-bold">14</span>
-                    <div className="w-full bg-secondary" style={{ height: "82%" }} />
-                    <span className="font-mono-data text-[0.6875rem] text-primary font-bold">B+ (70-79)</span>
+                    <span className="text-[10px] font-bold text-slate-500">14</span>
+                    <div className="w-full rounded-t-md bg-indigo-600" style={{ height: "82%" }} />
+                    <span className="text-[10px] font-bold text-indigo-700">B+ (70-79)</span>
                   </div>
                   <div className="flex-1 flex flex-col items-center gap-1 h-full justify-end">
-                    <span className="font-mono-data text-[0.625rem] text-on-surface-variant font-bold">6</span>
-                    <div className="w-full bg-primary" style={{ height: "48%" }} />
-                    <span className="font-mono-data text-[0.6875rem] text-primary font-bold">A (80-89)</span>
+                    <span className="text-[10px] font-bold text-slate-500">6</span>
+                    <div className="w-full rounded-t-md bg-emerald-500" style={{ height: "50%" }} />
+                    <span className="text-[10px] font-bold text-emerald-700">A (80-89)</span>
                   </div>
                   <div className="flex-1 flex flex-col items-center gap-1 h-full justify-end">
-                    <span className="font-mono-data text-[0.625rem] text-on-surface-variant font-bold">2</span>
-                    <div className="w-full bg-primary-container" style={{ height: "22%" }} />
-                    <span className="font-mono-data text-[0.6875rem] text-primary font-bold">A+ (&gt;90)</span>
+                    <span className="text-[10px] font-bold text-slate-500">2</span>
+                    <div className="w-full rounded-t-md bg-emerald-600" style={{ height: "25%" }} />
+                    <span className="text-[10px] font-bold text-emerald-800">A+ (&gt;90)</span>
                   </div>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* RIGHT AREA (4 cols): Official Marksheet & Transcript Live Preview Card */}
-          <div className="xl:col-span-4 flex flex-col gap-4 sticky top-20">
-            <div className="bg-surface-container-lowest shadow-md flex flex-col relative overflow-hidden border border-outline-variant/30">
-              {/* Card Header & Live Inspector Badge */}
-              <div className="bg-primary text-on-primary p-4 flex items-center justify-between">
+          {/* RIGHT AREA: Live Marksheet Preview (4 Cols) */}
+          <div className="xl:col-span-4 space-y-4 sticky top-6">
+            <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs overflow-hidden">
+              {/* Header */}
+              <div className="p-4 bg-indigo-600 text-white flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <Eye className="w-5 h-5 text-secondary-container" />
-                  <span className="font-label-md text-label-md uppercase tracking-wider font-bold">
-                    Live Marksheet Preview
-                  </span>
+                  <Eye className="w-4 h-4 text-indigo-200" />
+                  <span className="text-sm font-bold">Live Transcript Preview</span>
                 </div>
-                <span className="px-2 py-0.5 bg-secondary text-on-secondary font-mono-data text-[0.625rem] font-bold uppercase tracking-wider">
-                  REAL-TIME SYNC
+                <span className="px-2 py-0.5 rounded-full bg-white/20 text-white text-[10px] font-bold uppercase tracking-wider">
+                  Real-Time Sync
                 </span>
               </div>
 
-              {/* Official Document Body (High density simulated grade sheet) */}
-              <div className="p-4 flex flex-col gap-3 bg-surface-container-lowest relative">
-                {/* Institutional Watermark Simulated Center Seal */}
-                <div className="absolute inset-0 pointer-events-none opacity-[0.03] flex items-center justify-center">
-                  <svg className="w-64 h-64 text-primary fill-current" viewBox="0 0 200 200">
-                    <circle cx="100" cy="100" r="90" fill="none" stroke="currentColor" strokeWidth="6" />
-                    <circle cx="100" cy="100" r="75" fill="none" stroke="currentColor" strokeWidth="2" />
-                    <polygon points="100,25 125,75 180,80 140,120 150,175 100,150 50,175 60,120 20,80 75,75" />
-                  </svg>
-                </div>
-
+              {/* Document Body */}
+              <div className="p-5 space-y-4 text-xs font-mono text-slate-700 bg-white">
                 {/* Institutional Header */}
-                <div className="text-center pb-2 border-b border-surface-container flex flex-col items-center">
-                  <div className="font-headline-sm text-sm leading-snug font-bold text-primary uppercase tracking-tight">
-                    Apex Institute of Technology & Management
-                  </div>
-                  <div className="font-label-sm text-[0.625rem] uppercase tracking-widest text-on-surface-variant font-semibold">
-                    Autonomous Academic Council · Established Under Act 2012
-                  </div>
-                  <div className="mt-1 px-3 py-0.5 bg-surface-container text-primary font-mono-data text-[0.6875rem] font-bold uppercase tracking-wider">
-                    OFFICIAL GRADE CARD / TRANSCRIPT
+                <div className="text-center pb-3 border-b border-slate-200 space-y-1">
+                  <h4 className="font-bold text-sm text-slate-900 tracking-tight">
+                    APEX INSTITUTE OF TECHNOLOGY &amp; MANAGEMENT
+                  </h4>
+                  <p className="text-[10px] text-slate-500">Autonomous Academic Council • Estd. 2012</p>
+                  <div className="inline-block px-2.5 py-0.5 rounded bg-indigo-50 text-indigo-700 text-[10px] font-bold uppercase tracking-wider mt-1 border border-indigo-100">
+                    Official Grade Transcript
                   </div>
                 </div>
 
-                {/* Candidate Demographic Bio Box */}
-                <div className="p-2 bg-surface-container-low grid grid-cols-12 gap-2 text-xs border border-outline-variant/30">
-                  <div className="col-span-3 flex items-center justify-center">
-                    {selectedCandidate.avatar ? (
-                      <img
-                        src={selectedCandidate.avatar}
-                        alt={selectedCandidate.name}
-                        className="w-16 h-20 object-cover shadow-sm border border-outline-variant/30"
-                      />
-                    ) : (
-                      <div className="w-16 h-20 bg-surface-container flex items-center justify-center font-mono-data text-xs font-bold text-primary border border-outline-variant/30">
-                        {selectedCandidate.initials}
-                      </div>
-                    )}
-                  </div>
-                  <div className="col-span-9 flex flex-col justify-center font-mono-data text-[0.6875rem] leading-relaxed">
+                {/* Candidate Info */}
+                <div className="p-3 bg-slate-50 rounded-xl border border-slate-200/70 flex items-center gap-3">
+                  {selectedCandidate.avatar ? (
+                    <img
+                      src={selectedCandidate.avatar}
+                      alt={selectedCandidate.name}
+                      className="w-14 h-16 rounded-lg object-cover border border-slate-200 shrink-0"
+                    />
+                  ) : (
+                    <div className="w-14 h-16 rounded-lg bg-indigo-50 border border-indigo-100 flex items-center justify-center font-bold text-indigo-700 text-sm shrink-0">
+                      {selectedCandidate.initials}
+                    </div>
+                  )}
+                  <div className="space-y-0.5 text-[11px] leading-tight">
                     <div>
-                      <span className="text-on-surface-variant">NAME:</span>{" "}
-                      <strong className="text-primary font-bold">{selectedCandidate.name}</strong>
+                      <span className="text-slate-400">NAME:</span>{" "}
+                      <strong className="text-slate-900">{selectedCandidate.name}</strong>
                     </div>
                     <div>
-                      <span className="text-on-surface-variant">ROLL NO:</span>{" "}
-                      <strong className="text-primary">{selectedCandidate.rollNo}</strong>
+                      <span className="text-slate-400">ROLL NO:</span>{" "}
+                      <strong className="text-slate-900">{selectedCandidate.rollNo}</strong>
                     </div>
                     <div>
-                      <span className="text-on-surface-variant">ENROLL ID:</span>{" "}
-                      <strong className="text-primary">{selectedCandidate.enrollId}</strong>
+                      <span className="text-slate-400">ENROLL:</span>{" "}
+                      <span className="text-slate-700">{selectedCandidate.enrollId}</span>
                     </div>
                     <div>
-                      <span className="text-on-surface-variant">PROGRAM:</span>{" "}
-                      <span className="text-on-surface">{selectedCandidate.program}</span>
-                    </div>
-                    <div>
-                      <span className="text-on-surface-variant">TERM:</span>{" "}
-                      <span className="text-on-surface">Semester IV (Spring 2024)</span>
+                      <span className="text-slate-400">TERM:</span>{" "}
+                      <span className="text-slate-700">Semester IV (Spring 2025)</span>
                     </div>
                   </div>
                 </div>
 
-                {/* Subject-wise Breakdown Table */}
+                {/* Subject-wise Table */}
                 <div className="overflow-x-auto">
-                  <table className="w-full text-left border-collapse text-[0.6875rem] font-mono-data">
+                  <table className="w-full text-left text-[11px]">
                     <thead>
-                      <tr className="bg-surface-container text-primary uppercase font-bold border-b border-outline-variant/40">
-                        <th className="p-1">Code</th>
-                        <th className="p-1">Title</th>
-                        <th className="p-1 text-center">Cr</th>
-                        <th className="p-1 text-center">Max</th>
-                        <th className="p-1 text-center">Scored</th>
-                        <th className="p-1 text-center">Grd</th>
-                        <th className="p-1 text-center">Pt</th>
+                      <tr className="border-b border-slate-200 text-slate-400 uppercase text-[10px]">
+                        <th className="py-1">Code</th>
+                        <th className="py-1">Title</th>
+                        <th className="py-1 text-center">Cr</th>
+                        <th className="py-1 text-center">Marks</th>
+                        <th className="py-1 text-center">Grd</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-surface-container text-on-surface">
-                      <tr className="bg-surface-container-high/20 font-semibold">
-                        <td className="p-1 text-secondary">CS401</td>
-                        <td className="p-1 truncate max-w-[90px]">Database Mgmt</td>
-                        <td className="p-1 text-center">4.0</td>
-                        <td className="p-1 text-center">100</td>
-                        <td className="p-1 text-center font-bold text-primary">{selectedCandidate.totalMarks}</td>
-                        <td className="p-1 text-center text-secondary font-bold">
+                    <tbody className="divide-y divide-slate-100">
+                      <tr className="bg-indigo-50/40 font-semibold">
+                        <td className="py-1.5 text-indigo-700">CS401</td>
+                        <td className="py-1.5 truncate max-w-[80px]">DBMS</td>
+                        <td className="py-1.5 text-center">4.0</td>
+                        <td className="py-1.5 text-center font-bold">{selectedCandidate.totalMarks}</td>
+                        <td className="py-1.5 text-center font-bold text-indigo-700">
                           {selectedCandidate.gradeLabel.split(" ")[0]}
                         </td>
-                        <td className="p-1 text-center">10.0</td>
                       </tr>
                       <tr>
-                        <td className="p-1 text-on-surface-variant">CS402</td>
-                        <td className="p-1 truncate max-w-[90px]">Algorithms & Comp</td>
-                        <td className="p-1 text-center">4.0</td>
-                        <td className="p-1 text-center">100</td>
-                        <td className="p-1 text-center">88</td>
-                        <td className="p-1 text-center font-bold">A</td>
-                        <td className="p-1 text-center">9.0</td>
+                        <td className="py-1.5 text-slate-500">CS402</td>
+                        <td className="py-1.5 truncate max-w-[80px]">Algorithms</td>
+                        <td className="py-1.5 text-center">4.0</td>
+                        <td className="py-1.5 text-center">88</td>
+                        <td className="py-1.5 text-center font-bold">A</td>
                       </tr>
                       <tr>
-                        <td className="p-1 text-on-surface-variant">CS403</td>
-                        <td className="p-1 truncate max-w-[90px]">Operating Systems</td>
-                        <td className="p-1 text-center">4.0</td>
-                        <td className="p-1 text-center">100</td>
-                        <td className="p-1 text-center">81</td>
-                        <td className="p-1 text-center font-bold">A</td>
-                        <td className="p-1 text-center">9.0</td>
+                        <td className="py-1.5 text-slate-500">CS403</td>
+                        <td className="py-1.5 truncate max-w-[80px]">Operating Sys</td>
+                        <td className="py-1.5 text-center">4.0</td>
+                        <td className="py-1.5 text-center">81</td>
+                        <td className="py-1.5 text-center font-bold">A</td>
                       </tr>
                       <tr>
-                        <td className="p-1 text-on-surface-variant">CS404</td>
-                        <td className="p-1 truncate max-w-[90px]">Automata Theory</td>
-                        <td className="p-1 text-center">3.0</td>
-                        <td className="p-1 text-center">100</td>
-                        <td className="p-1 text-center">76</td>
-                        <td className="p-1 text-center font-bold">B+</td>
-                        <td className="p-1 text-center">8.0</td>
-                      </tr>
-                      <tr>
-                        <td className="p-1 text-on-surface-variant">CS405</td>
-                        <td className="p-1 truncate max-w-[90px]">DBMS Lab (Practical)</td>
-                        <td className="p-1 text-center">2.0</td>
-                        <td className="p-1 text-center">50</td>
-                        <td className="p-1 text-center">47</td>
-                        <td className="p-1 text-center text-secondary font-bold">O</td>
-                        <td className="p-1 text-center">10.0</td>
+                        <td className="py-1.5 text-slate-500">CS404</td>
+                        <td className="py-1.5 truncate max-w-[80px]">Automata</td>
+                        <td className="py-1.5 text-center">3.0</td>
+                        <td className="py-1.5 text-center">76</td>
+                        <td className="py-1.5 text-center font-bold">B+</td>
                       </tr>
                     </tbody>
                   </table>
                 </div>
 
-                {/* Cumulative Summary Matrix */}
-                <div className="p-2 bg-surface-container flex items-center justify-between font-mono-data text-xs border border-outline-variant/30">
-                  <div className="flex flex-col">
-                    <span className="text-on-surface-variant text-[0.625rem] uppercase">Semester SGPA</span>
-                    <span className="text-primary font-bold text-sm">{selectedCandidate.sgpa.toFixed(2)} / 10.0</span>
+                {/* Cumulative Metrics */}
+                <div className="p-3 bg-slate-50 rounded-xl border border-slate-200/80 flex items-center justify-between text-xs">
+                  <div>
+                    <div className="text-[10px] text-slate-400 uppercase">SGPA</div>
+                    <div className="text-sm font-bold text-slate-900">{selectedCandidate.sgpa.toFixed(2)}</div>
                   </div>
-                  <div className="flex flex-col text-center">
-                    <span className="text-on-surface-variant text-[0.625rem] uppercase">Cumulative CGPA</span>
-                    <span className="text-secondary font-bold text-sm">{selectedCandidate.cgpa.toFixed(2)}</span>
+                  <div className="text-center">
+                    <div className="text-[10px] text-slate-400 uppercase">CGPA</div>
+                    <div className="text-sm font-bold text-indigo-700">{selectedCandidate.cgpa.toFixed(2)}</div>
                   </div>
-                  <div className="flex flex-col text-right">
-                    <span className="text-on-surface-variant text-[0.625rem] uppercase">Classification</span>
-                    <span className="text-primary font-bold text-[0.6875rem]">{selectedCandidate.classification}</span>
+                  <div className="text-right">
+                    <div className="text-[10px] text-slate-400 uppercase">Class</div>
+                    <div className="text-[11px] font-bold text-slate-900">{selectedCandidate.classification}</div>
                   </div>
                 </div>
 
-                {/* Dean Official Signature Block & Institutional Seal Stamp */}
-                <div className="pt-2 flex items-center justify-between border-t border-surface-container mt-1">
-                  <div className="flex flex-col text-left">
-                    <span className="font-mono-data text-[0.625rem] text-on-surface-variant">ISSUANCE: 24-MAY-2024</span>
-                    <span className="font-mono-data text-[0.625rem] text-on-surface-variant">
-                      SECURITY KEY: 94F8-A21E
-                    </span>
+                {/* Digital Seal */}
+                <div className="pt-2 border-t border-slate-200 flex items-center justify-between text-[10px] text-slate-500">
+                  <div>
+                    <div>ISSUED: 24-MAR-2025</div>
+                    <div>HASH: 94F8-A21E</div>
                   </div>
-
-                  {/* Controller Stamp Element */}
-                  <div className="flex items-center gap-2">
-                    <div className="flex flex-col text-right">
-                      <span className="font-headline-sm text-xs font-bold text-primary italic">M. Vance</span>
-                      <span className="font-label-sm text-[0.5625rem] uppercase tracking-wider text-on-surface-variant font-semibold">
-                        CONTROLLER OF EXAMS
-                      </span>
-                    </div>
-                    <div className="w-8 h-8 rounded-full border border-secondary flex items-center justify-center text-secondary font-bold text-[0.5rem] tracking-tighter">
-                      SEAL
-                    </div>
+                  <div className="text-right">
+                    <div className="font-bold text-slate-900 italic">Dr. Margaret Vance</div>
+                    <div className="text-[9px] uppercase">Controller of Exams</div>
                   </div>
                 </div>
               </div>
 
-              {/* Marksheet Output Dispatch Actions */}
-              <div className="p-3 bg-surface-container-low flex flex-col gap-2 border-t border-outline-variant/30">
+              {/* Actions Footer */}
+              <div className="p-4 bg-slate-50/80 border-t border-slate-200/80 space-y-2">
                 <button
                   onClick={() => showToast(`Downloaded Official Marksheet for ${selectedCandidate.name}.pdf`)}
-                  className="w-full py-2 bg-primary-container text-on-primary font-label-md text-label-md uppercase tracking-wider hover:bg-primary transition-colors flex items-center justify-center gap-1.5 shadow-sm"
+                  className="w-full py-2 px-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs flex items-center justify-center gap-2 shadow-xs transition-colors"
                 >
                   <Download className="w-4 h-4" />
                   <span>Download Marksheet PDF</span>
                 </button>
                 <div className="grid grid-cols-2 gap-2">
                   <button
-                    onClick={() => showToast(`Sent transcript for ${selectedCandidate.name} to connected printer.`)}
-                    className="py-1.5 bg-surface-container-lowest text-primary font-label-sm text-label-sm uppercase tracking-wider hover:bg-surface-container-high transition-colors flex items-center justify-center gap-1 shadow-sm border border-outline-variant/30"
+                    onClick={() => showToast(`Sent transcript for ${selectedCandidate.name} to printer.`)}
+                    className="py-1.5 px-3 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 font-semibold text-xs flex items-center justify-center gap-1.5 transition-colors"
                   >
-                    <Printer className="w-3.5 h-3.5" />
-                    <span>Print Copy</span>
+                    <Printer className="w-3.5 h-3.5 text-slate-500" />
+                    <span>Print</span>
                   </button>
                   <button
-                    onClick={() =>
-                      showToast(`Marksheet synced to ${selectedCandidate.name}'s Student Portal account.`)
-                    }
-                    className="py-1.5 bg-secondary text-on-secondary font-label-sm text-label-sm uppercase tracking-wider hover:bg-primary transition-colors flex items-center justify-center gap-1 shadow-sm"
+                    onClick={() => showToast(`Marksheet synced to ${selectedCandidate.name}'s Student Portal.`)}
+                    className="py-1.5 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs flex items-center justify-center gap-1.5 shadow-xs transition-colors"
                   >
                     <Send className="w-3.5 h-3.5" />
-                    <span>Dispatch to Portal</span>
+                    <span>Sync Portal</span>
                   </button>
                 </div>
               </div>
             </div>
 
-            {/* Moderation Quick Policy Notice */}
-            <div className="p-4 bg-surface-container shadow-sm flex flex-col gap-1 border border-outline-variant/30">
-              <div className="flex items-center gap-2 text-primary font-label-sm text-label-sm uppercase tracking-wider font-bold">
-                <Gavel className="w-4 h-4 text-secondary" />
-                <span>Standing Academic Regulation 4.2</span>
+            {/* Moderation Standing Policy Card */}
+            <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-4 flex items-start gap-3">
+              <div className="w-8 h-8 rounded-xl bg-amber-50 flex items-center justify-center text-amber-600 shrink-0">
+                <Gavel className="w-4 h-4" />
               </div>
-              <p className="font-body-sm text-body-sm text-on-surface-variant leading-relaxed text-xs">
-                Grace marks are strictly capped at a maximum of <strong>3 marks aggregate</strong> across the semester
-                for candidates with 75%+ mandatory lecture attendance. Any adjustment requires joint sign-off by the
-                Academic Board.
-              </p>
+              <div className="text-xs text-slate-600 space-y-1">
+                <div className="font-semibold text-slate-900">Academic Regulation §4.2 (Grace Policy)</div>
+                <p className="leading-relaxed">
+                  Grace marks are strictly capped at 3 marks aggregate across the semester for candidates with 75%+ mandatory attendance.
+                </p>
+              </div>
             </div>
           </div>
         </div>
@@ -1078,47 +1038,45 @@ export default function ExamsPage() {
 
       {/* Create New Examination Modal */}
       {isCreateExamModalOpen && (
-        <div className="fixed inset-0 bg-primary/40 backdrop-blur-xs flex items-center justify-center p-4 z-50">
-          <div className="bg-surface-container-lowest max-w-lg w-full shadow-2xl border border-outline-variant/40 animate-in fade-in zoom-in-95">
-            <div className="bg-primary text-on-primary px-5 py-3.5 flex items-center justify-between">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-xs">
+          <div className="bg-white rounded-2xl shadow-xl border border-slate-200/80 max-w-lg w-full overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+            <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/70">
               <div className="flex items-center gap-2">
-                <Award className="w-5 h-5 text-secondary-container" />
-                <h3 className="font-headline-sm text-headline-sm uppercase font-bold tracking-tight">
-                  + Create Examination Series
-                </h3>
+                <Award className="w-5 h-5 text-indigo-600" />
+                <h3 className="font-bold text-base text-slate-900">Create Examination Series</h3>
               </div>
               <button
                 onClick={() => setIsCreateExamModalOpen(false)}
-                className="text-on-primary/70 hover:text-on-primary"
+                className="w-8 h-8 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 flex items-center justify-center"
               >
-                <X className="w-5 h-5" />
+                <X className="w-4 h-4" />
               </button>
             </div>
 
-            <form onSubmit={handleCreateExam} className="p-5 space-y-4">
+            <form onSubmit={handleCreateExam} className="p-6 space-y-4 text-xs text-slate-700">
               <div>
-                <label className="block font-label-sm text-[0.6875rem] uppercase text-on-surface-variant mb-1 font-semibold">
+                <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1.5">
                   Examination Series Title
                 </label>
                 <input
                   type="text"
                   required
-                  placeholder="e.g. End-Semester Regular Examinations (Autumn 2024)"
+                  placeholder="e.g. End-Semester Regular Examinations (Spring 2025)"
                   value={newExamTitle}
                   onChange={(e) => setNewExamTitle(e.target.value)}
-                  className="w-full bg-surface-container-low px-3 py-2 font-body-sm text-body-sm text-primary border border-outline-variant/40 text-xs focus:outline-none focus:bg-surface-container-lowest"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs font-semibold text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block font-label-sm text-[0.6875rem] uppercase text-on-surface-variant mb-1 font-semibold">
+                  <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1.5">
                     Assessment Type
                   </label>
                   <select
                     value={newExamType}
                     onChange={(e) => setNewExamType(e.target.value)}
-                    className="w-full bg-surface-container-low px-3 py-2 font-body-sm text-body-sm text-primary border border-outline-variant/40 text-xs focus:outline-none"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 cursor-pointer"
                   >
                     <option>End-Semester Regular</option>
                     <option>Mid-Term Comprehensive</option>
@@ -1127,13 +1085,13 @@ export default function ExamsPage() {
                   </select>
                 </div>
                 <div>
-                  <label className="block font-label-sm text-[0.6875rem] uppercase text-on-surface-variant mb-1 font-semibold">
+                  <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1.5">
                     Cohort Target
                   </label>
                   <select
                     value={newExamBatch}
                     onChange={(e) => setNewExamBatch(e.target.value)}
-                    className="w-full bg-surface-container-low px-3 py-2 font-body-sm text-body-sm text-primary border border-outline-variant/40 text-xs focus:outline-none"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 cursor-pointer"
                   >
                     <option>Batch 2023-27 · Sem IV</option>
                     <option>Batch 2022-26 · Sem VI</option>
@@ -1144,40 +1102,40 @@ export default function ExamsPage() {
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block font-label-sm text-[0.6875rem] uppercase text-on-surface-variant mb-1 font-semibold">
+                  <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1.5">
                     Start Date
                   </label>
                   <input
                     type="date"
                     value={newExamStartDate}
                     onChange={(e) => setNewExamStartDate(e.target.value)}
-                    className="w-full bg-surface-container-low px-3 py-2 font-mono-data text-mono-data text-primary border border-outline-variant/40 text-xs focus:outline-none"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs font-mono text-slate-900"
                   />
                 </div>
                 <div>
-                  <label className="block font-label-sm text-[0.6875rem] uppercase text-on-surface-variant mb-1 font-semibold">
+                  <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1.5">
                     End Date
                   </label>
                   <input
                     type="date"
                     value={newExamEndDate}
                     onChange={(e) => setNewExamEndDate(e.target.value)}
-                    className="w-full bg-surface-container-low px-3 py-2 font-mono-data text-mono-data text-primary border border-outline-variant/40 text-xs focus:outline-none"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs font-mono text-slate-900"
                   />
                 </div>
               </div>
 
-              <div className="pt-2 flex items-center justify-end gap-2 border-t border-outline-variant/30">
+              <div className="pt-3 flex items-center justify-end gap-2 border-t border-slate-100">
                 <button
                   type="button"
                   onClick={() => setIsCreateExamModalOpen(false)}
-                  className="px-4 py-2 bg-surface-container text-on-surface font-label-md text-label-md uppercase tracking-wider hover:bg-surface-container-high transition-colors"
+                  className="py-2 px-4 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 font-semibold"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 bg-primary-container text-on-primary font-label-md text-label-md uppercase tracking-wider hover:bg-primary transition-colors flex items-center gap-1.5 shadow-sm"
+                  className="py-2 px-5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold flex items-center gap-1.5 shadow-xs transition-colors"
                 >
                   <Plus className="w-4 h-4" />
                   <span>Schedule Series</span>
@@ -1190,4 +1148,3 @@ export default function ExamsPage() {
     </div>
   );
 }
-

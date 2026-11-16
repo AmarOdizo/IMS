@@ -23,7 +23,14 @@ import {
   ChevronRight,
   ExternalLink,
   Plus,
-  Coins
+  Coins,
+  TrendingUp,
+  FileText,
+  Calendar,
+  Send,
+  ArrowUpRight,
+  ShieldCheck,
+  SlidersHorizontal
 } from "lucide-react";
 
 interface FeeTransaction {
@@ -43,17 +50,17 @@ interface FeeTransaction {
   status: "Cleared" | "Pending Bank Clearance";
 }
 
-const initialTransactions: FeeTransaction[] = [
+const INITIAL_TRANSACTIONS: FeeTransaction[] = [
   {
     id: "tx-1",
-    receiptNo: "REC-2024-1049",
-    date: "Oct 24, 2024",
+    receiptNo: "REC-2025-1049",
+    date: "24 Mar 2025",
     time: "14:28",
     studentName: "Ethan Vance Walker",
-    rollId: "APEX-ENG-2022-094",
+    rollId: "APX-CS-2022-094",
     course: "B.Tech Computer Science",
     batch: "Batch 2022-26 • Sec-B",
-    feeHead: "Sem 5 Tuition",
+    feeHead: "Sem 5 Tuition Fee",
     amount: 4250.0,
     mode: "UPI (UTR-8491)",
     modeType: "upi",
@@ -62,27 +69,27 @@ const initialTransactions: FeeTransaction[] = [
   },
   {
     id: "tx-2",
-    receiptNo: "REC-2024-1048",
-    date: "Oct 24, 2024",
+    receiptNo: "REC-2025-1048",
+    date: "24 Mar 2025",
     time: "13:50",
     studentName: "Priya S. Nambiar",
-    rollId: "APEX-MGT-2023-018",
+    rollId: "APX-MGT-2023-018",
     course: "MBA Executive Strategy",
     batch: "Batch 2023-25 • Div-A",
-    feeHead: "Lab & Library",
+    feeHead: "Lab & Digital Library",
     amount: 1100.0,
     mode: "Counter Cash",
     modeType: "cash",
-    collector: "M. Vance (Dean Bursar)",
+    collector: "Dr. Margaret Vance",
     status: "Cleared"
   },
   {
     id: "tx-3",
-    receiptNo: "REC-2024-1047",
-    date: "Oct 24, 2024",
+    receiptNo: "REC-2025-1047",
+    date: "24 Mar 2025",
     time: "11:15",
     studentName: "Devon Marcus Lee",
-    rollId: "APEX-ENG-2021-304",
+    rollId: "APX-ENG-2021-304",
     course: "B.Tech Mechanical Robotics",
     batch: "Batch 2021-25 • Sec-C",
     feeHead: "Semester 7 Tuition",
@@ -94,11 +101,11 @@ const initialTransactions: FeeTransaction[] = [
   },
   {
     id: "tx-4",
-    receiptNo: "REC-2024-1046",
-    date: "Oct 24, 2024",
+    receiptNo: "REC-2025-1046",
+    date: "24 Mar 2025",
     time: "09:40",
     studentName: "Kavita R. Nair",
-    rollId: "APEX-DES-2024-012",
+    rollId: "APX-DES-2024-012",
     course: "B.Des Interaction Architecture",
     batch: "Batch 2024-28 • Div-A",
     feeHead: "Examination & Studio",
@@ -110,26 +117,59 @@ const initialTransactions: FeeTransaction[] = [
   },
   {
     id: "tx-5",
-    receiptNo: "REC-2024-1045",
-    date: "Oct 23, 2024",
+    receiptNo: "REC-2025-1045",
+    date: "23 Mar 2025",
     time: "16:45",
     studentName: "Liam A. Gallagher",
-    rollId: "APEX-ENG-2023-149",
+    rollId: "APX-ENG-2023-149",
     course: "B.Tech Civil Engineering",
     batch: "Batch 2023-27 • Sec-A",
     feeHead: "Sem 3 Tuition",
     amount: 2400.0,
-    mode: "NEFT/RTGS",
+    mode: "NEFT / RTGS Transfer",
     modeType: "neft",
     collector: "R. Hendricks (Desk-01)",
     status: "Cleared"
+  },
+  {
+    id: "tx-6",
+    receiptNo: "REC-2025-1044",
+    date: "23 Mar 2025",
+    time: "14:10",
+    studentName: "Devina Mukherjee",
+    rollId: "APX-CS-2022-002",
+    course: "B.Tech Computer Science",
+    batch: "Batch 2022-26 • Sec-A",
+    feeHead: "Sem 5 Tuition & Exam",
+    amount: 4350.0,
+    mode: "UPI (UTR-9912)",
+    modeType: "upi",
+    collector: "R. Hendricks (Desk-01)",
+    status: "Cleared"
+  },
+  {
+    id: "tx-7",
+    receiptNo: "REC-2025-1043",
+    date: "22 Mar 2025",
+    time: "11:30",
+    studentName: "Kiran Kumar",
+    rollId: "APX-CS-2022-004",
+    course: "B.Tech Computer Science",
+    batch: "Batch 2022-26 • Sec-A",
+    feeHead: "Sports Levy & Hostel",
+    amount: 1850.0,
+    mode: "Cheque #881290",
+    modeType: "cheque",
+    collector: "M. Vance (Dean Bursar)",
+    status: "Pending Bank Clearance"
   }
 ];
 
 export default function FeesManagementPage() {
-  const [transactions, setTransactions] = useState<FeeTransaction[]>(initialTransactions);
+  const [transactions, setTransactions] = useState<FeeTransaction[]>(INITIAL_TRANSACTIONS);
   const [activeTab, setActiveTab] = useState<"all" | "defaulters" | "schedule" | "reconcile">("all");
   const [searchQuery, setSearchQuery] = useState("");
+  const [modeFilter, setModeFilter] = useState<string>("all");
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isReceiptModalOpen, setIsReceiptModalOpen] = useState(false);
   const [isStructureModalOpen, setIsStructureModalOpen] = useState(false);
@@ -161,22 +201,22 @@ export default function FeesManagementPage() {
     return Math.max(0, sub - discount + fine);
   };
 
-  const triggerToast = (msg: string) => {
+  const showToast = (msg: string) => {
     setToastMessage(msg);
     setTimeout(() => {
       setToastMessage(null);
-    }, 3800);
+    }, 3200);
   };
 
   const handleCommitPayment = () => {
     const netAmount = calculateTotal();
     const newTx: FeeTransaction = {
       id: `tx-${Date.now()}`,
-      receiptNo: `REC-2024-${1050 + transactions.length}`,
-      date: "Oct 24, 2024",
+      receiptNo: `REC-2025-${1050 + transactions.length}`,
+      date: "24 Mar 2025",
       time: "15:02",
       studentName: "Ethan Vance Walker",
-      rollId: "APEX-ENG-2022-094",
+      rollId: "APX-CS-2022-094",
       course: "B.Tech Computer Science",
       batch: "Batch 2022-26 • Sec-B",
       feeHead: "Sem 5 Tuition & Labs",
@@ -189,7 +229,7 @@ export default function FeesManagementPage() {
 
     setTransactions([newTx, ...transactions]);
     setIsDrawerOpen(false);
-    triggerToast(`Payment recorded to ledger. Voucher #${newTx.receiptNo}`);
+    showToast(`Payment recorded to fiscal ledger. Voucher #${newTx.receiptNo}`);
 
     if (autoOpenReceipt) {
       setTimeout(() => {
@@ -201,185 +241,189 @@ export default function FeesManagementPage() {
 
   const filteredTransactions = transactions.filter((tx) => {
     if (activeTab === "defaulters") {
-      return tx.status === "Pending Bank Clearance";
+      if (tx.status !== "Pending Bank Clearance") return false;
+    }
+    if (modeFilter !== "all" && tx.modeType !== modeFilter) {
+      return false;
     }
     if (searchQuery.trim()) {
       const q = searchQuery.toLowerCase();
       return (
         tx.receiptNo.toLowerCase().includes(q) ||
         tx.studentName.toLowerCase().includes(q) ||
-        tx.rollId.toLowerCase().includes(q)
+        tx.rollId.toLowerCase().includes(q) ||
+        tx.course.toLowerCase().includes(q)
       );
     }
     return true;
   });
 
   return (
-    <div className="flex flex-col w-full font-body-md text-on-surface">
-      {/* Top Context & Action Command Bar */}
-      <section className="bg-surface-container-lowest shadow-sm px-gutter-desktop py-space-md flex flex-wrap items-center justify-between gap-space-md border-b border-outline-variant/30">
-        <div className="flex flex-col min-w-0">
-          <div className="flex items-center gap-space-xs text-on-surface-variant font-label-sm uppercase tracking-wider">
-            <span>Institutional Bursar Office</span>
-            <span>/</span>
-            <span className="text-secondary font-semibold">Treasury &amp; General Ledger</span>
-            <span>/</span>
-            <span className="text-on-surface">AY 2024-25 Series</span>
-          </div>
-          <div className="flex items-center gap-space-sm mt-0.5">
-            <h1 className="font-headline-lg text-headline-lg text-primary tracking-tight uppercase font-bold">
-              Fees Management &amp; Fiscal Ledger
-            </h1>
-            <span className="inline-flex items-center px-space-xs py-0.5 bg-surface-container font-mono-data text-label-sm text-secondary uppercase font-semibold">
-              Live Clearing
-            </span>
-          </div>
+    <div className="min-h-screen bg-slate-50/60 pb-16">
+      {/* Toast Notification */}
+      {toastMessage && (
+        <div className="fixed bottom-6 right-6 bg-slate-900 text-white px-4 py-3 rounded-xl shadow-xl flex items-center gap-3 z-50 animate-in fade-in slide-in-from-bottom-2 border border-slate-700">
+          <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0" />
+          <span className="text-sm font-medium">{toastMessage}</span>
         </div>
+      )}
 
-        {/* Action Toolset */}
-        <div className="flex items-center gap-space-sm flex-wrap font-mono-data">
-          <button
-            onClick={() => setIsStructureModalOpen(true)}
-            className="inline-flex items-center gap-space-xs px-space-md py-2 bg-surface-container-low text-on-surface font-label-md uppercase tracking-wider hover:bg-surface-container transition-colors shadow-sm border border-outline-variant/40"
-          >
-            <Sliders className="w-4 h-4 text-secondary" />
-            <span>Fee Structures</span>
-          </button>
-          <button
-            onClick={() => triggerToast("Preparing Tally XML & Consolidated Ledger (.xlsx)...")}
-            className="inline-flex items-center gap-space-xs px-space-md py-2 bg-surface-container-low text-on-surface font-label-md uppercase tracking-wider hover:bg-surface-container transition-colors shadow-sm border border-outline-variant/40"
-          >
-            <Download className="w-4 h-4 text-secondary" />
-            <span>Export Tally / CSV</span>
-          </button>
-          <button
-            onClick={() => setIsDrawerOpen(true)}
-            className="inline-flex items-center gap-space-xs px-space-lg py-2 bg-primary-container text-on-primary font-label-md uppercase tracking-wider hover:bg-primary transition-all shadow-md font-bold"
-          >
-            <Coins className="w-4 h-4 text-secondary-container" />
-            <span>Record Manual Payment</span>
-          </button>
-        </div>
-      </section>
-
-      {/* KPI Summary Matrix (4 Tiles) */}
-      <section className="p-gutter-desktop grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-gutter-desktop">
-        {/* Tile 1 */}
-        <div className="bg-surface-container-lowest p-space-md shadow-sm relative overflow-hidden flex flex-col justify-between border border-outline-variant/30">
-          <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-primary-container"></div>
-          <div className="flex items-start justify-between">
-            <span className="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-semibold">
-              Total Projected Revenue
-            </span>
-            <Landmark className="w-5 h-5 text-secondary" />
-          </div>
-          <div className="my-space-sm">
-            <div className="font-headline-xl text-headline-xl text-primary leading-none tabular-nums font-bold">
-              $3,850,000
-            </div>
-            <div className="font-mono-data text-body-sm text-on-surface-variant mt-1.5 flex items-center gap-1">
-              <span className="text-secondary font-semibold">1,420</span> enrolled students baseline
-            </div>
-          </div>
-          <div className="pt-space-xs bg-surface-container-low px-space-sm py-1 flex items-center justify-between text-on-surface-variant font-label-sm border-t border-outline-variant/20">
-            <span>SESSION: AY 2024-2025</span>
-            <span className="font-mono-data text-primary font-bold">100% QUOTA</span>
-          </div>
-        </div>
-
-        {/* Tile 2 */}
-        <div className="bg-surface-container-lowest p-space-md shadow-sm relative overflow-hidden flex flex-col justify-between border border-outline-variant/30">
-          <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-secondary"></div>
-          <div className="flex items-start justify-between">
-            <span className="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-semibold">
-              Total Collected To Date
-            </span>
-            <CheckCircle2 className="w-5 h-5 text-secondary" />
-          </div>
-          <div className="my-space-sm">
-            <div className="font-headline-xl text-headline-xl text-primary leading-none tabular-nums font-bold">
-              $3,210,000
-            </div>
-            <div className="font-mono-data text-body-sm text-on-surface-variant mt-1.5 flex items-center gap-1.5">
-              <span className="px-1 py-0.2 bg-secondary-container/40 text-on-secondary-container font-bold font-mono-data text-label-sm">
-                83.37%
+      {/* Main Container */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 space-y-6">
+        {/* Header Hero Section */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <div className="flex items-center gap-2">
+              <h1 className="text-2xl font-bold tracking-tight text-slate-900">Fees & Fiscal Ledger</h1>
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                Live Clearing Active
               </span>
-              <span>cleared to Central Treasury</span>
             </div>
+            <p className="text-sm text-slate-500 mt-1">
+              Multi-head fee collection, statutory receipts, fee structures, and bank reconciliation ledger.
+            </p>
           </div>
-          <div className="w-full bg-surface-container h-1.5 overflow-hidden">
-            <div className="bg-secondary h-full" style={{ width: "83.37%" }}></div>
-          </div>
-        </div>
 
-        {/* Tile 3 */}
-        <div className="bg-surface-container-lowest p-space-md shadow-sm relative overflow-hidden flex flex-col justify-between border border-outline-variant/30">
-          <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-rose-700"></div>
-          <div className="flex items-start justify-between">
-            <span className="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-semibold">
-              Overdue Outstanding Dues
-            </span>
-            <AlertTriangle className="w-5 h-5 text-rose-700" />
-          </div>
-          <div className="my-space-sm">
-            <div className="font-headline-xl text-headline-xl text-rose-700 leading-none tabular-nums font-bold">
-              $640,000
-            </div>
-            <div className="font-mono-data text-body-sm text-on-surface-variant mt-1.5 flex items-center gap-1">
-              <span className="px-1 py-0.2 bg-rose-100 text-rose-900 font-bold font-mono-data text-label-sm">
-                210 Students
-              </span>
-              <span>past due cutoff</span>
-            </div>
-          </div>
-          <div className="pt-space-xs bg-rose-50 px-space-sm py-1 flex items-center justify-between text-rose-700 font-label-sm border-t border-rose-200">
-            <span className="font-bold">ACTION NEEDED</span>
+          <div className="flex items-center gap-2.5 flex-wrap">
             <button
-              onClick={() => setActiveTab("defaulters")}
-              className="underline font-semibold hover:text-rose-900"
+              onClick={() => setIsStructureModalOpen(true)}
+              className="inline-flex items-center gap-2 px-3.5 py-2 text-xs font-semibold text-slate-700 bg-white border border-slate-200 rounded-xl hover:bg-slate-50 hover:border-slate-300 shadow-xs transition-all"
             >
-              Filter Ledger
+              <Sliders className="w-4 h-4 text-indigo-600" />
+              <span>Fee Structures</span>
+            </button>
+            <button
+              onClick={() => showToast("Consolidated Tally XML & Ledger Excel (.xlsx) prepared.")}
+              className="inline-flex items-center gap-2 px-3.5 py-2 text-xs font-semibold text-slate-700 bg-white border border-slate-200 rounded-xl hover:bg-slate-50 hover:border-slate-300 shadow-xs transition-all"
+            >
+              <Download className="w-4 h-4 text-emerald-600" />
+              <span>Export Tally / CSV</span>
+            </button>
+            <button
+              onClick={() => setIsDrawerOpen(true)}
+              className="inline-flex items-center gap-2 px-4 py-2 text-xs font-semibold text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl shadow-xs transition-all"
+            >
+              <Plus className="w-4 h-4" />
+              <span>Record Manual Payment</span>
             </button>
           </div>
         </div>
 
-        {/* Tile 4 */}
-        <div className="bg-surface-container-lowest p-space-md shadow-sm relative overflow-hidden flex flex-col justify-between border border-outline-variant/30">
-          <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-primary"></div>
-          <div className="flex items-start justify-between">
-            <span className="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-semibold">
-              Today&apos;s Counter Collection
-            </span>
-            <Receipt className="w-5 h-5 text-primary" />
-          </div>
-          <div className="my-space-sm">
-            <div className="font-headline-xl text-headline-xl text-primary leading-none tabular-nums font-bold">
-              $14,200
+        {/* 4 Standard Redesigned KPI Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {/* Card 1: Projected Revenue */}
+          <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-5">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                Total Projected Revenue
+              </span>
+              <div className="w-10 h-10 rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600">
+                <Landmark className="w-5 h-5" />
+              </div>
             </div>
-            <div className="font-mono-data text-body-sm text-on-surface-variant mt-1.5 flex items-center gap-1">
-              <span className="font-bold text-primary">18 Receipts</span> logged by counter staff
+            <div className="mt-3">
+              <div className="text-2xl font-bold tracking-tight text-slate-900 tabular-nums">
+                $3,850,000
+              </div>
+              <div className="mt-2 flex items-center gap-1.5 text-xs font-medium text-slate-500">
+                <span className="font-semibold text-slate-900">1,420</span>
+                <span>enrolled candidates baseline</span>
+              </div>
             </div>
           </div>
-          <div className="pt-space-xs bg-surface-container-low px-space-sm py-1 flex items-center justify-between text-on-surface-variant font-label-sm border-t border-outline-variant/20">
-            <span>DAILY REGISTER CLOSING</span>
-            <span className="font-mono-data text-secondary font-semibold">17:00 EST</span>
+
+          {/* Card 2: Collected To Date */}
+          <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-5">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                Total Collected To Date
+              </span>
+              <div className="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600">
+                <CheckCircle2 className="w-5 h-5" />
+              </div>
+            </div>
+            <div className="mt-3">
+              <div className="flex items-baseline gap-2">
+                <span className="text-2xl font-bold tracking-tight text-slate-900 tabular-nums">
+                  $3,210,000
+                </span>
+                <span className="text-xs font-semibold px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-700 border border-emerald-200">
+                  83.4%
+                </span>
+              </div>
+              {/* Progress bar */}
+              <div className="w-full bg-slate-100 rounded-full h-1.5 mt-2.5 overflow-hidden">
+                <div className="bg-emerald-500 h-full rounded-full" style={{ width: "83.4%" }} />
+              </div>
+            </div>
+          </div>
+
+          {/* Card 3: Overdue Outstanding */}
+          <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-5">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                Outstanding Overdue
+              </span>
+              <div className="w-10 h-10 rounded-xl bg-rose-50 flex items-center justify-center text-rose-600">
+                <AlertTriangle className="w-5 h-5" />
+              </div>
+            </div>
+            <div className="mt-3">
+              <div className="flex items-baseline gap-2">
+                <span className="text-2xl font-bold tracking-tight text-rose-600 tabular-nums">
+                  $640,000
+                </span>
+                <span className="text-xs font-semibold px-2 py-0.5 rounded-md bg-rose-50 text-rose-700 border border-rose-200">
+                  210 Defaulters
+                </span>
+              </div>
+              <div className="mt-2 flex items-center justify-between text-xs">
+                <span className="text-slate-500 font-medium">Past due date cutoff</span>
+                <button
+                  onClick={() => setActiveTab("defaulters")}
+                  className="font-semibold text-rose-600 hover:text-rose-700 hover:underline"
+                >
+                  View Defaulters
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Card 4: Today's Collection */}
+          <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-5">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                Today&apos;s Counter Receipts
+              </span>
+              <div className="w-10 h-10 rounded-xl bg-amber-50 flex items-center justify-center text-amber-600">
+                <Receipt className="w-5 h-5" />
+              </div>
+            </div>
+            <div className="mt-3">
+              <div className="text-2xl font-bold tracking-tight text-slate-900 tabular-nums">
+                $14,200
+              </div>
+              <div className="mt-2 flex items-center justify-between text-xs text-slate-500 font-medium">
+                <span className="text-indigo-600 font-semibold">18 Slips Settled</span>
+                <span>Closing: 17:00</span>
+              </div>
+            </div>
           </div>
         </div>
-      </section>
 
-      {/* Ledger Operational Console */}
-      <section className="px-gutter-desktop pb-gutter-desktop">
-        <div className="bg-surface-container-lowest shadow-sm border border-outline-variant/30">
-          {/* Toolbar & Subtabs */}
-          <div className="bg-surface-container-low px-space-md py-space-sm flex flex-wrap items-center justify-between gap-space-md border-b border-outline-variant/30">
-            {/* Segmented Tab Group */}
-            <div className="inline-flex bg-surface-container shadow-inner p-0.5 font-mono-data">
+        {/* Ledger Console Card */}
+        <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs overflow-hidden">
+          {/* Subtabs & Search Toolbar */}
+          <div className="p-4 border-b border-slate-100 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+            {/* Tabs */}
+            <div className="inline-flex rounded-xl bg-slate-100 p-1 text-xs font-medium">
               <button
                 onClick={() => setActiveTab("all")}
-                className={`px-space-md py-1.5 font-label-md uppercase tracking-wider text-label-sm font-semibold transition-all rounded-xs ${
+                className={`px-3 py-1.5 rounded-lg font-semibold transition-all ${
                   activeTab === "all"
-                    ? "bg-[#3D405B] text-white font-bold shadow-xs"
-                    : "text-on-surface-variant hover:text-on-surface"
+                    ? "bg-white text-slate-900 shadow-xs"
+                    : "text-slate-600 hover:text-slate-900"
                 }`}
               >
                 All Transactions (1,842)
@@ -387,22 +431,25 @@ export default function FeesManagementPage() {
               <button
                 onClick={() => {
                   setActiveTab("defaulters");
-                  triggerToast("Loaded 210 overdue defaulter accounts for follow-up.");
+                  showToast("Filtered 210 overdue fee defaulters.");
                 }}
-                className={`px-space-md py-1.5 font-label-md uppercase tracking-wider text-label-sm font-semibold transition-all rounded-xs ${
+                className={`px-3 py-1.5 rounded-lg font-semibold transition-all ${
                   activeTab === "defaulters"
-                    ? "bg-[#3D405B] text-white font-bold shadow-xs"
-                    : "text-on-surface-variant hover:text-on-surface"
+                    ? "bg-white text-rose-700 shadow-xs"
+                    : "text-slate-600 hover:text-slate-900"
                 }`}
               >
                 Pending Dues / Defaulters (210)
               </button>
               <button
-                onClick={() => setActiveTab("schedule")}
-                className={`px-space-md py-1.5 font-label-md uppercase tracking-wider text-label-sm font-semibold transition-all rounded-xs ${
+                onClick={() => {
+                  setActiveTab("schedule");
+                  showToast("Installment schedules loaded.");
+                }}
+                className={`px-3 py-1.5 rounded-lg font-semibold transition-all ${
                   activeTab === "schedule"
-                    ? "bg-[#3D405B] text-white font-bold shadow-xs"
-                    : "text-on-surface-variant hover:text-on-surface"
+                    ? "bg-white text-slate-900 shadow-xs"
+                    : "text-slate-600 hover:text-slate-900"
                 }`}
               >
                 Installment Schedule
@@ -410,105 +457,130 @@ export default function FeesManagementPage() {
               <button
                 onClick={() => {
                   setActiveTab("reconcile");
-                  triggerToast("Tally / Central Bank statement matched: 99.4%");
+                  showToast("Bank Reconciliation matched: 99.4% cleared.");
                 }}
-                className={`px-space-md py-1.5 font-label-md uppercase tracking-wider text-label-sm font-semibold transition-all rounded-xs ${
+                className={`px-3 py-1.5 rounded-lg font-semibold transition-all ${
                   activeTab === "reconcile"
-                    ? "bg-[#3D405B] text-white font-bold shadow-xs"
-                    : "text-on-surface-variant hover:text-on-surface"
+                    ? "bg-white text-slate-900 shadow-xs"
+                    : "text-slate-600 hover:text-slate-900"
                 }`}
               >
                 Bank Reconciliation
               </button>
             </div>
 
-            {/* Rapid Filter Search Bar */}
-            <div className="flex items-center gap-space-sm flex-1 max-w-lg min-w-[280px]">
-              <div className="relative w-full">
-                <Search className="w-4 h-4 text-on-surface-variant absolute left-2.5 top-2.5" />
+            {/* Search and Filters */}
+            <div className="flex items-center gap-2.5 flex-wrap sm:flex-nowrap">
+              {/* Mode filter dropdown */}
+              <select
+                value={modeFilter}
+                onChange={(e) => setModeFilter(e.target.value)}
+                className="bg-slate-50 border border-slate-200 rounded-xl px-3 py-1.5 text-xs font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 cursor-pointer"
+              >
+                <option value="all">All Modes</option>
+                <option value="upi">UPI Transfers</option>
+                <option value="cash">Counter Cash</option>
+                <option value="card">Card POS</option>
+                <option value="neft">NEFT / RTGS</option>
+                <option value="cheque">Cheque Deposit</option>
+              </select>
+
+              {/* Search input */}
+              <div className="relative w-full sm:w-64">
+                <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
                 <input
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Filter by Receipt No, Roll ID, or Student name..."
-                  className="w-full bg-surface-container-lowest pl-8 pr-space-md py-1.5 font-body-sm text-body-sm text-on-surface placeholder:text-on-surface-variant/60 shadow-inner focus:outline-none focus:bg-surface-bright border border-outline-variant/40"
+                  placeholder="Receipt, Roll ID, or student..."
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl pl-9 pr-3 py-1.5 text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white transition-all"
                 />
               </div>
-              <button className="px-space-sm py-1.5 bg-surface text-on-surface-variant hover:text-on-surface shadow-sm inline-flex items-center gap-1 font-label-sm uppercase border border-outline-variant/40">
-                <Filter className="w-3.5 h-3.5" />
-                <span>Filter</span>
-              </button>
             </div>
           </div>
 
-          {/* Multi-Head Ledger Table */}
+          {/* Table */}
           <div className="overflow-x-auto">
-            <table className="w-full text-left font-mono-data text-[0.75rem]">
+            <table className="w-full text-left border-collapse text-xs">
               <thead>
-                <tr className="bg-surface-container font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant border-b border-outline-variant/30">
-                  <th className="py-2.5 px-space-md font-semibold">Receipt No</th>
-                  <th className="py-2.5 px-space-md font-semibold">Date &amp; Time</th>
-                  <th className="py-2.5 px-space-md font-semibold">Student / Identifier</th>
-                  <th className="py-2.5 px-space-md font-semibold">Course &amp; Batch</th>
-                  <th className="py-2.5 px-space-md font-semibold">Fee Head</th>
-                  <th className="py-2.5 px-space-md font-semibold text-right">Amount Paid</th>
-                  <th className="py-2.5 px-space-md font-semibold">Mode</th>
-                  <th className="py-2.5 px-space-md font-semibold">Collector (Staff)</th>
-                  <th className="py-2.5 px-space-md font-semibold">Status</th>
-                  <th className="py-2.5 px-space-md font-semibold text-center">Actions</th>
+                <tr className="bg-slate-50/80 border-b border-slate-200/80 text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
+                  <th className="py-3 px-4">Receipt No</th>
+                  <th className="py-3 px-4">Date &amp; Time</th>
+                  <th className="py-3 px-4">Student Details</th>
+                  <th className="py-3 px-4">Program &amp; Batch</th>
+                  <th className="py-3 px-4">Fee Head</th>
+                  <th className="py-3 px-4 text-right">Amount Paid</th>
+                  <th className="py-3 px-4">Mode</th>
+                  <th className="py-3 px-4">Collector Staff</th>
+                  <th className="py-3 px-4">Status</th>
+                  <th className="py-3 px-4 text-center">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-outline-variant/20">
+              <tbody className="divide-y divide-slate-100">
                 {filteredTransactions.map((tx) => (
                   <tr
                     key={tx.id}
-                    className="hover:bg-surface-container-low transition-colors bg-surface-container-lowest"
+                    className="hover:bg-slate-50/80 transition-colors"
                   >
-                    <td className="py-2.5 px-space-md font-bold text-primary">
+                    {/* Receipt No */}
+                    <td className="py-3 px-4 font-mono font-bold text-indigo-700 whitespace-nowrap">
                       #{tx.receiptNo}
                     </td>
-                    <td className="py-2.5 px-space-md text-on-surface-variant whitespace-nowrap">
-                      {tx.date} <span className="text-on-surface-variant/60 text-[0.6875rem]">{tx.time}</span>
+
+                    {/* Date & Time */}
+                    <td className="py-3 px-4 whitespace-nowrap text-slate-600">
+                      <div>{tx.date}</div>
+                      <div className="text-[11px] text-slate-400 font-mono">{tx.time}</div>
                     </td>
-                    <td className="py-2.5 px-space-md">
-                      <div className="font-semibold text-on-surface text-[0.8125rem]">
-                        {tx.studentName}
-                      </div>
-                      <div className="text-[0.6875rem] text-on-surface-variant">
-                        {tx.rollId}
-                      </div>
+
+                    {/* Student Info */}
+                    <td className="py-3 px-4">
+                      <div className="font-semibold text-slate-900">{tx.studentName}</div>
+                      <div className="font-mono text-[11px] text-slate-500">{tx.rollId}</div>
                     </td>
-                    <td className="py-2.5 px-space-md">
-                      <div className="text-on-surface">{tx.course}</div>
-                      <div className="text-[0.6875rem] text-on-surface-variant">{tx.batch}</div>
+
+                    {/* Course & Batch */}
+                    <td className="py-3 px-4">
+                      <div className="text-slate-800">{tx.course}</div>
+                      <div className="text-[11px] text-slate-500">{tx.batch}</div>
                     </td>
-                    <td className="py-2.5 px-space-md">
-                      <span className="inline-block px-1.5 py-0.5 bg-surface-container text-[0.6875rem] text-primary font-semibold">
+
+                    {/* Fee Head */}
+                    <td className="py-3 px-4">
+                      <span className="inline-block px-2 py-0.5 rounded-md bg-slate-100 text-slate-700 font-medium text-[11px]">
                         {tx.feeHead}
                       </span>
                     </td>
-                    <td className="py-2.5 px-space-md text-right font-bold text-primary">
+
+                    {/* Amount */}
+                    <td className="py-3 px-4 text-right font-bold text-slate-900 tabular-nums font-mono whitespace-nowrap">
                       ${tx.amount.toLocaleString("en-US", { minimumFractionDigits: 2 })}
                     </td>
-                    <td className="py-2.5 px-space-md">
-                      <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-surface-container-high text-on-secondary-container font-label-sm uppercase font-semibold text-[0.6875rem]">
-                        {tx.modeType === "upi" && <Smartphone className="w-3 h-3" />}
-                        {tx.modeType === "cash" && <Coins className="w-3 h-3" />}
-                        {tx.modeType === "card" && <CreditCard className="w-3 h-3" />}
-                        {tx.modeType === "neft" && <Landmark className="w-3 h-3" />}
-                        {tx.modeType === "cheque" && <Receipt className="w-3 h-3" />}
-                        {tx.mode}
+
+                    {/* Mode */}
+                    <td className="py-3 px-4 whitespace-nowrap">
+                      <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-slate-100 text-slate-700 font-medium text-[11px]">
+                        {tx.modeType === "upi" && <Smartphone className="w-3 h-3 text-emerald-600" />}
+                        {tx.modeType === "cash" && <Coins className="w-3 h-3 text-amber-600" />}
+                        {tx.modeType === "card" && <CreditCard className="w-3 h-3 text-indigo-600" />}
+                        {tx.modeType === "neft" && <Landmark className="w-3 h-3 text-blue-600" />}
+                        {tx.modeType === "cheque" && <Receipt className="w-3 h-3 text-purple-600" />}
+                        <span>{tx.mode}</span>
                       </span>
                     </td>
-                    <td className="py-2.5 px-space-md text-on-surface-variant text-[0.6875rem]">
+
+                    {/* Collector */}
+                    <td className="py-3 px-4 text-slate-500 text-[11px] whitespace-nowrap">
                       {tx.collector}
                     </td>
-                    <td className="py-2.5 px-space-md">
+
+                    {/* Status */}
+                    <td className="py-3 px-4 whitespace-nowrap">
                       <span
-                        className={`inline-flex items-center gap-1 px-2 py-0.5 text-[0.6875rem] uppercase font-bold border ${
+                        className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold border ${
                           tx.status === "Cleared"
-                            ? "bg-emerald-50 text-emerald-800 border-emerald-300"
-                            : "bg-amber-50 text-amber-800 border-amber-300"
+                            ? "bg-emerald-50 text-emerald-700 border-emerald-200"
+                            : "bg-amber-50 text-amber-700 border-amber-200"
                         }`}
                       >
                         {tx.status === "Cleared" ? (
@@ -516,31 +588,33 @@ export default function FeesManagementPage() {
                         ) : (
                           <Clock className="w-3 h-3 text-amber-600" />
                         )}
-                        {tx.status}
+                        <span>{tx.status}</span>
                       </span>
                     </td>
-                    <td className="py-2.5 px-space-md text-center whitespace-nowrap">
-                      <button
-                        onClick={() => {
-                          setActiveReceipt(tx);
-                          setIsReceiptModalOpen(true);
-                        }}
-                        className="p-1 hover:bg-surface-container text-primary transition-colors inline-block"
-                        title="Print Receipt Preview"
-                      >
-                        <Printer className="w-3.5 h-3.5" />
-                      </button>
-                      <button
-                        onClick={() =>
-                          triggerToast(
-                            `SMS payment notification dispatched to ${tx.studentName} (${tx.rollId})`
-                          )
-                        }
-                        className="p-1 hover:bg-surface-container text-on-surface-variant hover:text-primary transition-colors inline-block"
-                        title="SMS Delivery Dispatch"
-                      >
-                        <MessageSquare className="w-3.5 h-3.5" />
-                      </button>
+
+                    {/* Actions */}
+                    <td className="py-3 px-4 text-center whitespace-nowrap">
+                      <div className="inline-flex items-center gap-1">
+                        <button
+                          onClick={() => {
+                            setActiveReceipt(tx);
+                            setIsReceiptModalOpen(true);
+                          }}
+                          className="p-1.5 rounded-lg text-slate-500 hover:text-indigo-600 hover:bg-slate-100 transition-colors"
+                          title="Print Receipt Slip"
+                        >
+                          <Printer className="w-4 h-4" />
+                        </button>
+                        <button
+                          onClick={() =>
+                            showToast(`Payment SMS alert dispatched to ${tx.studentName}.`)
+                          }
+                          className="p-1.5 rounded-lg text-slate-500 hover:text-emerald-600 hover:bg-slate-100 transition-colors"
+                          title="Send SMS Receipt"
+                        >
+                          <MessageSquare className="w-4 h-4" />
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 ))}
@@ -548,209 +622,160 @@ export default function FeesManagementPage() {
             </table>
           </div>
 
-          {/* Footer Audit Pagination & Telemetry */}
-          <div className="px-space-md py-space-sm bg-surface-container-low flex flex-wrap items-center justify-between gap-space-md font-mono-data text-[0.6875rem] text-on-surface-variant border-t border-outline-variant/30">
-            <div className="flex items-center gap-space-md">
-              <span>PAGE 01 / 92</span>
-              <span>•</span>
-              <span>DISPLAYING {filteredTransactions.length} OF 1,842 AUDITED SLIPS</span>
-              <span>•</span>
-              <span className="text-secondary font-semibold">TALLY XML SYNC READY</span>
+          {/* Table Footer */}
+          <div className="p-4 bg-slate-50/80 border-t border-slate-200/80 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-slate-500 font-medium">
+            <div className="flex items-center gap-3">
+              <span>Showing {filteredTransactions.length} of 1,842 audited transactions</span>
+              <span className="text-slate-300">•</span>
+              <span className="text-emerald-700 font-semibold">Tally XML Synchronized</span>
             </div>
-            <div className="inline-flex gap-0.5">
-              <button className="px-space-sm py-1 bg-surface-container hover:bg-surface text-primary font-bold">
-                PREV
+            <div className="flex items-center gap-2">
+              <button className="px-2.5 py-1 rounded-lg border border-slate-200 bg-white text-slate-600 hover:bg-slate-50 disabled:opacity-50">
+                Previous
               </button>
-              <button className="px-space-sm py-1 bg-primary-container text-on-primary font-bold">
-                01
-              </button>
-              <button className="px-space-sm py-1 bg-surface-container hover:bg-surface text-primary">
-                02
-              </button>
-              <button className="px-space-sm py-1 bg-surface-container hover:bg-surface text-primary">
-                03
-              </button>
-              <button className="px-space-sm py-1 bg-surface-container hover:bg-surface text-primary font-bold">
-                NEXT
+              <span className="px-2.5 py-1 rounded-lg bg-indigo-50 text-indigo-700 font-semibold border border-indigo-100">
+                1
+              </span>
+              <button className="px-2.5 py-1 rounded-lg border border-slate-200 bg-white text-slate-600 hover:bg-slate-50 disabled:opacity-50">
+                Next
               </button>
             </div>
           </div>
         </div>
-      </section>
+      </div>
 
-      {/* DRAWER: Direct Manual Payment Entry Slip (Back-Office) */}
+      {/* DRAWER: Record Manual Payment Entry Slip */}
       {isDrawerOpen && (
-        <>
-          <div
-            className="fixed inset-0 bg-primary/40 backdrop-blur-sm z-50 transition-opacity"
-            onClick={() => setIsDrawerOpen(false)}
-          ></div>
-          <aside className="fixed top-0 right-0 h-full w-full max-w-2xl bg-surface-container-lowest shadow-2xl z-50 flex flex-col border-l border-outline-variant/40">
+        <div className="fixed inset-0 z-50 flex justify-end bg-slate-900/40 backdrop-blur-xs animate-in fade-in duration-200">
+          <div className="w-full max-w-xl bg-white shadow-2xl border-l border-slate-200 h-full flex flex-col animate-in slide-in-from-right duration-300">
             {/* Header */}
-            <div className="px-gutter-desktop py-space-md bg-primary-container text-on-primary flex items-center justify-between">
-              <div className="flex items-center gap-space-sm">
-                <Coins className="w-6 h-6 text-secondary-container" />
+            <div className="p-5 border-b border-slate-100 flex items-center justify-between bg-slate-50/60">
+              <div className="flex items-center gap-2.5">
+                <div className="w-9 h-9 rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600">
+                  <Coins className="w-5 h-5" />
+                </div>
                 <div>
-                  <h2 className="font-headline-sm text-headline-sm uppercase tracking-tight font-bold">
-                    Manual Payment Entry Slip
-                  </h2>
-                  <p className="font-label-sm text-on-primary-container uppercase tracking-wider text-[0.6875rem]">
-                    Apex Treasury Ledger • Counter Terminal #01
-                  </p>
+                  <h2 className="text-base font-bold text-slate-900">Record Counter Payment</h2>
+                  <p className="text-xs text-slate-500">Counter Desk Terminal #01 • Treasury Slip</p>
                 </div>
               </div>
               <button
                 onClick={() => setIsDrawerOpen(false)}
-                className="p-1 hover:bg-primary text-on-primary transition-colors"
+                className="w-8 h-8 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 flex items-center justify-center"
               >
-                <X className="w-5 h-5" />
+                <X className="w-4 h-4" />
               </button>
             </div>
 
-            {/* Drawer Body */}
-            <div className="flex-1 overflow-y-auto p-gutter-desktop space-y-space-lg bg-surface">
-              {/* 1. Student Search Auto-Populate */}
-              <div className="bg-surface-container-lowest p-space-md shadow-sm space-y-space-sm border border-outline-variant/30">
-                <div className="flex items-center justify-between">
-                  <label className="font-label-sm text-label-sm uppercase tracking-wider text-primary font-bold">
-                    1. Student Identification / Lookup
-                  </label>
-                  <span className="font-mono-data text-label-sm text-secondary font-bold text-[0.6875rem]">
-                    AUTO-LOOKUP ACTIVE
-                  </span>
-                </div>
+            {/* Form Body */}
+            <div className="flex-1 overflow-y-auto p-5 space-y-5 text-xs text-slate-700">
+              {/* Student Lookup */}
+              <div className="space-y-2">
+                <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                  1. Student Identification
+                </label>
                 <div className="relative">
-                  <User className="w-4 h-4 text-on-surface-variant absolute left-3 top-3" />
+                  <User className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
                   <input
                     type="text"
-                    defaultValue="APEX-ENG-2022-094"
-                    className="w-full bg-surface-container-low pl-10 pr-space-md py-2 font-mono-data text-body-md text-primary font-semibold focus:outline-none focus:bg-surface-bright shadow-inner border border-outline-variant/40"
+                    defaultValue="APX-CS-2022-094"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl pl-9 pr-3 py-2 text-xs font-semibold text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white"
                   />
                 </div>
-                {/* Populated Snapshot */}
-                <div className="bg-surface-container-low p-space-sm mt-space-sm flex items-start justify-between border border-outline-variant/20">
+
+                {/* Populated Candidate Card */}
+                <div className="p-3 bg-slate-50 rounded-xl border border-slate-200/80 flex items-start justify-between">
                   <div>
-                    <div className="font-headline-sm text-body-md font-bold text-primary">
-                      Ethan Vance Walker
-                    </div>
-                    <div className="font-mono-data text-label-sm text-on-surface-variant text-[0.75rem]">
-                      B.Tech Computer Science • Batch 2022-26 (Sem 5)
-                    </div>
-                    <div className="text-label-sm text-on-surface-variant mt-1 text-[0.75rem]">
-                      Father: Marcus Vance Walker • Ph: +1 (555) 019-4820
-                    </div>
+                    <div className="font-bold text-slate-900 text-sm">Ethan Vance Walker</div>
+                    <div className="text-slate-500 text-[11px]">B.Tech Computer Science • Batch 2022-26 (Sem 5)</div>
+                    <div className="text-slate-400 text-[11px] mt-0.5">Guardian: Marcus Walker • +1 (555) 019-4820</div>
                   </div>
                   <div className="text-right">
-                    <span className="font-label-sm text-label-sm uppercase tracking-wider text-rose-700 font-bold text-[0.6875rem]">
-                      Total Dues Pending
+                    <span className="text-[10px] font-bold uppercase text-rose-600 bg-rose-50 px-1.5 py-0.5 rounded border border-rose-200">
+                      Pending Dues
                     </span>
-                    <div className="font-headline-sm text-headline-sm text-rose-700 font-bold tabular-nums">
-                      $4,250.00
-                    </div>
+                    <div className="text-sm font-bold text-rose-600 mt-1">$4,250.00</div>
                   </div>
                 </div>
               </div>
 
-              {/* 2. Fee Head & Installment Allocation */}
-              <div className="bg-surface-container-lowest p-space-md shadow-sm space-y-space-sm border border-outline-variant/30">
-                <label className="font-label-sm text-label-sm uppercase tracking-wider text-primary font-bold">
-                  2. Fee Head &amp; Installment Allocation
+              {/* Fee Head Allocation */}
+              <div className="space-y-2">
+                <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                  2. Fee Heads &amp; Installments
                 </label>
-                <div className="space-y-2">
-                  <label className="flex items-center justify-between p-space-sm bg-surface hover:bg-surface-container-low cursor-pointer transition-colors border border-outline-variant/20">
-                    <div className="flex items-center gap-space-sm">
+                <div className="space-y-1.5">
+                  <label className="flex items-center justify-between p-3 rounded-xl border border-slate-200 bg-slate-50/50 hover:bg-slate-50 cursor-pointer transition-colors">
+                    <div className="flex items-center gap-2.5">
                       <input
                         type="checkbox"
                         checked={selectedHeads.tuition}
                         onChange={(e) =>
                           setSelectedHeads({ ...selectedHeads, tuition: e.target.checked })
                         }
-                        className="w-4 h-4 accent-primary"
+                        className="w-4 h-4 rounded text-indigo-600 focus:ring-indigo-500 border-slate-300"
                       />
                       <div>
-                        <div className="font-semibold text-primary text-[0.8125rem]">
-                          Semester 5 Tuition Fee (Core)
-                        </div>
-                        <div className="text-[0.6875rem] text-on-surface-variant">
-                          Due Date: Oct 15, 2024 (Overdue by 9 days)
-                        </div>
+                        <div className="font-semibold text-slate-900">Semester 5 Tuition Fee (Core)</div>
+                        <div className="text-[11px] text-slate-500">Statutory syllabus fee</div>
                       </div>
                     </div>
-                    <span className="font-mono-data text-body-md font-bold text-primary">
-                      ${headPrices.tuition.toFixed(2)}
-                    </span>
+                    <span className="font-mono font-bold text-slate-900">${headPrices.tuition}</span>
                   </label>
 
-                  <label className="flex items-center justify-between p-space-sm bg-surface hover:bg-surface-container-low cursor-pointer transition-colors border border-outline-variant/20">
-                    <div className="flex items-center gap-space-sm">
+                  <label className="flex items-center justify-between p-3 rounded-xl border border-slate-200 bg-slate-50/50 hover:bg-slate-50 cursor-pointer transition-colors">
+                    <div className="flex items-center gap-2.5">
                       <input
                         type="checkbox"
                         checked={selectedHeads.lab}
                         onChange={(e) =>
                           setSelectedHeads({ ...selectedHeads, lab: e.target.checked })
                         }
-                        className="w-4 h-4 accent-primary"
+                        className="w-4 h-4 rounded text-indigo-600 focus:ring-indigo-500 border-slate-300"
                       />
                       <div>
-                        <div className="font-semibold text-primary text-[0.8125rem]">
-                          Advanced Computer Lab &amp; Cloud Sandbox
-                        </div>
-                        <div className="text-[0.6875rem] text-on-surface-variant">
-                          Regular Academic Levy
-                        </div>
+                        <div className="font-semibold text-slate-900">Advanced Computer Lab &amp; Cloud Sandbox</div>
+                        <div className="text-[11px] text-slate-500">High performance computing allocation</div>
                       </div>
                     </div>
-                    <span className="font-mono-data text-body-md font-bold text-primary">
-                      ${headPrices.lab.toFixed(2)}
-                    </span>
+                    <span className="font-mono font-bold text-slate-900">${headPrices.lab}</span>
                   </label>
 
-                  <label className="flex items-center justify-between p-space-sm bg-surface hover:bg-surface-container-low cursor-pointer transition-colors border border-outline-variant/20">
-                    <div className="flex items-center gap-space-sm">
+                  <label className="flex items-center justify-between p-3 rounded-xl border border-slate-200 bg-slate-50/50 hover:bg-slate-50 cursor-pointer transition-colors">
+                    <div className="flex items-center gap-2.5">
                       <input
                         type="checkbox"
                         checked={selectedHeads.exam}
                         onChange={(e) =>
                           setSelectedHeads({ ...selectedHeads, exam: e.target.checked })
                         }
-                        className="w-4 h-4 accent-primary"
+                        className="w-4 h-4 rounded text-indigo-600 focus:ring-indigo-500 border-slate-300"
                       />
                       <div>
-                        <div className="font-semibold text-primary text-[0.8125rem]">
-                          Mid-Term Examination &amp; Evaluation Fee
-                        </div>
-                        <div className="text-[0.6875rem] text-on-surface-variant">
-                          Autonomous Examination Controller
-                        </div>
+                        <div className="font-semibold text-slate-900">Mid-Term Examination &amp; Evaluation</div>
+                        <div className="text-[11px] text-slate-500">Autonomous evaluation levy</div>
                       </div>
                     </div>
-                    <span className="font-mono-data text-body-md font-bold text-primary">
-                      ${headPrices.exam.toFixed(2)}
-                    </span>
+                    <span className="font-mono font-bold text-slate-900">${headPrices.exam}</span>
                   </label>
                 </div>
               </div>
 
-              {/* 3. Back-Office Payment Instrument Mode */}
-              <div className="bg-surface-container-lowest p-space-md shadow-sm space-y-space-md border border-outline-variant/30">
-                <div className="flex items-center justify-between">
-                  <label className="font-label-sm text-label-sm uppercase tracking-wider text-primary font-bold">
-                    3. Counter Payment Instrument
-                  </label>
-                  <span className="font-mono-data text-label-sm text-on-surface-variant text-[0.6875rem]">
-                    STRICTLY NON-GATEWAY (LEDGER RECORDING)
-                  </span>
-                </div>
-                <div className="grid grid-cols-2 md:grid-cols-5 gap-1.5 font-mono-data">
+              {/* Payment Mode Selector */}
+              <div className="space-y-2">
+                <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                  3. Payment Instrument Mode
+                </label>
+                <div className="grid grid-cols-5 gap-1.5">
                   {(["cash", "upi", "card", "neft", "cheque"] as const).map((mode) => (
                     <button
                       key={mode}
                       type="button"
                       onClick={() => setDrawerMode(mode)}
-                      className={`py-2 px-1 text-center font-label-sm uppercase font-semibold text-[0.75rem] transition-colors ${
+                      className={`py-2 px-1 text-center rounded-xl font-semibold uppercase text-[11px] transition-all border ${
                         drawerMode === mode
-                          ? "bg-primary-container text-on-primary font-bold"
-                          : "bg-surface-container text-on-surface hover:bg-surface-container-high"
+                          ? "bg-indigo-600 text-white border-indigo-600 shadow-xs"
+                          : "bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100"
                       }`}
                     >
                       {mode}
@@ -759,163 +784,142 @@ export default function FeesManagementPage() {
                 </div>
 
                 {/* Conditional Fields */}
-                <div className="p-space-sm bg-surface-container-low space-y-space-sm border border-outline-variant/20">
+                <div className="p-3 bg-slate-50 rounded-xl border border-slate-200 space-y-2">
                   {drawerMode === "cash" && (
-                    <div className="flex items-center justify-between font-mono-data text-body-sm text-on-surface">
-                      <span>Physical Cash Deposit at Bursar Counter</span>
-                      <span className="text-secondary font-bold">REGISTER DRAWER: #01</span>
+                    <div className="flex items-center justify-between text-xs text-slate-700">
+                      <span>Physical Cash Handover at Counter</span>
+                      <span className="font-semibold text-indigo-600 font-mono">DRAWER: #01</span>
                     </div>
                   )}
                   {drawerMode === "upi" && (
-                    <div className="space-y-space-xs font-mono-data">
-                      <label className="font-label-sm text-label-sm uppercase text-on-surface-variant block text-[0.75rem]">
-                        Bank UPI Transaction ID (UTR)
+                    <div>
+                      <label className="block text-[11px] font-medium text-slate-500 mb-1">
+                        Bank UPI Reference / UTR Number
                       </label>
                       <input
                         type="text"
                         defaultValue="429188201948"
-                        className="w-full bg-surface-container-lowest px-space-sm py-1.5 font-mono-data text-body-sm shadow-inner focus:outline-none border border-outline-variant/40"
+                        className="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 text-xs font-mono font-semibold text-slate-900 focus:outline-none focus:ring-1 focus:ring-indigo-500"
                       />
                     </div>
                   )}
                   {drawerMode === "card" && (
-                    <div className="grid grid-cols-2 gap-space-sm font-mono-data">
+                    <div className="grid grid-cols-2 gap-2">
                       <div>
-                        <label className="font-label-sm text-label-sm uppercase text-on-surface-variant block text-[0.75rem]">
-                          POS Slip No
+                        <label className="block text-[11px] font-medium text-slate-500 mb-1">
+                          POS Slip Number
                         </label>
                         <input
                           type="text"
                           defaultValue="POS-TX-9901"
-                          className="w-full bg-surface-container-lowest px-space-sm py-1.5 font-mono-data text-body-sm shadow-inner focus:outline-none border border-outline-variant/40"
+                          className="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 text-xs font-mono text-slate-900"
                         />
                       </div>
                       <div>
-                        <label className="font-label-sm text-label-sm uppercase text-on-surface-variant block text-[0.75rem]">
-                          Card Last 4
+                        <label className="block text-[11px] font-medium text-slate-500 mb-1">
+                          Card Last 4 Digits
                         </label>
                         <input
                           type="text"
                           maxLength={4}
                           defaultValue="4821"
-                          className="w-full bg-surface-container-lowest px-space-sm py-1.5 font-mono-data text-body-sm shadow-inner focus:outline-none border border-outline-variant/40"
+                          className="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 text-xs font-mono text-slate-900"
                         />
                       </div>
                     </div>
                   )}
                   {drawerMode === "cheque" && (
-                    <div className="grid grid-cols-3 gap-space-sm font-mono-data">
+                    <div className="grid grid-cols-3 gap-2">
                       <div>
-                        <label className="font-label-sm text-label-sm uppercase text-on-surface-variant block text-[0.75rem]">
-                          Cheque No
-                        </label>
+                        <label className="block text-[11px] font-medium text-slate-500 mb-1">Cheque No</label>
                         <input
                           type="text"
                           defaultValue="649281"
-                          className="w-full bg-surface-container-lowest px-space-sm py-1.5 font-mono-data text-body-sm border border-outline-variant/40"
+                          className="w-full bg-white border border-slate-200 rounded-lg px-2 py-1.5 text-xs font-mono"
                         />
                       </div>
                       <div>
-                        <label className="font-label-sm text-label-sm uppercase text-on-surface-variant block text-[0.75rem]">
-                          Issuing Bank
-                        </label>
+                        <label className="block text-[11px] font-medium text-slate-500 mb-1">Bank</label>
                         <input
                           type="text"
-                          defaultValue="Chase"
-                          className="w-full bg-surface-container-lowest px-space-sm py-1.5 font-mono-data text-body-sm border border-outline-variant/40"
+                          defaultValue="HDFC Bank"
+                          className="w-full bg-white border border-slate-200 rounded-lg px-2 py-1.5 text-xs"
                         />
                       </div>
                       <div>
-                        <label className="font-label-sm text-label-sm uppercase text-on-surface-variant block text-[0.75rem]">
-                          Clearance Date
-                        </label>
+                        <label className="block text-[11px] font-medium text-slate-500 mb-1">Date</label>
                         <input
                           type="date"
-                          defaultValue="2024-10-28"
-                          className="w-full bg-surface-container-lowest px-space-sm py-1.5 font-mono-data text-body-sm border border-outline-variant/40"
+                          defaultValue="2025-03-24"
+                          className="w-full bg-white border border-slate-200 rounded-lg px-2 py-1.5 text-xs"
                         />
                       </div>
                     </div>
                   )}
                   {drawerMode === "neft" && (
-                    <div className="space-y-space-xs font-mono-data">
-                      <label className="font-label-sm text-label-sm uppercase text-on-surface-variant block text-[0.75rem]">
-                        Bank Transfer / IMPS Reference Number
+                    <div>
+                      <label className="block text-[11px] font-medium text-slate-500 mb-1">
+                        NEFT / RTGS Transfer Reference Number
                       </label>
                       <input
                         type="text"
                         defaultValue="CMS29481029471"
-                        className="w-full bg-surface-container-lowest px-space-sm py-1.5 font-mono-data text-body-sm border border-outline-variant/40"
+                        className="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 text-xs font-mono font-semibold text-slate-900"
                       />
                     </div>
                   )}
                 </div>
               </div>
 
-              {/* 4. Computation, Discounts & Approvals */}
-              <div className="bg-surface-container-lowest p-space-md shadow-sm space-y-space-md border border-outline-variant/30">
-                <label className="font-label-sm text-label-sm uppercase tracking-wider text-primary font-bold">
-                  4. Fiscal Breakdown &amp; Bursar Waivers
+              {/* Adjustments: Discount & Late Fee */}
+              <div className="space-y-2">
+                <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                  4. Waivers &amp; Fine Charges
                 </label>
-                <div className="grid grid-cols-2 gap-space-md font-mono-data">
+                <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="font-label-sm text-label-sm uppercase text-on-surface-variant block text-[0.75rem]">
-                      Discount / Scholarship Waiver ($)
+                    <label className="block text-[11px] font-medium text-slate-500 mb-1">
+                      Merit Scholarship / Waiver ($)
                     </label>
                     <input
                       type="number"
                       min={0}
                       value={discount}
                       onChange={(e) => setDiscount(parseFloat(e.target.value) || 0)}
-                      className="w-full bg-surface-container-low px-space-sm py-2 font-mono-data text-body-md text-primary font-bold shadow-inner focus:outline-none border border-outline-variant/40"
+                      className="w-full bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1.5 text-xs font-bold text-slate-900"
                     />
                   </div>
                   <div>
-                    <label className="font-label-sm text-label-sm uppercase text-on-surface-variant block text-[0.75rem]">
-                      Late Fine / Penalty Charge ($)
+                    <label className="block text-[11px] font-medium text-slate-500 mb-1">
+                      Late Fine Surcharge ($)
                     </label>
                     <input
                       type="number"
                       min={0}
                       value={fine}
                       onChange={(e) => setFine(parseFloat(e.target.value) || 0)}
-                      className="w-full bg-surface-container-low px-space-sm py-2 font-mono-data text-body-md text-primary font-bold shadow-inner focus:outline-none border border-outline-variant/40"
+                      className="w-full bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1.5 text-xs font-bold text-slate-900"
                     />
                   </div>
                 </div>
 
-                <div>
-                  <label className="font-label-sm text-label-sm uppercase text-on-surface-variant block text-[0.75rem]">
-                    Administrative Remarks / Reference Notes
-                  </label>
-                  <textarea
-                    rows={2}
-                    defaultValue="Approved under Institutional Merit Category. Installment 1 of 2."
-                    className="w-full bg-surface-container-low p-space-sm font-body-sm text-on-surface shadow-inner focus:outline-none resize-none border border-outline-variant/40"
-                  ></textarea>
-                </div>
-
-                <div className="bg-surface-container-low p-space-md flex items-center justify-between border border-outline-variant/30">
-                  <div className="flex items-center gap-space-sm">
+                {/* Total Summary Box */}
+                <div className="p-4 rounded-xl bg-indigo-50 border border-indigo-100 flex items-center justify-between mt-3">
+                  <div className="flex items-center gap-2">
                     <input
                       type="checkbox"
-                      id="receipt-print-toggle"
+                      id="drawer-receipt-check"
                       checked={autoOpenReceipt}
                       onChange={(e) => setAutoOpenReceipt(e.target.checked)}
-                      className="w-4 h-4 accent-primary"
+                      className="w-4 h-4 rounded text-indigo-600 focus:ring-indigo-500 border-slate-300"
                     />
-                    <label
-                      htmlFor="receipt-print-toggle"
-                      className="font-label-sm text-label-sm uppercase tracking-wider font-semibold text-primary cursor-pointer text-[0.75rem]"
-                    >
-                      Instantly Open Printable Official Receipt Slip
+                    <label htmlFor="drawer-receipt-check" className="font-semibold text-indigo-900 cursor-pointer">
+                      Instantly generate printable receipt
                     </label>
                   </div>
                   <div className="text-right">
-                    <span className="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant text-[0.6875rem]">
-                      Net Collected Amount
-                    </span>
-                    <div className="font-headline-xl text-headline-xl text-primary font-bold leading-none tabular-nums">
+                    <div className="text-[11px] text-indigo-700 font-semibold uppercase">Net Settled</div>
+                    <div className="text-xl font-bold text-indigo-900 font-mono">
                       ${calculateTotal().toFixed(2)}
                     </div>
                   </div>
@@ -923,274 +927,196 @@ export default function FeesManagementPage() {
               </div>
             </div>
 
-            {/* Action Footer */}
-            <div className="px-gutter-desktop py-space-md bg-surface-container-lowest shadow-md flex items-center justify-between gap-space-md border-t border-outline-variant/30 font-mono-data">
+            {/* Footer Actions */}
+            <div className="p-4 border-t border-slate-100 flex items-center justify-between gap-3 bg-white">
               <button
                 onClick={() => setIsDrawerOpen(false)}
-                className="px-space-md py-2.5 bg-surface text-on-surface-variant hover:text-on-surface font-label-md uppercase tracking-wider border border-outline-variant/40"
+                className="py-2 px-4 rounded-xl border border-slate-200 text-slate-700 font-semibold hover:bg-slate-50 transition-colors"
               >
-                Cancel Slip
+                Cancel
               </button>
               <button
                 onClick={handleCommitPayment}
-                className="px-space-xl py-2.5 bg-primary-container text-on-primary font-label-md uppercase tracking-wider font-bold hover:bg-primary shadow-md flex items-center gap-space-xs"
+                className="py-2 px-5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold flex items-center gap-2 shadow-xs transition-colors"
               >
                 <Check className="w-4 h-4" />
-                <span>Commit To Institutional Ledger</span>
+                <span>Commit to Fiscal Ledger</span>
               </button>
             </div>
-          </aside>
-        </>
+          </div>
+        </div>
       )}
 
-      {/* MODAL: Official Institutional Fee Receipt Preview */}
+      {/* MODAL: Official Receipt Preview */}
       {isReceiptModalOpen && activeReceipt && (
-        <div className="fixed inset-0 bg-primary/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-surface-container-lowest max-w-xl w-full shadow-2xl relative flex flex-col max-h-[92vh] border border-outline-variant/40">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-xs">
+          <div className="bg-white rounded-2xl shadow-2xl border border-slate-200/80 max-w-lg w-full overflow-hidden animate-in fade-in zoom-in-95 duration-200">
             {/* Header */}
-            <div className="p-space-sm bg-surface-container flex items-center justify-between border-b border-outline-variant/30">
-              <div className="flex items-center gap-space-xs font-mono-data text-label-sm text-primary font-semibold">
-                <Printer className="w-4 h-4 text-secondary" />
-                <span>OFFICIAL COUNTER RECEIPT PREVIEW</span>
+            <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/70">
+              <div className="flex items-center gap-2 text-indigo-700 font-semibold">
+                <Receipt className="w-5 h-5 shrink-0" />
+                <span>Official Fee Receipt Slip</span>
               </div>
-              <div className="flex items-center gap-space-xs font-mono-data">
+              <div className="flex items-center gap-2">
                 <button
                   onClick={() => {
                     if (typeof window !== "undefined") window.print();
                   }}
-                  className="px-space-sm py-1 bg-primary-container text-on-primary font-label-sm uppercase font-semibold hover:bg-primary inline-flex items-center gap-1"
+                  className="px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold flex items-center gap-1.5 shadow-xs transition-colors"
                 >
                   <Printer className="w-3.5 h-3.5" />
-                  <span>Print Standard</span>
+                  <span>Print Slip</span>
                 </button>
                 <button
                   onClick={() => setIsReceiptModalOpen(false)}
-                  className="p-1 hover:bg-surface-container-high text-primary"
+                  className="w-8 h-8 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 flex items-center justify-center"
                 >
                   <X className="w-4 h-4" />
                 </button>
               </div>
             </div>
 
-            {/* Printable Voucher Canvas */}
-            <div className="overflow-y-auto p-space-lg bg-surface-container-lowest relative font-mono-data">
-              {/* Background Watermark */}
-              <div className="absolute inset-0 pointer-events-none flex items-center justify-center opacity-[0.03] select-none">
-                <span className="font-headline-xl text-[9rem] font-bold text-primary rotate-[-25deg]">
-                  APEX
-                </span>
-              </div>
-
-              {/* Receipt Header */}
-              <div className="text-center pb-space-md border-b-2 border-primary/20 space-y-1">
-                <h2 className="font-headline-sm text-headline-sm uppercase tracking-tight text-primary font-bold">
-                  Apex Institute of Technology &amp; Management
-                </h2>
-                <p className="text-label-sm uppercase text-on-surface-variant font-mono-data text-[0.6875rem]">
-                  Campus Grid #01 North • Bursar Financial Division
-                </p>
-                <div className="inline-block px-space-sm py-0.5 bg-primary text-on-primary font-label-sm uppercase font-bold tracking-widest mt-1 text-[0.6875rem]">
-                  Official Fee Receipt (Student Copy)
+            {/* Printable Receipt Body */}
+            <div className="p-6 space-y-4 text-xs font-mono text-slate-700">
+              {/* Institution Title */}
+              <div className="text-center pb-3 border-b border-slate-200 space-y-1">
+                <h3 className="font-bold text-sm text-slate-900 tracking-tight">
+                  APEX INSTITUTE OF TECHNOLOGY &amp; MANAGEMENT
+                </h3>
+                <p className="text-[11px] text-slate-500">Central Campus • Bursar Financial Treasury</p>
+                <div className="inline-block px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 text-[10px] font-bold uppercase tracking-wider mt-1 border border-emerald-200">
+                  Paid &amp; Cleared Voucher
                 </div>
               </div>
 
-              {/* Metadata */}
-              <div className="grid grid-cols-2 gap-space-sm py-space-sm text-body-sm border-b border-outline-variant/30 text-[0.75rem]">
+              {/* Metadata Grid */}
+              <div className="grid grid-cols-2 gap-2 text-[11px] pb-3 border-b border-slate-200">
                 <div>
-                  <div className="text-on-surface-variant text-label-sm text-[0.6875rem]">
-                    RECEIPT NUMBER:
-                  </div>
-                  <div className="font-bold text-primary">#{activeReceipt.receiptNo}</div>
+                  <span className="text-slate-400">VOUCHER NO:</span>
+                  <div className="font-bold text-slate-900">#{activeReceipt.receiptNo}</div>
                 </div>
                 <div className="text-right">
-                  <div className="text-on-surface-variant text-label-sm text-[0.6875rem]">
-                    TIMESTAMP:
-                  </div>
-                  <div className="font-bold text-primary">
-                    {activeReceipt.date} {activeReceipt.time} EST
-                  </div>
+                  <span className="text-slate-400">DATE &amp; TIME:</span>
+                  <div className="font-bold text-slate-900">{activeReceipt.date} {activeReceipt.time}</div>
                 </div>
                 <div>
-                  <div className="text-on-surface-variant text-label-sm text-[0.6875rem]">
-                    STUDENT NAME:
-                  </div>
-                  <div className="font-bold text-primary">{activeReceipt.studentName}</div>
+                  <span className="text-slate-400">STUDENT:</span>
+                  <div className="font-bold text-slate-900">{activeReceipt.studentName}</div>
                 </div>
                 <div className="text-right">
-                  <div className="text-on-surface-variant text-label-sm text-[0.6875rem]">
-                    ROLL IDENTIFIER:
-                  </div>
-                  <div className="font-bold text-primary">{activeReceipt.rollId}</div>
+                  <span className="text-slate-400">ROLL NO:</span>
+                  <div className="font-bold text-slate-900">{activeReceipt.rollId}</div>
                 </div>
                 <div className="col-span-2">
-                  <div className="text-on-surface-variant text-label-sm text-[0.6875rem]">
-                    PROGRAM / BATCH:
-                  </div>
-                  <div className="font-bold text-primary">
-                    {activeReceipt.course} ({activeReceipt.batch})
-                  </div>
+                  <span className="text-slate-400">COURSE / BATCH:</span>
+                  <div className="font-bold text-slate-900">{activeReceipt.course} ({activeReceipt.batch})</div>
                 </div>
               </div>
 
               {/* Breakdown Table */}
-              <div className="py-space-sm text-[0.8125rem]">
-                <table className="w-full text-left">
-                  <thead>
-                    <tr className="text-label-sm uppercase text-on-surface-variant border-b border-outline-variant/30 text-[0.6875rem]">
-                      <th className="py-1">Description / Head</th>
-                      <th className="py-1 text-right">Amount</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-outline-variant/10 text-[0.75rem]">
-                    <tr>
-                      <td className="py-1.5 text-primary">{activeReceipt.feeHead}</td>
-                      <td className="py-1.5 text-right font-bold text-primary">
-                        ${activeReceipt.amount.toFixed(2)}
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="py-1.5 text-primary">
-                        Autonomous Exam &amp; Laboratory Charge
-                      </td>
-                      <td className="py-1.5 text-right font-bold text-primary">$0.00</td>
-                    </tr>
-                    <tr>
-                      <td className="py-1.5 text-on-surface-variant">
-                        Scholarship / Institutional Waiver
-                      </td>
-                      <td className="py-1.5 text-right font-bold text-secondary">-$0.00</td>
-                    </tr>
-                  </tbody>
-                  <tfoot>
-                    <tr className="border-t-2 border-primary/20 text-body-md font-bold">
-                      <td className="pt-2 text-primary uppercase">Total Settled</td>
-                      <td className="pt-2 text-right text-primary text-headline-sm">
-                        ${activeReceipt.amount.toFixed(2)}
-                      </td>
-                    </tr>
-                  </tfoot>
-                </table>
-              </div>
+              <table className="w-full text-left text-[11px]">
+                <thead>
+                  <tr className="border-b border-slate-200 text-slate-400 uppercase text-[10px]">
+                    <th className="py-1">Fee Description</th>
+                    <th className="py-1 text-right">Amount</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-100">
+                  <tr>
+                    <td className="py-1.5 font-medium text-slate-800">{activeReceipt.feeHead}</td>
+                    <td className="py-1.5 text-right font-bold text-slate-900">
+                      ${activeReceipt.amount.toFixed(2)}
+                    </td>
+                  </tr>
+                </tbody>
+                <tfoot>
+                  <tr className="border-t-2 border-slate-900 font-bold text-slate-900">
+                    <td className="pt-2 uppercase">Total Settled</td>
+                    <td className="pt-2 text-right text-sm">
+                      ${activeReceipt.amount.toFixed(2)}
+                    </td>
+                  </tr>
+                </tfoot>
+              </table>
 
-              {/* Mode & Official Stamp */}
-              <div className="pt-space-sm border-t border-outline-variant/30 grid grid-cols-2 gap-space-sm items-end text-[0.75rem]">
-                <div className="space-y-1">
-                  <div className="text-label-sm text-on-surface-variant uppercase text-[0.6875rem]">
-                    Settlement Mode:
-                  </div>
-                  <div className="font-bold text-primary uppercase">{activeReceipt.mode}</div>
-                  <div className="text-label-sm text-on-surface-variant uppercase mt-2 text-[0.6875rem]">
-                    Cashier / Staff:
-                  </div>
-                  <div className="font-bold text-primary">{activeReceipt.collector}</div>
+              {/* Footer Stamp */}
+              <div className="pt-3 border-t border-slate-200 flex items-center justify-between text-[11px]">
+                <div>
+                  <div className="text-slate-400">PAYMENT MODE:</div>
+                  <div className="font-bold text-slate-900">{activeReceipt.mode}</div>
+                  <div className="text-slate-400 mt-1">CASHIER:</div>
+                  <div className="font-medium text-slate-800">{activeReceipt.collector}</div>
                 </div>
-
-                <div className="flex flex-col items-center justify-center p-2 bg-surface-container-high/40 text-center border border-dashed border-secondary/30">
-                  <span className="font-headline-sm uppercase font-black text-secondary tracking-widest leading-none">
-                    PAID &amp; CLEARED
-                  </span>
-                  <span className="font-label-sm text-on-surface-variant mt-1 text-[0.625rem]">
-                    TREASURY SEAL • APEX IMS
-                  </span>
-                  <div className="w-full border-t border-dashed border-outline-variant/50 mt-4 pt-1 font-label-sm text-on-surface-variant uppercase text-[0.625rem]">
-                    Authorized Signatory
-                  </div>
+                <div className="text-center p-2 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-800">
+                  <div className="font-black tracking-widest text-[11px]">CLEARED</div>
+                  <div className="text-[9px] text-emerald-600 mt-0.5">APEX TREASURY SEAL</div>
                 </div>
-              </div>
-
-              <div className="mt-space-md pt-space-xs text-center text-label-sm text-on-surface-variant/80 border-t border-outline-variant/20 uppercase tracking-widest text-[0.625rem]">
-                Computer generated official transaction voucher • Apex Institute Bursar Division
               </div>
             </div>
           </div>
         </div>
       )}
 
-      {/* MODAL: Fee Structure Settings */}
+      {/* MODAL: Fee Structure Master Catalog */}
       {isStructureModalOpen && (
-        <div className="fixed inset-0 bg-primary/40 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-surface-container-lowest max-w-2xl w-full shadow-2xl p-gutter-desktop space-y-space-md border border-outline-variant/40 font-mono-data">
-            <div className="flex items-center justify-between border-b border-outline-variant/20 pb-space-sm">
-              <div>
-                <h3 className="font-headline-sm text-headline-sm text-primary uppercase font-bold">
-                  Institutional Fee Structures &amp; Heads
-                </h3>
-                <p className="font-label-sm text-on-surface-variant uppercase tracking-wider text-[0.75rem]">
-                  AY 2024-25 Master Catalogs
-                </p>
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-xs">
+          <div className="bg-white rounded-2xl shadow-xl border border-slate-200/80 max-w-lg w-full overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+            <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Sliders className="w-5 h-5 text-indigo-600" />
+                <h3 className="font-bold text-base text-slate-900">Master Fee Structures</h3>
               </div>
               <button
                 onClick={() => setIsStructureModalOpen(false)}
-                className="p-1 hover:bg-surface-container"
+                className="w-8 h-8 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 flex items-center justify-center"
               >
-                <X className="w-5 h-5" />
+                <X className="w-4 h-4" />
               </button>
             </div>
 
-            <div className="space-y-space-sm">
-              <div className="flex items-center justify-between p-space-sm bg-surface-container-low border border-outline-variant/30">
+            <div className="p-6 space-y-3 text-xs">
+              <div className="p-3.5 bg-slate-50 rounded-xl border border-slate-200 flex items-center justify-between">
                 <div>
-                  <div className="font-headline-sm text-body-md font-bold text-primary">
-                    B.Tech Engineering Programs
-                  </div>
-                  <div className="font-label-sm text-on-surface-variant text-[0.75rem]">
-                    8 Semesters • $3,800 Base Tuition / Sem + $450 Labs
-                  </div>
+                  <div className="font-bold text-slate-900 text-sm">B.Tech Engineering Programs</div>
+                  <div className="text-slate-500 mt-0.5">8 Semesters • $3,800 Base Tuition / Sem + $450 Labs</div>
                 </div>
-                <span className="font-mono-data text-label-sm px-2 py-0.5 bg-surface-container text-secondary font-bold">
-                  LOCKED
+                <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                  ACTIVE
                 </span>
               </div>
 
-              <div className="flex items-center justify-between p-space-sm bg-surface-container-low border border-outline-variant/30">
+              <div className="p-3.5 bg-slate-50 rounded-xl border border-slate-200 flex items-center justify-between">
                 <div>
-                  <div className="font-headline-sm text-body-md font-bold text-primary">
-                    MBA Master of Management
-                  </div>
-                  <div className="font-label-sm text-on-surface-variant text-[0.75rem]">
-                    4 Semesters • $5,200 Base Tuition / Sem + $300 Library
-                  </div>
+                  <div className="font-bold text-slate-900 text-sm">MBA Master of Management</div>
+                  <div className="text-slate-500 mt-0.5">4 Semesters • $5,200 Base Tuition / Sem + $300 Library</div>
                 </div>
-                <span className="font-mono-data text-label-sm px-2 py-0.5 bg-surface-container text-secondary font-bold">
-                  LOCKED
+                <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                  ACTIVE
                 </span>
               </div>
 
-              <div className="flex items-center justify-between p-space-sm bg-surface-container-low border border-outline-variant/30">
+              <div className="p-3.5 bg-slate-50 rounded-xl border border-slate-200 flex items-center justify-between">
                 <div>
-                  <div className="font-headline-sm text-body-md font-bold text-primary">
-                    B.Des Design &amp; Architecture
-                  </div>
-                  <div className="font-label-sm text-on-surface-variant text-[0.75rem]">
-                    8 Semesters • $4,100 Base Tuition / Sem + $650 Studio
-                  </div>
+                  <div className="font-bold text-slate-900 text-sm">B.Des Interaction Design</div>
+                  <div className="text-slate-500 mt-0.5">8 Semesters • $4,100 Base Tuition / Sem + $650 Studio</div>
                 </div>
-                <span className="font-mono-data text-label-sm px-2 py-0.5 bg-surface-container text-secondary font-bold">
-                  LOCKED
+                <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                  ACTIVE
                 </span>
               </div>
-            </div>
 
-            <div className="flex justify-end gap-space-sm pt-space-sm border-t border-outline-variant/20">
-              <button
-                onClick={() => setIsStructureModalOpen(false)}
-                className="px-space-md py-1.5 bg-surface-container text-primary font-label-md uppercase font-bold"
-              >
-                Close Catalog
-              </button>
+              <div className="flex justify-end pt-2">
+                <button
+                  onClick={() => setIsStructureModalOpen(false)}
+                  className="py-2 px-4 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 font-semibold"
+                >
+                  Close Catalog
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      )}
-
-      {/* Dynamic SMS / Toast Notification */}
-      {toastMessage && (
-        <div className="fixed bottom-6 right-6 bg-primary text-on-primary px-space-md py-space-sm shadow-xl flex items-center gap-space-sm z-50 border border-outline-variant/40">
-          <CheckCircle2 className="w-5 h-5 text-secondary-container" />
-          <span className="font-mono-data text-body-sm">{toastMessage}</span>
         </div>
       )}
     </div>
   );
 }
-
