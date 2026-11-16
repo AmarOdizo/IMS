@@ -296,9 +296,9 @@ export default function StaffAttendancePage() {
       )}
 
       {/* Header Banner */}
-      <div className="bg-white rounded-2xl p-6 md:p-7 border border-slate-200/80 shadow-xs relative overflow-hidden">
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
-          <div className="space-y-2">
+      <div className="bg-white rounded-2xl p-5 md:p-6 border border-slate-200/80 shadow-xs relative overflow-hidden">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="space-y-1.5">
             <div className="flex flex-wrap items-center gap-2">
               <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-blue-50 text-[#355C7D] text-xs font-semibold rounded-full border border-blue-200/60">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#355C7D]"></span>
@@ -310,16 +310,14 @@ export default function StaffAttendancePage() {
               </span>
             </div>
 
-            <div>
-              <h1 className="text-2xl md:text-3xl font-bold text-[#3D405B] tracking-tight">
-                Daily Attendance &amp; Classroom Register
-              </h1>
-            </div>
+            <h1 className="text-2xl md:text-3xl font-bold text-[#3D405B] tracking-tight">
+              Daily Attendance &amp; Classroom Register
+            </h1>
           </div>
 
           {/* Header Action Buttons & Lock Status */}
-          <div className="flex items-center flex-wrap gap-2.5">
-            <div className="flex items-center gap-2 bg-slate-50 px-3.5 py-2 border border-slate-200 rounded-xl text-xs font-semibold">
+          <div className="flex items-center flex-wrap gap-2.5 shrink-0">
+            <div className="inline-flex items-center gap-2 bg-slate-50 px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm font-semibold">
               <ShieldCheck className="h-4 w-4 text-slate-500" />
               <span className="text-slate-400 uppercase text-[10px] tracking-wider">Status:</span>
               <span
@@ -334,7 +332,7 @@ export default function StaffAttendancePage() {
             {!isLocked ? (
               <button
                 onClick={() => setIsLockModalOpen(true)}
-                className="inline-flex items-center gap-2 px-4 py-2.5 bg-[#355C7D] hover:bg-[#2b4c68] text-white text-xs font-semibold rounded-xl transition-colors shadow-sm cursor-pointer"
+                className="inline-flex items-center gap-2 px-4 py-2.5 bg-[#355C7D] hover:bg-[#2b4c68] text-white text-sm font-semibold rounded-xl transition-colors shadow-sm cursor-pointer"
               >
                 <Lock className="h-4 w-4" />
                 <span>Submit &amp; Lock Register</span>
@@ -345,7 +343,7 @@ export default function StaffAttendancePage() {
                   setIsLocked(false);
                   showToast("Register unlocked for revision edits.");
                 }}
-                className="inline-flex items-center gap-2 px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-xl transition-colors cursor-pointer border border-slate-200"
+                className="inline-flex items-center gap-2 px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm font-semibold rounded-xl transition-colors cursor-pointer border border-slate-200"
               >
                 <Unlock className="h-4 w-4 text-slate-600" />
                 <span>Unlock for Revision</span>
@@ -354,7 +352,7 @@ export default function StaffAttendancePage() {
 
             <button
               onClick={() => showToast("Exporting monthly attendance sheet (Excel)...")}
-              className="inline-flex items-center gap-2 px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-xl transition-colors cursor-pointer border border-slate-200"
+              className="inline-flex items-center gap-2 px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm font-semibold rounded-xl transition-colors cursor-pointer border border-slate-200"
             >
               <FileSpreadsheet className="h-4 w-4 text-slate-600" />
               <span>Export Excel</span>
