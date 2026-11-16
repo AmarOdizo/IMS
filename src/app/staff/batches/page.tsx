@@ -324,9 +324,9 @@ export default function StaffBatchesPage() {
       )}
 
       {/* Header Banner */}
-      <div className="bg-white rounded-2xl p-6 md:p-7 border border-slate-200/80 shadow-xs relative overflow-hidden">
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
-          <div className="space-y-2">
+      <div className="bg-white rounded-2xl p-5 md:p-6 border border-slate-200/80 shadow-xs relative overflow-hidden">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="space-y-1.5">
             <div className="flex flex-wrap items-center gap-2">
               <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-blue-50 text-[#355C7D] text-xs font-semibold rounded-full border border-blue-200/60">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#355C7D]"></span>
@@ -338,18 +338,13 @@ export default function StaffBatchesPage() {
               </span>
             </div>
 
-            <div>
-              <h1 className="text-2xl md:text-3xl font-bold text-[#3D405B] tracking-tight">
-                My Assigned Batches &amp; Cohorts
-              </h1>
-              <p className="text-sm text-slate-500 mt-1 max-w-2xl">
-                Teaching schedule, student roster registers, syllabus pace audit, and quick classroom attendance for your 4 assigned academic cohorts.
-              </p>
-            </div>
+            <h1 className="text-2xl md:text-3xl font-bold text-[#3D405B] tracking-tight">
+              My Assigned Batches &amp; Cohorts
+            </h1>
           </div>
 
           {/* Action Buttons */}
-          <div className="flex items-center flex-wrap gap-2.5">
+          <div className="flex items-center flex-wrap gap-2.5 shrink-0">
             <button
               onClick={() => setShowTimetableModal(true)}
               className="inline-flex items-center gap-2 px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm font-semibold rounded-xl transition-colors cursor-pointer border border-slate-200"
