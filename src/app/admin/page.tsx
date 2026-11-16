@@ -117,13 +117,15 @@ export default function AdminDashboardPage() {
       </div>
 
       {/* 2. Key Metrics Tiles (5 High-Density Cards) */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3.5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
         {/* Metric 1 */}
-        <div className="bg-white p-4.5 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-md transition-all flex flex-col justify-between">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-medium text-slate-500">Total Students</span>
-            <div className="w-9 h-9 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
-              <GraduationCap className="w-4.5 h-4.5" />
+        <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-md transition-all flex flex-col justify-between">
+          <div className="flex items-center justify-between gap-2">
+            <span className="text-xs font-semibold text-slate-500 uppercase tracking-wide">
+              Total Students
+            </span>
+            <div className="w-10 h-10 rounded-xl bg-blue-50/80 border border-blue-100 text-blue-600 flex items-center justify-center shrink-0">
+              <GraduationCap className="w-5 h-5" />
             </div>
           </div>
           <div className="mt-3.5">
@@ -139,58 +141,90 @@ export default function AdminDashboardPage() {
         </div>
 
         {/* Metric 2 */}
-        <div className="bg-white p-4.5 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-md transition-all flex flex-col justify-between">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-medium text-slate-500">Faculty &amp; Staff</span>
-            <div className="w-9 h-9 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center">
-              <Users className="w-4.5 h-4.5" />
+        <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-md transition-all flex flex-col justify-between">
+          <div className="flex items-center justify-between gap-2">
+            <span className="text-xs font-semibold text-slate-500 uppercase tracking-wide">
+              Faculty &amp; Staff
+            </span>
+            <div className="w-10 h-10 rounded-xl bg-purple-50/80 border border-purple-100 text-purple-600 flex items-center justify-center shrink-0">
+              <Users className="w-5 h-5" />
             </div>
           </div>
           <div className="mt-3.5">
             <div className="text-2xl font-bold text-[#3D405B] tracking-tight">142</div>
-            <div className="text-xs text-slate-500 mt-1">Across 18 Departments</div>
+            <div className="flex items-center gap-1.5 text-xs text-slate-500 mt-1">
+              <span className="inline-flex items-center text-purple-700 font-semibold">
+                <Building2 className="w-3.5 h-3.5 mr-0.5" />
+                18 Depts
+              </span>
+              <span>Active faculty</span>
+            </div>
           </div>
         </div>
 
         {/* Metric 3 */}
-        <div className="bg-white p-4.5 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-md transition-all flex flex-col justify-between">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-medium text-slate-500">Today's Attendance</span>
-            <div className="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
-              <CalendarCheck className="w-4.5 h-4.5" />
+        <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-md transition-all flex flex-col justify-between">
+          <div className="flex items-center justify-between gap-2">
+            <span className="text-xs font-semibold text-slate-500 uppercase tracking-wide">
+              Today's Attendance
+            </span>
+            <div className="w-10 h-10 rounded-xl bg-emerald-50/80 border border-emerald-100 text-emerald-600 flex items-center justify-center shrink-0">
+              <CalendarCheck className="w-5 h-5" />
             </div>
           </div>
           <div className="mt-3.5">
             <div className="text-2xl font-bold text-[#3D405B] tracking-tight">94.2%</div>
-            <div className="text-xs text-emerald-600 font-medium mt-1">2,336 Present today</div>
+            <div className="flex items-center gap-1.5 text-xs text-slate-500 mt-1">
+              <span className="inline-flex items-center text-emerald-600 font-semibold">
+                <CheckCircle2 className="w-3.5 h-3.5 mr-0.5" />
+                2,336
+              </span>
+              <span>Present today</span>
+            </div>
           </div>
         </div>
 
         {/* Metric 4 */}
-        <div className="bg-white p-4.5 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-md transition-all flex flex-col justify-between">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-medium text-slate-500">Fee Intake (Mar)</span>
-            <div className="w-9 h-9 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center">
-              <Banknote className="w-4.5 h-4.5" />
+        <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-md transition-all flex flex-col justify-between">
+          <div className="flex items-center justify-between gap-2">
+            <span className="text-xs font-semibold text-slate-500 uppercase tracking-wide">
+              Fee Intake (Mar)
+            </span>
+            <div className="w-10 h-10 rounded-xl bg-indigo-50/80 border border-indigo-100 text-indigo-600 flex items-center justify-center shrink-0">
+              <Banknote className="w-5 h-5" />
             </div>
           </div>
           <div className="mt-3.5">
             <div className="text-2xl font-bold text-[#3D405B] tracking-tight">₹48.60 L</div>
-            <div className="text-xs text-slate-500 mt-1">81% of monthly target</div>
+            <div className="flex items-center gap-1.5 text-xs text-slate-500 mt-1">
+              <span className="inline-flex items-center text-indigo-600 font-semibold">
+                <TrendingUp className="w-3.5 h-3.5 mr-0.5" />
+                81%
+              </span>
+              <span>of target</span>
+            </div>
           </div>
         </div>
 
         {/* Metric 5 */}
-        <div className="bg-white p-4.5 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-md transition-all flex flex-col justify-between">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-medium text-slate-500">Pending Dues</span>
-            <div className="w-9 h-9 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center">
-              <AlertTriangle className="w-4.5 h-4.5" />
+        <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-md transition-all flex flex-col justify-between">
+          <div className="flex items-center justify-between gap-2">
+            <span className="text-xs font-semibold text-slate-500 uppercase tracking-wide">
+              Pending Dues
+            </span>
+            <div className="w-10 h-10 rounded-xl bg-amber-50/80 border border-amber-100 text-amber-600 flex items-center justify-center shrink-0">
+              <AlertTriangle className="w-5 h-5" />
             </div>
           </div>
           <div className="mt-3.5">
             <div className="text-2xl font-bold text-amber-600 tracking-tight">₹11.40 L</div>
-            <div className="text-xs text-slate-500 mt-1">128 Accounts Pending</div>
+            <div className="flex items-center gap-1.5 text-xs text-slate-500 mt-1">
+              <span className="inline-flex items-center text-amber-600 font-semibold">
+                <AlertTriangle className="w-3.5 h-3.5 mr-0.5" />
+                128
+              </span>
+              <span>Accounts pending</span>
+            </div>
           </div>
         </div>
       </div>
