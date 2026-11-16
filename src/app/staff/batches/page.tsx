@@ -247,6 +247,54 @@ const batchesData: BatchItem[] = [
   }
 ];
 
+interface WeeklyScheduleSession {
+  id: string;
+  day: "Monday" | "Tuesday" | "Wednesday" | "Thursday" | "Friday";
+  time: string;
+  period: string;
+  duration: string;
+  code: string;
+  subject: string;
+  batch: string;
+  venue: string;
+  type: "lecture" | "lab" | "office" | "research" | "meeting";
+  enrolled?: number;
+  topic: string;
+  batchId?: string;
+}
+
+const facultyWeeklySchedule: WeeklyScheduleSession[] = [
+  // Monday
+  { id: "mon-1", day: "Monday", time: "09:00 - 10:00 AM", period: "Period 1", duration: "60 mins", code: "CS-401", subject: "Database Management Systems", batch: "B.Tech CS-IV-A", venue: "Lecture Hall 302", type: "lecture", enrolled: 62, topic: "Unit 4: Two-Phase Locking (2PL) & Serializability", batchId: "CS401" },
+  { id: "mon-2", day: "Monday", time: "11:00 AM - 12:30 PM", period: "Period 2", duration: "90 mins", code: "CS-602", subject: "Advanced Distributed Database Architecture", batch: "M.Tech DS-II", venue: "Room 204 (PG Block)", type: "lecture", enrolled: 28, topic: "Module 3: Raft Consensus & Commit Protocols", batchId: "CS602" },
+  { id: "mon-3", day: "Monday", time: "02:00 - 03:00 PM", period: "Consultation", duration: "60 mins", code: "OFFICE-HRS", subject: "Faculty Office Hours & Mentorship", batch: "Open Walk-in", venue: "Faculty Cabin B-204", type: "office", topic: "Individual Academic & Mentorship Guidance" },
+  { id: "mon-4", day: "Monday", time: "03:30 - 05:00 PM", period: "Department", duration: "90 mins", code: "DEPT-MEET", subject: "Department Academic Review Committee", batch: "CSE Faculty", venue: "Conference Room B", type: "meeting", topic: "Semester IV Progress & Question Paper Moderation" },
+
+  // Tuesday
+  { id: "tue-1", day: "Tuesday", time: "09:30 - 10:30 AM", period: "Advisory", duration: "60 mins", code: "OFFICE-HRS", subject: "Faculty Office Hours & Research Guidance", batch: "Open Walk-in", venue: "Faculty Cabin B-204", type: "office", topic: "B.Tech Final Year Capstone Project Review" },
+  { id: "tue-2", day: "Tuesday", time: "11:00 AM - 12:30 PM", period: "Research", duration: "90 mins", code: "PHD-SYNC", subject: "PhD Research Scholar Review", batch: "Research Scholars", venue: "PG Advanced Computing Lab", type: "research", topic: "Distributed Consensus Invariants & Edge Benchmarks" },
+  { id: "tue-3", day: "Tuesday", time: "02:00 - 03:00 PM", period: "Prep", duration: "60 mins", code: "PREP-HOURS", subject: "Curriculum Prep & Lab Setup", batch: "Faculty Workspace", venue: "Faculty Cabin B-204", type: "research", topic: "PostgreSQL Optimizer Script Verification" },
+  { id: "tue-4", day: "Tuesday", time: "03:30 - 05:00 PM", period: "Period 5 (Lab)", duration: "90 mins", code: "CS-405L", subject: "Database Systems Practicum Lab", batch: "B.Tech CS-IV-B", venue: "Turing Computing Lab 3", type: "lab", enrolled: 60, topic: "Lab 8: Query Plan Tuning (EXPLAIN ANALYZE)", batchId: "CS405L" },
+
+  // Wednesday
+  { id: "wed-1", day: "Wednesday", time: "09:00 - 10:00 AM", period: "Period 1", duration: "60 mins", code: "CS-401", subject: "Database Management Systems", batch: "B.Tech CS-IV-A", venue: "Lecture Hall 302", type: "lecture", enrolled: 62, topic: "Unit 4: Deadlock Prevention & Wait-For Graphs", batchId: "CS401" },
+  { id: "wed-2", day: "Wednesday", time: "11:00 AM - 12:30 PM", period: "Research", duration: "90 mins", code: "GRANT-SYNC", subject: "SERB Sponsored Project Research Sync", batch: "Project Team", venue: "AI & Distributed Systems Lab", type: "research", topic: "Fault-Tolerant Consensus Protocol Validation" },
+  { id: "wed-3", day: "Wednesday", time: "02:00 - 03:00 PM", period: "Period 4", duration: "60 mins", code: "CS-202", subject: "Data Structures & Algorithms Foundation", batch: "BCA-II-B", venue: "Seminar Hall B", type: "lecture", enrolled: 34, topic: "Unit 3: Binary Search Tree Insertion & Rotations", batchId: "CS202" },
+  { id: "wed-4", day: "Wednesday", time: "03:30 - 05:00 PM", period: "Evaluation", duration: "90 mins", code: "EVAL-HOURS", subject: "Continuous Assessment Script Evaluation", batch: "Faculty Workspace", venue: "Faculty Cabin B-204", type: "office", topic: "Continuous Internal Assessment Script Moderation" },
+
+  // Thursday
+  { id: "thu-1", day: "Thursday", time: "09:30 - 10:30 AM", period: "Advisory", duration: "60 mins", code: "OFFICE-HRS", subject: "Faculty Office Hours & Remedial Guidance", batch: "Open Walk-in", venue: "Faculty Cabin B-204", type: "office", topic: "At-Risk Student Remedial Coaching" },
+  { id: "thu-2", day: "Thursday", time: "11:00 AM - 12:30 PM", period: "Period 2", duration: "90 mins", code: "CS-602", subject: "Advanced Distributed Database Architecture", batch: "M.Tech DS-II", venue: "Room 204 (PG Block)", type: "lecture", enrolled: 28, topic: "Module 3: Paxos Safety Invariants & Quorum Slices", batchId: "CS602" },
+  { id: "thu-3", day: "Thursday", time: "02:00 - 03:00 PM", period: "Period 4", duration: "60 mins", code: "CS-202", subject: "Data Structures & Algorithms Foundation", batch: "BCA-II-B", venue: "Seminar Hall B", type: "lecture", enrolled: 34, topic: "Unit 3: Priority Queues & Min/Max Binary Heaps", batchId: "CS202" },
+  { id: "thu-4", day: "Thursday", time: "03:30 - 05:00 PM", period: "Period 5 (Lab)", duration: "90 mins", code: "CS-405L", subject: "Database Systems Practicum Lab", batch: "B.Tech CS-IV-B", venue: "Turing Computing Lab 3", type: "lab", enrolled: 60, topic: "Lab 8: Index Optimization & Execution Plan Costing", batchId: "CS405L" },
+
+  // Friday
+  { id: "fri-1", day: "Friday", time: "09:00 - 10:00 AM", period: "Period 1", duration: "60 mins", code: "CS-401", subject: "Database Management Systems", batch: "B.Tech CS-IV-A", venue: "Lecture Hall 302", type: "lecture", enrolled: 62, topic: "Unit 4: Transaction Recovery Architecture (ARIES & WAL)", batchId: "CS401" },
+  { id: "fri-2", day: "Friday", time: "11:00 AM - 12:30 PM", period: "Meeting", duration: "90 mins", code: "FACULTY-COUNCIL", subject: "Department Faculty Council & Sessional Review", batch: "CSE Faculty", venue: "Department Boardroom B", type: "meeting", topic: "Accreditation Self-Assessment & Course Outcomes" },
+  { id: "fri-3", day: "Friday", time: "02:00 - 03:00 PM", period: "Period 4", duration: "60 mins", code: "CS-202", subject: "Data Structures & Algorithms Foundation", batch: "BCA-II-B", venue: "Seminar Hall B", type: "lecture", enrolled: 34, topic: "Unit 3: Heap Sort Algorithm & Complexity Analysis", batchId: "CS202" },
+  { id: "fri-4", day: "Friday", time: "03:30 - 04:30 PM", period: "Review", duration: "60 mins", code: "LAB-SYNC", subject: "Weekly Batch Sync & Terminal Testing", batch: "Lab Assistants", venue: "Turing Computing Lab 3", type: "research", topic: "PostgreSQL Database Cluster Routine Maintenance" }
+];
+
 export default function StaffBatchesPage() {
   const [batches] = useState<BatchItem[]>(batchesData);
   const [searchQuery, setSearchQuery] = useState("");
@@ -259,6 +307,8 @@ export default function StaffBatchesPage() {
   const [activeDrawerBatch, setActiveDrawerBatch] = useState<BatchItem | null>(null);
   const [activeSyllabusBatch, setActiveSyllabusBatch] = useState<BatchItem | null>(null);
   const [showTimetableModal, setShowTimetableModal] = useState(false);
+  const [timetableTab, setTimetableTab] = useState<"matrix" | "agenda">("matrix");
+  const [timetableDay, setTimetableDay] = useState<"ALL" | "Monday" | "Tuesday" | "Wednesday" | "Thursday" | "Friday">("ALL");
   const [showAnnouncementModal, setShowAnnouncementModal] = useState(false);
   const [announcementBatchId, setAnnouncementBatchId] = useState("ALL");
   const [announcementText, setAnnouncementText] = useState("");
@@ -1165,149 +1215,505 @@ export default function StaffBatchesPage() {
 
       {/* Weekly Timetable Modal */}
       {showTimetableModal && (
-        <div className="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-4 animate-in fade-in duration-200">
-          <div className="bg-white rounded-2xl w-full max-w-4xl shadow-2xl p-6 sm:p-7 border border-slate-200 max-h-[90vh] overflow-y-auto space-y-5">
-            <div className="flex items-start justify-between pb-4 border-b border-slate-100">
-              <div>
-                <h3 className="text-xl font-bold text-[#3D405B]">
-                  Faculty Weekly Timetable — Even Semester 2024–25
-                </h3>
-                <p className="text-xs text-slate-500 mt-0.5">
-                  Prof. Rajesh Sharma &bull; Dept. of Computer Science &amp; Engineering &bull; 18 Contact Hours/Week
-                </p>
+        <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-5 md:p-6 animate-in fade-in duration-200">
+          <div className="bg-white rounded-2xl w-full max-w-6xl shadow-2xl border border-slate-200 flex flex-col max-h-[92vh] overflow-hidden animate-in zoom-in-95 duration-200">
+            {/* Modal Header */}
+            <div className="p-5 sm:p-6 bg-gradient-to-r from-slate-900 via-[#355C7D] to-[#2A4365] text-white flex items-start justify-between relative overflow-hidden flex-shrink-0">
+              <div className="absolute -right-10 -bottom-10 w-44 h-44 bg-white/5 rounded-full blur-2xl pointer-events-none" />
+              <div className="relative z-10 space-y-1">
+                <div className="flex items-center gap-2.5 flex-wrap">
+                  <div className="p-2 bg-white/10 rounded-xl border border-white/20 backdrop-blur-xs">
+                    <CalendarDays className="h-5 w-5 text-amber-300" />
+                  </div>
+                  <div>
+                    <h3 className="text-xl sm:text-2xl font-bold tracking-tight text-white flex items-center gap-2">
+                      Faculty Teaching &amp; Academic Timetable
+                      <span className="hidden sm:inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 mr-1.5 animate-pulse" />
+                        Even Sem 2024–25 (Active)
+                      </span>
+                    </h3>
+                    <p className="text-xs sm:text-sm text-slate-200/90 font-medium">
+                      Prof. Rajesh Sharma &bull; Dept. of Computer Science &amp; Engineering &bull; Cabin B-204
+                    </p>
+                  </div>
+                </div>
               </div>
-              <button
-                onClick={() => setShowTimetableModal(false)}
-                className="p-1.5 hover:bg-slate-100 text-slate-400 hover:text-slate-700 rounded-lg transition-colors cursor-pointer"
-              >
-                <X className="h-5 w-5" />
-              </button>
+
+              <div className="flex items-center gap-2 relative z-10">
+                <button
+                  onClick={() => setShowTimetableModal(false)}
+                  className="p-2 hover:bg-white/15 text-slate-200 hover:text-white rounded-xl transition-colors cursor-pointer border border-white/10"
+                  title="Close Timetable"
+                >
+                  <X className="h-5 w-5" />
+                </button>
+              </div>
             </div>
 
-            {/* Timetable Schedule Grid */}
-            <div className="overflow-x-auto border border-slate-200 rounded-xl">
-              <table className="w-full text-left text-xs">
-                <thead className="bg-slate-50 text-slate-500 font-bold uppercase tracking-wider text-[11px] border-b border-slate-200">
-                  <tr>
-                    <th className="py-3 px-4">Day</th>
-                    <th className="py-3 px-4">09:00 - 10:00</th>
-                    <th className="py-3 px-4">11:00 - 12:30</th>
-                    <th className="py-3 px-4">14:00 - 15:00</th>
-                    <th className="py-3 px-4">15:30 - 17:00</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-slate-100">
-                  {/* Monday */}
-                  <tr className="hover:bg-slate-50/50">
-                    <td className="py-3 px-4 font-bold text-[#3D405B]">Monday</td>
-                    <td className="py-3 px-4">
-                      <div className="p-2 bg-blue-50 border border-blue-200/80 rounded-lg">
-                        <span className="font-bold text-[#355C7D] block text-xs">CS-401</span>
-                        <span className="text-[11px] text-slate-600 block">DBMS &bull; Hall 302</span>
-                      </div>
-                    </td>
-                    <td className="py-3 px-4">
-                      <div className="p-2 bg-purple-50 border border-purple-200/80 rounded-lg">
-                        <span className="font-bold text-purple-700 block text-xs">CS-602</span>
-                        <span className="text-[11px] text-slate-600 block">Adv DB &bull; Room 204</span>
-                      </div>
-                    </td>
-                    <td className="py-3 px-4 text-slate-400 text-[11px] italic">Research / Office Hrs</td>
-                    <td className="py-3 px-4 text-slate-400 text-[11px] italic">Department Meeting</td>
-                  </tr>
+            {/* Quick Metrics Bar */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 p-4 bg-slate-50/80 border-b border-slate-200/80 flex-shrink-0 text-xs">
+              <div className="flex items-center gap-3 bg-white p-3 rounded-xl border border-slate-200/70 shadow-xs">
+                <div className="p-2 bg-blue-50 text-[#355C7D] rounded-lg">
+                  <Clock className="h-4 w-4" />
+                </div>
+                <div>
+                  <div className="text-[11px] text-slate-500 font-semibold uppercase tracking-wider">Weekly Workload</div>
+                  <div className="text-sm font-bold text-[#3D405B]">18 Contact Hours</div>
+                </div>
+              </div>
 
-                  {/* Tuesday */}
-                  <tr className="hover:bg-slate-50/50">
-                    <td className="py-3 px-4 font-bold text-[#3D405B]">Tuesday</td>
-                    <td className="py-3 px-4 text-slate-400 text-[11px] italic">Office Hours</td>
-                    <td className="py-3 px-4 text-slate-400 text-[11px] italic">PhD Scholar Review</td>
-                    <td className="py-3 px-4 text-slate-400 text-[11px] italic">Curriculum Prep</td>
-                    <td className="py-3 px-4">
-                      <div className="p-2 bg-emerald-50 border border-emerald-200/80 rounded-lg">
-                        <span className="font-bold text-emerald-700 block text-xs">CS-405L (Lab)</span>
-                        <span className="text-[11px] text-slate-600 block">DB Practicum &bull; Lab 3</span>
-                      </div>
-                    </td>
-                  </tr>
+              <div className="flex items-center gap-3 bg-white p-3 rounded-xl border border-slate-200/70 shadow-xs">
+                <div className="p-2 bg-purple-50 text-purple-700 rounded-lg">
+                  <Layers className="h-4 w-4" />
+                </div>
+                <div>
+                  <div className="text-[11px] text-slate-500 font-semibold uppercase tracking-wider">Assigned Cohorts</div>
+                  <div className="text-sm font-bold text-[#3D405B]">4 Batches (UG &amp; PG)</div>
+                </div>
+              </div>
 
-                  {/* Wednesday */}
-                  <tr className="hover:bg-slate-50/50">
-                    <td className="py-3 px-4 font-bold text-[#3D405B]">Wednesday</td>
-                    <td className="py-3 px-4">
-                      <div className="p-2 bg-blue-50 border border-blue-200/80 rounded-lg">
-                        <span className="font-bold text-[#355C7D] block text-xs">CS-401</span>
-                        <span className="text-[11px] text-slate-600 block">DBMS &bull; Hall 302</span>
-                      </div>
-                    </td>
-                    <td className="py-3 px-4 text-slate-400 text-[11px] italic">Research Guidance</td>
-                    <td className="py-3 px-4">
-                      <div className="p-2 bg-amber-50 border border-amber-200/80 rounded-lg">
-                        <span className="font-bold text-amber-700 block text-xs">CS-202</span>
-                        <span className="text-[11px] text-slate-600 block">DSA &bull; Seminar Hall B</span>
-                      </div>
-                    </td>
-                    <td className="py-3 px-4 text-slate-400 text-[11px] italic">Faculty Evaluation</td>
-                  </tr>
+              <div className="flex items-center gap-3 bg-white p-3 rounded-xl border border-slate-200/70 shadow-xs">
+                <div className="p-2 bg-emerald-50 text-emerald-700 rounded-lg">
+                  <Users className="h-4 w-4" />
+                </div>
+                <div>
+                  <div className="text-[11px] text-slate-500 font-semibold uppercase tracking-wider">Total Learners</div>
+                  <div className="text-sm font-bold text-[#3D405B]">184 Students Enrolled</div>
+                </div>
+              </div>
 
-                  {/* Thursday */}
-                  <tr className="hover:bg-slate-50/50">
-                    <td className="py-3 px-4 font-bold text-[#3D405B]">Thursday</td>
-                    <td className="py-3 px-4 text-slate-400 text-[11px] italic">Office Hours</td>
-                    <td className="py-3 px-4">
-                      <div className="p-2 bg-purple-50 border border-purple-200/80 rounded-lg">
-                        <span className="font-bold text-purple-700 block text-xs">CS-602</span>
-                        <span className="text-[11px] text-slate-600 block">Adv DB &bull; Room 204</span>
-                      </div>
-                    </td>
-                    <td className="py-3 px-4">
-                      <div className="p-2 bg-amber-50 border border-amber-200/80 rounded-lg">
-                        <span className="font-bold text-amber-700 block text-xs">CS-202</span>
-                        <span className="text-[11px] text-slate-600 block">DSA &bull; Seminar Hall B</span>
-                      </div>
-                    </td>
-                    <td className="py-3 px-4">
-                      <div className="p-2 bg-emerald-50 border border-emerald-200/80 rounded-lg">
-                        <span className="font-bold text-emerald-700 block text-xs">CS-405L (Lab)</span>
-                        <span className="text-[11px] text-slate-600 block">DB Practicum &bull; Lab 3</span>
-                      </div>
-                    </td>
-                  </tr>
-
-                  {/* Friday */}
-                  <tr className="hover:bg-slate-50/50">
-                    <td className="py-3 px-4 font-bold text-[#3D405B]">Friday</td>
-                    <td className="py-3 px-4">
-                      <div className="p-2 bg-blue-50 border border-blue-200/80 rounded-lg">
-                        <span className="font-bold text-[#355C7D] block text-xs">CS-401</span>
-                        <span className="text-[11px] text-slate-600 block">DBMS &bull; Hall 302</span>
-                      </div>
-                    </td>
-                    <td className="py-3 px-4 text-slate-400 text-[11px] italic">Sponsored Project Work</td>
-                    <td className="py-3 px-4">
-                      <div className="p-2 bg-amber-50 border border-amber-200/80 rounded-lg">
-                        <span className="font-bold text-amber-700 block text-xs">CS-202</span>
-                        <span className="text-[11px] text-slate-600 block">DSA &bull; Seminar Hall B</span>
-                      </div>
-                    </td>
-                    <td className="py-3 px-4 text-slate-400 text-[11px] italic">Weekly Sync</td>
-                  </tr>
-                </tbody>
-              </table>
+              <div className="flex items-center gap-3 bg-white p-3 rounded-xl border border-slate-200/70 shadow-xs">
+                <div className="p-2 bg-amber-50 text-amber-700 rounded-lg">
+                  <MapPin className="h-4 w-4" />
+                </div>
+                <div>
+                  <div className="text-[11px] text-slate-500 font-semibold uppercase tracking-wider">Primary Facilities</div>
+                  <div className="text-sm font-bold text-[#3D405B]">Hall 302 &bull; Turing Lab 3</div>
+                </div>
+              </div>
             </div>
 
-            <div className="flex items-center justify-between pt-2">
-              <span className="text-xs text-slate-500">
-                Official Timetable Slot Verification: Room allocation approved by Dean Academics.
-              </span>
-              <button
-                onClick={() => {
-                  showToast("Weekly Timetable PDF exported successfully.");
-                  setShowTimetableModal(false);
-                }}
-                className="px-4 py-2 bg-[#355C7D] hover:bg-[#2b4c68] text-white text-xs font-semibold rounded-xl transition-colors cursor-pointer"
-              >
-                Download Timetable PDF
-              </button>
+            {/* View Switcher & Day Filters */}
+            <div className="px-5 py-3.5 bg-white border-b border-slate-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 flex-shrink-0">
+              {/* Tab Switcher: Matrix vs Agenda */}
+              <div className="flex items-center bg-slate-100 p-1 rounded-xl border border-slate-200/80">
+                <button
+                  onClick={() => setTimetableTab("matrix")}
+                  className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                    timetableTab === "matrix"
+                      ? "bg-white text-[#355C7D] shadow-xs"
+                      : "text-slate-600 hover:text-slate-900"
+                  }`}
+                >
+                  <Grid className="h-3.5 w-3.5" />
+                  Weekly Matrix Grid
+                </button>
+                <button
+                  onClick={() => setTimetableTab("agenda")}
+                  className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                    timetableTab === "agenda"
+                      ? "bg-white text-[#355C7D] shadow-xs"
+                      : "text-slate-600 hover:text-slate-900"
+                  }`}
+                >
+                  <Calendar className="h-3.5 w-3.5" />
+                  Day-by-Day Agenda
+                </button>
+              </div>
+
+              {/* Day filter pills */}
+              <div className="flex items-center gap-1.5 overflow-x-auto w-full sm:w-auto pb-1 sm:pb-0">
+                {(["ALL", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"] as const).map((day) => (
+                  <button
+                    key={day}
+                    onClick={() => setTimetableDay(day)}
+                    className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all cursor-pointer border ${
+                      timetableDay === day
+                        ? "bg-[#355C7D] text-white border-[#355C7D] shadow-xs"
+                        : "bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100"
+                    }`}
+                  >
+                    {day === "ALL" ? "All Days (Mon–Fri)" : day}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Scrollable Content Body */}
+            <div className="p-5 sm:p-6 overflow-y-auto flex-1 space-y-4 bg-slate-50/50">
+              {timetableTab === "matrix" ? (
+                /* MATRIX VIEW */
+                <div className="overflow-x-auto rounded-2xl border border-slate-200 shadow-xs bg-white">
+                  <table className="w-full text-left border-collapse min-w-[850px]">
+                    <thead>
+                      <tr className="bg-slate-100/80 text-slate-600 text-xs font-bold uppercase tracking-wider border-b border-slate-200">
+                        <th className="py-3 px-4 w-32 bg-slate-100 border-r border-slate-200">Day / Period</th>
+                        <th className="py-3 px-4 w-1/4 border-r border-slate-200">
+                          <div>Period 1</div>
+                          <div className="text-[11px] font-medium text-slate-500 lowercase">09:00 - 10:30 am</div>
+                        </th>
+                        <th className="py-3 px-4 w-1/4 border-r border-slate-200">
+                          <div>Period 2</div>
+                          <div className="text-[11px] font-medium text-slate-500 lowercase">11:00 am - 12:30 pm</div>
+                        </th>
+                        <th className="py-3 px-4 w-1/4 border-r border-slate-200">
+                          <div>Period 3</div>
+                          <div className="text-[11px] font-medium text-slate-500 lowercase">02:00 - 03:00 pm</div>
+                        </th>
+                        <th className="py-3 px-4 w-1/4">
+                          <div>Period 4 &amp; Lab</div>
+                          <div className="text-[11px] font-medium text-slate-500 lowercase">03:30 - 05:00 pm</div>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-200 text-xs">
+                      {(["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"] as const)
+                        .filter((d) => timetableDay === "ALL" || timetableDay === d)
+                        .map((dayName) => {
+                          const daySessions = facultyWeeklySchedule.filter((s) => s.day === dayName);
+                          const slot1 = daySessions[0];
+                          const slot2 = daySessions[1];
+                          const slot3 = daySessions[2];
+                          const slot4 = daySessions[3];
+
+                          const renderCell = (session?: WeeklyScheduleSession) => {
+                            if (!session) {
+                              return (
+                                <div className="h-full min-h-[92px] p-3 rounded-xl border border-dashed border-slate-200 bg-slate-50/50 flex items-center justify-center text-slate-400 text-[11px] italic">
+                                  No Session Scheduled
+                                </div>
+                              );
+                            }
+
+                            if (session.code === "CS-401") {
+                              return (
+                                <div className="p-3 bg-blue-50/80 border border-blue-200 rounded-xl hover:shadow-xs transition-all space-y-1.5 h-full">
+                                  <div className="flex items-center justify-between">
+                                    <span className="px-2 py-0.5 bg-blue-600 text-white font-bold text-[10px] rounded-md uppercase tracking-wider">
+                                      CS-401 &bull; Theory
+                                    </span>
+                                    <span className="text-[11px] font-semibold text-blue-900">{session.time.split(" ")[0]}</span>
+                                  </div>
+                                  <div>
+                                    <div className="font-bold text-[#3D405B] text-xs line-clamp-1">{session.subject}</div>
+                                    <div className="text-[11px] text-slate-600 flex items-center gap-1.5 mt-0.5">
+                                      <Users className="h-3 w-3 text-slate-400" />
+                                      <span>{session.batch} ({session.enrolled} std)</span>
+                                    </div>
+                                  </div>
+                                  <div className="flex items-center justify-between pt-1 border-t border-blue-200/60 text-[11px]">
+                                    <span className="text-slate-600 flex items-center gap-1">
+                                      <MapPin className="h-3 w-3 text-blue-500" />
+                                      {session.venue}
+                                    </span>
+                                    <Link
+                                      href="/staff/attendance?batch=CS401"
+                                      className="text-blue-700 hover:text-blue-900 font-bold hover:underline inline-flex items-center gap-0.5"
+                                    >
+                                      Take Att. <ChevronRight className="h-3 w-3" />
+                                    </Link>
+                                  </div>
+                                </div>
+                              );
+                            }
+
+                            if (session.code === "CS-405L") {
+                              return (
+                                <div className="p-3 bg-emerald-50/80 border border-emerald-200 rounded-xl hover:shadow-xs transition-all space-y-1.5 h-full">
+                                  <div className="flex items-center justify-between">
+                                    <span className="px-2 py-0.5 bg-emerald-600 text-white font-bold text-[10px] rounded-md uppercase tracking-wider">
+                                      CS-405L &bull; Practicum
+                                    </span>
+                                    <span className="text-[11px] font-semibold text-emerald-900">{session.time.split(" ")[0]}</span>
+                                  </div>
+                                  <div>
+                                    <div className="font-bold text-[#3D405B] text-xs line-clamp-1">{session.subject}</div>
+                                    <div className="text-[11px] text-slate-600 flex items-center gap-1.5 mt-0.5">
+                                      <Users className="h-3 w-3 text-slate-400" />
+                                      <span>{session.batch} ({session.enrolled} std)</span>
+                                    </div>
+                                  </div>
+                                  <div className="flex items-center justify-between pt-1 border-t border-emerald-200/60 text-[11px]">
+                                    <span className="text-slate-600 flex items-center gap-1">
+                                      <MapPin className="h-3 w-3 text-emerald-600" />
+                                      {session.venue}
+                                    </span>
+                                    <Link
+                                      href="/staff/attendance?batch=CS405L"
+                                      className="text-emerald-700 hover:text-emerald-900 font-bold hover:underline inline-flex items-center gap-0.5"
+                                    >
+                                      Take Att. <ChevronRight className="h-3 w-3" />
+                                    </Link>
+                                  </div>
+                                </div>
+                              );
+                            }
+
+                            if (session.code === "CS-602") {
+                              return (
+                                <div className="p-3 bg-purple-50/80 border border-purple-200 rounded-xl hover:shadow-xs transition-all space-y-1.5 h-full">
+                                  <div className="flex items-center justify-between">
+                                    <span className="px-2 py-0.5 bg-purple-600 text-white font-bold text-[10px] rounded-md uppercase tracking-wider">
+                                      CS-602 &bull; PG Theory
+                                    </span>
+                                    <span className="text-[11px] font-semibold text-purple-900">{session.time.split(" ")[0]}</span>
+                                  </div>
+                                  <div>
+                                    <div className="font-bold text-[#3D405B] text-xs line-clamp-1">{session.subject}</div>
+                                    <div className="text-[11px] text-slate-600 flex items-center gap-1.5 mt-0.5">
+                                      <Users className="h-3 w-3 text-slate-400" />
+                                      <span>{session.batch} ({session.enrolled} std)</span>
+                                    </div>
+                                  </div>
+                                  <div className="flex items-center justify-between pt-1 border-t border-purple-200/60 text-[11px]">
+                                    <span className="text-slate-600 flex items-center gap-1">
+                                      <MapPin className="h-3 w-3 text-purple-600" />
+                                      {session.venue}
+                                    </span>
+                                    <Link
+                                      href="/staff/attendance?batch=CS602"
+                                      className="text-purple-700 hover:text-purple-900 font-bold hover:underline inline-flex items-center gap-0.5"
+                                    >
+                                      Take Att. <ChevronRight className="h-3 w-3" />
+                                    </Link>
+                                  </div>
+                                </div>
+                              );
+                            }
+
+                            if (session.code === "CS-202") {
+                              return (
+                                <div className="p-3 bg-amber-50/80 border border-amber-200 rounded-xl hover:shadow-xs transition-all space-y-1.5 h-full">
+                                  <div className="flex items-center justify-between">
+                                    <span className="px-2 py-0.5 bg-amber-600 text-white font-bold text-[10px] rounded-md uppercase tracking-wider">
+                                      CS-202 &bull; Core DSA
+                                    </span>
+                                    <span className="text-[11px] font-semibold text-amber-900">{session.time.split(" ")[0]}</span>
+                                  </div>
+                                  <div>
+                                    <div className="font-bold text-[#3D405B] text-xs line-clamp-1">{session.subject}</div>
+                                    <div className="text-[11px] text-slate-600 flex items-center gap-1.5 mt-0.5">
+                                      <Users className="h-3 w-3 text-slate-400" />
+                                      <span>{session.batch} ({session.enrolled} std)</span>
+                                    </div>
+                                  </div>
+                                  <div className="flex items-center justify-between pt-1 border-t border-amber-200/60 text-[11px]">
+                                    <span className="text-slate-600 flex items-center gap-1">
+                                      <MapPin className="h-3 w-3 text-amber-600" />
+                                      {session.venue}
+                                    </span>
+                                    <Link
+                                      href="/staff/attendance?batch=CS202"
+                                      className="text-amber-700 hover:text-amber-900 font-bold hover:underline inline-flex items-center gap-0.5"
+                                    >
+                                      Take Att. <ChevronRight className="h-3 w-3" />
+                                    </Link>
+                                  </div>
+                                </div>
+                              );
+                            }
+
+                            // Non-teaching (Office hours, meeting, research)
+                            return (
+                              <div className="p-3 bg-slate-50 border border-slate-200/90 rounded-xl space-y-1.5 h-full">
+                                <div className="flex items-center justify-between">
+                                  <span className="px-2 py-0.5 bg-slate-200 text-slate-700 font-semibold text-[10px] rounded-md uppercase tracking-wider">
+                                    {session.type === "office" ? "Office Hours" : session.type === "meeting" ? "Meeting" : "Research"}
+                                  </span>
+                                  <span className="text-[11px] font-medium text-slate-500">{session.time.split(" ")[0]}</span>
+                                </div>
+                                <div>
+                                  <div className="font-semibold text-slate-700 text-xs line-clamp-1">{session.subject}</div>
+                                  <div className="text-[11px] text-slate-500 mt-0.5">{session.topic}</div>
+                                </div>
+                                <div className="flex items-center justify-between pt-1 border-t border-slate-200 text-[11px] text-slate-500">
+                                  <span className="flex items-center gap-1">
+                                    <MapPin className="h-3 w-3 text-slate-400" />
+                                    {session.venue}
+                                  </span>
+                                  <span className="font-medium text-slate-400">{session.duration}</span>
+                                </div>
+                              </div>
+                            );
+                          };
+
+                          return (
+                            <tr key={dayName} className="hover:bg-slate-50/60 transition-colors">
+                              <td className="py-3 px-4 font-bold text-[#3D405B] align-top bg-slate-50/50 border-r border-slate-200">
+                                <div className="text-sm font-bold">{dayName}</div>
+                                <div className="text-[11px] font-normal text-slate-500 mt-0.5">
+                                  {daySessions.filter((s) => s.type === "lecture" || s.type === "lab").length} Classes Scheduled
+                                </div>
+                              </td>
+                              <td className="py-2.5 px-3 align-top border-r border-slate-200">{renderCell(slot1)}</td>
+                              <td className="py-2.5 px-3 align-top border-r border-slate-200">{renderCell(slot2)}</td>
+                              <td className="py-2.5 px-3 align-top border-r border-slate-200">{renderCell(slot3)}</td>
+                              <td className="py-2.5 px-3 align-top">{renderCell(slot4)}</td>
+                            </tr>
+                          );
+                        })}
+                    </tbody>
+                  </table>
+                </div>
+              ) : (
+                /* AGENDA VIEW */
+                <div className="space-y-4">
+                  {(["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"] as const)
+                    .filter((d) => timetableDay === "ALL" || timetableDay === d)
+                    .map((dayName) => {
+                      const daySessions = facultyWeeklySchedule.filter((s) => s.day === dayName);
+
+                      return (
+                        <div key={dayName} className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs">
+                          {/* Day Banner */}
+                          <div className="bg-slate-100/80 px-5 py-3 border-b border-slate-200 flex items-center justify-between">
+                            <div className="flex items-center gap-2">
+                              <span className="w-2.5 h-2.5 rounded-full bg-[#355C7D]" />
+                              <h4 className="font-bold text-[#3D405B] text-sm">{dayName} Schedule</h4>
+                              <span className="text-xs text-slate-500 font-medium">
+                                &bull; {daySessions.length} total blocks ({daySessions.filter((s) => s.type === "lecture" || s.type === "lab").length} teaching cohorts)
+                              </span>
+                            </div>
+                            <span className="text-xs font-semibold text-slate-600 bg-white px-2.5 py-1 rounded-lg border border-slate-200">
+                              09:00 AM – 05:00 PM
+                            </span>
+                          </div>
+
+                          {/* Sessions List */}
+                          <div className="divide-y divide-slate-100 p-3 sm:p-4 space-y-3">
+                            {daySessions.map((session) => {
+                              const isTeaching = session.type === "lecture" || session.type === "lab";
+
+                              return (
+                                <div
+                                  key={session.id}
+                                  className={`p-4 rounded-xl border transition-all ${
+                                    session.code === "CS-401"
+                                      ? "bg-blue-50/40 border-blue-200/80 hover:bg-blue-50/70"
+                                      : session.code === "CS-405L"
+                                      ? "bg-emerald-50/40 border-emerald-200/80 hover:bg-emerald-50/70"
+                                      : session.code === "CS-602"
+                                      ? "bg-purple-50/40 border-purple-200/80 hover:bg-purple-50/70"
+                                      : session.code === "CS-202"
+                                      ? "bg-amber-50/40 border-amber-200/80 hover:bg-amber-50/70"
+                                      : "bg-slate-50/60 border-slate-200 hover:bg-slate-100/60"
+                                  }`}
+                                >
+                                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                                    <div className="space-y-1.5 flex-1">
+                                      <div className="flex items-center gap-2 flex-wrap">
+                                        <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-white border border-slate-200 rounded-lg text-xs font-bold text-[#3D405B] shadow-2xs">
+                                          <Clock className="h-3.5 w-3.5 text-slate-500" />
+                                          {session.time}
+                                        </span>
+                                        <span className="text-xs text-slate-500 font-medium">({session.duration})</span>
+                                        <span
+                                          className={`px-2 py-0.5 rounded-md text-[11px] font-bold uppercase tracking-wider ${
+                                            session.type === "lecture"
+                                              ? "bg-blue-100 text-blue-800"
+                                              : session.type === "lab"
+                                              ? "bg-emerald-100 text-emerald-800"
+                                              : session.type === "office"
+                                              ? "bg-slate-200 text-slate-700"
+                                              : "bg-indigo-100 text-indigo-800"
+                                          }`}
+                                        >
+                                          {session.period} &bull; {session.code}
+                                        </span>
+                                        {session.enrolled && (
+                                          <span className="text-xs font-medium text-slate-600 flex items-center gap-1 bg-white px-2 py-0.5 rounded-md border border-slate-200">
+                                            <Users className="h-3 w-3 text-slate-400" />
+                                            {session.enrolled} Students Enrolled
+                                          </span>
+                                        )}
+                                      </div>
+
+                                      <div className="pt-1">
+                                        <h5 className="text-sm font-bold text-[#3D405B]">{session.subject}</h5>
+                                        <p className="text-xs text-slate-600 mt-0.5">
+                                          <span className="font-semibold text-slate-700">Topic: </span>
+                                          {session.topic}
+                                        </p>
+                                      </div>
+
+                                      <div className="flex items-center gap-4 text-xs text-slate-500 pt-1">
+                                        <span className="flex items-center gap-1">
+                                          <MapPin className="h-3.5 w-3.5 text-slate-400" />
+                                          Venue: <strong className="text-slate-700 font-semibold">{session.venue}</strong>
+                                        </span>
+                                        <span>
+                                          Cohort: <strong className="text-slate-700 font-semibold">{session.batch}</strong>
+                                        </span>
+                                      </div>
+                                    </div>
+
+                                    {/* Quick Actions */}
+                                    {isTeaching && session.batchId && (
+                                      <div className="flex sm:flex-col items-center sm:items-end gap-2 flex-shrink-0 pt-2 sm:pt-0 border-t sm:border-t-0 border-slate-200/80">
+                                        <Link
+                                          href={`/staff/attendance?batch=${session.batchId}`}
+                                          className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#355C7D] hover:bg-[#2b4c68] text-white text-xs font-semibold rounded-xl transition-all shadow-xs"
+                                        >
+                                          <CheckCircle2 className="h-3.5 w-3.5 text-emerald-300" />
+                                          Take Attendance
+                                        </Link>
+                                        <Link
+                                          href={`/staff/exams?batch=${session.batchId}`}
+                                          className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white hover:bg-slate-100 text-slate-700 text-xs font-semibold rounded-xl border border-slate-200 transition-colors"
+                                        >
+                                          <BookOpen className="h-3.5 w-3.5 text-slate-500" />
+                                          Enter Marks
+                                        </Link>
+                                      </div>
+                                    )}
+                                  </div>
+                                </div>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      );
+                    })}
+                </div>
+              )}
+            </div>
+
+            {/* Modal Footer */}
+            <div className="p-4 sm:p-5 bg-white border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3 flex-shrink-0">
+              <div className="flex items-center gap-2 text-xs text-slate-500">
+                <ShieldCheck className="h-4 w-4 text-emerald-600 flex-shrink-0" />
+                <span>
+                  Official Timetable Slot Verification &bull; Room allocation approved by Dean Academics (Ref: SIT/TT/EVEN-25/CSE)
+                </span>
+              </div>
+
+              <div className="flex items-center gap-2 w-full sm:w-auto justify-end">
+                <button
+                  onClick={() => {
+                    showToast("Institutional Google Calendar synchronized with Prof. Rajesh Sharma's schedule.");
+                  }}
+                  className="px-3.5 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-xl transition-colors cursor-pointer border border-slate-200 flex items-center gap-1.5"
+                >
+                  <Calendar className="h-3.5 w-3.5 text-slate-500" />
+                  Sync to Calendar
+                </button>
+                <button
+                  onClick={() => {
+                    showToast("Weekly Timetable PDF exported successfully.");
+                  }}
+                  className="px-4 py-2 bg-[#355C7D] hover:bg-[#2b4c68] text-white text-xs font-semibold rounded-xl transition-colors cursor-pointer flex items-center gap-1.5 shadow-xs"
+                >
+                  <Download className="h-3.5 w-3.5" />
+                  Download Timetable PDF
+                </button>
+                <button
+                  onClick={() => setShowTimetableModal(false)}
+                  className="px-4 py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 text-xs font-semibold rounded-xl transition-colors cursor-pointer"
+                >
+                  Close
+                </button>
+              </div>
             </div>
           </div>
         </div>
