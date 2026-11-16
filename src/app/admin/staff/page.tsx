@@ -22,7 +22,7 @@ import {
   GraduationCap,
   Clock,
   ArrowRight,
-  Sparkles
+  RotateCcw
 } from "lucide-react";
 
 interface SubjectAssignment {
@@ -233,575 +233,560 @@ export default function StaffDirectoryPage() {
   };
 
   return (
-    <div className="flex flex-col w-full pb-16">
-      {/* 1. Institutional Header & Operational Sub-bar */}
-      <section className="bg-surface-container-lowest px-6 py-4 shadow-sm border-b border-outline-variant/30">
-        <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-4">
-          <div className="flex flex-col gap-1">
-            <div className="flex items-center gap-1.5 font-mono text-[11px] text-on-surface-variant uppercase tracking-wider">
-              <span>Institutional Command</span>
-              <span>/</span>
-              <span>Academic Administration</span>
-              <span>/</span>
-              <span className="text-secondary font-bold">Staff Directory &amp; Faculty Assignment</span>
-            </div>
-            <div className="flex items-baseline gap-3 mt-0.5">
-              <h1 className="font-headline text-xl uppercase text-primary font-bold tracking-tight">
-                Staff Directory &amp; Faculty Assignment
-              </h1>
-              <span className="inline-flex items-center px-2 py-0.5 bg-surface-container font-mono text-xs text-secondary font-bold">
-                ACTIVE ROSTER AY 2024-25
+    <div className="p-5 md:p-7 space-y-5 max-w-[1600px] mx-auto font-sans text-slate-800">
+      {/* 1. Header Banner - Clean, Balanced, Zero Redundant Text */}
+      <div className="bg-white rounded-2xl p-5 md:p-6 border border-slate-200/80 shadow-xs relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-96 h-full bg-gradient-to-l from-blue-50/50 via-indigo-50/20 to-transparent pointer-events-none"></div>
+
+        <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="space-y-1.5">
+            <h1 className="text-xl md:text-2xl font-bold text-[#3D405B] tracking-tight">
+              Staff Directory &amp; Faculty Assignment
+            </h1>
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 bg-blue-50 text-blue-700 text-xs font-semibold rounded-full border border-blue-200/60">
+                <span className="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
+                ACTIVE ROSTER: <strong>142</strong>
+              </span>
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 bg-purple-50 text-purple-700 text-xs font-semibold rounded-full border border-purple-200/60">
+                <span className="w-1.5 h-1.5 rounded-full bg-purple-600"></span>
+                TEACHING: <strong>98</strong>
+              </span>
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 bg-emerald-50 text-emerald-700 text-xs font-semibold rounded-full border border-emerald-200/60">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+                LAB &amp; ADMIN: <strong>44</strong>
               </span>
             </div>
-            <p className="text-xs text-on-surface-variant">
-              Institutional Faculty Registry, Subject Load Balancing &amp; Batch Allocation • Operational Telemetry Grid
-            </p>
           </div>
 
-          <div className="flex flex-wrap items-center gap-2">
+          {/* Quick Action Buttons - Vertically Centered & Balanced */}
+          <div className="flex items-center flex-wrap sm:flex-nowrap gap-2.5 shrink-0">
             <button
               onClick={() => alert("Exporting Faculty Registry to Excel...")}
-              className="inline-flex items-center gap-1.5 px-3 py-2 bg-surface-container-low hover:bg-surface-container text-on-surface font-semibold text-xs uppercase tracking-wider transition-colors border border-outline-variant/30 shadow-sm"
+              className="inline-flex items-center gap-2 px-3.5 py-2 bg-slate-50 hover:bg-slate-100 text-slate-700 text-xs font-semibold rounded-xl border border-slate-200 shadow-2xs hover:shadow-xs transition-all cursor-pointer"
             >
-              <Download className="w-4 h-4 text-secondary" />
-              <span>Export Registry (XLSX)</span>
+              <Download className="w-4 h-4 text-slate-500" />
+              <span>Export (XLSX)</span>
             </button>
             <button
               onClick={() => alert("Opening Workload Matrix Heatmap")}
-              className="inline-flex items-center gap-1.5 px-3 py-2 bg-surface-container-low hover:bg-surface-container text-on-surface font-semibold text-xs uppercase tracking-wider transition-colors border border-outline-variant/30 shadow-sm"
+              className="inline-flex items-center gap-2 px-3.5 py-2 bg-slate-50 hover:bg-slate-100 text-slate-700 text-xs font-semibold rounded-xl border border-slate-200 shadow-2xs hover:shadow-xs transition-all cursor-pointer"
             >
-              <Grid className="w-4 h-4 text-secondary" />
-              <span>Batch Workload Matrix</span>
+              <Grid className="w-4 h-4 text-slate-500" />
+              <span>Workload Matrix</span>
             </button>
             <button
               onClick={() => setShowOnboardModal(true)}
-              className="inline-flex items-center gap-1.5 px-4 py-2 bg-primary-container hover:bg-primary text-white font-bold text-xs uppercase tracking-wider transition-colors shadow-md"
+              className="inline-flex items-center gap-2 px-3.5 py-2 bg-[#3D405B] hover:bg-[#2E3046] text-white text-xs font-semibold rounded-xl shadow-xs hover:shadow transition-all cursor-pointer"
             >
               <UserPlus className="w-4 h-4" />
-              <span>+ Onboard New Faculty / Staff</span>
+              <span>Onboard Faculty</span>
             </button>
           </div>
         </div>
-      </section>
+      </div>
 
-      {/* 2. Telemetry KPI Strip */}
-      <section className="px-6 py-4">
-        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
-          {/* KPI 1 */}
-          <div className="relative bg-surface-container-lowest p-4 shadow-sm border border-outline-variant/20 overflow-hidden flex flex-col justify-between">
-            <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-primary"></div>
-            <div className="flex items-start justify-between">
-              <span className="text-[11px] uppercase tracking-wider text-on-surface-variant font-semibold">
-                Total Faculty &amp; Staff
-              </span>
-              <Users className="w-5 h-5 text-secondary" />
-            </div>
-            <div className="my-2">
-              <div className="flex items-baseline gap-2">
-                <span className="font-headline text-2xl font-bold text-primary">142</span>
-                <span className="text-[11px] uppercase text-secondary font-bold">Total Active</span>
-              </div>
-              <p className="text-xs text-on-surface-variant mt-0.5">
-                Teaching Faculty: <strong className="text-on-surface">98</strong> • Lab/Admin: <strong className="text-on-surface">44</strong>
-              </p>
-            </div>
-            <div className="pt-1 flex items-center justify-between text-[11px]">
-              <span className="text-secondary font-bold">+6 this semester</span>
-              <span className="text-on-surface-variant font-mono">100% Verified</span>
+      {/* 2. Telemetry KPI Cards (4 Cards) */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {/* KPI 1 */}
+        <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-md transition-all flex flex-col justify-between">
+          <div className="flex items-center justify-between gap-2">
+            <span className="text-xs font-semibold text-slate-500 uppercase tracking-wide">
+              Total Faculty &amp; Staff
+            </span>
+            <div className="w-10 h-10 rounded-xl bg-blue-50/80 border border-blue-100 text-blue-600 flex items-center justify-center shrink-0">
+              <Users className="w-5 h-5" />
             </div>
           </div>
-
-          {/* KPI 2 */}
-          <div className="relative bg-surface-container-lowest p-4 shadow-sm border border-outline-variant/20 overflow-hidden flex flex-col justify-between">
-            <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-secondary"></div>
-            <div className="flex items-start justify-between">
-              <span className="text-[11px] uppercase tracking-wider text-on-surface-variant font-semibold">
-                Average Teaching Load
+          <div className="mt-3.5">
+            <div className="text-2xl font-bold text-[#3D405B] tracking-tight">142</div>
+            <div className="flex items-center gap-1.5 text-xs text-slate-500 mt-1">
+              <span className="inline-flex items-center text-emerald-600 font-semibold">
+                <CheckCircle2 className="w-3.5 h-3.5 mr-0.5" />
+                100%
               </span>
-              <Gauge className="w-5 h-5 text-secondary" />
-            </div>
-            <div className="my-2">
-              <div className="flex items-baseline gap-2">
-                <span className="font-headline text-2xl font-bold text-primary">16.4</span>
-                <span className="text-[11px] uppercase text-secondary font-bold">Hrs / Wk</span>
-              </div>
-              <div className="w-full bg-surface-container h-1.5 mt-2">
-                <div className="bg-secondary h-1.5" style={{ width: "82%" }}></div>
-              </div>
-            </div>
-            <div className="pt-1 flex items-center justify-between text-[11px]">
-              <span className="text-on-surface-variant">Ceiling: 20.0 Hrs/Wk</span>
-              <span className="text-secondary font-bold">82.0% Optimal</span>
-            </div>
-          </div>
-
-          {/* KPI 3 */}
-          <div className="relative bg-surface-container-lowest p-4 shadow-sm border border-outline-variant/20 overflow-hidden flex flex-col justify-between">
-            <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-secondary-container"></div>
-            <div className="flex items-start justify-between">
-              <span className="text-[11px] uppercase tracking-wider text-on-surface-variant font-semibold">
-                Batch Subject Allocation
-              </span>
-              <Layers className="w-5 h-5 text-secondary" />
-            </div>
-            <div className="my-2">
-              <div className="flex items-baseline gap-2">
-                <span className="font-headline text-2xl font-bold text-primary">98.6%</span>
-                <span className="text-[11px] uppercase text-secondary font-bold">Staffed</span>
-              </div>
-              <p className="text-xs text-on-surface-variant mt-0.5">
-                148 / 150 Course Modules Assigned
-              </p>
-            </div>
-            <div className="pt-1 flex items-center justify-between text-[11px]">
-              <span className="text-error font-bold flex items-center gap-1">
-                <AlertTriangle className="w-3.5 h-3.5" /> 2 Unstaffed Slots
-              </span>
-              <span className="text-secondary font-bold">12 Core Labs</span>
-            </div>
-          </div>
-
-          {/* KPI 4 */}
-          <div className="relative bg-surface-container-lowest p-4 shadow-sm border border-outline-variant/20 overflow-hidden flex flex-col justify-between">
-            <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-outline"></div>
-            <div className="flex items-start justify-between">
-              <span className="text-[11px] uppercase tracking-wider text-on-surface-variant font-semibold">
-                Faculty on Leave
-              </span>
-              <CalendarX className="w-5 h-5 text-secondary" />
-            </div>
-            <div className="my-2">
-              <div className="flex items-baseline gap-2">
-                <span className="font-headline text-2xl font-bold text-primary">4</span>
-                <span className="text-[11px] uppercase text-on-surface-variant font-bold">On Leave</span>
-              </div>
-              <p className="text-xs text-on-surface-variant mt-0.5">
-                Sabbatical: 2 • Medical: 2
-              </p>
-            </div>
-            <div className="pt-1 flex items-center justify-between text-[11px]">
-              <span className="text-secondary font-bold flex items-center gap-1">
-                <CheckCircle2 className="w-3.5 h-3.5" /> Substitutes Active
-              </span>
-              <span className="text-on-surface-variant font-mono">Zero Gaps</span>
+              <span>Verified across 18 depts</span>
             </div>
           </div>
         </div>
-      </section>
+
+        {/* KPI 2 */}
+        <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-md transition-all flex flex-col justify-between">
+          <div className="flex items-center justify-between gap-2">
+            <span className="text-xs font-semibold text-slate-500 uppercase tracking-wide">
+              Average Teaching Load
+            </span>
+            <div className="w-10 h-10 rounded-xl bg-purple-50/80 border border-purple-100 text-purple-600 flex items-center justify-center shrink-0">
+              <Gauge className="w-5 h-5" />
+            </div>
+          </div>
+          <div className="mt-3.5">
+            <div className="text-2xl font-bold text-[#3D405B] tracking-tight">16.4 <span className="text-sm font-normal text-slate-400">h/wk</span></div>
+            <div className="flex items-center gap-1.5 text-xs text-slate-500 mt-1">
+              <span className="inline-flex items-center text-purple-700 font-semibold">
+                82.0%
+              </span>
+              <span>of 20h standard ceiling</span>
+            </div>
+          </div>
+        </div>
+
+        {/* KPI 3 */}
+        <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-md transition-all flex flex-col justify-between">
+          <div className="flex items-center justify-between gap-2">
+            <span className="text-xs font-semibold text-slate-500 uppercase tracking-wide">
+              Batch Subject Allocation
+            </span>
+            <div className="w-10 h-10 rounded-xl bg-emerald-50/80 border border-emerald-100 text-emerald-600 flex items-center justify-center shrink-0">
+              <Layers className="w-5 h-5" />
+            </div>
+          </div>
+          <div className="mt-3.5">
+            <div className="text-2xl font-bold text-[#3D405B] tracking-tight">98.6%</div>
+            <div className="flex items-center gap-1.5 text-xs text-slate-500 mt-1">
+              <span className="inline-flex items-center text-emerald-600 font-semibold">
+                148/150
+              </span>
+              <span>Modules fully staffed</span>
+            </div>
+          </div>
+        </div>
+
+        {/* KPI 4 */}
+        <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-md transition-all flex flex-col justify-between">
+          <div className="flex items-center justify-between gap-2">
+            <span className="text-xs font-semibold text-slate-500 uppercase tracking-wide">
+              Faculty on Leave
+            </span>
+            <div className="w-10 h-10 rounded-xl bg-amber-50/80 border border-amber-100 text-amber-600 flex items-center justify-center shrink-0">
+              <CalendarX className="w-5 h-5" />
+            </div>
+          </div>
+          <div className="mt-3.5">
+            <div className="text-2xl font-bold text-amber-600 tracking-tight">4</div>
+            <div className="flex items-center gap-1.5 text-xs text-slate-500 mt-1">
+              <span className="inline-flex items-center text-emerald-600 font-semibold">
+                <CheckCircle2 className="w-3.5 h-3.5 mr-0.5" />
+                Substitutes Active
+              </span>
+              <span>(Zero gaps)</span>
+            </div>
+          </div>
+        </div>
+      </div>
 
       {/* 3. Workspace Grid: Left Ledger + Right Faculty Assignment Controller */}
-      <section className="px-6 pb-6">
-        <div className="grid grid-cols-1 xl:grid-cols-12 gap-6 items-start">
-          {/* LEFT COLUMN: Staff Directory Ledger (Col 8) */}
-          <div className="xl:col-span-8 flex flex-col gap-4">
-            {/* Filter Console & Search Bar */}
-            <div className="bg-surface-container-lowest p-4 shadow-sm border border-outline-variant/20">
-              <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pb-3 border-b border-outline-variant/20">
-                <div className="relative flex-1 w-full">
-                  <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant" />
-                  <input
-                    className="w-full bg-surface-container-low pl-9 pr-3 py-1.5 text-xs text-on-surface border border-outline-variant/30 focus:outline-none focus:bg-surface-container-lowest"
-                    placeholder="Filter by Name, Employee ID (APX-FAC...), or Department..."
-                    type="text"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                  />
-                </div>
-                <div className="flex items-center gap-2">
-                  <select
-                    className="bg-surface-container-low text-xs px-2.5 py-1.5 border border-outline-variant/30 focus:outline-none"
-                    value={selectedDept}
-                    onChange={(e) => setSelectedDept(e.target.value)}
-                  >
-                    <option value="all">All Departments</option>
-                    <option value="computing">Dept. of Computing &amp; IT</option>
-                    <option value="robotics">AI &amp; Robotics Lab</option>
-                    <option value="management">School of Management</option>
-                    <option value="quantum">Quantum Computing &amp; ECE</option>
-                  </select>
-                  <button
-                    onClick={() => {
-                      setSearchQuery("");
-                      setSelectedDept("all");
-                    }}
-                    className="px-2.5 py-1.5 text-xs text-on-surface-variant hover:text-on-surface uppercase border border-outline-variant/30"
-                  >
-                    Reset
-                  </button>
-                </div>
+      <div className="grid grid-cols-1 xl:grid-cols-12 gap-5 items-start">
+        {/* LEFT COLUMN: Staff Directory Ledger (Col 8) */}
+        <div className="xl:col-span-8 space-y-4">
+          {/* Filter Console & Search Bar */}
+          <div className="bg-white p-4.5 rounded-2xl border border-slate-200/80 shadow-xs space-y-3">
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pb-3 border-b border-slate-100">
+              <div className="relative flex-1 w-full">
+                <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                <input
+                  className="w-full bg-slate-50 hover:bg-slate-100/70 focus:bg-white text-slate-800 pl-9 pr-3 py-2 text-xs border border-slate-200 rounded-xl focus:outline-none focus:border-[#3D405B] focus:ring-2 focus:ring-slate-100 transition-all placeholder:text-slate-400"
+                  placeholder="Filter by Name, Employee ID (APX-FAC...), or Department..."
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                />
               </div>
-
-              {/* Segmented Filter Tabs */}
-              <div className="flex items-center overflow-x-auto pt-3 gap-1 text-xs">
-                <button
-                  onClick={() => setSelectedTab("all")}
-                  className={`px-3 py-1.5 font-semibold uppercase tracking-wider whitespace-nowrap transition-colors rounded-xs ${
-                    selectedTab === "all"
-                      ? "bg-[#3D405B] text-white"
-                      : "bg-surface-container-low text-on-surface-variant hover:text-on-surface"
-                  }`}
+              <div className="flex items-center gap-2 w-full sm:w-auto">
+                <select
+                  className="bg-slate-50 hover:bg-slate-100/70 focus:bg-white text-xs px-3 py-2 border border-slate-200 rounded-xl focus:outline-none focus:border-[#3D405B] text-slate-800"
+                  value={selectedDept}
+                  onChange={(e) => setSelectedDept(e.target.value)}
                 >
-                  All Staff ({facultyList.length})
-                </button>
+                  <option value="all">All Departments</option>
+                  <option value="computing">Dept. of Computing &amp; IT</option>
+                  <option value="robotics">AI &amp; Robotics Lab</option>
+                  <option value="management">School of Management</option>
+                  <option value="quantum">Quantum Computing &amp; ECE</option>
+                </select>
                 <button
-                  onClick={() => setSelectedTab("teaching")}
-                  className={`px-3 py-1.5 font-semibold uppercase tracking-wider whitespace-nowrap transition-colors rounded-xs ${
-                    selectedTab === "teaching"
-                      ? "bg-[#3D405B] text-white"
-                      : "bg-surface-container-low text-on-surface-variant hover:text-on-surface"
-                  }`}
+                  onClick={() => {
+                    setSearchQuery("");
+                    setSelectedDept("all");
+                  }}
+                  className="px-3 py-2 text-xs text-slate-600 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 rounded-xl border border-slate-200 transition-colors cursor-pointer"
+                  title="Reset Filters"
                 >
-                  Teaching Faculty ({facultyList.filter((f) => f.type === "teaching").length})
-                </button>
-                <button
-                  onClick={() => setSelectedTab("overallocated")}
-                  className={`px-3 py-1.5 font-semibold uppercase tracking-wider whitespace-nowrap transition-colors ml-auto flex items-center gap-1 ${
-                    selectedTab === "overallocated"
-                      ? "bg-error text-white"
-                      : "bg-error-container text-error hover:bg-error/20"
-                  }`}
-                >
-                  <AlertTriangle className="w-3.5 h-3.5" />
-                  Over-Allocated (&gt;18h) ({facultyList.filter((f) => f.weeklyHours >= 19.0).length})
+                  <RotateCcw className="w-3.5 h-3.5" />
                 </button>
               </div>
             </div>
 
-            {/* Dense Data Ledger Table */}
-            <div className="bg-surface-container-lowest shadow-sm border border-outline-variant/20 overflow-hidden">
-              <div className="overflow-x-auto">
-                <table className="w-full text-left border-collapse text-xs">
-                  <thead>
-                    <tr className="bg-surface-container-low text-on-surface-variant text-[10px] uppercase tracking-wider font-semibold border-b border-outline-variant/30">
-                      <th className="py-2.5 px-4 font-semibold">Faculty / Employee</th>
-                      <th className="py-2.5 px-4 font-semibold">Department &amp; Cadre</th>
-                      <th className="py-2.5 px-4 font-semibold">Assigned Subjects &amp; Cohorts</th>
-                      <th className="py-2.5 px-4 font-semibold">Weekly Load</th>
-                      <th className="py-2.5 px-4 font-semibold">Status</th>
-                      <th className="py-2.5 px-4 font-semibold text-right">Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-outline-variant/10">
-                    {filteredList.map((fac) => {
-                      const isSelected = selectedFaculty.id === fac.id;
-                      const loadPercent = Math.min(100, Math.round((fac.weeklyHours / fac.maxHours) * 100));
-
-                      return (
-                        <tr
-                          key={fac.id}
-                          onClick={() => setSelectedFaculty(fac)}
-                          className={`hover:bg-surface-container-low transition-colors cursor-pointer ${
-                            isSelected ? "bg-surface-container/60 border-l-4 border-primary" : ""
-                          }`}
-                        >
-                          {/* Faculty Info */}
-                          <td className="py-3 px-4">
-                            <div className="flex items-center gap-3">
-                              <div className="w-10 h-10 rounded-full bg-primary-container text-white flex items-center justify-center font-bold text-xs shrink-0 overflow-hidden">
-                                {fac.avatar ? (
-                                  <img src={fac.avatar} alt={fac.name} className="w-full h-full object-cover" />
-                                ) : (
-                                  fac.initials
-                                )}
-                              </div>
-                              <div className="flex flex-col min-w-0">
-                                <span className="font-bold text-primary truncate flex items-center gap-1">
-                                  {fac.name}
-                                  {fac.verified && (
-                                    <BadgeCheck className="w-3.5 h-3.5 text-secondary" />
-                                  )}
-                                </span>
-                                <span className="font-mono text-[10px] text-on-surface-variant">
-                                  {fac.empId}
-                                </span>
-                              </div>
-                            </div>
-                          </td>
-
-                          {/* Department */}
-                          <td className="py-3 px-4">
-                            <div className="flex flex-col">
-                              <span className="font-semibold text-primary">{fac.department}</span>
-                              <span className="text-on-surface-variant text-[10px] uppercase">
-                                {fac.cadre}
-                              </span>
-                            </div>
-                          </td>
-
-                          {/* Subjects */}
-                          <td className="py-3 px-4">
-                            <div className="flex flex-col gap-1 max-w-xs">
-                              {fac.assignments.slice(0, 2).map((a) => (
-                                <div key={a.id} className="flex items-center gap-1.5 truncate">
-                                  <span className="px-1.5 py-0.2 bg-surface-container text-primary font-mono text-[10px] font-bold">
-                                    {a.code}
-                                  </span>
-                                  <span className="truncate text-on-surface-variant text-[11px]">
-                                    {a.batch}
-                                  </span>
-                                </div>
-                              ))}
-                              {fac.assignments.length > 2 && (
-                                <span className="text-[10px] text-secondary font-bold">
-                                  +{fac.assignments.length - 2} more modules
-                                </span>
-                              )}
-                            </div>
-                          </td>
-
-                          {/* Weekly Load */}
-                          <td className="py-3 px-4">
-                            <div className="flex flex-col gap-1 w-28">
-                              <div className="flex justify-between items-center font-mono text-[10px]">
-                                <span
-                                  className={`font-bold ${
-                                    fac.status === "Overallocated" ? "text-error" : "text-primary"
-                                  }`}
-                                >
-                                  {fac.weeklyHours}h / {fac.maxHours}h
-                                </span>
-                                <span className="text-on-surface-variant">{loadPercent}%</span>
-                              </div>
-                              <div className="w-full bg-surface-container h-1.5">
-                                <div
-                                  className={`h-full ${
-                                    fac.status === "Overallocated"
-                                      ? "bg-error"
-                                      : fac.weeklyHours >= 14
-                                      ? "bg-primary-container"
-                                      : "bg-secondary"
-                                  }`}
-                                  style={{ width: `${loadPercent}%` }}
-                                ></div>
-                              </div>
-                            </div>
-                          </td>
-
-                          {/* Status */}
-                          <td className="py-3 px-4">
-                            <span
-                              className={`inline-flex items-center gap-1 px-2 py-0.5 text-[10px] font-mono font-bold uppercase tracking-wider ${
-                                fac.status === "Optimal"
-                                  ? "bg-emerald-50 text-emerald-800 border border-emerald-200"
-                                  : fac.status === "Overallocated"
-                                  ? "bg-error-container text-error border border-error/30"
-                                  : "bg-amber-50 text-amber-800 border border-amber-200"
-                              }`}
-                            >
-                              {fac.status}
-                            </span>
-                          </td>
-
-                          {/* Actions */}
-                          <td
-                            className="py-3 px-4 text-right"
-                            onClick={(e) => e.stopPropagation()}
-                          >
-                            <button
-                              onClick={() => setSelectedFaculty(fac)}
-                              className="px-2.5 py-1 bg-surface-container-low text-primary hover:bg-primary hover:text-white font-mono text-[10px] font-bold uppercase transition-colors border border-outline-variant/30"
-                            >
-                              Manage
-                            </button>
-                          </td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
-              </div>
+            {/* Segmented Filter Tabs */}
+            <div className="flex items-center overflow-x-auto gap-2 text-xs">
+              <button
+                onClick={() => setSelectedTab("all")}
+                className={`px-3 py-1.5 font-semibold rounded-lg transition-colors cursor-pointer ${
+                  selectedTab === "all"
+                    ? "bg-[#3D405B] text-white shadow-xs"
+                    : "bg-slate-100 text-slate-600 hover:text-slate-900"
+                }`}
+              >
+                All Staff ({facultyList.length})
+              </button>
+              <button
+                onClick={() => setSelectedTab("teaching")}
+                className={`px-3 py-1.5 font-semibold rounded-lg transition-colors cursor-pointer ${
+                  selectedTab === "teaching"
+                    ? "bg-[#3D405B] text-white shadow-xs"
+                    : "bg-slate-100 text-slate-600 hover:text-slate-900"
+                }`}
+              >
+                Teaching Faculty ({facultyList.filter((f) => f.type === "teaching").length})
+              </button>
+              <button
+                onClick={() => setSelectedTab("overallocated")}
+                className={`px-3 py-1.5 font-semibold rounded-lg transition-colors ml-auto flex items-center gap-1.5 cursor-pointer ${
+                  selectedTab === "overallocated"
+                    ? "bg-rose-600 text-white shadow-xs"
+                    : "bg-rose-50 text-rose-700 border border-rose-200 hover:bg-rose-100"
+                }`}
+              >
+                <AlertTriangle className="w-3.5 h-3.5" />
+                <span>Over-Allocated (&gt;18h) ({facultyList.filter((f) => f.weeklyHours >= 19.0).length})</span>
+              </button>
             </div>
           </div>
 
-          {/* RIGHT COLUMN: Faculty Assignment & Workload Controller (Col 4) */}
-          <div className="xl:col-span-4 flex flex-col gap-4">
-            <div className="bg-surface-container-lowest p-5 shadow-md border border-outline-variant/20 sticky top-20">
-              {/* Header */}
-              <div className="flex items-center justify-between pb-3 border-b border-outline-variant/20 mb-4">
-                <div className="flex items-center gap-2">
-                  <BookOpen className="w-4 h-4 text-primary" />
-                  <h3 className="font-headline text-sm font-bold text-primary uppercase">
-                    Faculty Assignment Console
-                  </h3>
-                </div>
-                <span className="font-mono text-[10px] text-secondary font-bold">
-                  LIVE WORKLOAD
-                </span>
-              </div>
+          {/* Dense Data Ledger Table */}
+          <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs overflow-hidden">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left border-collapse text-xs">
+                <thead>
+                  <tr className="bg-slate-50/70 text-slate-500 text-[10px] uppercase tracking-wider font-semibold border-b border-slate-100">
+                    <th className="py-2.5 px-4 font-semibold">Faculty / Employee</th>
+                    <th className="py-2.5 px-4 font-semibold">Department &amp; Cadre</th>
+                    <th className="py-2.5 px-4 font-semibold">Assigned Subjects</th>
+                    <th className="py-2.5 px-4 font-semibold">Weekly Load</th>
+                    <th className="py-2.5 px-4 font-semibold">Status</th>
+                    <th className="py-2.5 px-4 font-semibold text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-100">
+                  {filteredList.map((fac) => {
+                    const isSelected = selectedFaculty.id === fac.id;
+                    const loadPercent = Math.min(100, Math.round((fac.weeklyHours / fac.maxHours) * 100));
 
-              {/* Selected Faculty Identity Tile */}
-              <div className="p-3 bg-surface-container-low border border-outline-variant/30 flex items-center gap-3 mb-4">
-                <div className="w-12 h-12 rounded-full bg-primary-container text-white flex items-center justify-center font-bold text-sm overflow-hidden shrink-0">
-                  {selectedFaculty.avatar ? (
-                    <img src={selectedFaculty.avatar} alt={selectedFaculty.name} className="w-full h-full object-cover" />
-                  ) : (
-                    selectedFaculty.initials
-                  )}
-                </div>
-                <div className="flex flex-col min-w-0">
-                  <h4 className="font-headline text-sm font-bold text-primary truncate">
-                    {selectedFaculty.name}
-                  </h4>
-                  <span className="font-mono text-[10px] text-secondary font-semibold">
-                    {selectedFaculty.empId}
-                  </span>
-                  <span className="text-[11px] text-on-surface-variant truncate">
-                    {selectedFaculty.department}
-                  </span>
-                </div>
-              </div>
+                    return (
+                      <tr
+                        key={fac.id}
+                        onClick={() => setSelectedFaculty(fac)}
+                        className={`hover:bg-slate-50/60 transition-colors cursor-pointer ${
+                          isSelected ? "bg-blue-50/50 border-l-4 border-[#3D405B]" : ""
+                        }`}
+                      >
+                        {/* Faculty Info */}
+                        <td className="py-3 px-4">
+                          <div className="flex items-center gap-3">
+                            <div className="w-9 h-9 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center font-bold text-xs shrink-0 overflow-hidden">
+                              {fac.avatar ? (
+                                <img src={fac.avatar} alt={fac.name} className="w-full h-full object-cover" />
+                              ) : (
+                                fac.initials
+                              )}
+                            </div>
+                            <div className="flex flex-col min-w-0">
+                              <span className="font-semibold text-[#3D405B] truncate flex items-center gap-1">
+                                {fac.name}
+                                {fac.verified && (
+                                  <BadgeCheck className="w-3.5 h-3.5 text-blue-600" />
+                                )}
+                              </span>
+                              <span className="font-mono text-[10px] text-slate-400">
+                                {fac.empId}
+                              </span>
+                            </div>
+                          </div>
+                        </td>
 
-              {/* Workload Meter */}
-              <div className="p-3 bg-surface border border-outline-variant/30 mb-4">
-                <div className="flex justify-between items-center mb-1 text-xs">
-                  <span className="text-on-surface-variant font-medium">Weekly Allocated Load:</span>
-                  <strong
-                    className={`font-mono text-sm ${
-                      selectedFaculty.weeklyHours >= 19 ? "text-error" : "text-primary"
-                    }`}
-                  >
-                    {selectedFaculty.weeklyHours} / {selectedFaculty.maxHours} Hrs
-                  </strong>
-                </div>
-                <div className="w-full bg-surface-container h-2 rounded-none overflow-hidden">
-                  <div
-                    className={`h-full transition-all duration-300 ${
-                      selectedFaculty.weeklyHours >= 19
-                        ? "bg-error"
-                        : selectedFaculty.weeklyHours >= 14
-                        ? "bg-primary-container"
-                        : "bg-secondary"
-                    }`}
-                    style={{
-                      width: `${Math.min(100, (selectedFaculty.weeklyHours / selectedFaculty.maxHours) * 100)}%`
-                    }}
-                  ></div>
-                </div>
-                {selectedFaculty.weeklyHours >= 19 && (
-                  <p className="text-[10px] text-error font-semibold mt-1.5 flex items-center gap-1">
-                    <AlertTriangle className="w-3 h-3" /> Overload Warning: Exceeds standard faculty ceiling!
-                  </p>
-                )}
-              </div>
+                        {/* Department */}
+                        <td className="py-3 px-4">
+                          <div className="flex flex-col">
+                            <span className="font-semibold text-slate-800">{fac.department}</span>
+                            <span className="text-slate-400 text-[10px]">
+                              {fac.cadre}
+                            </span>
+                          </div>
+                        </td>
 
-              {/* Current Active Course Assignments */}
-              <div className="space-y-2 mb-5">
-                <div className="flex items-center justify-between text-xs font-bold text-primary uppercase">
-                  <span>Assigned Courses ({selectedFaculty.assignments.length})</span>
-                  <span className="text-[10px] text-on-surface-variant font-mono">HOURS/WK</span>
-                </div>
+                        {/* Subjects */}
+                        <td className="py-3 px-4">
+                          <div className="flex flex-col gap-1 max-w-xs">
+                            {fac.assignments.slice(0, 2).map((a) => (
+                              <div key={a.id} className="flex items-center gap-1.5 truncate">
+                                <span className="px-1.5 py-0.5 bg-slate-100 text-[#3D405B] font-mono text-[10px] font-bold rounded">
+                                  {a.code}
+                                </span>
+                                <span className="truncate text-slate-500 text-[11px]">
+                                  {a.batch}
+                                </span>
+                              </div>
+                            ))}
+                            {fac.assignments.length > 2 && (
+                              <span className="text-[10px] text-blue-600 font-semibold">
+                                +{fac.assignments.length - 2} more modules
+                              </span>
+                            )}
+                          </div>
+                        </td>
 
-                <div className="space-y-1.5 max-h-48 overflow-y-auto">
-                  {selectedFaculty.assignments.map((sub) => (
-                    <div
-                      key={sub.id}
-                      className="p-2.5 bg-surface border border-outline-variant/30 flex items-center justify-between text-xs group hover:border-primary transition-colors"
-                    >
-                      <div className="flex flex-col min-w-0 pr-2">
-                        <div className="flex items-center gap-1.5">
-                          <span className="font-mono font-bold text-primary">{sub.code}</span>
-                          <span className="font-medium text-on-surface truncate">{sub.name}</span>
-                        </div>
-                        <span className="text-[10px] text-on-surface-variant font-mono">
-                          {sub.batch}
-                        </span>
-                      </div>
-                      <div className="flex items-center gap-2 shrink-0">
-                        <span className="font-mono font-bold text-secondary text-xs">
-                          {sub.hours}h
-                        </span>
-                        <button
-                          onClick={() => handleRemoveCourse(sub.id, sub.hours)}
-                          className="p-1 text-on-surface-variant/60 hover:text-error transition-colors"
-                          title="Unassign module"
+                        {/* Weekly Load */}
+                        <td className="py-3 px-4">
+                          <div className="flex flex-col gap-1 w-28">
+                            <div className="flex justify-between items-center font-mono text-[10px]">
+                              <span
+                                className={`font-bold ${
+                                  fac.status === "Overallocated" ? "text-rose-600" : "text-[#3D405B]"
+                                }`}
+                              >
+                                {fac.weeklyHours}h / {fac.maxHours}h
+                              </span>
+                              <span className="text-slate-400">{loadPercent}%</span>
+                            </div>
+                            <div className="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
+                              <div
+                                className={`h-full rounded-full ${
+                                  fac.status === "Overallocated"
+                                    ? "bg-rose-600"
+                                    : fac.weeklyHours >= 14
+                                    ? "bg-[#3D405B]"
+                                    : "bg-blue-600"
+                                }`}
+                                style={{ width: `${loadPercent}%` }}
+                              ></div>
+                            </div>
+                          </div>
+                        </td>
+
+                        {/* Status */}
+                        <td className="py-3 px-4">
+                          <span
+                            className={`inline-flex items-center gap-1 px-2.5 py-0.5 text-[10px] font-semibold rounded-full ${
+                              fac.status === "Optimal"
+                                ? "bg-emerald-50 text-emerald-700 border border-emerald-200"
+                                : fac.status === "Overallocated"
+                                ? "bg-rose-50 text-rose-700 border border-rose-200"
+                                : "bg-amber-50 text-amber-700 border border-amber-200"
+                            }`}
+                          >
+                            {fac.status}
+                          </span>
+                        </td>
+
+                        {/* Actions */}
+                        <td
+                          className="py-3 px-4 text-right"
+                          onClick={(e) => e.stopPropagation()}
                         >
-                          <Trash2 className="w-3.5 h-3.5" />
-                        </button>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Quick Course Assignment Form */}
-              <form onSubmit={handleAssignCourse} className="p-3 bg-surface-container-low border border-outline-variant/30 space-y-2.5 text-xs">
-                <span className="font-bold text-primary uppercase text-[10px] tracking-wider block">
-                  + Assign New Subject / Batch
-                </span>
-
-                <div className="flex flex-col gap-1">
-                  <label className="text-[10px] text-on-surface-variant">Course Subject</label>
-                  <select
-                    className="p-1.5 bg-surface border border-outline-variant/40 text-xs focus:outline-none"
-                    value={newSubCode}
-                    onChange={(e) => {
-                      setNewSubCode(e.target.value);
-                      if (e.target.value === "CS505") setNewSubName("Advanced Operating Systems");
-                      if (e.target.value === "AI402") setNewSubName("Computer Vision & Perception");
-                      if (e.target.value === "DS301") setNewSubName("Big Data Streaming Architectures");
-                    }}
-                  >
-                    <option value="CS505">CS505 - Advanced Operating Systems</option>
-                    <option value="AI402">AI402 - Computer Vision &amp; Perception</option>
-                    <option value="DS301">DS301 - Big Data Streaming Architectures</option>
-                  </select>
-                </div>
-
-                <div className="grid grid-cols-2 gap-2">
-                  <div className="flex flex-col gap-1">
-                    <label className="text-[10px] text-on-surface-variant">Target Batch</label>
-                    <select
-                      className="p-1.5 bg-surface border border-outline-variant/40 text-xs focus:outline-none"
-                      value={newSubBatch}
-                      onChange={(e) => setNewSubBatch(e.target.value)}
-                    >
-                      <option value="B.Tech CS Sem 5 (A)">B.Tech CS Sem 5 (A)</option>
-                      <option value="B.Tech AI Sem 3 (B)">B.Tech AI Sem 3 (B)</option>
-                      <option value="M.Tech Sem 1">M.Tech Sem 1</option>
-                    </select>
-                  </div>
-
-                  <div className="flex flex-col gap-1">
-                    <label className="text-[10px] text-on-surface-variant">Hours / Wk</label>
-                    <input
-                      type="number"
-                      step="0.5"
-                      min="1"
-                      max="10"
-                      className="p-1.5 bg-surface border border-outline-variant/40 text-xs focus:outline-none font-mono"
-                      value={newSubHours}
-                      onChange={(e) => setNewSubHours(Number(e.target.value))}
-                    />
-                  </div>
-                </div>
-
-                <button
-                  type="submit"
-                  className="w-full py-2 bg-primary-container text-white font-bold text-xs uppercase tracking-wider hover:bg-primary transition-colors flex items-center justify-center gap-1.5 shadow-sm mt-2"
-                >
-                  <Plus className="w-3.5 h-3.5" />
-                  <span>Assign Subject to Faculty</span>
-                </button>
-              </form>
+                          <button
+                            onClick={() => setSelectedFaculty(fac)}
+                            className="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-medium transition-colors cursor-pointer"
+                          >
+                            Manage
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
-      </section>
+
+        {/* RIGHT COLUMN: Faculty Assignment & Workload Controller (Col 4) */}
+        <div className="xl:col-span-4">
+          <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs sticky top-20 space-y-4">
+            {/* Header */}
+            <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+              <div className="flex items-center gap-2">
+                <BookOpen className="w-4 h-4 text-[#3D405B]" />
+                <h3 className="font-bold text-sm text-[#3D405B]">
+                  Faculty Assignment Console
+                </h3>
+              </div>
+              <span className="font-mono text-[10px] text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full font-semibold border border-emerald-200">
+                LIVE WORKLOAD
+              </span>
+            </div>
+
+            {/* Selected Faculty Identity Tile */}
+            <div className="p-3 bg-slate-50/80 rounded-xl border border-slate-100 flex items-center gap-3">
+              <div className="w-11 h-11 rounded-full bg-[#3D405B] text-white flex items-center justify-center font-bold text-xs overflow-hidden shrink-0">
+                {selectedFaculty.avatar ? (
+                  <img src={selectedFaculty.avatar} alt={selectedFaculty.name} className="w-full h-full object-cover" />
+                ) : (
+                  selectedFaculty.initials
+                )}
+              </div>
+              <div className="flex flex-col min-w-0">
+                <h4 className="font-semibold text-sm text-[#3D405B] truncate">
+                  {selectedFaculty.name}
+                </h4>
+                <span className="font-mono text-[10px] text-slate-400">
+                  {selectedFaculty.empId}
+                </span>
+                <span className="text-[11px] text-slate-500 truncate">
+                  {selectedFaculty.department}
+                </span>
+              </div>
+            </div>
+
+            {/* Workload Meter */}
+            <div className="p-3 bg-slate-50 rounded-xl border border-slate-100">
+              <div className="flex justify-between items-center mb-1.5 text-xs">
+                <span className="text-slate-500">Weekly Allocated Load:</span>
+                <strong
+                  className={`font-mono text-sm ${
+                    selectedFaculty.weeklyHours >= 19 ? "text-rose-600" : "text-[#3D405B]"
+                  }`}
+                >
+                  {selectedFaculty.weeklyHours} / {selectedFaculty.maxHours} Hrs
+                </strong>
+              </div>
+              <div className="w-full bg-slate-200 rounded-full h-2 overflow-hidden">
+                <div
+                  className={`h-full rounded-full transition-all duration-300 ${
+                    selectedFaculty.weeklyHours >= 19
+                      ? "bg-rose-600"
+                      : selectedFaculty.weeklyHours >= 14
+                      ? "bg-[#3D405B]"
+                      : "bg-blue-600"
+                  }`}
+                  style={{
+                    width: `${Math.min(100, (selectedFaculty.weeklyHours / selectedFaculty.maxHours) * 100)}%`
+                  }}
+                ></div>
+              </div>
+              {selectedFaculty.weeklyHours >= 19 && (
+                <p className="text-[10px] text-rose-600 font-semibold mt-1.5 flex items-center gap-1">
+                  <AlertTriangle className="w-3 h-3" /> Overload Warning: Exceeds standard faculty ceiling!
+                </p>
+              )}
+            </div>
+
+            {/* Current Active Course Assignments */}
+            <div className="space-y-2">
+              <div className="flex items-center justify-between text-xs font-semibold text-[#3D405B]">
+                <span>Assigned Courses ({selectedFaculty.assignments.length})</span>
+                <span className="text-[10px] text-slate-400 font-mono">HOURS/WK</span>
+              </div>
+
+              <div className="space-y-1.5 max-h-48 overflow-y-auto">
+                {selectedFaculty.assignments.map((sub) => (
+                  <div
+                    key={sub.id}
+                    className="p-2.5 bg-slate-50 hover:bg-slate-100/80 rounded-xl border border-slate-100 flex items-center justify-between text-xs group transition-colors"
+                  >
+                    <div className="flex flex-col min-w-0 pr-2">
+                      <div className="flex items-center gap-1.5">
+                        <span className="font-mono font-bold text-[#3D405B]">{sub.code}</span>
+                        <span className="font-medium text-slate-800 truncate">{sub.name}</span>
+                      </div>
+                      <span className="text-[10px] text-slate-400 font-mono">
+                        {sub.batch}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-2 shrink-0">
+                      <span className="font-mono font-bold text-blue-600 text-xs">
+                        {sub.hours}h
+                      </span>
+                      <button
+                        onClick={() => handleRemoveCourse(sub.id, sub.hours)}
+                        className="p-1 text-slate-400 hover:text-rose-600 transition-colors cursor-pointer"
+                        title="Unassign module"
+                      >
+                        <Trash2 className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Quick Course Assignment Form */}
+            <form onSubmit={handleAssignCourse} className="p-3 bg-slate-50/80 rounded-xl border border-slate-100 space-y-2.5 text-xs">
+              <span className="font-bold text-[#3D405B] uppercase text-[10px] tracking-wider block">
+                + Assign New Subject / Batch
+              </span>
+
+              <div className="flex flex-col gap-1">
+                <label className="text-[10px] text-slate-500 font-medium">Course Subject</label>
+                <select
+                  className="p-2 bg-white border border-slate-200 rounded-lg text-xs focus:outline-none focus:border-[#3D405B]"
+                  value={newSubCode}
+                  onChange={(e) => {
+                    setNewSubCode(e.target.value);
+                    if (e.target.value === "CS505") setNewSubName("Advanced Operating Systems");
+                    if (e.target.value === "AI402") setNewSubName("Computer Vision & Perception");
+                    if (e.target.value === "DS301") setNewSubName("Big Data Streaming Architectures");
+                  }}
+                >
+                  <option value="CS505">CS505 - Advanced Operating Systems</option>
+                  <option value="AI402">AI402 - Computer Vision &amp; Perception</option>
+                  <option value="DS301">DS301 - Big Data Streaming Architectures</option>
+                </select>
+              </div>
+
+              <div className="grid grid-cols-2 gap-2">
+                <div className="flex flex-col gap-1">
+                  <label className="text-[10px] text-slate-500 font-medium">Target Batch</label>
+                  <select
+                    className="p-2 bg-white border border-slate-200 rounded-lg text-xs focus:outline-none focus:border-[#3D405B]"
+                    value={newSubBatch}
+                    onChange={(e) => setNewSubBatch(e.target.value)}
+                  >
+                    <option value="B.Tech CS Sem 5 (A)">B.Tech CS Sem 5 (A)</option>
+                    <option value="B.Tech AI Sem 3 (B)">B.Tech AI Sem 3 (B)</option>
+                    <option value="M.Tech Sem 1">M.Tech Sem 1</option>
+                  </select>
+                </div>
+
+                <div className="flex flex-col gap-1">
+                  <label className="text-[10px] text-slate-500 font-medium">Hours / Wk</label>
+                  <input
+                    type="number"
+                    step="0.5"
+                    min="1"
+                    max="10"
+                    className="p-2 bg-white border border-slate-200 rounded-lg text-xs focus:outline-none focus:border-[#3D405B] font-mono"
+                    value={newSubHours}
+                    onChange={(e) => setNewSubHours(Number(e.target.value))}
+                  />
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                className="w-full py-2 bg-[#3D405B] hover:bg-[#2E3046] text-white font-semibold text-xs rounded-xl transition-all flex items-center justify-center gap-1.5 shadow-xs cursor-pointer mt-1"
+              >
+                <Plus className="w-3.5 h-3.5" />
+                <span>Assign Subject to Faculty</span>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
 
       {/* 4. Onboard Faculty Modal */}
       {showOnboardModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#3D405B]/50 backdrop-blur-xs animate-in fade-in">
-          <div className="w-full max-w-lg bg-surface-container-lowest shadow-2xl border border-outline-variant/30 overflow-hidden">
-            <div className="p-4 bg-primary text-white flex items-center justify-between">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-xs animate-in fade-in">
+          <div className="w-full max-w-lg bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden">
+            <div className="p-4.5 bg-[#3D405B] text-white flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <UserPlus className="w-5 h-5 text-secondary-container" />
-                <h3 className="font-headline font-bold text-sm uppercase tracking-wider">
+                <UserPlus className="w-5 h-5 text-indigo-200" />
+                <h3 className="font-bold text-sm">
                   Onboard Faculty / Academic Staff
                 </h3>
               </div>
               <button
                 onClick={() => setShowOnboardModal(false)}
-                className="p-1 text-white/80 hover:text-white"
+                className="p-1 text-white/80 hover:text-white rounded-lg hover:bg-white/10 transition-colors cursor-pointer"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -816,77 +801,77 @@ export default function StaffDirectoryPage() {
               className="p-6 space-y-4 text-xs"
             >
               <div className="space-y-3">
-                <div className="flex flex-col gap-1">
-                  <label className="font-bold text-on-surface uppercase text-[10px]">
+                <div className="flex flex-col gap-1.5">
+                  <label className="font-bold text-slate-700 uppercase text-[10px]">
                     Faculty Full Name *
                   </label>
                   <input
                     required
                     type="text"
-                    className="p-2 border border-outline-variant/40 bg-surface focus:outline-none focus:border-primary-container"
+                    className="p-2.5 border border-slate-200 bg-slate-50 hover:bg-slate-100/70 focus:bg-white rounded-xl focus:outline-none focus:border-[#3D405B] focus:ring-2 focus:ring-slate-100 transition-all text-xs"
                     placeholder="e.g. Dr. Jennifer Lawrence"
                   />
                 </div>
 
                 <div className="grid grid-cols-2 gap-3">
-                  <div className="flex flex-col gap-1">
-                    <label className="font-bold text-on-surface uppercase text-[10px]">
+                  <div className="flex flex-col gap-1.5">
+                    <label className="font-bold text-slate-700 uppercase text-[10px]">
                       Academic Department *
                     </label>
-                    <select className="p-2 border border-outline-variant/40 bg-surface focus:outline-none focus:border-primary-container">
-                      <option>Dept. of Computing & IT</option>
-                      <option>AI & Robotics Lab</option>
+                    <select className="p-2.5 border border-slate-200 bg-slate-50 hover:bg-slate-100/70 focus:bg-white rounded-xl focus:outline-none focus:border-[#3D405B] focus:ring-2 focus:ring-slate-100 transition-all text-xs">
+                      <option>Dept. of Computing &amp; IT</option>
+                      <option>AI &amp; Robotics Lab</option>
                       <option>School of Management</option>
-                      <option>Quantum Computing & ECE</option>
+                      <option>Quantum Computing &amp; ECE</option>
                     </select>
                   </div>
-                  <div className="flex flex-col gap-1">
-                    <label className="font-bold text-on-surface uppercase text-[10px]">
+                  <div className="flex flex-col gap-1.5">
+                    <label className="font-bold text-slate-700 uppercase text-[10px]">
                       Cadre / Designation *
                     </label>
                     <input
                       type="text"
-                      className="p-2 border border-outline-variant/40 bg-surface focus:outline-none focus:border-primary-container"
+                      className="p-2.5 border border-slate-200 bg-slate-50 hover:bg-slate-100/70 focus:bg-white rounded-xl focus:outline-none focus:border-[#3D405B] focus:ring-2 focus:ring-slate-100 transition-all text-xs"
                       placeholder="e.g. Assistant Professor"
                     />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-2 gap-3">
-                  <div className="flex flex-col gap-1">
-                    <label className="font-bold text-on-surface uppercase text-[10px]">
+                  <div className="flex flex-col gap-1.5">
+                    <label className="font-bold text-slate-700 uppercase text-[10px]">
                       Official Institutional Email *
                     </label>
                     <input
                       type="email"
-                      className="p-2 border border-outline-variant/40 bg-surface focus:outline-none focus:border-primary-container"
+                      className="p-2.5 border border-slate-200 bg-slate-50 hover:bg-slate-100/70 focus:bg-white rounded-xl focus:outline-none focus:border-[#3D405B] focus:ring-2 focus:ring-slate-100 transition-all text-xs"
                       placeholder="j.lawrence@apex.edu"
                     />
                   </div>
-                  <div className="flex flex-col gap-1">
-                    <label className="font-bold text-on-surface uppercase text-[10px]">
+                  <div className="flex flex-col gap-1.5">
+                    <label className="font-bold text-slate-700 uppercase text-[10px]">
                       Emergency Phone Dial
                     </label>
                     <input
                       type="text"
-                      className="p-2 border border-outline-variant/40 bg-surface focus:outline-none focus:border-primary-container"
+                      className="p-2.5 border border-slate-200 bg-slate-50 hover:bg-slate-100/70 focus:bg-white rounded-xl focus:outline-none focus:border-[#3D405B] focus:ring-2 focus:ring-slate-100 transition-all text-xs"
                       placeholder="+1 (555) 000-0000"
                     />
                   </div>
                 </div>
               </div>
 
-              <div className="pt-4 border-t border-outline-variant/20 flex justify-end gap-2">
+              <div className="pt-4 border-t border-slate-100 flex justify-end gap-2.5">
                 <button
                   type="button"
                   onClick={() => setShowOnboardModal(false)}
-                  className="px-4 py-2 border border-outline-variant/40 font-semibold uppercase hover:bg-surface-container transition-colors"
+                  className="px-4 py-2 border border-slate-200 text-slate-700 font-semibold rounded-xl hover:bg-slate-50 transition-colors cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 bg-primary-container text-white font-bold uppercase tracking-wider hover:bg-primary transition-colors shadow-sm"
+                  className="px-5 py-2 bg-[#3D405B] hover:bg-[#2E3046] text-white font-semibold rounded-xl transition-all shadow-xs hover:shadow cursor-pointer"
                 >
                   Confirm &amp; Issue Roster ID
                 </button>
@@ -898,4 +883,3 @@ export default function StaffDirectoryPage() {
     </div>
   );
 }
-
