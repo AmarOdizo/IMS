@@ -9,6 +9,7 @@ import {
   Users,
   CalendarCheck,
   FileSpreadsheet,
+  Contact,
   Bell,
   GraduationCap,
   LogOut,
@@ -21,6 +22,7 @@ const navigationItems = [
   { name: "Students", href: "/staff/students", icon: Users },
   { name: "Attendance", href: "/staff/attendance", icon: CalendarCheck },
   { name: "Marks Entry", href: "/staff/exams", icon: FileSpreadsheet },
+  { name: "ID Card", href: "/staff/id-card", icon: Contact },
   { name: "Notices", href: "/staff/notices", icon: Bell },
 ];
 

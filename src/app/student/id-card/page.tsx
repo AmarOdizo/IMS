@@ -22,6 +22,7 @@ export default function StudentIdCardPage() {
     instituteCode: "SI",
     studentName: "Aarav Sharma",
     course: "Bachelor of Computer Applications",
+    photoUrl: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=400&q=80",
     rollNo: "STU-2026-0142",
     batch: "BCA 2026–29",
     dob: "12 Aug 2007",
@@ -136,22 +137,35 @@ export default function StudentIdCardPage() {
     ctx.strokeStyle = "#FFFFFF";
     ctx.stroke();
 
-    // Clip to Avatar box to draw minimalist avatar silhouette
+    // Clip to Avatar box to draw candidate photo or avatar silhouette
     ctx.save();
     ctx.beginPath();
     ctx.roundRect(boxX, boxY, boxW, boxH, 32);
     ctx.clip();
 
-    // Avatar Head Circle
-    ctx.fillStyle = "#94A3B8";
-    ctx.beginPath();
-    ctx.arc(W / 2, boxY + 110, 48, 0, Math.PI * 2);
-    ctx.fill();
+    const domImg = typeof document !== "undefined" ? (document.getElementById("student-card-avatar-img") as HTMLImageElement | null) : null;
+    let imgDrawn = false;
+    if (domImg && domImg.complete && domImg.naturalWidth > 0) {
+      try {
+        ctx.drawImage(domImg, boxX, boxY, boxW, boxH);
+        imgDrawn = true;
+      } catch {
+        // Fallback to silhouette if cross-origin canvas security triggers
+      }
+    }
 
-    // Avatar Torso
-    ctx.beginPath();
-    ctx.roundRect(W / 2 - 82, boxY + 180, 164, 130, [46, 46, 0, 0]);
-    ctx.fill();
+    if (!imgDrawn) {
+      // Avatar Head Circle
+      ctx.fillStyle = "#94A3B8";
+      ctx.beginPath();
+      ctx.arc(W / 2, boxY + 110, 48, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Avatar Torso
+      ctx.beginPath();
+      ctx.roundRect(W / 2 - 82, boxY + 180, 164, 130, [46, 46, 0, 0]);
+      ctx.fill();
+    }
     ctx.restore();
 
     // 4. Cardholder Name & Course
@@ -470,42 +484,42 @@ export default function StudentIdCardPage() {
       )}
 
       {/* Main Dual Cards Grid Container */}
-      <div className="w-full max-w-5xl grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-14 items-start justify-center pt-2">
+      <div className="w-full max-w-4xl grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-10 items-start justify-center pt-2">
         {/* ========================================================= */}
         {/* LEFT COLUMN: Student - front                              */}
         {/* ========================================================= */}
         <div className="flex flex-col items-center w-full">
           {/* Header Bar above Front Card */}
-          <div className="w-full max-w-[380px] flex items-center justify-between pb-3 px-1">
+          <div className="w-full max-w-[320px] flex items-center justify-between pb-2.5 px-1">
             <h2
               onClick={() => setSelectedCard("front")}
-              className={`text-lg font-bold cursor-pointer transition-colors ${selectedCard === "front" ? "text-[#1B72E8]" : "text-[#475569]"
+              className={`text-base font-bold cursor-pointer transition-colors ${selectedCard === "front" ? "text-[#1B72E8]" : "text-[#475569]"
                 }`}
             >
               Student – front
             </h2>
 
-            <div className="flex items-center gap-3 text-slate-400">
+            <div className="flex items-center gap-2.5 text-slate-400">
               <button
                 onClick={() => setIsEditModalOpen(true)}
                 className="hover:text-slate-700 transition-colors cursor-pointer p-1"
                 title="Edit Card Details"
               >
-                <SlidersHorizontal className="w-4 h-4" />
+                <SlidersHorizontal className="w-3.5 h-3.5" />
               </button>
               <button
                 onClick={() => setZoomCard("front")}
                 className="hover:text-slate-700 transition-colors cursor-pointer p-1"
                 title="Fullscreen Preview"
               >
-                <Maximize2 className="w-4 h-4" />
+                <Maximize2 className="w-3.5 h-3.5" />
               </button>
               <button
                 onClick={() => executeDownload("front")}
                 className="hover:text-[#1B72E8] transition-colors cursor-pointer p-1"
                 title="Download Front Card"
               >
-                <Download className="w-4 h-4" />
+                <Download className="w-3.5 h-3.5" />
               </button>
             </div>
           </div>
@@ -513,90 +527,94 @@ export default function StudentIdCardPage() {
           {/* FRONT CARD CONTAINER */}
           <div
             onClick={() => setSelectedCard("front")}
-            className={`w-full max-w-[380px] aspect-[1/1.585] bg-white rounded-2xl shadow-xl overflow-hidden flex flex-col justify-between transition-all cursor-pointer relative select-none ${selectedCard === "front"
+            className={`w-full max-w-[320px] aspect-[1/1.585] bg-white rounded-2xl shadow-lg overflow-hidden flex flex-col justify-between transition-all cursor-pointer relative select-none ${selectedCard === "front"
               ? "ring-2 ring-[#1B72E8] shadow-2xl"
-              : "border border-slate-200/90 hover:shadow-2xl"
+              : "border border-slate-200/90 hover:shadow-xl"
               }`}
           >
             {/* Top Navy Blue Header Banner */}
-            <div className="relative bg-[#19335A] pt-7 pb-14 px-6 text-white flex flex-col items-center text-center">
+            <div className="relative bg-[#19335A] pt-5 pb-11 px-4 text-white flex flex-col items-center text-center">
               {/* Institution Crest + Name Row */}
-              <div className="flex items-center gap-3.5 justify-center">
+              <div className="flex items-center gap-2.5 justify-center">
                 {/* Circular White Logo */}
-                <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center text-[#19335A] font-black text-sm shadow-sm shrink-0">
+                <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center text-[#19335A] font-black text-xs shadow-xs shrink-0">
                   {cardData.instituteCode}
                 </div>
 
                 {/* Institute Name */}
                 <div className="text-left">
-                  <h3 className="text-sm font-extrabold tracking-wide uppercase leading-tight text-white">
+                  <h3 className="text-xs font-extrabold tracking-wide uppercase leading-tight text-white">
                     {cardData.instituteName}
                   </h3>
-                  <p className="text-[9px] tracking-[0.2em] uppercase font-semibold text-slate-300 mt-0.5">
+                  <p className="text-[8px] tracking-[0.18em] uppercase font-semibold text-slate-300 mt-0.5">
                     {cardData.instituteSub}
                   </p>
                 </div>
               </div>
 
               {/* Student Identity Card Pill Badge */}
-              <div className="mt-3.5">
-                <span className="inline-block px-4 py-1 bg-white/15 text-white text-[9.5px] font-semibold tracking-widest uppercase rounded-full border border-white/20">
+              <div className="mt-2.5">
+                <span className="inline-block px-3 py-0.5 bg-white/15 text-white text-[8.5px] font-semibold tracking-widest uppercase rounded-full border border-white/20">
                   STUDENT IDENTITY CARD
                 </span>
               </div>
             </div>
 
             {/* Overlapping Avatar Box */}
-            <div className="relative -mt-11 flex justify-center z-10 px-4">
-              <div className="w-30 h-36 bg-[#EEF2F6] rounded-2xl border-[4px] border-white shadow-md overflow-hidden flex flex-col items-center justify-end relative">
-                {/* Minimalist Avatar Illustration (matches screenshot exact silhouette) */}
-                <div className="w-12 h-12 rounded-full bg-[#94A3B8] absolute top-7"></div>
-                <div className="w-20 h-13 bg-[#94A3B8] rounded-t-full"></div>
+            <div className="relative -mt-9 flex justify-center z-10 px-3">
+              <div className="w-24 h-30 bg-[#EEF2F6] rounded-xl border-[3px] border-white shadow-md overflow-hidden flex items-center justify-center relative">
+                <img
+                  id="student-card-avatar-img"
+                  crossOrigin="anonymous"
+                  src={cardData.photoUrl}
+                  alt={cardData.studentName}
+                  className="w-full h-full object-cover"
+                />
               </div>
             </div>
 
             {/* Cardholder Identity & Degree */}
-            <div className="text-center px-4 pt-2">
-              <h1 className="text-[22px] font-bold text-[#1E293B] tracking-tight leading-snug">
+            <div className="text-center px-3 pt-1">
+              <h1 className="text-lg font-bold text-[#1E293B] tracking-tight leading-snug">
                 {cardData.studentName}
               </h1>
-              <p className="text-[12px] font-medium text-[#64748B] mt-0.5">
+              <p className="text-[11px] font-medium text-[#64748B] mt-0.5">
                 {cardData.course}
               </p>
             </div>
 
             {/* Rounded 2x2 Information Matrix */}
-            <div className="px-5 py-1">
-              <div className="bg-[#F8FAFC] rounded-2xl p-4 border border-[#EDF2F7] grid grid-cols-2 gap-x-4 gap-y-3 text-left">
+            <div className="px-4 py-0.5">
+              <div className="bg-[#F8FAFC] rounded-xl p-3 border border-[#EDF2F7] grid grid-cols-2 gap-x-3 gap-y-2 text-left">
                 <div>
-                  <span className="text-[9px] font-bold text-[#94A3B8] tracking-wider uppercase block">
+                  <span className="text-[8px] font-bold text-[#94A3B8] tracking-wider uppercase block">
                     ROLL NO.
                   </span>
-                  <span className="text-[13px] font-bold text-[#0F172A] block mt-0.5">
+                  <span className="text-[11.5px] font-bold text-[#0F172A] block mt-0.5">
                     {cardData.rollNo}
                   </span>
                 </div>
                 <div>
-                  <span className="text-[9px] font-bold text-[#94A3B8] tracking-wider uppercase block">
+                  <span className="text-[8px] font-bold text-[#94A3B8] tracking-wider uppercase block">
                     BATCH
                   </span>
-                  <span className="text-[13px] font-bold text-[#0F172A] block mt-0.5">
+                  <span className="text-[11.5px] font-bold text-[#0F172A] block mt-0.5">
                     {cardData.batch}
                   </span>
                 </div>
                 <div>
-                  <span className="text-[9px] font-bold text-[#94A3B8] tracking-wider uppercase block">
+                  <span className="text-[8px] font-bold text-[#94A3B8] tracking-wider uppercase block">
                     DATE OF BIRTH
                   </span>
-                  <span className="text-[13px] font-bold text-[#0F172A] block mt-0.5">
+                  <span className="text-[11.5px] font-bold text-[#0F172A] block mt-0.5">
                     {cardData.dob}
                   </span>
                 </div>
                 <div>
-                  <span className="text-[9px] font-bold text-[#94A3B8] tracking-wider uppercase block">
+                  <span className="text-[8px] font-bold text-[#94A3B8] tracking-wider uppercase block">
                     VALID TILL
                   </span>
-                  <span className="text-[13px] font-bold text-[#0F172A] block mt-0.5">
+                  <span className="text-[11.5px] font-bold text-[#0F172A] block mt-0.5">
                     {cardData.validTill}
                   </span>
                 </div>
@@ -605,16 +623,16 @@ export default function StudentIdCardPage() {
 
             {/* Bottom Card No. Strip & Navy Base Line */}
             <div className="mt-auto">
-              <div className="px-6 py-3 border-t border-[#E2E8F0] flex items-center justify-between text-xs">
-                <span className="text-[10px] font-bold tracking-widest text-[#94A3B8] uppercase">
+              <div className="px-4 py-2 border-t border-[#E2E8F0] flex items-center justify-between text-xs">
+                <span className="text-[9px] font-bold tracking-widest text-[#94A3B8] uppercase">
                   CARD NO.
                 </span>
-                <span className="font-bold text-[#0F172A] font-mono text-[13px] tracking-wider">
+                <span className="font-bold text-[#0F172A] font-mono text-[11.5px] tracking-wider">
                   {cardData.cardNo}
                 </span>
               </div>
               {/* Bottom Deep Navy Base */}
-              <div className="h-2 bg-[#19335A] w-full"></div>
+              <div className="h-1.5 bg-[#19335A] w-full"></div>
             </div>
           </div>
         </div>
@@ -624,36 +642,36 @@ export default function StudentIdCardPage() {
         {/* ========================================================= */}
         <div className="flex flex-col items-center w-full">
           {/* Header Bar above Back Card */}
-          <div className="w-full max-w-[380px] flex items-center justify-between pb-3 px-1">
+          <div className="w-full max-w-[320px] flex items-center justify-between pb-2.5 px-1">
             <h2
               onClick={() => setSelectedCard("back")}
-              className={`text-lg font-bold cursor-pointer transition-colors ${selectedCard === "back" ? "text-[#1B72E8]" : "text-[#475569]"
+              className={`text-base font-bold cursor-pointer transition-colors ${selectedCard === "back" ? "text-[#1B72E8]" : "text-[#475569]"
                 }`}
             >
               Student – back
             </h2>
 
-            <div className="flex items-center gap-3 text-slate-400">
+            <div className="flex items-center gap-2.5 text-slate-400">
               <button
                 onClick={() => setIsEditModalOpen(true)}
                 className="hover:text-slate-700 transition-colors cursor-pointer p-1"
                 title="Edit Card Details"
               >
-                <SlidersHorizontal className="w-4 h-4" />
+                <SlidersHorizontal className="w-3.5 h-3.5" />
               </button>
               <button
                 onClick={() => setZoomCard("back")}
                 className="hover:text-slate-700 transition-colors cursor-pointer p-1"
                 title="Fullscreen Preview"
               >
-                <Maximize2 className="w-4 h-4" />
+                <Maximize2 className="w-3.5 h-3.5" />
               </button>
               <button
                 onClick={() => executeDownload("back")}
                 className="hover:text-[#1B72E8] transition-colors cursor-pointer p-1"
                 title="Download Back Card"
               >
-                <Download className="w-4 h-4" />
+                <Download className="w-3.5 h-3.5" />
               </button>
             </div>
           </div>
@@ -661,22 +679,22 @@ export default function StudentIdCardPage() {
           {/* BACK CARD CONTAINER */}
           <div
             onClick={() => setSelectedCard("back")}
-            className={`w-full max-w-[380px] aspect-[1/1.585] bg-white rounded-2xl shadow-xl overflow-hidden flex flex-col justify-between transition-all cursor-pointer relative select-none ${selectedCard === "back"
+            className={`w-full max-w-[320px] aspect-[1/1.585] bg-white rounded-2xl shadow-lg overflow-hidden flex flex-col justify-between transition-all cursor-pointer relative select-none ${selectedCard === "back"
               ? "ring-2 ring-[#1B72E8] shadow-2xl"
-              : "border border-slate-200/90 hover:shadow-2xl"
+              : "border border-slate-200/90 hover:shadow-xl"
               }`}
           >
             {/* Top Navy Blue Header Banner */}
-            <div className="bg-[#19335A] py-3.5 px-4 text-center">
-              <h3 className="text-white text-[12px] font-extrabold tracking-widest uppercase">
+            <div className="bg-[#19335A] py-2.5 px-3 text-center">
+              <h3 className="text-white text-[10.5px] font-extrabold tracking-widest uppercase">
                 {cardData.instituteName} {cardData.instituteSub}
               </h3>
             </div>
 
             {/* QR Code Verification Section */}
-            <div className="flex flex-col items-center pt-3 pb-1">
+            <div className="flex flex-col items-center pt-2.5 pb-0.5">
               {/* Rounded White QR Box */}
-              <div className="w-44 h-44 bg-white border border-[#E2E8F0] rounded-2xl p-3 shadow-xs flex items-center justify-center">
+              <div className="w-36 h-36 bg-white border border-[#E2E8F0] rounded-xl p-2.5 shadow-2xs flex items-center justify-center">
                 <svg
                   className="w-full h-full text-slate-900"
                   viewBox="0 0 100 100"
@@ -716,55 +734,55 @@ export default function StudentIdCardPage() {
                 </svg>
               </div>
 
-              <span className="text-[12px] text-[#64748B] font-medium mt-2">
+              <span className="text-[10.5px] text-[#64748B] font-medium mt-1.5">
                 Scan to verify this card
               </span>
-              <span className="text-[15px] font-extrabold text-[#0F172A] font-mono tracking-wider mt-0.5">
+              <span className="text-[13px] font-extrabold text-[#0F172A] font-mono tracking-wider mt-0.5">
                 {cardData.cardNo}
               </span>
             </div>
 
             {/* Three Institutional Data Rows with Dividers */}
-            <div className="px-7 py-2 space-y-2 text-xs">
+            <div className="px-5 py-1.5 space-y-1.5 text-xs">
               {/* Row 1: Blood Group */}
-              <div className="flex items-center justify-between pb-1.5 border-b border-[#F1F5F9]">
-                <span className="text-[10px] font-bold text-[#94A3B8] tracking-wider uppercase">
+              <div className="flex items-center justify-between pb-1 border-b border-[#F1F5F9]">
+                <span className="text-[8.5px] font-bold text-[#94A3B8] tracking-wider uppercase">
                   BLOOD GROUP
                 </span>
-                <span className="text-[12px] font-bold text-[#0F172A]">
+                <span className="text-[11px] font-bold text-[#0F172A]">
                   {cardData.bloodGroup}
                 </span>
               </div>
 
               {/* Row 2: Emergency Contact */}
-              <div className="flex items-center justify-between pb-1.5 border-b border-[#F1F5F9]">
-                <span className="text-[10px] font-bold text-[#94A3B8] tracking-wider uppercase">
+              <div className="flex items-center justify-between pb-1 border-b border-[#F1F5F9]">
+                <span className="text-[8.5px] font-bold text-[#94A3B8] tracking-wider uppercase">
                   EMERGENCY CONTACT
                 </span>
-                <span className="text-[12px] font-bold text-[#0F172A] font-mono">
+                <span className="text-[11px] font-bold text-[#0F172A] font-mono">
                   {cardData.emergencyContact}
                 </span>
               </div>
 
               {/* Row 3: Address */}
-              <div className="flex items-center justify-between pb-1.5 border-b border-[#F1F5F9]">
-                <span className="text-[10px] font-bold text-[#94A3B8] tracking-wider uppercase shrink-0">
+              <div className="flex items-center justify-between pb-1 border-b border-[#F1F5F9]">
+                <span className="text-[8.5px] font-bold text-[#94A3B8] tracking-wider uppercase shrink-0">
                   ADDRESS
                 </span>
-                <span className="text-[12px] font-bold text-[#0F172A] text-right truncate pl-3">
+                <span className="text-[11px] font-bold text-[#0F172A] text-right truncate pl-3">
                   {cardData.address}
                 </span>
               </div>
             </div>
 
             {/* Principal Signature Block */}
-            <div className="px-7 pt-1 pb-3 flex flex-col items-end">
-              <div className="w-40 text-center">
-                <div className="font-serif italic text-lg font-bold text-[#1E293B] leading-none mb-1">
+            <div className="px-5 pt-1 flex flex-col items-end">
+              <div className="w-28 text-center">
+                <span className="font-serif italic text-base text-slate-800 font-bold block leading-tight">
                   {cardData.principalName}
-                </div>
-                <div className="w-full border-b border-[#1E293B] mb-1"></div>
-                <span className="text-[9.5px] font-bold text-[#64748B] tracking-widest uppercase block">
+                </span>
+                <div className="h-[1px] bg-slate-800 w-full my-0.5"></div>
+                <span className="text-[8px] font-bold uppercase tracking-widest text-[#64748B] block">
                   {cardData.principalTitle}
                 </span>
               </div>
@@ -772,13 +790,13 @@ export default function StudentIdCardPage() {
 
             {/* Footer Disclaimer & Return Address */}
             <div className="mt-auto">
-              <div className="px-6 py-3 border-t border-[#F1F5F9] text-center text-[10px] text-[#64748B] leading-relaxed space-y-0.5">
+              <div className="px-4 pb-2 pt-1 text-center text-[#64748B] text-[8.5px] leading-tight space-y-0.5">
                 <p>{cardData.returnLine1}</p>
                 <p>{cardData.returnLine2}</p>
-                <p className="text-[#19335A] font-semibold">{cardData.website}</p>
+                <p className="font-bold text-[#19335A] pt-0.5">{cardData.website}</p>
               </div>
               {/* Bottom Deep Navy Base */}
-              <div className="h-2 bg-[#19335A] w-full"></div>
+              <div className="h-1.5 bg-[#19335A] w-full"></div>
             </div>
           </div>
         </div>
@@ -839,6 +857,19 @@ export default function StudentIdCardPage() {
             </div>
 
             <div className="py-4 space-y-3.5 text-xs">
+              <div>
+                <label className="block text-[11px] font-semibold text-slate-600 mb-1">
+                  Photo Image URL
+                </label>
+                <input
+                  type="text"
+                  value={cardData.photoUrl}
+                  onChange={(e) => setCardData({ ...cardData, photoUrl: e.target.value })}
+                  placeholder="https://images.unsplash.com/..."
+                  className="w-full p-2 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:ring-2 focus:ring-[#1B72E8] outline-none text-slate-800"
+                />
+              </div>
+
               <div className="grid grid-cols-2 gap-3">
                 <div>
                   <label className="block text-[11px] font-semibold text-slate-600 mb-1">
@@ -986,6 +1017,7 @@ export default function StudentIdCardPage() {
                       instituteCode: "SI",
                       studentName: "Rahul Sharma",
                       course: "B.Tech - Computer Science & Engineering",
+                      photoUrl: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=400&q=80",
                       rollNo: "23CS042",
                       batch: "B.Tech 2023–27",
                       dob: "15 Aug 2004",
@@ -1015,6 +1047,7 @@ export default function StudentIdCardPage() {
                       instituteCode: "SI",
                       studentName: "Aarav Sharma",
                       course: "Bachelor of Computer Applications",
+                      photoUrl: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=400&q=80",
                       rollNo: "STU-2026-0142",
                       batch: "BCA 2026–29",
                       dob: "12 Aug 2007",

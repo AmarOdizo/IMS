@@ -22,6 +22,7 @@ const routeTitleMap: Record<string, string> = {
   "/staff/students": "Students",
   "/staff/attendance": "Attendance",
   "/staff/exams": "Marks Entry",
+  "/staff/id-card": "ID Card",
   "/staff/notices": "Notices",
 };
 
