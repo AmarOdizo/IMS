@@ -24,7 +24,9 @@ export default function StaffLayout({
 
         {/* Content Area */}
         <main className="pt-16 flex-1 bg-background">
-          {children}
+          <div className="w-full staff-zoom-wrapper" style={{ zoom: "80%" }}>
+            {children}
+          </div>
         </main>
       </div>
     </div>
