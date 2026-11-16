@@ -48,6 +48,26 @@ export default function StaffIdCardPage() {
     setTimeout(() => setToastMessage(null), 3000);
   };
 
+  // Upload and process passport size photo from device
+  const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      if (file.size > 5 * 1024 * 1024) {
+        showToast("Photo must be less than 5MB.");
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const result = event.target?.result as string;
+        if (result) {
+          setCardData((prev) => ({ ...prev, photoUrl: result }));
+          showToast("Passport photo updated successfully!");
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   // -------------------------------------------------------------
   // High-Resolution HTML5 Canvas Vector Generator for 300 DPI
   // -------------------------------------------------------------
@@ -535,16 +555,34 @@ export default function StaffIdCardPage() {
               </div>
             </div>
 
-            {/* Overlapping Avatar Box */}
+            {/* Overlapping Avatar Box (Standard Passport Photo Frame) */}
             <div className="relative -mt-9 flex justify-center z-10 px-3">
-              <div className="w-24 h-30 bg-[#EEF2F6] rounded-xl border-[3px] border-white shadow-md overflow-hidden flex items-center justify-center relative">
+              <input
+                type="file"
+                ref={fileInputRef}
+                accept="image/*"
+                onChange={handlePhotoUpload}
+                className="hidden"
+              />
+              <div
+                onClick={(e) => {
+                  e.stopPropagation();
+                  fileInputRef.current?.click();
+                }}
+                title="Click to upload passport photo"
+                className="w-24 h-30 bg-[#EEF2F6] rounded-xl border-[3px] border-white shadow-md overflow-hidden flex items-center justify-center relative group cursor-pointer"
+              >
                 <img
                   id="staff-card-avatar-img"
                   crossOrigin="anonymous"
                   src={cardData.photoUrl}
                   alt={cardData.staffName}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover object-top"
                 />
+                <div className="absolute inset-0 bg-black/45 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center text-white">
+                  <Camera className="w-5 h-5 mb-0.5" />
+                  <span className="text-[8px] font-bold uppercase tracking-wider">Change</span>
+                </div>
               </div>
             </div>
 
@@ -808,19 +846,60 @@ export default function StaffIdCardPage() {
               }}
               className="pt-4 grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs"
             >
-              <div className="sm:col-span-2">
-                <label className="font-bold text-slate-700 block mb-1">
-                  Photo Image URL
-                </label>
+              {/* Passport Size Photo Uploader */}
+              <div className="sm:col-span-2 p-3 bg-slate-50 border border-slate-200 rounded-xl flex flex-col sm:flex-row items-center gap-4">
                 <input
-                  type="text"
-                  value={cardData.photoUrl}
-                  onChange={(e) =>
-                    setCardData({ ...cardData, photoUrl: e.target.value })
-                  }
-                  placeholder="https://images.unsplash.com/..."
-                  className="w-full px-3 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#7A1F2B]/20 focus:border-[#7A1F2B] font-medium"
+                  type="file"
+                  ref={modalFileInputRef}
+                  accept="image/*"
+                  onChange={handlePhotoUpload}
+                  className="hidden"
                 />
+                <div className="w-20 h-24 bg-white rounded-lg border-2 border-dashed border-slate-300 overflow-hidden flex items-center justify-center relative shadow-2xs shrink-0">
+                  {cardData.photoUrl ? (
+                    <img
+                      src={cardData.photoUrl}
+                      alt="Passport Preview"
+                      className="w-full h-full object-cover object-top"
+                    />
+                  ) : (
+                    <Camera className="w-6 h-6 text-slate-400" />
+                  )}
+                </div>
+
+                <div className="flex-1 text-center sm:text-left">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                    <div>
+                      <span className="font-bold text-slate-800 text-xs block">
+                        Passport Size Photograph (35mm &times; 45mm)
+                      </span>
+                      <p className="text-[11px] text-slate-500 mt-0.5">
+                        Clear face-front portrait photo with light background (Max 5MB)
+                      </p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => modalFileInputRef.current?.click()}
+                      className="px-3 py-1.5 bg-white hover:bg-slate-100 text-[#7A1F2B] border border-[#7A1F2B]/30 font-semibold text-xs rounded-lg flex items-center justify-center gap-1.5 shadow-2xs transition-colors cursor-pointer self-center sm:self-auto"
+                    >
+                      <Upload className="w-3.5 h-3.5" />
+                      <span>Upload Photo</span>
+                    </button>
+                  </div>
+
+                  <div className="mt-2 flex items-center gap-2">
+                    <span className="text-[10px] text-slate-400 uppercase font-semibold shrink-0">Or URL:</span>
+                    <input
+                      type="text"
+                      value={cardData.photoUrl}
+                      onChange={(e) =>
+                        setCardData({ ...cardData, photoUrl: e.target.value })
+                      }
+                      placeholder="Paste image URL here..."
+                      className="w-full px-2.5 py-1 text-[11px] bg-white border border-slate-200 rounded-md focus:outline-none focus:ring-1 focus:ring-[#7A1F2B]"
+                    />
+                  </div>
+                </div>
               </div>
 
               <div>
