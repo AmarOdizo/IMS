@@ -6,7 +6,9 @@
 @tailwind utilities;
 
 @layer base {
-  html, body {
+
+  html,
+  body {
     margin: 0;
     padding: 0;
     font-family: 'Geist', sans-serif;
@@ -28,6 +30,7 @@
   word-wrap: normal;
   direction: ltr;
   -webkit-font-feature-settings: 'liga';
+  font-feature-settings: 'liga';
   -webkit-font-smoothing: antialiased;
 }
 
@@ -36,13 +39,16 @@
   width: 6px;
   height: 6px;
 }
+
 ::-webkit-scrollbar-track {
   background: #f1f5f9;
 }
+
 ::-webkit-scrollbar-thumb {
   background: #cbd5e1;
   border-radius: 3px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background: #94a3b8;
 }
@@ -53,4 +59,3 @@
 .portal-zoom-wrapper {
   zoom: 0.8;
 }
-
