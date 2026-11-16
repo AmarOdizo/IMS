@@ -314,9 +314,6 @@ export default function StaffAttendancePage() {
               <h1 className="text-2xl md:text-3xl font-bold text-[#3D405B] tracking-tight">
                 Daily Attendance &amp; Classroom Register
               </h1>
-              <p className="text-sm text-slate-500 mt-1 max-w-2xl">
-                Take live period attendance, review biometric turnstile logs, trigger parental SMS alerts for unexcused absentees, and commit to the institutional ledger.
-              </p>
             </div>
           </div>
 
