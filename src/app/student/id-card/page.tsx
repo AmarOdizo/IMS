@@ -6,32 +6,25 @@ import {
   Printer,
   Download,
   RotateCw,
-  ShieldCheck,
   CheckCircle2,
-  AlertTriangle,
+  X,
+  User,
+  ShieldCheck,
+  Calendar,
+  Building,
+  Phone,
+  QrCode,
+  Sparkles,
+  RefreshCw,
   Lock,
   Unlock,
-  QrCode,
-  X,
-  Building,
-  User,
-  Phone,
-  FileCheck,
-  MapPin,
-  Calendar,
-  BadgeCheck,
-  AlertCircle,
-  Clock,
-  Sparkles,
 } from "lucide-react";
 
 export default function StudentIdCardPage() {
   const [viewMode, setViewMode] = useState<"both" | "flip">("both");
   const [isFlipped, setIsFlipped] = useState(false);
-  const [cardStatus, setCardStatus] = useState<"active" | "suspended">("active");
-  const [isFreezeModalOpen, setIsFreezeModalOpen] = useState(false);
-  const [isDuplicateModalOpen, setIsDuplicateModalOpen] = useState(false);
-  const [duplicateReason, setDuplicateReason] = useState("Lost / Misplaced");
+  const [activeProfile, setActiveProfile] = useState<"sample" | "student">("sample");
+  const [showPhoto, setShowPhoto] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   const showToast = (msg: string) => {
@@ -39,31 +32,55 @@ export default function StudentIdCardPage() {
     setTimeout(() => setToastMessage(null), 3500);
   };
 
-  const handleToggleFreeze = () => {
-    if (cardStatus === "active") {
-      setCardStatus("suspended");
-      setIsFreezeModalOpen(false);
-      showToast("Card temporarily locked. Campus access suspended.");
-    } else {
-      setCardStatus("active");
-      setIsFreezeModalOpen(false);
-      showToast("Card unlocked successfully! Campus access restored.");
-    }
-  };
-
-  const handleDuplicateSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsDuplicateModalOpen(false);
-    showToast(
-      `Duplicate ID card request submitted (#DUP-${Math.floor(
-        1000 + Math.random() * 9000
-      )}). Collection in 3 working days.`
-    );
-  };
+  // Profile data definitions
+  const profileData =
+    activeProfile === "sample"
+      ? {
+          instituteName: "SUNRISE INSTITUTE",
+          instituteSub: "OF TECHNOLOGY",
+          instituteCode: "SI",
+          studentName: "Aarav Sharma",
+          course: "Bachelor of Computer Applications",
+          rollNo: "STU-2026-0142",
+          batch: "BCA 2026–29",
+          dob: "12 Aug 2007",
+          validTill: "31 May 2029",
+          cardNo: "SIT-26-0142",
+          bloodGroup: "O+",
+          emergencyContact: "+91 98765 43210",
+          address: "24, MG Road, Pune 411001",
+          signatoryName: "R. Mehta",
+          signatoryTitle: "PRINCIPAL",
+          returnAddressLine1: "If found, please return to the institute office.",
+          returnAddressLine2: "Plot 12, Knowledge Park, Pune 411057 • +91 20 1234 5678",
+          website: "www.sunriseinstitute.edu.in",
+          photo: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=400&q=80",
+        }
+      : {
+          instituteName: "SUNRISE INSTITUTE",
+          instituteSub: "OF TECHNOLOGY",
+          instituteCode: "SI",
+          studentName: "Rahul Sharma",
+          course: "B.Tech - Computer Science & Engineering",
+          rollNo: "23CS042",
+          batch: "B.Tech 2023–27",
+          dob: "15 Aug 2004",
+          validTill: "30 Jun 2027",
+          cardNo: "SIT-23-0042",
+          bloodGroup: "O+",
+          emergencyContact: "+91 98111 22334",
+          address: "Sector 14, Gurugram, Haryana 122001",
+          signatoryName: "R. Mehta",
+          signatoryTitle: "PRINCIPAL",
+          returnAddressLine1: "If found, please return to the institute office.",
+          returnAddressLine2: "Plot 12, Knowledge Park, Pune 411057 • +91 20 1234 5678",
+          website: "www.sunriseinstitute.edu.in",
+          photo: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=400&q=80",
+        };
 
   return (
     <div className="p-5 md:p-8 space-y-6 max-w-[1600px] w-full mx-auto font-sans text-slate-800">
-      {/* Print Specific CSS to isolate Front & Back ID Card on 1 Page */}
+      {/* Print Specific CSS to isolate Front & Back ID Card on 1 clean Page */}
       <style>{`
         @media print {
           body * {
@@ -78,13 +95,15 @@ export default function StudentIdCardPage() {
             top: 0;
             width: 100%;
             margin: 0;
-            padding: 15mm 20mm;
+            padding: 10mm 15mm;
             background: white !important;
             display: flex !important;
             flex-direction: row !important;
             justify-content: center !important;
             align-items: flex-start !important;
             gap: 12mm !important;
+            box-shadow: none !important;
+            border: none !important;
           }
           .no-print {
             display: none !important;
@@ -94,7 +113,7 @@ export default function StudentIdCardPage() {
 
       {/* Toast Notification */}
       {toastMessage && (
-        <div className="fixed bottom-6 right-6 z-50 bg-[#3D405B] text-white px-5 py-3 rounded-xl shadow-xl flex items-center gap-3 border border-slate-700 text-sm font-medium animate-in slide-in-from-bottom no-print">
+        <div className="fixed bottom-6 right-6 z-50 bg-[#1B365D] text-white px-5 py-3 rounded-xl shadow-xl flex items-center gap-3 border border-slate-700 text-sm font-medium animate-in slide-in-from-bottom no-print">
           <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0" />
           <span>{toastMessage}</span>
           <button
@@ -106,135 +125,86 @@ export default function StudentIdCardPage() {
         </div>
       )}
 
-      {/* Top Header & Actions Bar */}
+      {/* Top Header & Master Action Bar */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-4 md:px-6 rounded-2xl border border-slate-200/80 shadow-xs no-print">
         <div>
           <div className="flex items-center gap-2">
-            <h1 className="text-xl md:text-2xl font-bold text-[#3D405B] tracking-tight">
+            <h1 className="text-xl md:text-2xl font-bold text-[#1B365D] tracking-tight">
               Student Identity Card
             </h1>
-            {cardStatus === "active" ? (
-              <span className="px-2.5 py-0.5 bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-semibold rounded-full flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                Active &amp; Verified
-              </span>
-            ) : (
-              <span className="px-2.5 py-0.5 bg-rose-50 text-rose-700 border border-rose-200 text-xs font-semibold rounded-full flex items-center gap-1">
-                <Lock className="w-3 h-3" />
-                Temporarily Locked
-              </span>
-            )}
+            <span className="px-2.5 py-0.5 bg-blue-50 text-[#1B365D] border border-blue-200 text-xs font-semibold rounded-full flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+              Official Template &bull; {profileData.instituteName}
+            </span>
           </div>
           <p className="text-xs text-slate-500 mt-0.5">
-            Official identity badge &bull; Rahul Sharma (Roll: 23CS042 &bull; Reg: APX-2023-CS-042)
+            Cardholder: {profileData.studentName} ({profileData.cardNo}) &bull; Valid Till {profileData.validTill}
           </p>
         </div>
 
         <div className="flex flex-wrap items-center gap-2.5">
+          {/* Profile Switcher */}
+          <div className="bg-slate-100 p-1 rounded-xl border border-slate-200 flex items-center gap-1">
+            <button
+              onClick={() => setActiveProfile("sample")}
+              className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-all cursor-pointer ${
+                activeProfile === "sample"
+                  ? "bg-white text-[#1B365D] shadow-xs"
+                  : "text-slate-600 hover:text-slate-900"
+              }`}
+            >
+              Sample Card (Aarav)
+            </button>
+            <button
+              onClick={() => setActiveProfile("student")}
+              className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-all cursor-pointer ${
+                activeProfile === "student"
+                  ? "bg-white text-[#1B365D] shadow-xs"
+                  : "text-slate-600 hover:text-slate-900"
+              }`}
+            >
+              My Profile (Rahul)
+            </button>
+          </div>
+
+          <button
+            onClick={() => setShowPhoto(!showPhoto)}
+            className="inline-flex items-center gap-1.5 px-3 py-2 bg-slate-100 hover:bg-slate-200 text-[#1B365D] text-xs font-semibold rounded-xl border border-slate-200 transition-all cursor-pointer"
+            title="Toggle between Avatar illustration and Photo"
+          >
+            <User className="w-3.5 h-3.5" />
+            <span>{showPhoto ? "Show Avatar" : "Show Photo"}</span>
+          </button>
+
           <button
             onClick={() => window.print()}
-            className="inline-flex items-center gap-2 px-3.5 py-2 bg-slate-100 hover:bg-slate-200 text-[#3D405B] text-xs font-semibold rounded-xl border border-slate-200 transition-all cursor-pointer shadow-xs"
+            className="inline-flex items-center gap-2 px-3.5 py-2 bg-slate-100 hover:bg-slate-200 text-[#1B365D] text-xs font-semibold rounded-xl border border-slate-200 transition-all cursor-pointer shadow-xs"
           >
-            <Printer className="w-3.5 h-3.5 text-[#355C7D]" />
+            <Printer className="w-3.5 h-3.5 text-[#1B365D]" />
             <span>Print ID Card</span>
           </button>
           <button
-            onClick={() => showToast("Downloading high-resolution ID card PDF...")}
-            className="inline-flex items-center gap-2 px-3.5 py-2 bg-[#355C7D] hover:bg-[#2A4963] text-white text-xs font-semibold rounded-xl transition-all cursor-pointer shadow-xs"
+            onClick={() => showToast("Downloading high-resolution ID Card PDF...")}
+            className="inline-flex items-center gap-2 px-3.5 py-2 bg-[#1B365D] hover:bg-[#152a48] text-white text-xs font-semibold rounded-xl transition-all cursor-pointer shadow-xs"
           >
             <Download className="w-3.5 h-3.5" />
             <span>Download PDF</span>
           </button>
-          <button
-            onClick={() => setIsDuplicateModalOpen(true)}
-            className="inline-flex items-center gap-2 px-3.5 py-2 bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200 text-xs font-semibold rounded-xl transition-all cursor-pointer"
-          >
-            <CreditCard className="w-3.5 h-3.5 text-amber-700" />
-            <span>Request Duplicate</span>
-          </button>
         </div>
       </div>
 
-      {/* 4 Summary / Metric Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 no-print">
-        {/* Card 1: Status */}
-        <div className="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-xs flex items-center gap-3.5">
-          <div
-            className={`w-11 h-11 rounded-xl flex items-center justify-center shrink-0 ${
-              cardStatus === "active" ? "bg-emerald-50 text-emerald-600" : "bg-rose-50 text-rose-600"
-            }`}
-          >
-            <ShieldCheck className="w-5 h-5" />
-          </div>
-          <div>
-            <span className="text-[11px] font-medium text-slate-500 uppercase tracking-wider block">
-              Card Status
-            </span>
-            <span className="text-base font-bold text-slate-800">
-              {cardStatus === "active" ? "Active & Valid" : "Temporarily Locked"}
-            </span>
-            <span className="text-[11px] text-slate-500 block">Semester IV (AY 2024–25)</span>
-          </div>
-        </div>
-
-        {/* Card 2: Validity */}
-        <div className="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-xs flex items-center gap-3.5">
-          <div className="w-11 h-11 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
-            <Calendar className="w-5 h-5 text-[#355C7D]" />
-          </div>
-          <div>
-            <span className="text-[11px] font-medium text-slate-500 uppercase tracking-wider block">
-              Validity Period
-            </span>
-            <span className="text-base font-bold text-slate-800">Aug 2023 – Jun 2027</span>
-            <span className="text-[11px] text-slate-500 block">4 Academic Years (B.Tech)</span>
-          </div>
-        </div>
-
-        {/* Card 3: Library Membership */}
-        <div className="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-xs flex items-center gap-3.5">
-          <div className="w-11 h-11 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center shrink-0">
-            <Building className="w-5 h-5 text-[#3D405B]" />
-          </div>
-          <div>
-            <span className="text-[11px] font-medium text-slate-500 uppercase tracking-wider block">
-              Library Card ID
-            </span>
-            <span className="text-base font-bold text-slate-800">APX-LIB-2023-042</span>
-            <span className="text-[11px] text-emerald-600 font-medium block">Active &bull; 0 Overdue</span>
-          </div>
-        </div>
-
-        {/* Card 4: Issuing Authority */}
-        <div className="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-xs flex items-center gap-3.5">
-          <div className="w-11 h-11 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center shrink-0">
-            <BadgeCheck className="w-5 h-5 text-amber-700" />
-          </div>
-          <div>
-            <span className="text-[11px] font-medium text-slate-500 uppercase tracking-wider block">
-              Issuing Office
-            </span>
-            <span className="text-base font-bold text-slate-800">Office of Registrar</span>
-            <span className="text-[11px] text-slate-500 block">Dr. K. N. Murthy</span>
-          </div>
-        </div>
-      </div>
-
-      {/* Main Card View Section */}
-      <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-6 md:p-8 flex flex-col items-center">
-        {/* View Mode Switcher Toolbar */}
-        <div className="w-full max-w-4xl mb-8 flex flex-col sm:flex-row items-center justify-between gap-4 pb-4 border-b border-slate-100 no-print">
+      {/* Main Showcase Surface */}
+      <div className="bg-slate-50/70 rounded-2xl border border-slate-200/80 p-6 md:p-10 flex flex-col items-center">
+        {/* View Mode Toolbar */}
+        <div className="w-full max-w-4xl mb-8 flex flex-col sm:flex-row items-center justify-between gap-4 pb-4 border-b border-slate-200 no-print">
           <div className="flex items-center gap-2">
-            <CreditCard className="w-5 h-5 text-[#355C7D]" />
-            <span className="text-sm font-bold text-[#3D405B]">
-              Institutional Identity Badge Preview
-            </span>
-            <span className="hidden sm:inline-block text-xs text-slate-400">
-              &bull; Standard Vertical ID-1 Format
+            <CreditCard className="w-5 h-5 text-[#1B365D]" />
+            <span className="text-sm font-bold text-[#1B365D]">
+              Physical ID Card Studio &bull; Standard CR80 Vertical Format
             </span>
           </div>
 
-          <div className="flex items-center gap-1.5 bg-slate-100 p-1 rounded-xl border border-slate-200">
+          <div className="flex items-center gap-1.5 bg-white p-1 rounded-xl border border-slate-200 shadow-xs">
             <button
               onClick={() => {
                 setViewMode("both");
@@ -242,7 +212,7 @@ export default function StudentIdCardPage() {
               }}
               className={`px-3.5 py-1 text-xs font-semibold rounded-lg transition-all cursor-pointer ${
                 viewMode === "both"
-                  ? "bg-white text-[#3D405B] shadow-xs"
+                  ? "bg-[#1B365D] text-white shadow-xs"
                   : "text-slate-600 hover:text-slate-900"
               }`}
             >
@@ -255,17 +225,17 @@ export default function StudentIdCardPage() {
               }}
               className={`px-3.5 py-1 text-xs font-semibold rounded-lg flex items-center gap-1.5 transition-all cursor-pointer ${
                 viewMode === "flip"
-                  ? "bg-white text-[#3D405B] shadow-xs"
+                  ? "bg-[#1B365D] text-white shadow-xs"
                   : "text-slate-600 hover:text-slate-900"
               }`}
             >
               <RotateCw className="w-3.5 h-3.5" />
-              <span>Flip Card ({isFlipped ? "Back" : "Front"})</span>
+              <span>Flip ({isFlipped ? "Back" : "Front"})</span>
             </button>
           </div>
         </div>
 
-        {/* Printable & Screen ID Card Render Container */}
+        {/* Printable & Screen Render Container */}
         <div
           id="printable-id-card"
           className={`w-full max-w-4xl items-center justify-center ${
@@ -274,501 +244,312 @@ export default function StudentIdCardPage() {
               : "flex justify-center"
           }`}
         >
-          {/* ======================================================== */}
-          {/* FRONT OF THE ID CARD                                     */}
-          {/* ======================================================== */}
+          {/* ========================================================= */}
+          {/* FRONT FACE (OBVERSE) - EXACT MATCH TO USER'S SCREENSHOT  */}
+          {/* ========================================================= */}
           {(viewMode === "both" || !isFlipped) && (
-            <div className="flex flex-col items-center w-full max-w-[340px]">
+            <div className="flex flex-col items-center w-full max-w-[360px]">
               <div className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider mb-2.5 flex items-center gap-1.5 no-print">
-                <span className="w-2 h-2 rounded-full bg-[#355C7D]"></span>
-                Front Side
+                <span className="w-2 h-2 rounded-full bg-[#1B365D]"></span>
+                Front Face
               </div>
 
-              {/* Physical Card Body */}
-              <div className="relative w-full aspect-[1/1.586] bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-300 flex flex-col justify-between text-slate-800">
-                {/* Gloss / Depth Overlay */}
-                <div className="absolute inset-0 pointer-events-none bg-gradient-to-tr from-transparent via-white/10 to-slate-200/20"></div>
-
-                {/* Top Banner (Steel Blue / Navy) */}
-                <div className="relative z-10 bg-gradient-to-r from-[#355C7D] via-[#3D405B] to-[#2E3046] px-4 py-3 text-white border-b-2 border-amber-400">
-                  <div className="flex items-center gap-2.5">
-                    <div className="w-8 h-8 rounded-lg bg-white/10 backdrop-blur-xs border border-white/20 flex items-center justify-center font-bold text-amber-300 text-sm shadow-xs shrink-0">
-                      AIT
-                    </div>
-                    <div className="min-w-0">
-                      <div className="text-[11px] font-bold uppercase tracking-wide leading-tight truncate">
-                        Apex Institute of Technology
-                      </div>
-                      <div className="text-[8px] text-slate-200 tracking-wider uppercase">
-                        &amp; Management &bull; New Delhi
-                      </div>
-                    </div>
-                  </div>
-                  <div className="mt-1 flex items-center justify-between text-[8px] text-amber-200 font-medium tracking-wider">
-                    <span>STUDENT IDENTITY CARD</span>
-                    <span>SESSION 2023–27</span>
-                  </div>
-                </div>
-
-                {/* Card Main Body */}
-                <div className="relative z-10 px-4 py-2 flex-1 flex flex-col justify-between">
-                  {/* Photo & Primary Info */}
-                  <div className="flex items-center gap-3.5 pt-1">
-                    {/* Student Photo */}
-                    <div className="relative shrink-0">
-                      <div className="w-22 h-26 rounded-xl overflow-hidden border-2 border-[#355C7D]/30 shadow-sm bg-slate-100">
-                        <img
-                          src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=400&q=80"
-                          alt="Rahul Sharma"
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                      <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-emerald-500 rounded-full border-2 border-white flex items-center justify-center">
-                        <CheckCircle2 className="w-2.5 h-2.5 text-white" />
-                      </div>
+              {/* Physical Card Container */}
+              <div className="relative w-full aspect-[1/1.58] bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-200 flex flex-col justify-between text-slate-800">
+                {/* 1. Deep Navy Header Section */}
+                <div className="relative bg-[#1B365D] pt-6 pb-12 px-5 text-white flex flex-col items-center text-center">
+                  {/* Top Row: Crest Logo + Institute Name */}
+                  <div className="flex items-center gap-3 justify-center">
+                    {/* Circular White Logo */}
+                    <div className="w-11 h-11 bg-white rounded-full flex items-center justify-center text-[#1B365D] font-black text-sm shadow-sm shrink-0">
+                      {profileData.instituteCode}
                     </div>
 
-                    {/* Name & Academic Details */}
-                    <div className="flex-1 min-w-0">
-                      <span className="text-[9px] font-semibold text-slate-400 uppercase tracking-wider block">
-                        Student Name
-                      </span>
-                      <h2 className="text-base font-extrabold text-[#3D405B] leading-tight truncate">
-                        RAHUL SHARMA
+                    {/* Institute Title */}
+                    <div className="text-left">
+                      <h2 className="text-sm font-extrabold tracking-wide uppercase leading-tight">
+                        {profileData.instituteName}
                       </h2>
-
-                      <div className="mt-1.5 space-y-0.5 text-xs">
-                        <div className="flex items-center gap-1.5">
-                          <span className="text-[10px] text-slate-500 font-medium">Roll No:</span>
-                          <span className="font-bold text-[#355C7D] font-mono text-[11px]">
-                            23CS042
-                          </span>
-                        </div>
-                        <div className="flex items-center gap-1.5">
-                          <span className="text-[10px] text-slate-500 font-medium">Reg No:</span>
-                          <span className="font-semibold text-slate-700 font-mono text-[10px]">
-                            APX-2023-CS-042
-                          </span>
-                        </div>
-                        <div className="text-[10px] font-semibold text-slate-800 leading-tight pt-0.5">
-                          B.Tech &bull; Computer Science &amp; Engg
-                        </div>
-                      </div>
+                      <p className="text-[9px] tracking-[0.2em] uppercase font-semibold text-slate-300">
+                        {profileData.instituteSub}
+                      </p>
                     </div>
                   </div>
 
-                  {/* Quick Info Grid */}
-                  <div className="grid grid-cols-3 gap-2 bg-slate-50 p-2 rounded-xl border border-slate-200/80 text-center my-1.5">
-                    <div>
-                      <span className="text-[8px] text-slate-400 font-medium uppercase block">
-                        Blood Grp
-                      </span>
-                      <span className="text-[11px] font-bold text-slate-800">O+</span>
-                    </div>
-                    <div className="border-x border-slate-200">
-                      <span className="text-[8px] text-slate-400 font-medium uppercase block">
-                        DOB
-                      </span>
-                      <span className="text-[11px] font-bold text-slate-800">15/08/2004</span>
-                    </div>
-                    <div>
-                      <span className="text-[8px] text-slate-400 font-medium uppercase block">
-                        Valid Thru
-                      </span>
-                      <span className="text-[11px] font-bold text-slate-800">Jun 2027</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Bottom Barcode & Footer Strip */}
-                <div className="relative z-10 px-4 py-2 bg-slate-100 border-t border-slate-200 flex items-center justify-between">
-                  <div className="flex flex-col">
-                    {/* Realistic Barcode Graphic */}
-                    <svg className="h-5 w-32 fill-slate-800" viewBox="0 0 145 24">
-                      <rect height="24" width="2" x="0" y="0"></rect>
-                      <rect height="24" width="1" x="4" y="0"></rect>
-                      <rect height="24" width="3" x="7" y="0"></rect>
-                      <rect height="24" width="1" x="12" y="0"></rect>
-                      <rect height="24" width="2" x="15" y="0"></rect>
-                      <rect height="24" width="4" x="20" y="0"></rect>
-                      <rect height="24" width="1" x="26" y="0"></rect>
-                      <rect height="24" width="2" x="30" y="0"></rect>
-                      <rect height="24" width="1" x="34" y="0"></rect>
-                      <rect height="24" width="3" x="38" y="0"></rect>
-                      <rect height="24" width="2" x="44" y="0"></rect>
-                      <rect height="24" width="1" x="48" y="0"></rect>
-                      <rect height="24" width="3" x="52" y="0"></rect>
-                      <rect height="24" width="1" x="58" y="0"></rect>
-                      <rect height="24" width="2" x="62" y="0"></rect>
-                      <rect height="24" width="4" x="66" y="0"></rect>
-                      <rect height="24" width="2" x="73" y="0"></rect>
-                      <rect height="24" width="1" x="78" y="0"></rect>
-                      <rect height="24" width="3" x="82" y="0"></rect>
-                      <rect height="24" width="1" x="88" y="0"></rect>
-                      <rect height="24" width="2" x="92" y="0"></rect>
-                      <rect height="24" width="3" x="97" y="0"></rect>
-                      <rect height="24" width="1" x="103" y="0"></rect>
-                      <rect height="24" width="4" x="107" y="0"></rect>
-                      <rect height="24" width="2" x="114" y="0"></rect>
-                      <rect height="24" width="1" x="119" y="0"></rect>
-                      <rect height="24" width="3" x="123" y="0"></rect>
-                      <rect height="24" width="1" x="129" y="0"></rect>
-                      <rect height="24" width="3" x="133" y="0"></rect>
-                      <rect height="24" width="2" x="139" y="0"></rect>
-                    </svg>
-                    <span className="font-mono text-[8px] text-slate-500 tracking-wider">
-                      APX-2023-CS-042
+                  {/* Student Identity Card Pill Badge */}
+                  <div className="mt-3.5">
+                    <span className="inline-block px-4 py-1 bg-white/15 text-white text-[9.5px] font-semibold tracking-widest uppercase rounded-full border border-white/20">
+                      STUDENT IDENTITY CARD
                     </span>
                   </div>
-                  <div className="text-right">
-                    <span className="text-[8px] font-semibold text-[#355C7D] block">
-                      OFFICIAL ID
-                    </span>
-                    <span className="text-[7.5px] text-slate-400 block">Apex Campus Card</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* ======================================================== */}
-          {/* BACK OF THE ID CARD                                      */}
-          {/* ======================================================== */}
-          {(viewMode === "both" || isFlipped) && (
-            <div className="flex flex-col items-center w-full max-w-[340px]">
-              <div className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider mb-2.5 flex items-center gap-1.5 no-print">
-                <span className="w-2 h-2 rounded-full bg-[#3D405B]"></span>
-                Back Side
-              </div>
-
-              {/* Physical Card Body */}
-              <div className="relative w-full aspect-[1/1.586] bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-300 flex flex-col justify-between text-slate-800">
-                {/* Magnetic Stripe Preview */}
-                <div className="w-full h-8 bg-slate-900 mt-2 flex items-center justify-between px-4">
-                  <span className="text-[7.5px] font-mono text-slate-400 uppercase tracking-widest">
-                    CAMPUS ACCESS &bull; LIBRARY &bull; EXAMINATION
-                  </span>
-                  <span className="text-[7.5px] font-mono text-slate-400">APX-2023</span>
                 </div>
 
-                {/* Back Content Area */}
-                <div className="px-4 py-2 flex-1 flex flex-col justify-between text-left">
-                  {/* Instructions */}
-                  <div>
-                    <h3 className="text-[9px] font-bold text-[#355C7D] uppercase tracking-wider border-b border-slate-200 pb-0.5 mb-1">
-                      Terms &amp; Instructions
-                    </h3>
-                    <ul className="text-[7.5px] text-slate-600 space-y-0.5 leading-tight list-disc pl-3">
-                      <li>This card is non-transferable and remains property of the Institute.</li>
-                      <li>Must be produced on demand by university staff or faculty.</li>
-                      <li>Loss or theft of this card must be immediately reported to the Registrar.</li>
-                      <li>Mandatory for campus entry, library borrowing, and semester exams.</li>
-                    </ul>
-                  </div>
-
-                  {/* Addresses & Contacts */}
-                  <div className="space-y-1 text-[8px] bg-slate-50 p-2 rounded-xl border border-slate-200/80">
-                    <div>
-                      <span className="font-semibold text-slate-700">Permanent Address: </span>
-                      <span className="text-slate-600">
-                        Sector 14, Gurugram, Haryana &bull; 122001
-                      </span>
-                    </div>
-                    <div>
-                      <span className="font-semibold text-slate-700">Campus Residence: </span>
-                      <span className="text-slate-600">
-                        Room 314, Hostel Block C, North Campus
-                      </span>
-                    </div>
-                    <div className="flex items-center justify-between pt-0.5 border-t border-slate-200">
-                      <div>
-                        <span className="font-semibold text-slate-700">Emergency: </span>
-                        <span className="text-[#355C7D] font-bold font-mono">
-                          +91 98111 22334 (Father)
-                        </span>
+                {/* 2. Photo / Avatar Box Overlapping Header and Body */}
+                <div className="relative -mt-10 flex justify-center z-10 px-4">
+                  <div className="w-26 h-32 bg-[#e2e8f0] rounded-2xl border-[3.5px] border-white shadow-md overflow-hidden flex items-center justify-center relative">
+                    {showPhoto ? (
+                      <img
+                        src={profileData.photo}
+                        alt={profileData.studentName}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      /* Clean Minimalist Avatar Placeholder as seen in screenshot */
+                      <div className="w-full h-full bg-[#edf2f7] flex flex-col items-center justify-end pb-0 relative">
+                        {/* Circular Head */}
+                        <div className="w-11 h-11 rounded-full bg-[#94a3b8] absolute top-6"></div>
+                        {/* Shoulders / Torso */}
+                        <div className="w-18 h-11 bg-[#94a3b8] rounded-t-full"></div>
                       </div>
-                      <div>
-                        <span className="text-slate-500">Security: </span>
-                        <span className="font-mono text-slate-700 font-semibold">Ext 1099</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* QR Code & Signatures Row */}
-                  <div className="flex items-end justify-between gap-3 pt-1 border-t border-slate-200">
-                    {/* Official QR Code */}
-                    <div className="p-1 bg-white border border-slate-200 rounded-lg flex flex-col items-center shrink-0">
-                      <QrCode className="w-11 h-11 text-[#3D405B]" />
-                      <span className="text-[6px] font-bold text-slate-500 uppercase tracking-tighter mt-0.5">
-                        Scan to Verify
-                      </span>
-                    </div>
-
-                    {/* Student Signature */}
-                    <div className="text-center flex-1">
-                      <div className="h-6 flex items-center justify-center font-serif italic text-slate-700 text-xs">
-                        Rahul Sharma
-                      </div>
-                      <div className="border-t border-slate-300 pt-0.5">
-                        <span className="text-[7px] text-slate-500 font-medium uppercase block">
-                          Cardholder Signature
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Registrar Signature */}
-                    <div className="text-center flex-1">
-                      <div className="h-6 flex items-center justify-center font-serif italic text-[#355C7D] text-xs font-bold">
-                        K.N. Murthy
-                      </div>
-                      <div className="border-t border-slate-300 pt-0.5">
-                        <span className="text-[7px] text-slate-800 font-bold uppercase block">
-                          Dr. K. N. Murthy
-                        </span>
-                        <span className="text-[6.5px] text-slate-500 block leading-none">
-                          Registrar
-                        </span>
-                      </div>
-                    </div>
+                    )}
                   </div>
                 </div>
 
-                {/* Return Address Footer */}
-                <div className="bg-slate-100 px-4 py-1.5 border-t border-slate-200 text-center">
-                  <p className="text-[7px] text-slate-500 leading-tight">
-                    If found, please return to: Office of Registrar, Apex Institute of Technology &amp; Management, Delhi-NCR, India &bull; Phone: +91 11 2659 1000
+                {/* 3. Student Identity & Course */}
+                <div className="text-center px-4 pt-2">
+                  <h3 className="text-xl font-bold text-slate-900 tracking-tight leading-tight">
+                    {profileData.studentName}
+                  </h3>
+                  <p className="text-xs text-slate-600 font-medium mt-0.5">
+                    {profileData.course}
                   </p>
                 </div>
+
+                {/* 4. Rounded Info Box (2x2 Grid) */}
+                <div className="px-5 py-1">
+                  <div className="bg-[#f8fafc] rounded-2xl p-4 border border-slate-100 grid grid-cols-2 gap-x-4 gap-y-3 text-left">
+                    <div>
+                      <span className="text-[9px] font-bold text-slate-400 tracking-wider uppercase block">
+                        ROLL NO.
+                      </span>
+                      <span className="text-xs font-bold text-slate-900 block mt-0.5">
+                        {profileData.rollNo}
+                      </span>
+                    </div>
+                    <div>
+                      <span className="text-[9px] font-bold text-slate-400 tracking-wider uppercase block">
+                        BATCH
+                      </span>
+                      <span className="text-xs font-bold text-slate-900 block mt-0.5">
+                        {profileData.batch}
+                      </span>
+                    </div>
+                    <div>
+                      <span className="text-[9px] font-bold text-slate-400 tracking-wider uppercase block">
+                        DATE OF BIRTH
+                      </span>
+                      <span className="text-xs font-bold text-slate-900 block mt-0.5">
+                        {profileData.dob}
+                      </span>
+                    </div>
+                    <div>
+                      <span className="text-[9px] font-bold text-slate-400 tracking-wider uppercase block">
+                        VALID TILL
+                      </span>
+                      <span className="text-xs font-bold text-slate-900 block mt-0.5">
+                        {profileData.validTill}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* 5. Bottom Card No Strip & Navy Accent */}
+                <div className="mt-auto">
+                  <div className="px-5 py-2.5 border-t border-slate-200 flex items-center justify-between text-xs">
+                    <span className="text-[9.5px] font-bold tracking-widest text-slate-400 uppercase">
+                      CARD NO.
+                    </span>
+                    <span className="font-bold text-slate-900 font-mono text-xs tracking-wider">
+                      {profileData.cardNo}
+                    </span>
+                  </div>
+                  {/* Bottom Navy Line */}
+                  <div className="h-1.5 bg-[#1B365D] w-full"></div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* ========================================================= */}
+          {/* BACK FACE (REVERSE) - EXACT MATCH TO USER'S SCREENSHOT   */}
+          {/* ========================================================= */}
+          {(viewMode === "both" || isFlipped) && (
+            <div className="flex flex-col items-center w-full max-w-[360px]">
+              <div className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider mb-2.5 flex items-center gap-1.5 no-print">
+                <span className="w-2 h-2 rounded-full bg-[#1B365D]"></span>
+                Back Face
+              </div>
+
+              {/* Physical Card Container */}
+              <div className="relative w-full aspect-[1/1.58] bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-200 flex flex-col justify-between text-slate-800">
+                {/* 1. Top Navy Bar with Institute Name */}
+                <div className="bg-[#1B365D] py-2.5 px-4 text-center">
+                  <h3 className="text-white text-xs font-extrabold tracking-wider uppercase">
+                    {profileData.instituteName} {profileData.instituteSub}
+                  </h3>
+                </div>
+
+                {/* 2. QR Code Verification Section */}
+                <div className="flex flex-col items-center pt-3 pb-1">
+                  {/* QR Code Container */}
+                  <div className="w-36 h-36 bg-white border border-slate-200 rounded-2xl p-2.5 flex items-center justify-center shadow-xs">
+                    <svg
+                      className="w-full h-full text-slate-900"
+                      viewBox="0 0 100 100"
+                      fill="currentColor"
+                    >
+                      {/* Accurate QR Code Matrix Representation */}
+                      <rect x="5" y="5" width="26" height="26" fill="none" stroke="currentColor" strokeWidth="6" />
+                      <rect x="12" y="12" width="12" height="12" />
+                      <rect x="69" y="5" width="26" height="26" fill="none" stroke="currentColor" strokeWidth="6" />
+                      <rect x="76" y="12" width="12" height="12" />
+                      <rect x="5" y="69" width="26" height="26" fill="none" stroke="currentColor" strokeWidth="6" />
+                      <rect x="12" y="76" width="12" height="12" />
+                      <rect x="38" y="8" width="6" height="6" />
+                      <rect x="48" y="14" width="8" height="6" />
+                      <rect x="58" y="8" width="6" height="10" />
+                      <rect x="36" y="22" width="10" height="6" />
+                      <rect x="52" y="24" width="8" height="8" />
+                      <rect x="8" y="38" width="8" height="6" />
+                      <rect x="22" y="38" width="6" height="8" />
+                      <rect x="34" y="36" width="14" height="14" />
+                      <rect x="54" y="38" width="8" height="8" />
+                      <rect x="68" y="36" width="12" height="6" />
+                      <rect x="86" y="38" width="6" height="8" />
+                      <rect x="8" y="48" width="6" height="10" />
+                      <rect x="20" y="50" width="8" height="6" />
+                      <rect x="38" y="54" width="8" height="12" />
+                      <rect x="52" y="52" width="12" height="6" />
+                      <rect x="70" y="48" width="8" height="10" />
+                      <rect x="84" y="50" width="8" height="8" />
+                      <rect x="36" y="70" width="10" height="8" />
+                      <rect x="50" y="66" width="8" height="12" />
+                      <rect x="64" y="68" width="14" height="8" />
+                      <rect x="84" y="68" width="8" height="10" />
+                      <rect x="38" y="84" width="8" height="8" />
+                      <rect x="52" y="82" width="10" height="10" />
+                      <rect x="68" y="82" width="10" height="8" />
+                      <rect x="82" y="84" width="10" height="8" />
+                    </svg>
+                  </div>
+
+                  <span className="text-[11px] text-slate-500 font-medium mt-1.5">
+                    Scan to verify this card
+                  </span>
+                  <span className="text-sm font-extrabold text-slate-900 font-mono tracking-wider mt-0.5">
+                    {profileData.cardNo}
+                  </span>
+                </div>
+
+                {/* 3. Three Data Rows (Blood Group, Emergency Contact, Address) */}
+                <div className="px-6 py-2 space-y-2 text-xs">
+                  {/* Row 1: Blood Group */}
+                  <div className="flex items-center justify-between pb-1.5 border-b border-slate-100">
+                    <span className="text-[9.5px] font-bold text-slate-400 tracking-wider uppercase">
+                      BLOOD GROUP
+                    </span>
+                    <span className="font-bold text-slate-900 text-xs">
+                      {profileData.bloodGroup}
+                    </span>
+                  </div>
+
+                  {/* Row 2: Emergency Contact */}
+                  <div className="flex items-center justify-between pb-1.5 border-b border-slate-100">
+                    <span className="text-[9.5px] font-bold text-slate-400 tracking-wider uppercase">
+                      EMERGENCY CONTACT
+                    </span>
+                    <span className="font-bold text-slate-900 font-mono text-xs">
+                      {profileData.emergencyContact}
+                    </span>
+                  </div>
+
+                  {/* Row 3: Address */}
+                  <div className="flex items-center justify-between pb-1.5 border-b border-slate-100">
+                    <span className="text-[9.5px] font-bold text-slate-400 tracking-wider uppercase shrink-0">
+                      ADDRESS
+                    </span>
+                    <span className="font-bold text-slate-900 text-xs text-right truncate pl-3">
+                      {profileData.address}
+                    </span>
+                  </div>
+                </div>
+
+                {/* 4. Principal Signature Section */}
+                <div className="px-6 pt-1 pb-2 flex flex-col items-end">
+                  <div className="w-36 text-center">
+                    <div className="font-serif italic text-base font-bold text-slate-800 tracking-tight leading-tight">
+                      {profileData.signatoryName}
+                    </div>
+                    <div className="w-full border-b border-slate-800 my-0.5"></div>
+                    <span className="text-[9px] font-bold text-slate-500 tracking-wider uppercase block">
+                      {profileData.signatoryTitle}
+                    </span>
+                  </div>
+                </div>
+
+                {/* 5. Institutional Disclaimer Footer */}
+                <div className="mt-auto">
+                  <div className="px-4 py-2 border-t border-slate-100 text-center text-[9.5px] text-slate-500 leading-tight space-y-0.5">
+                    <p>{profileData.returnAddressLine1}</p>
+                    <p>{profileData.returnAddressLine2}</p>
+                    <p className="text-[#1B365D] font-semibold">{profileData.website}</p>
+                  </div>
+                  {/* Bottom Navy Line */}
+                  <div className="h-1.5 bg-[#1B365D] w-full"></div>
+                </div>
               </div>
             </div>
           )}
         </div>
       </div>
 
-      {/* Guidelines & Card Actions Grid */}
+      {/* Guidelines & Institutional Notes */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 no-print">
-        {/* Card Management Action Card */}
         <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs flex flex-col justify-between">
           <div>
-            <div className="flex items-center gap-2 mb-2">
-              <CreditCard className="w-4 h-4 text-[#355C7D]" />
-              <h2 className="text-sm font-bold text-[#3D405B]">Card Security &amp; Control</h2>
+            <div className="flex items-center gap-2 mb-2 text-[#1B365D]">
+              <ShieldCheck className="w-4 h-4" />
+              <h2 className="text-sm font-bold">Identity &amp; Campus Entry</h2>
             </div>
             <p className="text-xs text-slate-500 leading-relaxed">
-              If your card is misplaced or temporarily missing, lock it instantly to prevent unauthorized use across campus.
+              This identity badge is required for physical gate entry, laboratory access, and semester examination halls.
             </p>
-          </div>
-          <div className="mt-5 space-y-2">
-            {cardStatus === "active" ? (
-              <button
-                onClick={() => setIsFreezeModalOpen(true)}
-                className="w-full py-2.5 px-4 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 text-xs font-semibold rounded-xl flex items-center justify-center gap-2 transition-all cursor-pointer"
-              >
-                <Lock className="w-4 h-4" />
-                <span>Temporarily Lock ID Card</span>
-              </button>
-            ) : (
-              <button
-                onClick={handleToggleFreeze}
-                className="w-full py-2.5 px-4 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-xl flex items-center justify-center gap-2 transition-all cursor-pointer shadow-xs"
-              >
-                <Unlock className="w-4 h-4" />
-                <span>Unlock &amp; Restore Access</span>
-              </button>
-            )}
-            <button
-              onClick={() => setIsDuplicateModalOpen(true)}
-              className="w-full py-2.5 px-4 bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200 text-xs font-semibold rounded-xl flex items-center justify-center gap-2 transition-all cursor-pointer"
-            >
-              <CreditCard className="w-4 h-4 text-slate-500" />
-              <span>Apply for Duplicate Card</span>
-            </button>
-          </div>
-        </div>
-
-        {/* Student Guidelines Card */}
-        <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs flex flex-col justify-between">
-          <div>
-            <div className="flex items-center gap-2 mb-2">
-              <AlertCircle className="w-4 h-4 text-[#355C7D]" />
-              <h2 className="text-sm font-bold text-[#3D405B]">Important Instructions</h2>
-            </div>
-            <ul className="text-xs text-slate-600 space-y-2 leading-relaxed">
-              <li className="flex items-start gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#355C7D] mt-1.5 shrink-0"></span>
-                <span>Mandatory to wear / carry your ID card inside college premises and during semester exams.</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#355C7D] mt-1.5 shrink-0"></span>
-                <span>Scan card barcode at the Central Library desk to issue or return reference books.</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#355C7D] mt-1.5 shrink-0"></span>
-                <span>Duplicate card fee is ₹200 (INR) in case of permanent loss or physical damage.</span>
-              </li>
-            </ul>
           </div>
           <div className="mt-4 pt-3 border-t border-slate-100 text-[11px] text-slate-400">
-            Valid across all university campuses &bull; Academic Year 2024–25
+            Card Specification: ISO/IEC 7810 Standard
           </div>
         </div>
 
-        {/* Academic Cell Helpdesk Card */}
         <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs flex flex-col justify-between">
           <div>
-            <div className="flex items-center gap-2 mb-2">
-              <Building className="w-4 h-4 text-[#355C7D]" />
-              <h2 className="text-sm font-bold text-[#3D405B]">Registrar Academic Cell</h2>
+            <div className="flex items-center gap-2 mb-2 text-[#1B365D]">
+              <QrCode className="w-4 h-4" />
+              <h2 className="text-sm font-bold">Digital QR Verification</h2>
             </div>
             <p className="text-xs text-slate-500 leading-relaxed">
-              For ID card corrections, photo updates, or duplicate card collections, visit the Academic Cell desk.
+              Scanning the reverse QR code validates student enrollment status directly against institutional records.
             </p>
-            <div className="mt-3 space-y-1.5 text-xs text-slate-700">
-              <div className="flex items-center gap-2">
-                <MapPin className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-                <span>Ground Floor, Administrative Block A</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Clock className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-                <span>Mon – Fri &bull; 9:30 AM to 4:30 PM</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Phone className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-                <span>+91 11 2659 1000 (Ext: 1042)</span>
-              </div>
-            </div>
           </div>
-          <div className="mt-4 pt-3 border-t border-slate-100 text-[11px] text-slate-500">
-            Contact: <span className="font-semibold text-slate-700">academic.cell@apex.edu.in</span>
+          <div className="mt-4 pt-3 border-t border-slate-100 text-[11px] text-slate-400">
+            Card ID: {profileData.cardNo}
+          </div>
+        </div>
+
+        <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs flex flex-col justify-between">
+          <div>
+            <div className="flex items-center gap-2 mb-2 text-[#1B365D]">
+              <Building className="w-4 h-4" />
+              <h2 className="text-sm font-bold">Loss &amp; Replacement</h2>
+            </div>
+            <p className="text-xs text-slate-500 leading-relaxed">
+              In case of loss or damage, report to the institute administrative office for reissue within 3 working days.
+            </p>
+          </div>
+          <div className="mt-4 pt-3 border-t border-slate-100 text-[11px] text-slate-400">
+            Support: helpdesk@sunriseinstitute.edu.in
           </div>
         </div>
       </div>
-
-      {/* MODAL: Temporary Freeze Card Confirmation */}
-      {isFreezeModalOpen && (
-        <div className="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-4 no-print">
-          <div className="bg-white w-full max-w-md rounded-2xl shadow-xl border border-slate-200 p-6 relative animate-in fade-in zoom-in-95 duration-150">
-            <div className="flex items-center justify-between pb-3 border-b border-slate-100">
-              <div className="flex items-center gap-2 text-rose-600">
-                <AlertTriangle className="w-5 h-5" />
-                <h3 className="text-base font-bold">Lock ID Card</h3>
-              </div>
-              <button
-                onClick={() => setIsFreezeModalOpen(false)}
-                className="p-1 text-slate-400 hover:text-slate-600 rounded-lg hover:bg-slate-100 transition-colors cursor-pointer"
-              >
-                <X className="w-4 h-4" />
-              </button>
-            </div>
-
-            <div className="py-4 text-xs space-y-3">
-              <p className="text-slate-700 leading-relaxed">
-                Are you sure you want to temporarily lock ID card for{" "}
-                <strong className="text-slate-900">Rahul Sharma (23CS042)</strong>?
-              </p>
-              <div className="p-3 bg-rose-50 border border-rose-200 text-rose-800 rounded-xl leading-relaxed">
-                &bull; Library issue, lab entry, and turnstiles will be paused.
-                <br />
-                &bull; You can unlock your card anytime from this portal with one click.
-              </div>
-            </div>
-
-            <div className="pt-3 border-t border-slate-100 flex justify-end gap-2.5">
-              <button
-                onClick={() => setIsFreezeModalOpen(false)}
-                className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-xl transition-all cursor-pointer"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleToggleFreeze}
-                className="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white text-xs font-semibold rounded-xl transition-all cursor-pointer shadow-xs"
-              >
-                Confirm Lock
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* MODAL: Request Duplicate ID Card */}
-      {isDuplicateModalOpen && (
-        <div className="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-4 no-print">
-          <div className="bg-white w-full max-w-lg rounded-2xl shadow-xl border border-slate-200 p-6 relative animate-in fade-in zoom-in-95 duration-150">
-            <div className="flex items-center justify-between pb-3 border-b border-slate-100">
-              <div className="flex items-center gap-2 text-[#3D405B]">
-                <CreditCard className="w-5 h-5 text-[#355C7D]" />
-                <h3 className="text-base font-bold">Request Duplicate ID Card</h3>
-              </div>
-              <button
-                onClick={() => setIsDuplicateModalOpen(false)}
-                className="p-1 text-slate-400 hover:text-slate-600 rounded-lg hover:bg-slate-100 transition-colors cursor-pointer"
-              >
-                <X className="w-4 h-4" />
-              </button>
-            </div>
-
-            <form onSubmit={handleDuplicateSubmit} className="py-4 space-y-4 text-xs">
-              <div>
-                <label className="block text-[11px] font-semibold text-slate-700 mb-1">
-                  Student Details
-                </label>
-                <div className="bg-slate-50 p-2.5 rounded-xl border border-slate-200 text-slate-700 font-mono text-[11px]">
-                  Rahul Sharma &bull; 23CS042 &bull; B.Tech CSE (Sem IV)
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-[11px] font-semibold text-slate-700 mb-1">
-                  Reason for Duplicate Card
-                </label>
-                <select
-                  value={duplicateReason}
-                  onChange={(e) => setDuplicateReason(e.target.value)}
-                  className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 text-xs focus:ring-2 focus:ring-[#355C7D] outline-none"
-                >
-                  <option value="Lost / Misplaced">Lost / Misplaced</option>
-                  <option value="Physical Damage / Broken">Physical Damage / Broken</option>
-                  <option value="Information / Photo Correction">
-                    Information / Photo Correction
-                  </option>
-                  <option value="Stolen / Theft">Stolen / Theft</option>
-                </select>
-              </div>
-
-              <div className="bg-amber-50 p-3 rounded-xl border border-amber-200 text-amber-900 space-y-1">
-                <div className="font-semibold flex items-center justify-between">
-                  <span>Re-issuance Processing Fee:</span>
-                  <span className="font-bold text-sm">₹200 (INR)</span>
-                </div>
-                <p className="text-[11px] text-amber-800">
-                  Fee will be added to your semester fee ledger or can be paid at the Registrar counter.
-                </p>
-              </div>
-
-              <div className="text-[11px] text-slate-500 leading-relaxed">
-                Collection Point: Academic Cell Desk, Ground Floor, Block A. Processing time is 3 working days.
-              </div>
-
-              <div className="pt-3 border-t border-slate-100 flex justify-end gap-2.5">
-                <button
-                  type="button"
-                  onClick={() => setIsDuplicateModalOpen(false)}
-                  className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-xl transition-all cursor-pointer"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  className="px-4 py-2 bg-[#355C7D] hover:bg-[#2A4963] text-white text-xs font-semibold rounded-xl transition-all cursor-pointer shadow-xs"
-                >
-                  Submit Application (₹200)
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
