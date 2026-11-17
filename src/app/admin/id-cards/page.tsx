@@ -242,7 +242,7 @@ export default function IdCardManagementPage() {
       )}
 
       {/* Main Container */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 space-y-6">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 pt-4 sm:pt-6 space-y-4 sm:space-y-6">
         {/* Header Hero Section */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
@@ -250,7 +250,7 @@ export default function IdCardManagementPage() {
               <h1 className="text-2xl font-bold tracking-tight text-slate-900">ID Cards &amp; Smart Badges</h1>
               <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                Thermal Printer Node Online
+                Thermal Printer Online
               </span>
             </div>
             <p className="text-sm text-slate-500 mt-1">
@@ -275,110 +275,110 @@ export default function IdCardManagementPage() {
               }`}
             >
               <Layers className="w-4 h-4 text-indigo-600" />
-              <span>A4 Batch Sheet (8-Up)</span>
+              <span>A4 Batch Sheet</span>
             </button>
             <button
               onClick={() => setIsIssueModalOpen(true)}
               className="inline-flex items-center gap-2 px-4 py-2 text-xs font-semibold text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl shadow-xs transition-all"
             >
               <Plus className="w-4 h-4" />
-              <span>Issue Single ID Card</span>
+              <span>Issue Single ID</span>
             </button>
           </div>
         </div>
 
         {/* 4 Standard Redesigned KPI Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
           {/* Card 1: Total Active Badges */}
-          <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-5">
+          <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-3.5 sm:p-5">
             <div className="flex items-center justify-between">
               <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
-                Total Active Badges
+                Active Badges
               </span>
-              <div className="w-10 h-10 rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600">
-                <UserCheck className="w-5 h-5" />
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600 shrink-0">
+                <UserCheck className="w-4 h-4 sm:w-5 sm:h-5" />
               </div>
             </div>
-            <div className="mt-3">
-              <div className="text-2xl font-bold tracking-tight text-slate-900 tabular-nums">
+            <div className="mt-2.5 sm:mt-3">
+              <div className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 tabular-nums">
                 3,892
               </div>
-              <div className="mt-2 flex items-center justify-between text-xs text-slate-500 font-medium">
-                <span>Students: 3,450 • Faculty: 442</span>
-                <span className="text-emerald-600 font-semibold">+14.2% YoY</span>
+              <div className="mt-1.5 sm:mt-2 flex items-center justify-between text-xs text-slate-500 font-medium">
+                <span>Stu: 3,450 • Fac: 442</span>
+                <span className="text-emerald-600 font-semibold">+14.2%</span>
               </div>
             </div>
           </div>
 
           {/* Card 2: Pending Issuance Queue */}
-          <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-5">
+          <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-3.5 sm:p-5">
             <div className="flex items-center justify-between">
               <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
-                Pending Print Queue
+                Pending Queue
               </span>
-              <div className="w-10 h-10 rounded-xl bg-amber-50 flex items-center justify-center text-amber-600">
-                <Printer className="w-5 h-5" />
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-amber-50 flex items-center justify-center text-amber-600 shrink-0">
+                <Printer className="w-4 h-4 sm:w-5 sm:h-5" />
               </div>
             </div>
-            <div className="mt-3">
-              <div className="flex items-baseline gap-2">
-                <span className="text-2xl font-bold tracking-tight text-slate-900 tabular-nums">68 Cards</span>
-                <span className="text-xs font-semibold px-2 py-0.5 rounded-md bg-amber-50 text-amber-700 border border-amber-200">
-                  Ready to print
+            <div className="mt-2.5 sm:mt-3">
+              <div className="flex items-baseline gap-1.5 sm:gap-2">
+                <span className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 tabular-nums">68 Cards</span>
+                <span className="text-xs font-semibold px-1.5 sm:px-2 py-0.5 rounded-md bg-amber-50 text-amber-700 border border-amber-200">
+                  Ready
                 </span>
               </div>
-              <div className="mt-2 flex items-center justify-between text-xs text-slate-500 font-medium">
-                <span>Batch &apos;25: 52 • Faculty: 16</span>
+              <div className="mt-1.5 sm:mt-2 flex items-center justify-between text-xs text-slate-500 font-medium">
+                <span>Batch &apos;25: 52</span>
                 <span className="text-indigo-600 font-semibold">Priority 1</span>
               </div>
             </div>
           </div>
 
           {/* Card 3: RFID / Hardware Health */}
-          <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-5">
+          <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-3.5 sm:p-5">
             <div className="flex items-center justify-between">
               <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
-                RFID &amp; Access Health
+                RFID Health
               </span>
-              <div className="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600">
-                <Radio className="w-5 h-5" />
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600 shrink-0">
+                <Radio className="w-4 h-4 sm:w-5 sm:h-5" />
               </div>
             </div>
-            <div className="mt-3">
-              <div className="flex items-baseline gap-2">
-                <span className="text-2xl font-bold tracking-tight text-slate-900 tabular-nums">99.8%</span>
-                <span className="text-xs font-semibold px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-700 border border-emerald-200">
+            <div className="mt-2.5 sm:mt-3">
+              <div className="flex items-baseline gap-1.5 sm:gap-2">
+                <span className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 tabular-nums">99.8%</span>
+                <span className="text-xs font-semibold px-1.5 sm:px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-700 border border-emerald-200">
                   Healthy
                 </span>
               </div>
-              <div className="mt-2 flex items-center justify-between text-xs text-slate-500 font-medium">
-                <span>Turnstiles &amp; Labs Synced</span>
-                <span className="text-emerald-600 font-semibold">0 Conflicts</span>
+              <div className="mt-1.5 sm:mt-2 flex items-center justify-between text-xs text-slate-500 font-medium">
+                <span>Turnstiles Synced</span>
+                <span className="text-emerald-600 font-semibold">0 Error</span>
               </div>
             </div>
           </div>
 
           {/* Card 4: Damaged / Re-Issue Requests */}
-          <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-5">
+          <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-3.5 sm:p-5">
             <div className="flex items-center justify-between">
               <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
-                Re-Issue / Lost Requests
+                Re-Issue Requests
               </span>
-              <div className="w-10 h-10 rounded-xl bg-rose-50 flex items-center justify-center text-rose-600">
-                <AlertTriangle className="w-5 h-5" />
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-rose-50 flex items-center justify-center text-rose-600 shrink-0">
+                <AlertTriangle className="w-4 h-4 sm:w-5 sm:h-5" />
               </div>
             </div>
-            <div className="mt-3">
-              <div className="flex items-baseline gap-2">
-                <span className="text-2xl font-bold tracking-tight text-rose-600 tabular-nums">12 Pending</span>
+            <div className="mt-2.5 sm:mt-3">
+              <div className="flex items-baseline gap-1.5 sm:gap-2">
+                <span className="text-xl sm:text-2xl font-bold tracking-tight text-rose-600 tabular-nums">12 Pending</span>
               </div>
-              <div className="mt-2 flex items-center justify-between text-xs font-medium">
-                <span className="text-slate-500">Lost: 8 • Chip Fault: 4</span>
+              <div className="mt-1.5 sm:mt-2 flex items-center justify-between text-xs font-medium">
+                <span className="text-slate-500">Lost: 8 • Chip: 4</span>
                 <button
                   onClick={() => setActiveTab("reissue")}
                   className="text-rose-600 hover:text-rose-700 hover:underline font-semibold"
                 >
-                  Review Re-Issues →
+                  Review →
                 </button>
               </div>
             </div>
@@ -389,7 +389,7 @@ export default function IdCardManagementPage() {
         <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-5 space-y-4">
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
             {/* Tabs */}
-            <div className="inline-flex rounded-xl bg-slate-100 p-1 text-xs font-medium overflow-x-auto">
+            <div className="inline-flex rounded-xl bg-slate-100 p-1 text-xs font-medium overflow-x-auto max-w-full no-scrollbar">
               <button
                 onClick={() => setActiveTab("all")}
                 className={`px-3 py-1.5 rounded-lg font-semibold transition-all whitespace-nowrap ${
@@ -500,10 +500,10 @@ export default function IdCardManagementPage() {
           {/* LEFT: Ledger Table (7 Cols) */}
           <div className="xl:col-span-7 space-y-4">
             <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs overflow-hidden">
-              <div className="overflow-x-auto">
-                <table className="w-full text-left border-collapse text-xs">
+              <div className="overflow-x-auto w-full">
+                <table className="w-full text-left border-collapse text-xs min-w-[700px]">
                   <thead>
-                    <tr className="bg-slate-50/80 border-b border-slate-200/80 text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
+                    <tr className="bg-slate-50/80 border-b border-slate-200/80 text-[11px] font-semibold text-slate-500 uppercase tracking-wider whitespace-nowrap">
                       <th className="p-3 w-8 text-center">
                         <input
                           type="checkbox"

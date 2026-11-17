@@ -392,7 +392,7 @@ export default function CampusNoticesPage() {
       )}
 
       {/* Main Container */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 space-y-6">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 pt-4 sm:pt-6 space-y-4 sm:space-y-6">
         {/* Hero Header */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
@@ -441,89 +441,89 @@ export default function CampusNoticesPage() {
         </div>
 
         {/* 4 Standard Redesigned KPI Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
           {/* Card 1: Active Published Notices */}
-          <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-5 hover:border-slate-300 transition-all">
+          <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-3.5 sm:p-5 hover:border-slate-300 transition-all">
             <div className="flex items-center justify-between">
               <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
-                Active Published Notices
+                Published Notices
               </span>
-              <div className="w-10 h-10 rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600">
-                <Megaphone className="w-5 h-5" />
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600 shrink-0">
+                <Megaphone className="w-4 h-4 sm:w-5 sm:h-5" />
               </div>
             </div>
-            <div className="mt-3">
-              <div className="text-2xl font-bold tracking-tight text-slate-900 tabular-nums">
+            <div className="mt-2.5 sm:mt-3">
+              <div className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 tabular-nums">
                 {notices.length} <span className="text-xs font-normal text-slate-500">Active</span>
               </div>
-              <div className="mt-2 flex items-center justify-between text-xs font-medium text-slate-500">
-                <span>12 Inst • 11 Dept • 1 Alert</span>
+              <div className="mt-1.5 sm:mt-2 flex items-center justify-between text-xs font-medium text-slate-500">
+                <span>12 Inst • 11 Dept</span>
                 <span className="inline-flex items-center gap-1 text-amber-600 font-semibold">
                   <Hourglass className="w-3.5 h-3.5" />
-                  4 Expiring &lt; 48h
+                  4 Expiring
                 </span>
               </div>
             </div>
           </div>
 
           {/* Card 2: Dispatch Reach & Engagement */}
-          <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-5 hover:border-slate-300 transition-all">
+          <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-3.5 sm:p-5 hover:border-slate-300 transition-all">
             <div className="flex items-center justify-between">
               <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
-                Dispatch Reach & Engagement
+                Dispatch Reach
               </span>
-              <div className="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600">
-                <Eye className="w-5 h-5" />
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600 shrink-0">
+                <Eye className="w-4 h-4 sm:w-5 sm:h-5" />
               </div>
             </div>
-            <div className="mt-3">
-              <div className="text-2xl font-bold tracking-tight text-slate-900 tabular-nums">
-                96.4% <span className="text-xs font-normal text-slate-500">Cumulative</span>
+            <div className="mt-2.5 sm:mt-3">
+              <div className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 tabular-nums">
+                96.4%
               </div>
-              <div className="mt-2 flex items-center justify-between text-xs text-slate-500 font-medium">
-                <span className="text-emerald-600 font-semibold">Portal: 3,740 / 3,892</span>
-                <span>Mean: 3.8 hrs</span>
+              <div className="mt-1.5 sm:mt-2 flex items-center justify-between text-xs text-slate-500 font-medium">
+                <span className="text-emerald-600 font-semibold">3,740 / 3,892</span>
+                <span>3.8h avg</span>
               </div>
             </div>
           </div>
 
           {/* Card 3: SMS & Email Outbox */}
-          <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-5 hover:border-slate-300 transition-all">
+          <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-3.5 sm:p-5 hover:border-slate-300 transition-all">
             <div className="flex items-center justify-between">
               <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
-                Gateway Outbox Total
+                Gateway Outbox
               </span>
-              <div className="w-10 h-10 rounded-xl bg-sky-50 flex items-center justify-center text-sky-600">
-                <Send className="w-5 h-5" />
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-sky-50 flex items-center justify-center text-sky-600 shrink-0">
+                <Send className="w-4 h-4 sm:w-5 sm:h-5" />
               </div>
             </div>
-            <div className="mt-3">
-              <div className="text-2xl font-bold tracking-tight text-slate-900 tabular-nums">
-                14,820 <span className="text-xs font-normal text-slate-500">Dispatches</span>
+            <div className="mt-2.5 sm:mt-3">
+              <div className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 tabular-nums">
+                14,820 <span className="text-xs font-normal text-slate-500">Sent</span>
               </div>
-              <div className="mt-2 flex items-center justify-between text-xs text-slate-500 font-medium">
-                <span>SMS: 99.4% • Email: 84.6%</span>
-                <span className="text-emerald-600 font-semibold">0 Bounces</span>
+              <div className="mt-1.5 sm:mt-2 flex items-center justify-between text-xs text-slate-500 font-medium">
+                <span>SMS: 99.4%</span>
+                <span className="text-emerald-600 font-semibold">0 Bounce</span>
               </div>
             </div>
           </div>
 
           {/* Card 4: Pending Sign-Off */}
-          <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-5 hover:border-slate-300 transition-all">
+          <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-3.5 sm:p-5 hover:border-slate-300 transition-all">
             <div className="flex items-center justify-between">
               <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
-                Pending Dean Sign-Off
+                Dean Sign-Off
               </span>
-              <div className="w-10 h-10 rounded-xl bg-rose-50 flex items-center justify-center text-rose-600">
-                <AlertTriangle className="w-5 h-5" />
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-rose-50 flex items-center justify-center text-rose-600 shrink-0">
+                <AlertTriangle className="w-4 h-4 sm:w-5 sm:h-5" />
               </div>
             </div>
-            <div className="mt-3">
-              <div className="text-2xl font-bold tracking-tight text-slate-900 tabular-nums">
-                3 <span className="text-xs font-normal text-slate-500">In Queue</span>
+            <div className="mt-2.5 sm:mt-3">
+              <div className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 tabular-nums">
+                3 <span className="text-xs font-normal text-slate-500">Queue</span>
               </div>
-              <div className="mt-2 flex items-center justify-between text-xs font-medium">
-                <span className="text-slate-500">2 Senate • 1 Fee Memo</span>
+              <div className="mt-1.5 sm:mt-2 flex items-center justify-between text-xs font-medium">
+                <span className="text-slate-500">2 Senate</span>
                 <button
                   onClick={() => showToast("Authorizing Dean signature token for 3 pending notices...")}
                   className="px-2 py-0.5 rounded-lg bg-rose-50 text-rose-700 hover:bg-rose-100 font-semibold transition-colors"
@@ -538,7 +538,7 @@ export default function CampusNoticesPage() {
         {/* Cadre Navigation Ribbon & Filters */}
         <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-4 space-y-4">
           {/* Cadre Tabs */}
-          <div className="flex items-center gap-1.5 overflow-x-auto pb-1 border-b border-slate-100">
+          <div className="flex items-center gap-1.5 overflow-x-auto pb-1 border-b border-slate-100 max-w-full no-scrollbar">
             {[
               { id: "all", label: "All Notices", count: notices.length },
               { id: "student", label: "Student Only", count: notices.filter(n => n.cadre === "student").length },

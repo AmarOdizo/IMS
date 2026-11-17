@@ -233,9 +233,9 @@ export default function StaffDirectoryPage() {
   };
 
   return (
-    <div className="p-5 md:p-7 space-y-5 max-w-[1600px] mx-auto font-sans text-slate-800">
+    <div className="p-3 sm:p-5 md:p-7 space-y-4 sm:space-y-5 max-w-[1600px] mx-auto font-sans text-slate-800">
       {/* 1. Header Banner - Clean, Balanced, Zero Redundant Text */}
-      <div className="bg-white rounded-2xl p-5 md:p-6 border border-slate-200/80 shadow-xs relative overflow-hidden">
+      <div className="bg-white rounded-2xl p-4 sm:p-5 md:p-6 border border-slate-200/80 shadow-xs relative overflow-hidden">
         <div className="absolute top-0 right-0 w-96 h-full bg-gradient-to-l from-blue-50/50 via-indigo-50/20 to-transparent pointer-events-none"></div>
 
         <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -260,7 +260,7 @@ export default function StaffDirectoryPage() {
           </div>
 
           {/* Quick Action Buttons - Vertically Centered & Balanced */}
-          <div className="flex items-center flex-wrap sm:flex-nowrap gap-2.5 shrink-0">
+          <div className="flex items-center flex-wrap gap-2 shrink-0">
             <button
               onClick={() => alert("Exporting Faculty Registry to Excel...")}
               className="inline-flex items-center gap-2 px-3.5 py-2 bg-slate-50 hover:bg-slate-100 text-slate-700 text-xs font-semibold rounded-xl border border-slate-200 shadow-2xs hover:shadow-xs transition-all cursor-pointer"
@@ -287,89 +287,88 @@ export default function StaffDirectoryPage() {
       </div>
 
       {/* 2. Telemetry KPI Cards (4 Cards) */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
         {/* KPI 1 */}
-        <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-md transition-all flex flex-col justify-between">
+        <div className="bg-white p-3.5 sm:p-5 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-md transition-all flex flex-col justify-between">
           <div className="flex items-center justify-between gap-2">
             <span className="text-xs font-semibold text-slate-500 uppercase tracking-wide">
               Total Faculty &amp; Staff
             </span>
-            <div className="w-10 h-10 rounded-xl bg-blue-50/80 border border-blue-100 text-blue-600 flex items-center justify-center shrink-0">
-              <Users className="w-5 h-5" />
+            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-blue-50/80 border border-blue-100 text-blue-600 flex items-center justify-center shrink-0">
+              <Users className="w-4 h-4 sm:w-5 sm:h-5" />
             </div>
           </div>
-          <div className="mt-3.5">
-            <div className="text-2xl font-bold text-[#3D405B] tracking-tight">142</div>
+          <div className="mt-2.5 sm:mt-3.5">
+            <div className="text-xl sm:text-2xl font-bold text-[#3D405B] tracking-tight">142</div>
             <div className="flex items-center gap-1.5 text-xs text-slate-500 mt-1">
               <span className="inline-flex items-center text-emerald-600 font-semibold">
                 <CheckCircle2 className="w-3.5 h-3.5 mr-0.5" />
                 100%
               </span>
-              <span>Verified across 18 depts</span>
+              <span>18 depts</span>
             </div>
           </div>
         </div>
 
         {/* KPI 2 */}
-        <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-md transition-all flex flex-col justify-between">
+        <div className="bg-white p-3.5 sm:p-5 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-md transition-all flex flex-col justify-between">
           <div className="flex items-center justify-between gap-2">
             <span className="text-xs font-semibold text-slate-500 uppercase tracking-wide">
-              Average Teaching Load
+              Average Load
             </span>
-            <div className="w-10 h-10 rounded-xl bg-purple-50/80 border border-purple-100 text-purple-600 flex items-center justify-center shrink-0">
-              <Gauge className="w-5 h-5" />
+            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-purple-50/80 border border-purple-100 text-purple-600 flex items-center justify-center shrink-0">
+              <Gauge className="w-4 h-4 sm:w-5 sm:h-5" />
             </div>
           </div>
-          <div className="mt-3.5">
-            <div className="text-2xl font-bold text-[#3D405B] tracking-tight">16.4 <span className="text-sm font-normal text-slate-400">h/wk</span></div>
+          <div className="mt-2.5 sm:mt-3.5">
+            <div className="text-xl sm:text-2xl font-bold text-[#3D405B] tracking-tight">16.4 <span className="text-xs font-normal text-slate-400">h/wk</span></div>
             <div className="flex items-center gap-1.5 text-xs text-slate-500 mt-1">
               <span className="inline-flex items-center text-purple-700 font-semibold">
                 82.0%
               </span>
-              <span>of 20h standard ceiling</span>
+              <span>of 20h</span>
             </div>
           </div>
         </div>
 
         {/* KPI 3 */}
-        <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-md transition-all flex flex-col justify-between">
+        <div className="bg-white p-3.5 sm:p-5 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-md transition-all flex flex-col justify-between">
           <div className="flex items-center justify-between gap-2">
             <span className="text-xs font-semibold text-slate-500 uppercase tracking-wide">
-              Batch Subject Allocation
+              Subject Allocation
             </span>
-            <div className="w-10 h-10 rounded-xl bg-emerald-50/80 border border-emerald-100 text-emerald-600 flex items-center justify-center shrink-0">
-              <Layers className="w-5 h-5" />
+            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-emerald-50/80 border border-emerald-100 text-emerald-600 flex items-center justify-center shrink-0">
+              <Layers className="w-4 h-4 sm:w-5 sm:h-5" />
             </div>
           </div>
-          <div className="mt-3.5">
-            <div className="text-2xl font-bold text-[#3D405B] tracking-tight">98.6%</div>
+          <div className="mt-2.5 sm:mt-3.5">
+            <div className="text-xl sm:text-2xl font-bold text-[#3D405B] tracking-tight">98.6%</div>
             <div className="flex items-center gap-1.5 text-xs text-slate-500 mt-1">
               <span className="inline-flex items-center text-emerald-600 font-semibold">
                 148/150
               </span>
-              <span>Modules fully staffed</span>
+              <span>Modules</span>
             </div>
           </div>
         </div>
 
         {/* KPI 4 */}
-        <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-md transition-all flex flex-col justify-between">
+        <div className="bg-white p-3.5 sm:p-5 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-md transition-all flex flex-col justify-between">
           <div className="flex items-center justify-between gap-2">
             <span className="text-xs font-semibold text-slate-500 uppercase tracking-wide">
-              Faculty on Leave
+              On Leave
             </span>
-            <div className="w-10 h-10 rounded-xl bg-amber-50/80 border border-amber-100 text-amber-600 flex items-center justify-center shrink-0">
-              <CalendarX className="w-5 h-5" />
+            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-amber-50/80 border border-amber-100 text-amber-600 flex items-center justify-center shrink-0">
+              <CalendarX className="w-4 h-4 sm:w-5 sm:h-5" />
             </div>
           </div>
-          <div className="mt-3.5">
-            <div className="text-2xl font-bold text-amber-600 tracking-tight">4</div>
+          <div className="mt-2.5 sm:mt-3.5">
+            <div className="text-xl sm:text-2xl font-bold text-amber-600 tracking-tight">4</div>
             <div className="flex items-center gap-1.5 text-xs text-slate-500 mt-1">
               <span className="inline-flex items-center text-emerald-600 font-semibold">
                 <CheckCircle2 className="w-3.5 h-3.5 mr-0.5" />
                 Substitutes Active
               </span>
-              <span>(Zero gaps)</span>
             </div>
           </div>
         </div>
@@ -418,7 +417,7 @@ export default function StaffDirectoryPage() {
             </div>
 
             {/* Segmented Filter Tabs */}
-            <div className="flex items-center overflow-x-auto gap-2 text-xs">
+            <div className="flex items-center overflow-x-auto gap-2 text-xs max-w-full no-scrollbar pb-1">
               <button
                 onClick={() => setSelectedTab("all")}
                 className={`px-3 py-1.5 font-semibold rounded-lg transition-colors cursor-pointer ${
@@ -455,10 +454,10 @@ export default function StaffDirectoryPage() {
 
           {/* Dense Data Ledger Table */}
           <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs overflow-hidden">
-            <div className="overflow-x-auto">
-              <table className="w-full text-left border-collapse text-xs">
+            <div className="overflow-x-auto w-full">
+              <table className="w-full text-left border-collapse text-xs min-w-[750px]">
                 <thead>
-                  <tr className="bg-slate-50/70 text-slate-500 text-[10px] uppercase tracking-wider font-semibold border-b border-slate-100">
+                  <tr className="bg-slate-50/70 text-slate-500 text-[10px] uppercase tracking-wider font-semibold border-b border-slate-100 whitespace-nowrap">
                     <th className="py-2.5 px-4 font-semibold">Faculty / Employee</th>
                     <th className="py-2.5 px-4 font-semibold">Department &amp; Cadre</th>
                     <th className="py-2.5 px-4 font-semibold">Assigned Subjects</th>

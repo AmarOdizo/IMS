@@ -8,10 +8,14 @@ import {
   ChevronRight,
   Clock,
   X,
+  Menu,
 } from "lucide-react";
 
 interface StaffHeaderProps {
   breadcrumbTitle?: string;
+  onOpenMobileNav?: () => void;
+  onToggleMobileNav?: () => void;
+  isMobileNavOpen?: boolean;
 }
 
 // Short tab names matching StaffSidebar exactly
@@ -26,7 +30,12 @@ const routeTitleMap: Record<string, string> = {
   "/staff/notices": "Notices",
 };
 
-export default function StaffHeader({ breadcrumbTitle }: StaffHeaderProps) {
+export default function StaffHeader({
+  breadcrumbTitle,
+  onOpenMobileNav,
+  onToggleMobileNav,
+  isMobileNavOpen = false,
+}: StaffHeaderProps) {
   const [showNotifications, setShowNotifications] = useState(false);
   const pathname = usePathname();
 
@@ -78,17 +87,39 @@ export default function StaffHeader({ breadcrumbTitle }: StaffHeaderProps) {
   ];
 
   return (
-    <header className="fixed top-0 left-64 right-0 h-16 bg-white/95 backdrop-blur-md border-b border-slate-200 z-40 flex items-center justify-between px-6 shadow-xs select-none">
-      {/* Left: Faculty Portal / Short Tab Name from Sidebar */}
-      <div className="flex items-center gap-2">
+    <header className="fixed top-0 left-0 lg:left-64 right-0 h-16 bg-white/95 backdrop-blur-md border-b border-slate-200 z-40 flex items-center justify-between px-3 sm:px-6 shadow-xs select-none">
+      {/* Left: Hamburger & Faculty Portal / Short Tab Name from Sidebar */}
+      <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+        {/* Mobile Hamburger Menu Toggle */}
+        <button
+          type="button"
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            if (onToggleMobileNav) {
+              onToggleMobileNav();
+            } else if (onOpenMobileNav) {
+              onOpenMobileNav();
+            }
+          }}
+          className="lg:hidden p-2 rounded-xl text-slate-600 hover:text-emerald-700 hover:bg-slate-100 transition-colors cursor-pointer shrink-0"
+          aria-label={isMobileNavOpen ? "Close Navigation Menu" : "Open Navigation Menu"}
+        >
+          {isMobileNavOpen ? (
+            <X className="w-5 h-5 text-emerald-700" />
+          ) : (
+            <Menu className="w-5 h-5" />
+          )}
+        </button>
+
         <Link
           href="/staff"
-          className="text-xs uppercase tracking-wider text-slate-500 hover:text-slate-800 font-semibold transition-colors"
+          className="hidden sm:inline-block text-xs uppercase tracking-wider text-slate-500 hover:text-slate-800 font-semibold transition-colors"
         >
           Faculty Portal
         </Link>
-        <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
-        <span className="text-xs font-bold text-slate-800 bg-slate-100 px-2.5 py-1 rounded-md border border-slate-200/80">
+        <ChevronRight className="hidden sm:inline-block w-3.5 h-3.5 text-slate-400 shrink-0" />
+        <span className="text-xs font-bold text-slate-800 bg-slate-100 px-2 sm:px-2.5 py-1 rounded-md border border-slate-200/80 truncate">
           {currentTitle}
         </span>
       </div>

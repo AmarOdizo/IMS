@@ -53,15 +53,21 @@ export default function AdminSidebar({
       {/* Mobile Drawer Backdrop */}
       {isMobileOpen && (
         <div
-          onClick={onCloseMobile}
-          className="fixed inset-0 bg-slate-900/50 backdrop-blur-xs z-50 lg:hidden animate-in fade-in duration-200"
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            onCloseMobile?.();
+          }}
+          className="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-[90] lg:hidden"
           aria-hidden="true"
         />
       )}
 
       <aside
-        className={`fixed left-0 top-0 h-full w-64 bg-white text-slate-800 z-50 flex flex-col justify-between border-r border-slate-200 shadow-xl lg:shadow-sm select-none transition-transform duration-300 ease-in-out ${
-          isMobileOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
+        className={`fixed left-0 top-0 h-full w-64 bg-white text-slate-800 z-[100] flex flex-col justify-between border-r border-slate-200 shadow-2xl lg:shadow-sm select-none transition-transform duration-300 ease-in-out ${
+          isMobileOpen
+            ? "translate-x-0 pointer-events-auto"
+            : "-translate-x-full pointer-events-none lg:translate-x-0 lg:pointer-events-auto"
         }`}
       >
         {/* Top Branding & Nav */}
@@ -86,7 +92,11 @@ export default function AdminSidebar({
             {onCloseMobile && (
               <button
                 type="button"
-                onClick={onCloseMobile}
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  onCloseMobile();
+                }}
                 className="lg:hidden p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors ml-2 cursor-pointer"
                 aria-label="Close Navigation"
               >

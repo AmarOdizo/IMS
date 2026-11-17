@@ -214,7 +214,7 @@ export default function CertificatesPage() {
       )}
 
       {/* Main Container */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 space-y-6">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 pt-4 sm:pt-6 space-y-4 sm:space-y-6">
         {/* Header Hero Section */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
@@ -256,97 +256,97 @@ export default function CertificatesPage() {
         </div>
 
         {/* 4 Standard Redesigned KPI Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
           {/* Card 1: Total Issued Credentials */}
-          <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-5">
+          <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-3.5 sm:p-5">
             <div className="flex items-center justify-between">
               <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
-                Total Credentials Issued
+                Issued Credentials
               </span>
-              <div className="w-10 h-10 rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600">
-                <ShieldCheck className="w-5 h-5" />
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600 shrink-0">
+                <ShieldCheck className="w-4 h-4 sm:w-5 sm:h-5" />
               </div>
             </div>
-            <div className="mt-3">
-              <div className="text-2xl font-bold tracking-tight text-slate-900 tabular-nums">
+            <div className="mt-2.5 sm:mt-3">
+              <div className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 tabular-nums">
                 1,428
               </div>
-              <div className="mt-2 flex items-center gap-1.5 text-xs font-medium text-emerald-600">
+              <div className="mt-1.5 sm:mt-2 flex items-center gap-1.5 text-xs font-medium text-emerald-600">
                 <Sparkles className="w-3.5 h-3.5" />
-                <span>+14.2% YoY • AY 2024–25</span>
+                <span>+14.2% YoY</span>
               </div>
             </div>
           </div>
 
           {/* Card 2: Active Templates */}
-          <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-5">
+          <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-3.5 sm:p-5">
             <div className="flex items-center justify-between">
               <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
                 Approved Formats
               </span>
-              <div className="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600">
-                <Award className="w-5 h-5" />
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600 shrink-0">
+                <Award className="w-4 h-4 sm:w-5 sm:h-5" />
               </div>
             </div>
-            <div className="mt-3">
-              <div className="text-2xl font-bold tracking-tight text-slate-900 tabular-nums">
+            <div className="mt-2.5 sm:mt-3">
+              <div className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 tabular-nums">
                 05 <span className="text-xs font-normal text-slate-500">Templates</span>
               </div>
-              <div className="mt-2 flex items-center gap-1.5 text-xs text-slate-500 font-medium truncate">
-                <span>CC, Bonafide, Merit, Transfer, Honor</span>
+              <div className="mt-1.5 sm:mt-2 flex items-center gap-1.5 text-xs text-slate-500 font-medium truncate">
+                <span>CC, Bonafide, Merit, Transfer</span>
               </div>
             </div>
           </div>
 
           {/* Card 3: Pending Issue Queue */}
-          <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-5">
+          <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-3.5 sm:p-5">
             <div className="flex items-center justify-between">
               <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
-                Pending Approval Queue
+                Approval Queue
               </span>
-              <div className="w-10 h-10 rounded-xl bg-amber-50 flex items-center justify-center text-amber-600">
-                <FileCheck className="w-5 h-5" />
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-amber-50 flex items-center justify-center text-amber-600 shrink-0">
+                <FileCheck className="w-4 h-4 sm:w-5 sm:h-5" />
               </div>
             </div>
-            <div className="mt-3">
-              <div className="flex items-baseline gap-2">
-                <span className="text-2xl font-bold tracking-tight text-slate-900 tabular-nums">42</span>
-                <span className="text-xs font-semibold px-2 py-0.5 rounded-md bg-amber-50 text-amber-700 border border-amber-200">
-                  36 Batch • 6 Urgent
+            <div className="mt-2.5 sm:mt-3">
+              <div className="flex items-baseline gap-1.5 sm:gap-2">
+                <span className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 tabular-nums">42</span>
+                <span className="text-xs font-semibold px-1.5 sm:px-2 py-0.5 rounded-md bg-amber-50 text-amber-700 border border-amber-200">
+                  36 Batch
                 </span>
               </div>
-              <div className="mt-2 flex items-center justify-between text-xs font-medium">
-                <span className="text-slate-500">Awaiting Dean Stamp</span>
+              <div className="mt-1.5 sm:mt-2 flex items-center justify-between text-xs font-medium">
+                <span className="text-slate-500">Dean Stamp</span>
                 <button
                   onClick={() => showToast("Loading 42 pending approvals queue...")}
                   className="text-indigo-600 hover:text-indigo-700 hover:underline font-semibold"
                 >
-                  Review Queue
+                  Review
                 </button>
               </div>
             </div>
           </div>
 
           {/* Card 4: Revoked / Invalidation */}
-          <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-5">
+          <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-3.5 sm:p-5">
             <div className="flex items-center justify-between">
               <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
                 Revoked Credentials
               </span>
-              <div className="w-10 h-10 rounded-xl bg-rose-50 flex items-center justify-center text-rose-600">
-                <Ban className="w-5 h-5" />
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-rose-50 flex items-center justify-center text-rose-600 shrink-0">
+                <Ban className="w-4 h-4 sm:w-5 sm:h-5" />
               </div>
             </div>
-            <div className="mt-3">
-              <div className="flex items-baseline gap-2">
-                <span className="text-2xl font-bold tracking-tight text-rose-600 tabular-nums">04</span>
-                <span className="text-xs font-semibold px-2 py-0.5 rounded-md bg-rose-50 text-rose-700 border border-rose-200">
-                  Disciplinary Null
+            <div className="mt-2.5 sm:mt-3">
+              <div className="flex items-baseline gap-1.5 sm:gap-2">
+                <span className="text-xl sm:text-2xl font-bold tracking-tight text-rose-600 tabular-nums">04</span>
+                <span className="text-xs font-semibold px-1.5 sm:px-2 py-0.5 rounded-md bg-rose-50 text-rose-700 border border-rose-200">
+                  Null
                 </span>
               </div>
-              <div className="mt-2 flex items-center justify-between text-xs text-slate-500 font-medium">
-                <span>Immutable ledger audit</span>
-                <span className="text-slate-900 font-semibold">100% Retained</span>
+              <div className="mt-1.5 sm:mt-2 flex items-center justify-between text-xs text-slate-500 font-medium">
+                <span>Ledger audit</span>
+                <span className="text-slate-900 font-semibold">Retained</span>
               </div>
             </div>
           </div>
@@ -356,7 +356,7 @@ export default function CertificatesPage() {
         <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-5 space-y-4">
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
             {/* Filter Pills */}
-            <div className="inline-flex rounded-xl bg-slate-100 p-1 text-xs font-medium overflow-x-auto">
+            <div className="inline-flex rounded-xl bg-slate-100 p-1 text-xs font-medium overflow-x-auto max-w-full no-scrollbar">
               <button
                 onClick={() => setFilterType("all")}
                 className={`px-3 py-1.5 rounded-lg font-semibold transition-all whitespace-nowrap ${
@@ -510,10 +510,10 @@ export default function CertificatesPage() {
               </div>
 
               {/* Table */}
-              <div className="overflow-x-auto">
-                <table className="w-full text-left border-collapse text-xs">
+              <div className="overflow-x-auto w-full">
+                <table className="w-full text-left border-collapse text-xs min-w-[650px]">
                   <thead>
-                    <tr className="bg-slate-50/80 border-b border-slate-200/80 text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
+                    <tr className="bg-slate-50/80 border-b border-slate-200/80 text-[11px] font-semibold text-slate-500 uppercase tracking-wider whitespace-nowrap">
                       <th className="py-3 px-4">Certificate ID</th>
                       <th className="py-3 px-4">Recipient Student</th>
                       <th className="py-3 px-4">Type</th>

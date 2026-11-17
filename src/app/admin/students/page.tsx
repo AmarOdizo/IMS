@@ -266,9 +266,9 @@ export default function StudentsDirectoryPage() {
   };
 
   return (
-    <div className="p-5 md:p-7 space-y-5 max-w-[1600px] mx-auto font-sans text-slate-800">
+    <div className="p-3 sm:p-5 md:p-7 space-y-4 sm:space-y-5 max-w-[1600px] mx-auto font-sans text-slate-800">
       {/* 1. Header Banner - Clean, Balanced, Zero Redundant Text */}
-      <div className="bg-white rounded-2xl p-5 md:p-6 border border-slate-200/80 shadow-xs relative overflow-hidden">
+      <div className="bg-white rounded-2xl p-4 sm:p-5 md:p-6 border border-slate-200/80 shadow-xs relative overflow-hidden">
         <div className="absolute top-0 right-0 w-96 h-full bg-gradient-to-l from-blue-50/50 via-indigo-50/20 to-transparent pointer-events-none"></div>
 
         <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -293,7 +293,7 @@ export default function StudentsDirectoryPage() {
           </div>
 
           {/* Quick Action Buttons - Vertically Centered & Balanced */}
-          <div className="flex items-center flex-wrap sm:flex-nowrap gap-2.5 shrink-0">
+          <div className="flex items-center flex-wrap gap-2 shrink-0">
             <button
               onClick={() => alert("Exporting 2,480 student records to Excel...")}
               className="inline-flex items-center gap-2 px-3.5 py-2 bg-slate-50 hover:bg-slate-100 text-slate-700 text-xs font-semibold rounded-xl border border-slate-200 shadow-2xs hover:shadow-xs transition-all cursor-pointer"
@@ -320,8 +320,8 @@ export default function StudentsDirectoryPage() {
       </div>
 
       {/* 2. Advanced Multi-Filter Query Matrix */}
-      <div className="bg-white p-4.5 rounded-2xl border border-slate-200/80 shadow-xs">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-3 items-end">
+      <div className="bg-white p-4 sm:p-4.5 rounded-2xl border border-slate-200/80 shadow-xs">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-3 items-end">
           {/* Search Input */}
           <div className="lg:col-span-4 flex flex-col gap-1.5">
             <label className="text-[11px] uppercase font-bold text-slate-500 flex items-center justify-between">
@@ -453,10 +453,10 @@ export default function StudentsDirectoryPage() {
         </div>
 
         {/* Table */}
-        <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse text-xs">
+        <div className="overflow-x-auto w-full">
+          <table className="w-full text-left border-collapse text-xs min-w-[700px]">
             <thead>
-              <tr className="bg-slate-50/70 text-slate-500 text-[10px] uppercase tracking-wider font-semibold select-none border-b border-slate-100">
+              <tr className="bg-slate-50/70 text-slate-500 text-[10px] uppercase tracking-wider font-semibold select-none border-b border-slate-100 whitespace-nowrap">
                 <th className="py-2.5 px-4 w-10 text-center"></th>
                 <th className="py-2.5 px-4 font-semibold">Student Profile &amp; Roll ID</th>
                 <th className="py-2.5 px-4 font-semibold">Program &amp; Discipline</th>
@@ -714,8 +714,8 @@ export default function StudentsDirectoryPage() {
                   </span>
                   <span className="font-mono text-lg font-bold text-[#3D405B] mt-1">
                     {selectedStudent.feeStatus === "PAID IN FULL"
-                      ? "$0.00"
-                      : `$${selectedStudent.feeAmountDue}`}
+                      ? "₹0"
+                      : `₹${(selectedStudent.feeAmountDue || 0).toLocaleString("en-IN")}`}
                   </span>
                   <span
                     className={`text-[10px] font-semibold mt-0.5 ${

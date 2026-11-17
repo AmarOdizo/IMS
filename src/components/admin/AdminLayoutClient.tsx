@@ -18,7 +18,11 @@ export default function AdminLayoutClient({
         onCloseMobile={() => setIsMobileNavOpen(false)}
       />
       <div className="pl-0 lg:pl-64 transition-all">
-        <AdminHeader onOpenMobileNav={() => setIsMobileNavOpen(true)} />
+        <AdminHeader
+          isMobileNavOpen={isMobileNavOpen}
+          onOpenMobileNav={() => setIsMobileNavOpen(true)}
+          onToggleMobileNav={() => setIsMobileNavOpen((prev) => !prev)}
+        />
         <main className="w-full pt-16 bg-surface min-h-[calc(100vh-4rem)] overflow-x-hidden">
           <div className="w-full admin-zoom-wrapper portal-zoom-wrapper lg:[zoom:80%]">
             {children}

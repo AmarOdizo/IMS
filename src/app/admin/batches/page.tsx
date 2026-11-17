@@ -271,7 +271,7 @@ export default function AdminBatchesPage() {
   };
 
   return (
-    <div className="p-5 md:p-7 space-y-5 max-w-[1600px] mx-auto font-sans text-slate-800">
+    <div className="p-3 sm:p-5 md:p-7 space-y-4 sm:space-y-5 max-w-[1600px] mx-auto font-sans text-slate-800">
       {/* Toast Notification */}
       {toastMessage && (
         <div className="fixed bottom-6 right-6 z-50 bg-[#3D405B] text-white px-4 py-3 rounded-xl shadow-xl border border-slate-700 flex items-center gap-3 text-xs font-medium animate-in fade-in slide-in-from-bottom-2">
@@ -284,7 +284,7 @@ export default function AdminBatchesPage() {
       )}
 
       {/* 1. Header Banner - Clean, Balanced, Zero Redundant Text */}
-      <div className="bg-white rounded-2xl p-5 md:p-6 border border-slate-200/80 shadow-xs relative overflow-hidden">
+      <div className="bg-white rounded-2xl p-4 sm:p-5 md:p-6 border border-slate-200/80 shadow-xs relative overflow-hidden">
         <div className="absolute top-0 right-0 w-96 h-full bg-gradient-to-l from-blue-50/50 via-indigo-50/20 to-transparent pointer-events-none"></div>
 
         <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -309,7 +309,7 @@ export default function AdminBatchesPage() {
           </div>
 
           {/* Quick Action Buttons - Vertically Centered & Balanced */}
-          <div className="flex items-center flex-wrap sm:flex-nowrap gap-2.5 shrink-0">
+          <div className="flex items-center flex-wrap gap-2 shrink-0">
             <button
               onClick={() => showToast("Exporting comprehensive Batch Cohort Registry (Excel)...")}
               className="inline-flex items-center gap-2 px-3.5 py-2 bg-slate-50 hover:bg-slate-100 text-slate-700 text-xs font-semibold rounded-xl border border-slate-200 shadow-2xs hover:shadow-xs transition-all cursor-pointer"
@@ -329,62 +329,62 @@ export default function AdminBatchesPage() {
       </div>
 
       {/* 2. Telemetry KPI Cards (4 Cards) */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
         {/* Card 1 */}
-        <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-md transition-all flex flex-col justify-between">
+        <div className="bg-white p-3.5 sm:p-5 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-md transition-all flex flex-col justify-between">
           <div className="flex items-center justify-between gap-2">
             <span className="text-xs font-semibold text-slate-500 uppercase tracking-wide">
               Active Cohorts
             </span>
-            <div className="w-10 h-10 rounded-xl bg-blue-50/80 border border-blue-100 text-blue-600 flex items-center justify-center shrink-0">
-              <Users className="w-5 h-5" />
+            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-blue-50/80 border border-blue-100 text-blue-600 flex items-center justify-center shrink-0">
+              <Users className="w-4 h-4 sm:w-5 sm:h-5" />
             </div>
           </div>
-          <div className="mt-3.5">
-            <div className="text-2xl font-bold text-[#3D405B] tracking-tight">{batches.length} Cohorts</div>
+          <div className="mt-2.5 sm:mt-3.5">
+            <div className="text-xl sm:text-2xl font-bold text-[#3D405B] tracking-tight">{batches.length} Cohorts</div>
             <div className="flex items-center gap-1.5 text-xs text-slate-500 mt-1">
-              <span className="font-medium text-slate-700">4 Undergrad</span>
+              <span className="font-medium text-slate-700">4 UG</span>
               <span>•</span>
-              <span className="font-medium text-slate-700">2 Postgrad</span>
+              <span className="font-medium text-slate-700">2 PG</span>
             </div>
           </div>
         </div>
 
         {/* Card 2 */}
-        <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-md transition-all flex flex-col justify-between">
+        <div className="bg-white p-3.5 sm:p-5 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-md transition-all flex flex-col justify-between">
           <div className="flex items-center justify-between gap-2">
             <span className="text-xs font-semibold text-slate-500 uppercase tracking-wide">
               Total Enrolled
             </span>
-            <div className="w-10 h-10 rounded-xl bg-emerald-50/80 border border-emerald-100 text-emerald-600 flex items-center justify-center shrink-0">
-              <GraduationCap className="w-5 h-5" />
+            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-emerald-50/80 border border-emerald-100 text-emerald-600 flex items-center justify-center shrink-0">
+              <GraduationCap className="w-4 h-4 sm:w-5 sm:h-5" />
             </div>
           </div>
-          <div className="mt-3.5">
-            <div className="text-2xl font-bold text-[#3D405B] tracking-tight">
-              {batches.reduce((sum, b) => sum + b.enrolled, 0)} Students
+          <div className="mt-2.5 sm:mt-3.5">
+            <div className="text-xl sm:text-2xl font-bold text-[#3D405B] tracking-tight">
+              {batches.reduce((sum, b) => sum + b.enrolled, 0)}
             </div>
             <div className="flex items-center gap-1.5 text-xs text-slate-500 mt-1">
               <span className="inline-flex items-center text-emerald-600 font-semibold">
                 87.5%
               </span>
-              <span>Cap: 360 Seats</span>
+              <span>Cap: 360</span>
             </div>
           </div>
         </div>
 
         {/* Card 3 */}
-        <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-md transition-all flex flex-col justify-between">
+        <div className="bg-white p-3.5 sm:p-5 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-md transition-all flex flex-col justify-between">
           <div className="flex items-center justify-between gap-2">
             <span className="text-xs font-semibold text-slate-500 uppercase tracking-wide">
-              Weekly Contact Hours
+              Contact Hours
             </span>
-            <div className="w-10 h-10 rounded-xl bg-purple-50/80 border border-purple-100 text-purple-600 flex items-center justify-center shrink-0">
-              <Clock className="w-5 h-5" />
+            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-purple-50/80 border border-purple-100 text-purple-600 flex items-center justify-center shrink-0">
+              <Clock className="w-4 h-4 sm:w-5 sm:h-5" />
             </div>
           </div>
-          <div className="mt-3.5">
-            <div className="text-2xl font-bold text-[#3D405B] tracking-tight">92 <span className="text-sm font-normal text-slate-400">hrs</span></div>
+          <div className="mt-2.5 sm:mt-3.5">
+            <div className="text-xl sm:text-2xl font-bold text-[#3D405B] tracking-tight">92 <span className="text-xs font-normal text-slate-400">hrs</span></div>
             <div className="flex items-center gap-1.5 text-xs text-slate-500 mt-1">
               <span className="font-medium text-slate-700">68 Theory</span>
               <span>•</span>
@@ -394,23 +394,22 @@ export default function AdminBatchesPage() {
         </div>
 
         {/* Card 4 */}
-        <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-md transition-all flex flex-col justify-between">
+        <div className="bg-white p-3.5 sm:p-5 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-md transition-all flex flex-col justify-between">
           <div className="flex items-center justify-between gap-2">
             <span className="text-xs font-semibold text-slate-500 uppercase tracking-wide">
-              Avg Syllabus Pace
+              Syllabus Pace
             </span>
-            <div className="w-10 h-10 rounded-xl bg-indigo-50/80 border border-indigo-100 text-indigo-600 flex items-center justify-center shrink-0">
-              <TrendingUp className="w-5 h-5" />
+            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-indigo-50/80 border border-indigo-100 text-indigo-600 flex items-center justify-center shrink-0">
+              <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5" />
             </div>
           </div>
-          <div className="mt-3.5">
-            <div className="text-2xl font-bold text-[#3D405B] tracking-tight">67.2%</div>
+          <div className="mt-2.5 sm:mt-3.5">
+            <div className="text-xl sm:text-2xl font-bold text-[#3D405B] tracking-tight">67.2%</div>
             <div className="flex items-center gap-1.5 text-xs text-slate-500 mt-1">
               <span className="inline-flex items-center text-emerald-600 font-semibold">
                 <CheckCircle2 className="w-3.5 h-3.5 mr-0.5" />
                 On Track
               </span>
-              <span>Audited Wk 11</span>
             </div>
           </div>
         </div>
@@ -613,10 +612,10 @@ export default function AdminBatchesPage() {
       {/* 5. TABLE VIEW */}
       {viewMode === "table" && (
         <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs overflow-hidden">
-          <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse text-xs">
+          <div className="overflow-x-auto w-full">
+            <table className="w-full text-left border-collapse text-xs min-w-[750px]">
               <thead>
-                <tr className="bg-slate-50/70 text-slate-500 text-[10px] uppercase tracking-wider font-semibold border-b border-slate-100">
+                <tr className="bg-slate-50/70 text-slate-500 text-[10px] uppercase tracking-wider font-semibold border-b border-slate-100 whitespace-nowrap">
                   <th className="py-2.5 px-4 font-semibold">Batch Code</th>
                   <th className="py-2.5 px-4 font-semibold">Program &amp; Subject</th>
                   <th className="py-2.5 px-4 font-semibold">Section</th>

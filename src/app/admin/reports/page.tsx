@@ -16,7 +16,7 @@ import {
   ShieldCheck,
   Building,
   GraduationCap,
-  DollarSign,
+  IndianRupee,
   Users,
   Award,
   BookOpen,
@@ -72,7 +72,7 @@ const REPORT_TEMPLATES: ReportTemplate[] = [
     scope: "Real-time payment gateway, demand draft, and bank settlement ledger.",
     cadence: "Daily EOD Batch",
     lastRun: "Today 06:00 EST",
-    coverage: "$5.10M Billed, 14 Ledgers",
+    coverage: "₹5.10 Cr Billed, 14 Ledgers",
     formats: ["PDF", "XLSX"]
   },
   {
@@ -145,7 +145,7 @@ const REPORT_TEMPLATES: ReportTemplate[] = [
     scope: "Scopus/WoS h-index tracking, government grants, and IP disclosures.",
     cadence: "Quarterly Audit",
     lastRun: "Apr 15, 2024",
-    coverage: "84 Papers, $1.42M Grants",
+    coverage: "84 Papers, ₹1.42 Cr Grants",
     formats: ["PDF", "DOCX"]
   }
 ];
@@ -226,19 +226,19 @@ export default function ReportsAndAnalyticsPage() {
       )}
 
       {/* Main Container */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 space-y-6">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 pt-4 sm:pt-6 space-y-4 sm:space-y-6">
         {/* Hero Header */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <div className="flex items-center gap-2.5">
-              <h1 className="text-2xl font-bold tracking-tight text-slate-900">Reports & Analytics</h1>
+              <h1 className="text-2xl font-bold tracking-tight text-slate-900">Reports &amp; Analytics</h1>
               <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200/80">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                 Data Lake v4.12 Synced
               </span>
             </div>
             <p className="text-sm text-slate-500 mt-1">
-              Institutional intelligence, statutory compliance dossiers (NIRF/NAAC/ABET) & automated dispatch center.
+              Institutional intelligence, statutory compliance dossiers (NIRF/NAAC/ABET) &amp; automated dispatch center.
             </p>
           </div>
 
@@ -248,7 +248,7 @@ export default function ReportsAndAnalyticsPage() {
               className="inline-flex items-center gap-2 px-3.5 py-2 text-xs font-semibold text-slate-700 bg-white border border-slate-200 rounded-xl hover:bg-slate-50 hover:border-slate-300 shadow-xs transition-all"
             >
               <ShieldCheck className="w-4 h-4 text-indigo-600" />
-              <span>Regulatory Audit (NIRF/NAAC)</span>
+              <span>Regulatory Audit</span>
             </button>
             <button
               onClick={() => showToast("Exporting Complete Executive Reporting Pack (ZIP, 14.8 MB)...")}
@@ -268,87 +268,87 @@ export default function ReportsAndAnalyticsPage() {
         </div>
 
         {/* 4 Standard Redesigned KPI Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
           {/* KPI 1: Campus Enrollment & Retention */}
-          <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-5 hover:border-slate-300 transition-all">
+          <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-3.5 sm:p-5 hover:border-slate-300 transition-all">
             <div className="flex items-center justify-between">
               <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
-                Enrollment & Retention
+                Enrollment
               </span>
-              <div className="w-10 h-10 rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600">
-                <GraduationCap className="w-5 h-5" />
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600 shrink-0">
+                <GraduationCap className="w-4 h-4 sm:w-5 sm:h-5" />
               </div>
             </div>
-            <div className="mt-3">
-              <div className="text-2xl font-bold tracking-tight text-slate-900 tabular-nums">
-                3,892 <span className="text-xs font-normal text-slate-500">Enrolled</span>
+            <div className="mt-2.5 sm:mt-3">
+              <div className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 tabular-nums">
+                3,892 <span className="text-xs font-normal text-slate-500">Students</span>
               </div>
-              <div className="mt-2 flex items-center justify-between text-xs font-medium">
-                <span className="text-emerald-600 font-semibold">+1.8% YoY • 97.2% Ret.</span>
-                <span className="text-slate-400">101.1% Cap</span>
+              <div className="mt-1.5 sm:mt-2 flex items-center justify-between text-xs font-medium">
+                <span className="text-emerald-600 font-semibold">+1.8% YoY</span>
+                <span className="text-slate-400">97.2% Ret.</span>
               </div>
             </div>
           </div>
 
           {/* KPI 2: Aggregate Academic Performance */}
-          <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-5 hover:border-slate-300 transition-all">
+          <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-3.5 sm:p-5 hover:border-slate-300 transition-all">
             <div className="flex items-center justify-between">
               <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
-                Academic Performance
+                Performance
               </span>
-              <div className="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600">
-                <BarChart3 className="w-5 h-5" />
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600 shrink-0">
+                <BarChart3 className="w-4 h-4 sm:w-5 sm:h-5" />
               </div>
             </div>
-            <div className="mt-3">
-              <div className="text-2xl font-bold tracking-tight text-slate-900 tabular-nums">
-                3.44 <span className="text-xs font-normal text-slate-500">CGPA / 4.00</span>
+            <div className="mt-2.5 sm:mt-3">
+              <div className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 tabular-nums">
+                3.44 <span className="text-xs font-normal text-slate-500">CGPA</span>
               </div>
-              <div className="mt-2 flex items-center justify-between text-xs font-medium">
-                <span className="text-emerald-600 font-semibold">94.6% Exam Clear</span>
-                <span className="text-slate-400">28.4% Honor Roll</span>
+              <div className="mt-1.5 sm:mt-2 flex items-center justify-between text-xs font-medium">
+                <span className="text-emerald-600 font-semibold">94.6% Clear</span>
+                <span className="text-slate-400">28% Honor</span>
               </div>
             </div>
           </div>
 
           {/* KPI 3: Fee Collections Telemetry */}
-          <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-5 hover:border-slate-300 transition-all">
+          <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-3.5 sm:p-5 hover:border-slate-300 transition-all">
             <div className="flex items-center justify-between">
               <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
                 Fee Collection Rate
               </span>
-              <div className="w-10 h-10 rounded-xl bg-sky-50 flex items-center justify-center text-sky-600">
-                <DollarSign className="w-5 h-5" />
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-sky-50 flex items-center justify-center text-sky-600 shrink-0">
+                <IndianRupee className="w-4 h-4 sm:w-5 sm:h-5" />
               </div>
             </div>
-            <div className="mt-3">
-              <div className="text-2xl font-bold tracking-tight text-slate-900 tabular-nums">
-                $4.82M <span className="text-xs font-normal text-slate-500">/ $5.10M</span>
+            <div className="mt-2.5 sm:mt-3">
+              <div className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 tabular-nums">
+                ₹4.82 Cr <span className="text-xs font-normal text-slate-500">/ ₹5.10 Cr</span>
               </div>
-              <div className="mt-2 flex items-center justify-between text-xs font-medium">
+              <div className="mt-1.5 sm:mt-2 flex items-center justify-between text-xs font-medium">
                 <span className="text-emerald-600 font-semibold">94.5% Realized</span>
-                <span className="text-slate-400">2.1% Defaulter</span>
+                <span className="text-slate-400">2.1% Due</span>
               </div>
             </div>
           </div>
 
           {/* KPI 4: Faculty Load & Research Velocity */}
-          <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-5 hover:border-slate-300 transition-all">
+          <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-3.5 sm:p-5 hover:border-slate-300 transition-all">
             <div className="flex items-center justify-between">
               <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
-                Faculty Load & Velocity
+                Faculty Load
               </span>
-              <div className="w-10 h-10 rounded-xl bg-purple-50 flex items-center justify-center text-purple-600">
-                <Award className="w-5 h-5" />
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-purple-50 flex items-center justify-center text-purple-600 shrink-0">
+                <Award className="w-4 h-4 sm:w-5 sm:h-5" />
               </div>
             </div>
-            <div className="mt-3">
-              <div className="text-2xl font-bold tracking-tight text-slate-900 tabular-nums">
-                16.4 <span className="text-xs font-normal text-slate-500">Hrs/Wk Avg</span>
+            <div className="mt-2.5 sm:mt-3">
+              <div className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 tabular-nums">
+                16.4 <span className="text-xs font-normal text-slate-500">h/wk</span>
               </div>
-              <div className="mt-2 flex items-center justify-between text-xs font-medium">
-                <span className="text-purple-600 font-semibold">84 Papers AY 24-25</span>
-                <span className="text-slate-400">$1.42M Grants</span>
+              <div className="mt-1.5 sm:mt-2 flex items-center justify-between text-xs font-medium">
+                <span className="text-purple-600 font-semibold">84 Papers</span>
+                <span className="text-slate-400">₹1.42 Cr Grants</span>
               </div>
             </div>
           </div>
@@ -357,7 +357,7 @@ export default function ReportsAndAnalyticsPage() {
         {/* Category Navigation Ribbon & Filters */}
         <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-4 space-y-4">
           {/* Category Tabs */}
-          <div className="flex items-center gap-1.5 overflow-x-auto pb-1 border-b border-slate-100">
+          <div className="flex items-center gap-1.5 overflow-x-auto pb-1 border-b border-slate-100 max-w-full no-scrollbar">
             {[
               { id: "all", label: "All Reports", count: reports.length },
               { id: "academic", label: "Academic & Grades", count: reports.filter(r => r.category === "academic").length },
@@ -480,10 +480,10 @@ export default function ReportsAndAnalyticsPage() {
               </div>
 
               {/* Scrollable Table */}
-              <div className="overflow-x-auto">
-                <table className="w-full text-left border-collapse">
+              <div className="overflow-x-auto w-full">
+                <table className="w-full text-left border-collapse min-w-[750px]">
                   <thead>
-                    <tr className="bg-slate-50/80 border-b border-slate-200/80 text-[11px] font-bold text-slate-500 uppercase tracking-wider">
+                    <tr className="bg-slate-50/80 border-b border-slate-200/80 text-[11px] font-bold text-slate-500 uppercase tracking-wider whitespace-nowrap">
                       <th className="px-3.5 py-3">Report Code & Class</th>
                       <th className="px-3.5 py-3">Report Title & Scope</th>
                       <th className="px-3.5 py-3">Cadence & Last Run</th>
@@ -658,7 +658,7 @@ export default function ReportsAndAnalyticsPage() {
                     <div className="h-1.5 w-full bg-slate-200 rounded-full overflow-hidden">
                       <div className="h-full bg-emerald-500 rounded-full w-[94.5%]" />
                     </div>
-                    <span className="text-[10px] font-mono text-slate-400 mt-1 block">Cleared: $4.82M</span>
+                    <span className="text-[10px] font-mono text-slate-400 mt-1 block">Cleared: ₹4.82 Cr</span>
                   </div>
                 </div>
 

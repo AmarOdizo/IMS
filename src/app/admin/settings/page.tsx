@@ -166,23 +166,23 @@ export default function CampusSettingsPage() {
       )}
 
       {/* Main Container */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 space-y-6">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 pt-4 sm:pt-6 space-y-4 sm:space-y-6">
         {/* Hero Header */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
-            <div className="flex items-center gap-2.5">
-              <h1 className="text-2xl font-bold tracking-tight text-slate-900">Settings & Configuration</h1>
+            <div className="flex items-center gap-2.5 flex-wrap">
+              <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900">Settings & Configuration</h1>
               <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200/80">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                 Config Engine v5.4 Active
               </span>
             </div>
-            <p className="text-sm text-slate-500 mt-1">
+            <p className="text-xs sm:text-sm text-slate-500 mt-1">
               Global institutional parameters, academic session governance, RBAC permissions & gateway telemetry.
             </p>
           </div>
 
-          <div className="flex items-center gap-2.5 flex-wrap">
+          <div className="flex items-center gap-2 sm:gap-2.5 flex-wrap">
             <button
               onClick={() => setIsAuditLogsOpen(true)}
               className="inline-flex items-center gap-2 px-3.5 py-2 text-xs font-semibold text-slate-700 bg-white border border-slate-200 rounded-xl hover:bg-slate-50 hover:border-slate-300 shadow-xs transition-all"
@@ -208,94 +208,94 @@ export default function CampusSettingsPage() {
         </div>
 
         {/* 4 Standard Redesigned KPI Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
           {/* Metric 1: Academic Session */}
-          <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-5 hover:border-slate-300 transition-all">
+          <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-3.5 sm:p-5 hover:border-slate-300 transition-all">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
-                Active Academic Session
+              <span className="text-[11px] sm:text-xs font-semibold text-slate-500 uppercase tracking-wider truncate">
+                Active Session
               </span>
-              <div className="w-10 h-10 rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600">
-                <Clock className="w-5 h-5" />
+              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600 shrink-0">
+                <Clock className="w-4 h-4 sm:w-5 sm:h-5" />
               </div>
             </div>
-            <div className="mt-3">
-              <div className="text-2xl font-bold tracking-tight text-slate-900 tabular-nums">
-                AY 2024-25 <span className="text-xs font-normal text-slate-500">Fall Term</span>
+            <div className="mt-2 sm:mt-3">
+              <div className="text-lg sm:text-2xl font-bold tracking-tight text-slate-900 tabular-nums">
+                AY 2024-25 <span className="text-[10px] sm:text-xs font-normal text-slate-500 block sm:inline">Fall Term</span>
               </div>
-              <div className="mt-2 flex items-center justify-between text-xs font-medium text-slate-500">
+              <div className="mt-1.5 sm:mt-2 flex flex-col sm:flex-row sm:items-center justify-between text-[11px] sm:text-xs font-medium text-slate-500 gap-1">
                 <span className="text-indigo-600 font-semibold">Cycle 1 of 2</span>
-                <span className="font-mono">Auto-rollover: 142d</span>
+                <span className="font-mono text-[10px] sm:text-xs">Rollover: 142d</span>
               </div>
             </div>
           </div>
 
           {/* Metric 2: Roles & RBAC */}
-          <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-5 hover:border-slate-300 transition-all">
+          <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-3.5 sm:p-5 hover:border-slate-300 transition-all">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
-                System Roles & RBAC
+              <span className="text-[11px] sm:text-xs font-semibold text-slate-500 uppercase tracking-wider truncate">
+                System Roles
               </span>
-              <div className="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600">
-                <Shield className="w-5 h-5" />
+              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600 shrink-0">
+                <Shield className="w-4 h-4 sm:w-5 sm:h-5" />
               </div>
             </div>
-            <div className="mt-3">
-              <div className="text-2xl font-bold tracking-tight text-slate-900 tabular-nums">
-                18 <span className="text-xs font-normal text-slate-500">Defined Roles</span>
+            <div className="mt-2 sm:mt-3">
+              <div className="text-lg sm:text-2xl font-bold tracking-tight text-slate-900 tabular-nums">
+                18 <span className="text-[10px] sm:text-xs font-normal text-slate-500">Roles</span>
               </div>
-              <div className="mt-2 flex items-center justify-between text-xs font-medium text-slate-500">
-                <span className="text-emerald-600 font-semibold">4 Super Admins</span>
-                <span className="font-mono">1,248 Users</span>
+              <div className="mt-1.5 sm:mt-2 flex flex-col sm:flex-row sm:items-center justify-between text-[11px] sm:text-xs font-medium text-slate-500 gap-1">
+                <span className="text-emerald-600 font-semibold">4 Admins</span>
+                <span className="font-mono text-[10px] sm:text-xs">1,248 Users</span>
               </div>
             </div>
           </div>
 
           {/* Metric 3: Security & Compliance */}
-          <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-5 hover:border-slate-300 transition-all">
+          <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-3.5 sm:p-5 hover:border-slate-300 transition-all">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
-                Security Telemetry
+              <span className="text-[11px] sm:text-xs font-semibold text-slate-500 uppercase tracking-wider truncate">
+                Compliance
               </span>
-              <div className="w-10 h-10 rounded-xl bg-purple-50 flex items-center justify-center text-purple-600">
-                <Lock className="w-5 h-5" />
+              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-purple-50 flex items-center justify-center text-purple-600 shrink-0">
+                <Lock className="w-4 h-4 sm:w-5 sm:h-5" />
               </div>
             </div>
-            <div className="mt-3">
-              <div className="text-2xl font-bold tracking-tight text-slate-900 tabular-nums">
+            <div className="mt-2 sm:mt-3">
+              <div className="text-lg sm:text-2xl font-bold tracking-tight text-slate-900 tabular-nums truncate">
                 SOC-2 & FERPA
               </div>
-              <div className="mt-2 flex items-center justify-between text-xs font-medium text-slate-500">
-                <span className="text-purple-600 font-semibold">MFA Enforced: 100%</span>
-                <span className="font-mono">TLS 1.3 Strict</span>
+              <div className="mt-1.5 sm:mt-2 flex flex-col sm:flex-row sm:items-center justify-between text-[11px] sm:text-xs font-medium text-slate-500 gap-1">
+                <span className="text-purple-600 font-semibold">MFA: 100%</span>
+                <span className="font-mono text-[10px] sm:text-xs">TLS 1.3</span>
               </div>
             </div>
           </div>
 
           {/* Metric 4: API & Gateways */}
-          <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-5 hover:border-slate-300 transition-all">
+          <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-3.5 sm:p-5 hover:border-slate-300 transition-all">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
-                Connected Gateways
+              <span className="text-[11px] sm:text-xs font-semibold text-slate-500 uppercase tracking-wider truncate">
+                Gateways
               </span>
-              <div className="w-10 h-10 rounded-xl bg-sky-50 flex items-center justify-center text-sky-600">
-                <Radio className="w-5 h-5" />
+              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-sky-50 flex items-center justify-center text-sky-600 shrink-0">
+                <Radio className="w-4 h-4 sm:w-5 sm:h-5" />
               </div>
             </div>
-            <div className="mt-3">
-              <div className="text-2xl font-bold tracking-tight text-slate-900 tabular-nums">
-                14 <span className="text-xs font-normal text-slate-500">Active Webhooks</span>
+            <div className="mt-2 sm:mt-3">
+              <div className="text-lg sm:text-2xl font-bold tracking-tight text-slate-900 tabular-nums">
+                14 <span className="text-[10px] sm:text-xs font-normal text-slate-500">Webhooks</span>
               </div>
-              <div className="mt-2 flex items-center justify-between text-xs font-medium text-slate-500">
-                <span className="text-sky-600 font-semibold">Twilio • Stripe • Canvas</span>
-                <span className="text-emerald-600 font-mono font-semibold">99.98% SLA</span>
+              <div className="mt-1.5 sm:mt-2 flex flex-col sm:flex-row sm:items-center justify-between text-[11px] sm:text-xs font-medium text-slate-500 gap-1">
+                <span className="text-sky-600 font-semibold truncate">Twilio • Stripe</span>
+                <span className="text-emerald-600 font-mono font-semibold text-[10px] sm:text-xs">99.98%</span>
               </div>
             </div>
           </div>
         </div>
 
         {/* Horizontal Navigation Tabs */}
-        <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-1.5 flex items-center gap-1 overflow-x-auto">
+        <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-1.5 flex items-center gap-1.5 overflow-x-auto max-w-full no-scrollbar">
           {[
             { id: "general", label: "General & Campus Profile", icon: Building },
             { id: "academic", label: "Academic Session & Terms", icon: Clock },
@@ -470,9 +470,9 @@ export default function CampusSettingsPage() {
                       + Register Campus Node
                     </button>
                   </div>
-                  <div className="overflow-x-auto border border-slate-200 rounded-xl">
-                    <table className="w-full text-left text-xs">
-                      <thead className="bg-slate-50/80 text-[11px] font-bold text-slate-500 uppercase tracking-wider border-b border-slate-200/80">
+                  <div className="overflow-x-auto w-full border border-slate-200 rounded-xl">
+                    <table className="w-full text-left text-xs min-w-[650px]">
+                      <thead className="bg-slate-50/80 text-[11px] font-bold text-slate-500 uppercase tracking-wider border-b border-slate-200/80 whitespace-nowrap">
                         <tr>
                           <th className="py-2.5 px-3">Campus ID</th>
                           <th className="py-2.5 px-3">Designation</th>
@@ -482,7 +482,7 @@ export default function CampusSettingsPage() {
                           <th className="py-2.5 px-3 text-right">Status</th>
                         </tr>
                       </thead>
-                      <tbody className="divide-y divide-slate-100">
+                      <tbody className="divide-y divide-slate-100 whitespace-nowrap">
                         {campuses.map(node => (
                           <tr key={node.id} className="hover:bg-slate-50/70 transition-colors">
                             <td className="py-2.5 px-3 font-mono font-bold text-slate-900">

@@ -68,6 +68,6 @@
   .admin-zoom-wrapper,
   .accountant-zoom-wrapper,
   .portal-zoom-wrapper {
-    zoom: 1;
+    zoom: 1 !important;
   }
 }

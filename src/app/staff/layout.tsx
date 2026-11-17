@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
-import StaffSidebar from "@/components/staff/StaffSidebar";
-import StaffHeader from "@/components/staff/StaffHeader";
+import StaffLayoutClient from "@/components/staff/StaffLayoutClient";
 
 export const metadata: Metadata = {
   title: "Staff Dashboard - Faculty Instruction Portal",
@@ -12,23 +11,5 @@ export default function StaffLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return (
-    <div className="min-h-screen bg-background text-on-surface antialiased flex flex-col">
-      {/* Staff Fixed Sidebar */}
-      <StaffSidebar />
-
-      {/* Main App Container */}
-      <div className="pl-64 flex flex-col flex-1">
-        {/* Fixed Header */}
-        <StaffHeader />
-
-        {/* Content Area */}
-        <main className="pt-16 flex-1 bg-background">
-          <div className="w-full staff-zoom-wrapper" style={{ zoom: "80%" }}>
-            {children}
-          </div>
-        </main>
-      </div>
-    </div>
-  );
+  return <StaffLayoutClient>{children}</StaffLayoutClient>;
 }

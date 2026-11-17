@@ -348,7 +348,7 @@ export default function AttendancePage() {
       )}
 
       {/* Main Container */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 space-y-6">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 pt-4 sm:pt-6 space-y-4 sm:space-y-6">
         {/* Header Hero Section */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
@@ -400,94 +400,94 @@ export default function AttendancePage() {
         </div>
 
         {/* 4 Standard Redesigned KPI Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
           {/* Card 1: Total Enrolled */}
-          <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-5">
+          <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-3.5 sm:p-5">
             <div className="flex items-center justify-between">
               <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
                 Total Enrolled
               </span>
-              <div className="w-10 h-10 rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600">
-                <Users className="w-5 h-5" />
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600 shrink-0">
+                <Users className="w-4 h-4 sm:w-5 sm:h-5" />
               </div>
             </div>
-            <div className="mt-3">
-              <div className="text-2xl font-bold tracking-tight text-slate-900">
+            <div className="mt-2.5 sm:mt-3">
+              <div className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900">
                 64 <span className="text-xs font-normal text-slate-500">Students</span>
               </div>
-              <div className="mt-2 flex items-center gap-1.5 text-xs font-medium text-emerald-600">
+              <div className="mt-1.5 sm:mt-2 flex items-center gap-1.5 text-xs font-medium text-emerald-600">
                 <CheckCircle2 className="w-3.5 h-3.5" />
-                <span>100% Census Verified</span>
+                <span>100% Census</span>
               </div>
             </div>
           </div>
 
           {/* Card 2: Present Today */}
-          <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-5">
+          <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-3.5 sm:p-5">
             <div className="flex items-center justify-between">
               <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
                 Present Today
               </span>
-              <div className="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600">
-                <UserCheck className="w-5 h-5" />
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600 shrink-0">
+                <UserCheck className="w-4 h-4 sm:w-5 sm:h-5" />
               </div>
             </div>
-            <div className="mt-3">
+            <div className="mt-2.5 sm:mt-3">
               <div className="flex items-baseline gap-2">
-                <span className="text-2xl font-bold tracking-tight text-slate-900">{simP}</span>
-                <span className="text-xs font-semibold px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-700 border border-emerald-200">
+                <span className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900">{simP}</span>
+                <span className="text-xs font-semibold px-1.5 sm:px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-700 border border-emerald-200">
                   {presentPct}%
                 </span>
               </div>
-              <div className="mt-2 flex items-center gap-1.5 text-xs font-medium text-emerald-600">
+              <div className="mt-1.5 sm:mt-2 flex items-center gap-1.5 text-xs font-medium text-emerald-600">
                 <TrendingUp className="w-3.5 h-3.5" />
-                <span>+3.2% vs 7-day average</span>
+                <span>+3.2% vs avg</span>
               </div>
             </div>
           </div>
 
           {/* Card 3: Unexcused Absent */}
-          <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-5">
+          <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-3.5 sm:p-5">
             <div className="flex items-center justify-between">
               <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
                 Unexcused Absentees
               </span>
-              <div className="w-10 h-10 rounded-xl bg-rose-50 flex items-center justify-center text-rose-600">
-                <UserX className="w-5 h-5" />
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-rose-50 flex items-center justify-center text-rose-600 shrink-0">
+                <UserX className="w-4 h-4 sm:w-5 sm:h-5" />
               </div>
             </div>
-            <div className="mt-3">
+            <div className="mt-2.5 sm:mt-3">
               <div className="flex items-baseline gap-2">
-                <span className="text-2xl font-bold tracking-tight text-slate-900">{simA}</span>
-                <span className="text-xs font-semibold px-2 py-0.5 rounded-md bg-rose-50 text-rose-700 border border-rose-200">
+                <span className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900">{simA}</span>
+                <span className="text-xs font-semibold px-1.5 sm:px-2 py-0.5 rounded-md bg-rose-50 text-rose-700 border border-rose-200">
                   {absentPct}%
                 </span>
               </div>
-              <div className="mt-2 flex items-center gap-1.5 text-xs font-medium text-rose-600">
+              <div className="mt-1.5 sm:mt-2 flex items-center gap-1.5 text-xs font-medium text-rose-600">
                 <AlertTriangle className="w-3.5 h-3.5" />
-                <span>2 students &lt;75% statutory bar</span>
+                <span>2 at &lt;75% bar</span>
               </div>
             </div>
           </div>
 
           {/* Card 4: Approved Medical / Duty */}
-          <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-5">
+          <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-3.5 sm:p-5">
             <div className="flex items-center justify-between">
               <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
                 Approved Medical / OD
               </span>
-              <div className="w-10 h-10 rounded-xl bg-amber-50 flex items-center justify-center text-amber-600">
-                <FileText className="w-5 h-5" />
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-amber-50 flex items-center justify-center text-amber-600 shrink-0">
+                <FileText className="w-4 h-4 sm:w-5 sm:h-5" />
               </div>
             </div>
-            <div className="mt-3">
+            <div className="mt-2.5 sm:mt-3">
               <div className="flex items-baseline gap-2">
-                <span className="text-2xl font-bold tracking-tight text-slate-900">{simL}</span>
-                <span className="text-xs font-semibold px-2 py-0.5 rounded-md bg-amber-50 text-amber-700 border border-amber-200">
+                <span className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900">{simL}</span>
+                <span className="text-xs font-semibold px-1.5 sm:px-2 py-0.5 rounded-md bg-amber-50 text-amber-700 border border-amber-200">
                   {leavePct}%
                 </span>
               </div>
-              <div className="mt-2 flex items-center gap-1.5 text-xs font-medium text-slate-500">
+              <div className="mt-1.5 sm:mt-2 flex items-center gap-1.5 text-xs font-medium text-slate-500">
                 <ShieldCheck className="w-3.5 h-3.5 text-slate-400" />
                 <span>Documents verified</span>
               </div>
@@ -654,7 +654,7 @@ export default function AttendancePage() {
                   </div>
 
                   {/* Filter tabs */}
-                  <div className="inline-flex rounded-xl bg-slate-100 p-1 text-xs">
+                  <div className="inline-flex rounded-xl bg-slate-100 p-1 text-xs overflow-x-auto max-w-full no-scrollbar">
                     <button
                       onClick={() => setStatusFilter("all")}
                       className={`px-2.5 py-1 rounded-lg font-semibold transition-all ${
@@ -700,10 +700,10 @@ export default function AttendancePage() {
               </div>
 
               {/* Ledger Table */}
-              <div className="overflow-x-auto">
-                <table className="w-full text-left border-collapse">
+              <div className="overflow-x-auto w-full">
+                <table className="w-full text-left border-collapse min-w-[700px]">
                   <thead>
-                    <tr className="bg-slate-50/80 border-b border-slate-200/80 text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
+                    <tr className="bg-slate-50/80 border-b border-slate-200/80 text-[11px] font-semibold text-slate-500 uppercase tracking-wider whitespace-nowrap">
                       <th className="py-3 px-4">Roll No</th>
                       <th className="py-3 px-4">Student Details</th>
                       <th className="py-3 px-4 text-center">Monthly Avg</th>

@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
-import StudentSidebar from "@/components/student/StudentSidebar";
-import StudentHeader from "@/components/student/StudentHeader";
+import StudentLayoutClient from "@/components/student/StudentLayoutClient";
 
 export const metadata: Metadata = {
   title: "Student Dashboard - Academic Portal",
@@ -12,23 +11,5 @@ export default function StudentLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return (
-    <div className="min-h-screen bg-background text-on-surface antialiased flex flex-col">
-      {/* Student Fixed Sidebar */}
-      <StudentSidebar />
-
-      {/* Main App Container */}
-      <div className="pl-64 flex flex-col flex-1">
-        {/* Fixed Header */}
-        <StudentHeader />
-
-        {/* Content Area */}
-        <main className="pt-16 flex-1 bg-background">
-          <div className="w-full student-zoom-wrapper" style={{ zoom: "80%" }}>
-            {children}
-          </div>
-        </main>
-      </div>
-    </div>
-  );
+  return <StudentLayoutClient>{children}</StudentLayoutClient>;
 }

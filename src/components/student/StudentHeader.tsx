@@ -11,11 +11,16 @@ import {
   ShieldCheck,
   CheckCircle,
   Clock,
-  FileText
+  FileText,
+  Menu,
+  X,
 } from "lucide-react";
 
 interface StudentHeaderProps {
   breadcrumbTitle?: string;
+  onOpenMobileNav?: () => void;
+  onToggleMobileNav?: () => void;
+  isMobileNavOpen?: boolean;
 }
 
 const routeTitleMap: Record<string, string> = {
@@ -31,6 +36,9 @@ const routeTitleMap: Record<string, string> = {
 
 export default function StudentHeader({
   breadcrumbTitle,
+  onOpenMobileNav,
+  onToggleMobileNav,
+  isMobileNavOpen = false,
 }: StudentHeaderProps) {
   const [showNotifications, setShowNotifications] = useState(false);
   const pathname = usePathname();
@@ -83,19 +91,41 @@ export default function StudentHeader({
   ];
 
   return (
-    <header className="fixed top-0 left-64 right-0 h-16 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-2xs z-40 flex items-center justify-between px-6">
-      {/* Left: Dynamic Breadcrumbs */}
-      <div className="flex items-center gap-2">
+    <header className="fixed top-0 left-0 lg:left-64 right-0 h-16 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-2xs z-40 flex items-center justify-between px-3 sm:px-6">
+      {/* Left: Hamburger & Dynamic Breadcrumbs */}
+      <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+        {/* Mobile Hamburger Menu Toggle */}
+        <button
+          type="button"
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            if (onToggleMobileNav) {
+              onToggleMobileNav();
+            } else if (onOpenMobileNav) {
+              onOpenMobileNav();
+            }
+          }}
+          className="lg:hidden p-2 rounded-xl text-slate-600 hover:text-violet-700 hover:bg-slate-100 transition-colors cursor-pointer shrink-0"
+          aria-label={isMobileNavOpen ? "Close Navigation Menu" : "Open Navigation Menu"}
+        >
+          {isMobileNavOpen ? (
+            <X className="w-5 h-5 text-violet-700" />
+          ) : (
+            <Menu className="w-5 h-5" />
+          )}
+        </button>
+
         <Link
           href="/student"
-          className="text-xs uppercase tracking-wider text-slate-500 hover:text-violet-700 font-semibold transition-colors"
+          className="hidden sm:inline-block text-xs uppercase tracking-wider text-slate-500 hover:text-violet-700 font-semibold transition-colors"
         >
           Student Portal
         </Link>
-        <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
-        <span className="font-semibold text-xs text-violet-700 bg-violet-50 px-2.5 py-1 rounded-md border border-violet-200/60 flex items-center gap-1.5 shadow-2xs">
-          <span className="w-1.5 h-1.5 rounded-full bg-violet-600"></span>
-          {currentTitle}
+        <ChevronRight className="hidden sm:inline-block w-3.5 h-3.5 text-slate-400 shrink-0" />
+        <span className="font-semibold text-xs text-violet-700 bg-violet-50 px-2 sm:px-2.5 py-1 rounded-md border border-violet-200/60 flex items-center gap-1.5 shadow-2xs truncate">
+          <span className="w-1.5 h-1.5 rounded-full bg-violet-600 shrink-0"></span>
+          <span className="truncate">{currentTitle}</span>
         </span>
       </div>
 

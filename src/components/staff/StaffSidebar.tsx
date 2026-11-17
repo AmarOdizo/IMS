@@ -13,6 +13,7 @@ import {
   Bell,
   GraduationCap,
   LogOut,
+  X,
 } from "lucide-react";
 
 const navigationItems = [
@@ -26,27 +27,73 @@ const navigationItems = [
   { name: "Notices", href: "/staff/notices", icon: Bell },
 ];
 
-export default function StaffSidebar() {
+interface StaffSidebarProps {
+  isMobileOpen?: boolean;
+  onCloseMobile?: () => void;
+}
+
+export default function StaffSidebar({
+  isMobileOpen = false,
+  onCloseMobile,
+}: StaffSidebarProps) {
   const pathname = usePathname();
 
   return (
-    <aside className="fixed left-0 top-0 h-full w-64 bg-white text-slate-800 z-50 flex flex-col justify-between border-r border-slate-200 shadow-sm select-none">
-      {/* Top Branding & Nav */}
-      <div className="flex flex-col min-h-0 flex-1">
-        {/* Brand Header */}
-        <div className="h-16 px-4 flex items-center gap-3 bg-white text-[#3D405B] border-b border-slate-200 shrink-0">
-          <div className="w-9 h-9 bg-emerald-100 text-emerald-700 font-bold flex items-center justify-center rounded-xl shadow-xs shrink-0">
-            <GraduationCap className="w-5 h-5 text-emerald-700" />
+    <>
+      {/* Mobile Drawer Backdrop */}
+      {isMobileOpen && (
+        <div
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            onCloseMobile?.();
+          }}
+          className="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-[90] lg:hidden"
+          aria-hidden="true"
+        />
+      )}
+
+      <aside
+        className={`fixed left-0 top-0 h-full w-64 bg-white text-slate-800 z-[100] flex flex-col justify-between border-r border-slate-200 shadow-2xl lg:shadow-sm select-none transition-transform duration-300 ease-in-out ${
+          isMobileOpen
+            ? "translate-x-0 pointer-events-auto"
+            : "-translate-x-full pointer-events-none lg:translate-x-0 lg:pointer-events-auto"
+        }`}
+      >
+        {/* Top Branding & Nav */}
+        <div className="flex flex-col min-h-0 flex-1">
+          {/* Brand Header */}
+          <div className="h-16 px-4 flex items-center justify-between bg-white text-[#3D405B] border-b border-slate-200 shrink-0">
+            <div className="flex items-center gap-3 min-w-0">
+              <div className="w-9 h-9 bg-emerald-100 text-emerald-700 font-bold flex items-center justify-center rounded-xl shadow-xs shrink-0">
+                <GraduationCap className="w-5 h-5 text-emerald-700" />
+              </div>
+              <div className="flex flex-col min-w-0">
+                <span className="font-headline text-sm font-bold tracking-tight text-[#3D405B] leading-tight truncate">
+                  Apex Institute
+                </span>
+                <span className="text-[10px] tracking-wider uppercase text-emerald-700 font-semibold truncate">
+                  Faculty Portal
+                </span>
+              </div>
+            </div>
+
+            {/* Mobile Close Button */}
+            {onCloseMobile && (
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  onCloseMobile();
+                }}
+                className="lg:hidden p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors cursor-pointer"
+                aria-label="Close Navigation"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            )}
           </div>
-          <div className="flex flex-col min-w-0">
-            <span className="font-headline text-sm font-bold tracking-tight text-[#3D405B] leading-tight truncate">
-              Apex Institute
-            </span>
-            <span className="text-[10px] tracking-wider uppercase text-emerald-700 font-semibold truncate">
-              Faculty Portal
-            </span>
-          </div>
-        </div>
 
         {/* Navigation List */}
         <nav className="flex-1 overflow-y-auto p-2.5 flex flex-col gap-1">
@@ -62,6 +109,7 @@ export default function StaffSidebar() {
               <Link
                 key={item.href}
                 href={item.href}
+                onClick={() => onCloseMobile?.()}
                 className={`flex items-center gap-3 px-3.5 py-2.5 text-xs font-semibold transition-all rounded-xl ${
                   isActive
                     ? "bg-emerald-600 text-white font-bold shadow-sm"
@@ -98,5 +146,6 @@ export default function StaffSidebar() {
         </div>
       </div>
     </aside>
+    </>
   );
 }

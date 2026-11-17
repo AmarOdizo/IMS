@@ -89,9 +89,15 @@ const notificationsData: NotificationItem[] = [
 
 interface AdminHeaderProps {
   onOpenMobileNav?: () => void;
+  onToggleMobileNav?: () => void;
+  isMobileNavOpen?: boolean;
 }
 
-export default function AdminHeader({ onOpenMobileNav }: AdminHeaderProps) {
+export default function AdminHeader({
+  onOpenMobileNav,
+  onToggleMobileNav,
+  isMobileNavOpen = false,
+}: AdminHeaderProps) {
   const [showQuickModal, setShowQuickModal] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
@@ -146,11 +152,23 @@ export default function AdminHeader({ onOpenMobileNav }: AdminHeaderProps) {
         {/* Mobile Hamburger Menu Toggle */}
         <button
           type="button"
-          onClick={onOpenMobileNav}
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            if (onToggleMobileNav) {
+              onToggleMobileNav();
+            } else if (onOpenMobileNav) {
+              onOpenMobileNav();
+            }
+          }}
           className="lg:hidden p-2 rounded-xl text-slate-600 hover:text-[#3D405B] hover:bg-slate-100 transition-colors cursor-pointer shrink-0"
-          aria-label="Open Navigation Menu"
+          aria-label={isMobileNavOpen ? "Close Navigation Menu" : "Open Navigation Menu"}
         >
-          <Menu className="w-5 h-5" />
+          {isMobileNavOpen ? (
+            <X className="w-5 h-5 text-[#3D405B]" />
+          ) : (
+            <Menu className="w-5 h-5" />
+          )}
         </button>
 
         <nav className="flex items-center gap-1.5 sm:gap-2 text-xs truncate">

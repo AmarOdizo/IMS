@@ -308,7 +308,7 @@ export default function ExamsPage() {
       )}
 
       {/* Main Container */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 space-y-6">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 pt-4 sm:pt-6 space-y-4 sm:space-y-6">
         {/* Header Hero Section */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
@@ -350,46 +350,44 @@ export default function ExamsPage() {
         </div>
 
         {/* 4 Standard Redesigned KPI Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
           {/* Card 1: Scheduled Exams */}
-          <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-5">
+          <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-3.5 sm:p-5">
             <div className="flex items-center justify-between">
               <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
                 Scheduled Exams
               </span>
-              <div className="w-10 h-10 rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600">
-                <Calendar className="w-5 h-5" />
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600 shrink-0">
+                <Calendar className="w-4 h-4 sm:w-5 sm:h-5" />
               </div>
             </div>
-            <div className="mt-3">
-              <div className="text-2xl font-bold tracking-tight text-slate-900">
-                18 <span className="text-xs font-normal text-slate-500">Active Series</span>
+            <div className="mt-2.5 sm:mt-3">
+              <div className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900">
+                18 <span className="text-xs font-normal text-slate-500">Active</span>
               </div>
-              <div className="mt-2 flex items-center gap-1.5 text-xs font-medium text-slate-500">
+              <div className="mt-1.5 sm:mt-2 flex items-center gap-1.5 text-xs font-medium text-slate-500">
                 <span className="text-emerald-600 font-semibold">8 Done</span>
                 <span>•</span>
-                <span className="text-indigo-600 font-semibold">6 Ongoing</span>
-                <span>•</span>
-                <span>4 Upcoming</span>
+                <span className="text-indigo-600 font-semibold">6 Live</span>
               </div>
             </div>
           </div>
 
           {/* Card 2: Paper Evaluation Velocity */}
-          <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-5">
+          <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-3.5 sm:p-5">
             <div className="flex items-center justify-between">
               <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
                 Evaluation Velocity
               </span>
-              <div className="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600">
-                <FileCheck className="w-5 h-5" />
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600 shrink-0">
+                <FileCheck className="w-4 h-4 sm:w-5 sm:h-5" />
               </div>
             </div>
-            <div className="mt-3">
-              <div className="flex items-baseline gap-2">
-                <span className="text-2xl font-bold tracking-tight text-slate-900 tabular-nums">4,820</span>
-                <span className="text-xs text-slate-500 font-normal">/ 5,100</span>
-                <span className="text-xs font-semibold px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-700 border border-emerald-200 ml-auto">
+            <div className="mt-2.5 sm:mt-3">
+              <div className="flex items-baseline gap-1.5 sm:gap-2">
+                <span className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 tabular-nums">4,820</span>
+                <span className="text-xs text-slate-500 font-normal">/ 5.1k</span>
+                <span className="text-xs font-semibold px-1.5 py-0.5 rounded-md bg-emerald-50 text-emerald-700 border border-emerald-200 ml-auto">
                   94.5%
                 </span>
               </div>
@@ -400,49 +398,49 @@ export default function ExamsPage() {
           </div>
 
           {/* Card 3: Institutional Average */}
-          <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-5">
+          <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-3.5 sm:p-5">
             <div className="flex items-center justify-between">
               <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
-                Institutional Average
+                Average GPA
               </span>
-              <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600">
-                <TrendingUp className="w-5 h-5" />
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600 shrink-0">
+                <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5" />
               </div>
             </div>
-            <div className="mt-3">
+            <div className="mt-2.5 sm:mt-3">
               <div className="flex items-baseline gap-2">
-                <span className="text-2xl font-bold tracking-tight text-slate-900">78.4%</span>
-                <span className="text-xs font-semibold px-2 py-0.5 rounded-md bg-blue-50 text-blue-700 border border-blue-200">
+                <span className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900">78.4%</span>
+                <span className="text-xs font-semibold px-1.5 py-0.5 rounded-md bg-blue-50 text-blue-700 border border-blue-200">
                   GPA 3.42
                 </span>
               </div>
-              <div className="mt-2 flex items-center gap-1.5 text-xs font-medium text-emerald-600">
+              <div className="mt-1.5 sm:mt-2 flex items-center gap-1.5 text-xs font-medium text-emerald-600">
                 <TrendingUp className="w-3.5 h-3.5" />
-                <span>+2.1% YoY across all faculties</span>
+                <span>+2.1% YoY</span>
               </div>
             </div>
           </div>
 
           {/* Card 4: Publishing Queue */}
-          <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-5">
+          <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-3.5 sm:p-5">
             <div className="flex items-center justify-between">
               <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
                 Publishing Queue
               </span>
-              <div className="w-10 h-10 rounded-xl bg-amber-50 flex items-center justify-center text-amber-600">
-                <AlertCircle className="w-5 h-5" />
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-amber-50 flex items-center justify-center text-amber-600 shrink-0">
+                <AlertCircle className="w-4 h-4 sm:w-5 sm:h-5" />
               </div>
             </div>
-            <div className="mt-3">
+            <div className="mt-2.5 sm:mt-3">
               <div className="flex items-baseline gap-2">
-                <span className="text-2xl font-bold tracking-tight text-slate-900">3 Batches</span>
-                <span className="text-xs font-semibold px-2 py-0.5 rounded-md bg-amber-50 text-amber-700 border border-amber-200">
+                <span className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900">3 Batches</span>
+                <span className="text-xs font-semibold px-1.5 py-0.5 rounded-md bg-amber-50 text-amber-700 border border-amber-200">
                   1,240 Slips
                 </span>
               </div>
-              <div className="mt-2 flex items-center justify-between text-xs text-slate-500 font-medium">
-                <span>Pending Dean Sign-off</span>
-                <span className="text-indigo-600 font-semibold">Ready to Sync</span>
+              <div className="mt-1.5 sm:mt-2 flex items-center justify-between text-xs text-slate-500 font-medium">
+                <span>Dean Sign-off</span>
+                <span className="text-indigo-600 font-semibold">Ready</span>
               </div>
             </div>
           </div>
@@ -636,10 +634,10 @@ export default function ExamsPage() {
               </div>
 
               {/* Data Table */}
-              <div className="overflow-x-auto">
-                <table className="w-full text-left border-collapse text-xs">
+              <div className="overflow-x-auto w-full">
+                <table className="w-full text-left border-collapse text-xs min-w-[700px]">
                   <thead>
-                    <tr className="bg-slate-50/80 border-b border-slate-200/80 text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
+                    <tr className="bg-slate-50/80 border-b border-slate-200/80 text-[11px] font-semibold text-slate-500 uppercase tracking-wider whitespace-nowrap">
                       <th className="py-3 px-3">Roll &amp; Candidate</th>
                       <th className="py-3 px-2 text-center w-24">Theory (70)</th>
                       <th className="py-3 px-2 text-center w-24">Internal (30)</th>
