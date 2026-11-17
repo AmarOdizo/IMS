@@ -31,7 +31,16 @@ import {
   Users,
   ChevronRight,
   Flame,
-  Info
+  Info,
+  Filter,
+  ArrowUpRight,
+  Share2,
+  Trash2,
+  Copy,
+  ExternalLink,
+  ShieldCheck,
+  Sparkles,
+  Wifi
 } from "lucide-react";
 
 interface Notice {
@@ -201,17 +210,17 @@ export default function CampusNoticesPage() {
   const [selectedNotice, setSelectedNotice] = useState<Notice>(INITIAL_NOTICES[0]);
   const [activeCadreTab, setActiveCadreTab] = useState<"all" | "student" | "faculty" | "exam" | "emergency" | "archive">("all");
   const [activeStudioTab, setActiveStudioTab] = useState<"letterhead" | "studio" | "dispatch">("letterhead");
-  
+
   // Search & Filters
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedAudience, setSelectedAudience] = useState("all");
   const [selectedDept, setSelectedDept] = useState("all");
   const [selectedPriority, setSelectedPriority] = useState("all");
   const [selectedChannel, setSelectedChannel] = useState("all");
-  
+
   // Selection
   const [selectedNoticeIds, setSelectedNoticeIds] = useState<string[]>([INITIAL_NOTICES[0].id]);
-  
+
   // Modals
   const [isDraftModalOpen, setIsDraftModalOpen] = useState(false);
   const [isEmergencyModalOpen, setIsEmergencyModalOpen] = useState(false);
@@ -235,7 +244,7 @@ export default function CampusNoticesPage() {
 
   const showToast = (msg: string) => {
     setToastMessage(msg);
-    setTimeout(() => setToastMessage(null), 3000);
+    setTimeout(() => setToastMessage(null), 3200);
   };
 
   // Filter Notices
@@ -353,326 +362,284 @@ export default function CampusNoticesPage() {
     showToast("CRIMSON EMERGENCY BROADCAST DISPATCHED TO ALL CHANNELS!");
   };
 
+  const getPriorityBadgeClass = (priority: Notice["priority"]) => {
+    switch (priority) {
+      case "URGENT":
+      case "EMERGENCY":
+        return "bg-rose-50 text-rose-700 border-rose-200/80";
+      case "HIGH":
+        return "bg-amber-50 text-amber-700 border-amber-200/80";
+      case "REGULATION":
+        return "bg-blue-50 text-blue-700 border-blue-200/80";
+      case "FACULTY":
+        return "bg-purple-50 text-purple-700 border-purple-200/80";
+      case "FEES":
+        return "bg-emerald-50 text-emerald-700 border-emerald-200/80";
+      case "MAINTENANCE":
+      default:
+        return "bg-slate-100 text-slate-700 border-slate-200/80";
+    }
+  };
+
   return (
-    <div className="flex flex-col w-full pb-16">
+    <div className="min-h-screen bg-slate-50/60 pb-16">
       {/* Toast Notification */}
       {toastMessage && (
-        <div className="fixed bottom-6 right-6 z-50 bg-primary text-on-primary px-4 py-3 shadow-xl border border-secondary flex items-center gap-3">
-          <CheckCircle2 className="w-5 h-5 text-secondary" />
-          <span className="font-mono-data text-body-sm font-semibold">{toastMessage}</span>
+        <div className="fixed bottom-6 right-6 z-50 bg-slate-900 text-white px-4 py-3 rounded-xl shadow-xl border border-slate-700 flex items-center gap-3 animate-in fade-in slide-in-from-bottom-2">
+          <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0" />
+          <span className="text-sm font-medium">{toastMessage}</span>
         </div>
       )}
 
-      {/* Sub-Header & Breadcrumbs Command Bar */}
-      <div className="bg-surface-container-lowest border-b border-outline-variant/30 px-gutter-desktop py-space-md shadow-sm">
-        <div className="flex flex-col xl:flex-row xl:items-center xl:justify-between gap-space-md">
-          <div className="flex flex-col gap-1">
-            <nav className="flex items-center gap-1.5 font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">
-              <span className="hover:text-on-surface cursor-pointer">INSTITUTIONAL COMMAND</span>
-              <ChevronRight className="w-3.5 h-3.5" />
-              <span className="hover:text-on-surface cursor-pointer">REGISTRAR & CAMPUS COMMUNICATIONS</span>
-              <ChevronRight className="w-3.5 h-3.5" />
-              <span className="text-primary font-semibold">CAMPUS NOTICES & CIRCULAR DISPATCH</span>
-            </nav>
-            <div className="flex items-baseline gap-space-sm">
-              <h1 className="font-headline-lg text-headline-lg uppercase text-primary tracking-tight font-bold">
-                Notices & Campus Bulletins
-              </h1>
-              <span className="font-mono-data text-mono-data text-secondary px-2 py-0.5 bg-surface-container-high border border-outline-variant/40 font-semibold">
-                CONSOLE ID: CTL-NOTICES-09
+      {/* Main Container */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 space-y-6">
+        {/* Hero Header */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <div className="flex items-center gap-2.5">
+              <h1 className="text-2xl font-bold tracking-tight text-slate-900">Notices & Bulletins</h1>
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200/80">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                Broadcast Channels Active
               </span>
             </div>
-            <p className="font-body-sm text-body-sm text-on-surface-variant">
-              Institutional Circulars, Emergency Broadcasts, Academic Notifications & Multi-Channel Dispatch Ledger
+            <p className="text-sm text-slate-500 mt-1">
+              Institutional circulars, emergency advisories, academic notifications & multi-channel dispatch ledger.
             </p>
           </div>
 
-          {/* Quick Header Actions */}
-          <div className="flex flex-wrap items-center gap-space-xs">
-            <button
-              onClick={() => setIsDraftModalOpen(true)}
-              className="inline-flex items-center gap-1.5 px-space-md py-2 bg-primary-container text-on-primary font-label-md text-label-md uppercase tracking-wider border border-primary-container hover:bg-primary shadow-sm transition-colors"
-            >
-              <PlusCircle className="w-4 h-4" />
-              <span>+ Draft New Notice</span>
-            </button>
+          <div className="flex items-center gap-2.5 flex-wrap">
             <button
               onClick={() => setIsScheduledQueueOpen(true)}
-              className="inline-flex items-center gap-1.5 px-space-md py-2 bg-surface-container-lowest text-primary font-label-md text-label-md uppercase tracking-wider border border-outline-variant/60 hover:bg-surface-container-low transition-colors shadow-sm"
+              className="inline-flex items-center gap-2 px-3.5 py-2 text-xs font-semibold text-slate-700 bg-white border border-slate-200 rounded-xl hover:bg-slate-50 hover:border-slate-300 shadow-xs transition-all"
             >
-              <Clock className="w-4 h-4 text-secondary" />
+              <Clock className="w-4 h-4 text-indigo-600" />
               <span>Scheduled Queue (4)</span>
             </button>
             <button
               onClick={() => setIsBroadcastConfigOpen(true)}
-              className="inline-flex items-center gap-1.5 px-space-md py-2 bg-surface-container-lowest text-primary font-label-md text-label-md uppercase tracking-wider border border-outline-variant/60 hover:bg-surface-container-low transition-colors shadow-sm"
+              className="inline-flex items-center gap-2 px-3.5 py-2 text-xs font-semibold text-slate-700 bg-white border border-slate-200 rounded-xl hover:bg-slate-50 hover:border-slate-300 shadow-xs transition-all"
             >
-              <Radio className="w-4 h-4 text-secondary" />
+              <Radio className="w-4 h-4 text-indigo-600" />
               <span>Broadcast Config</span>
             </button>
             <button
-              onClick={() => showToast("Archived audit logs exported as encrypted ZIP digest.")}
-              className="inline-flex items-center gap-1.5 px-space-md py-2 bg-surface-container-lowest text-primary font-label-md text-label-md uppercase tracking-wider border border-outline-variant/60 hover:bg-surface-container-low transition-colors shadow-sm"
+              onClick={() => setIsEmergencyModalOpen(true)}
+              className="inline-flex items-center gap-2 px-3.5 py-2 text-xs font-semibold text-rose-700 bg-rose-50 border border-rose-200 rounded-xl hover:bg-rose-100 shadow-xs transition-all"
             >
-              <Download className="w-4 h-4 text-secondary" />
-              <span>Audit Archive</span>
+              <AlertTriangle className="w-4 h-4 text-rose-600" />
+              <span>Emergency Alert</span>
+            </button>
+            <button
+              onClick={() => setIsDraftModalOpen(true)}
+              className="inline-flex items-center gap-2 px-4 py-2 text-xs font-semibold text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl shadow-xs transition-all"
+            >
+              <PlusCircle className="w-4 h-4" />
+              <span>Draft New Notice</span>
             </button>
           </div>
         </div>
-      </div>
 
-      {/* Main Canvas Container */}
-      <div className="p-gutter-desktop space-y-gutter-desktop">
-        {/* Top KPI Telemetry Grid (4 Tiles) */}
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-gutter">
-          {/* Card 1 */}
-          <div className="bg-surface-container-lowest border border-outline-variant/40 shadow-sm p-space-md relative overflow-hidden flex flex-col justify-between">
-            <div className="absolute left-0 top-0 bottom-0 w-1 bg-secondary"></div>
-            <div>
-              <div className="flex items-center justify-between mb-1">
-                <span className="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-semibold">
-                  Active Published Notices
-                </span>
-                <Megaphone className="w-5 h-5 text-secondary" />
+        {/* 4 Standard Redesigned KPI Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {/* Card 1: Active Published Notices */}
+          <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-5 hover:border-slate-300 transition-all">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                Active Published Notices
+              </span>
+              <div className="w-10 h-10 rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600">
+                <Megaphone className="w-5 h-5" />
               </div>
-              <div className="flex items-baseline gap-2">
-                <span className="font-headline-lg text-headline-lg text-primary font-bold tracking-tight">28</span>
-                <span className="font-label-md text-label-md text-on-surface-variant font-medium">Active Bulletins</span>
-              </div>
-              <p className="font-body-sm text-body-sm text-on-surface-variant mt-1">
-                Institutional: 12 • Dept: 11 • Emergency: 1
-              </p>
             </div>
-            <div className="mt-space-md pt-2 border-t border-outline-variant/30 flex items-center justify-between">
-              <span className="inline-flex items-center gap-1 font-mono-data text-mono-data text-error font-semibold">
-                <Hourglass className="w-3.5 h-3.5" />
-                4 Expiring &lt; 48h
-              </span>
-              <span className="font-label-sm text-label-sm uppercase text-secondary font-semibold cursor-pointer hover:underline">
-                VIEW EXPY
-              </span>
+            <div className="mt-3">
+              <div className="text-2xl font-bold tracking-tight text-slate-900 tabular-nums">
+                {notices.length} <span className="text-xs font-normal text-slate-500">Active</span>
+              </div>
+              <div className="mt-2 flex items-center justify-between text-xs font-medium text-slate-500">
+                <span>12 Inst • 11 Dept • 1 Alert</span>
+                <span className="inline-flex items-center gap-1 text-amber-600 font-semibold">
+                  <Hourglass className="w-3.5 h-3.5" />
+                  4 Expiring &lt; 48h
+                </span>
+              </div>
             </div>
           </div>
 
-          {/* Card 2 */}
-          <div className="bg-surface-container-lowest border border-outline-variant/40 shadow-sm p-space-md relative overflow-hidden flex flex-col justify-between">
-            <div className="absolute left-0 top-0 bottom-0 w-1 bg-secondary"></div>
-            <div>
-              <div className="flex items-center justify-between mb-1">
-                <span className="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-semibold">
-                  Dispatch Reach & Engagement
-                </span>
-                <Eye className="w-5 h-5 text-secondary" />
-              </div>
-              <div className="flex items-baseline gap-2">
-                <span className="font-headline-lg text-headline-lg text-primary font-bold tracking-tight">96.4%</span>
-                <span className="font-label-md text-label-md text-secondary font-medium">Cumulative</span>
-              </div>
-              <p className="font-body-sm text-body-sm text-on-surface-variant mt-1">
-                Portal: 3,740 / 3,892 read • Mobile: 91.2%
-              </p>
-            </div>
-            <div className="mt-space-md pt-2 border-t border-outline-variant/30 flex items-center justify-between">
-              <span className="inline-flex items-center gap-1 font-mono-data text-mono-data text-primary">
-                <Clock className="w-3.5 h-3.5 text-secondary" />
-                Mean read time: 3.8 hrs
+          {/* Card 2: Dispatch Reach & Engagement */}
+          <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-5 hover:border-slate-300 transition-all">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                Dispatch Reach & Engagement
               </span>
-              <span className="h-2 w-2 rounded-full bg-secondary"></span>
+              <div className="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600">
+                <Eye className="w-5 h-5" />
+              </div>
+            </div>
+            <div className="mt-3">
+              <div className="text-2xl font-bold tracking-tight text-slate-900 tabular-nums">
+                96.4% <span className="text-xs font-normal text-slate-500">Cumulative</span>
+              </div>
+              <div className="mt-2 flex items-center justify-between text-xs text-slate-500 font-medium">
+                <span className="text-emerald-600 font-semibold">Portal: 3,740 / 3,892</span>
+                <span>Mean: 3.8 hrs</span>
+              </div>
             </div>
           </div>
 
-          {/* Card 3 */}
-          <div className="bg-surface-container-lowest border border-outline-variant/40 shadow-sm p-space-md relative overflow-hidden flex flex-col justify-between">
-            <div className="absolute left-0 top-0 bottom-0 w-1 bg-secondary"></div>
-            <div>
-              <div className="flex items-center justify-between mb-1">
-                <span className="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-semibold">
-                  SMS & Email Gateway Outbox
-                </span>
-                <Send className="w-5 h-5 text-secondary" />
-              </div>
-              <div className="flex items-baseline gap-2">
-                <span className="font-headline-lg text-headline-lg text-primary font-bold tracking-tight">14,820</span>
-                <span className="font-label-md text-label-md text-on-surface-variant font-medium">Delivered</span>
-              </div>
-              <p className="font-body-sm text-body-sm text-on-surface-variant mt-1">
-                SMS Rate: 99.4% • Email Open Rate: 84.6%
-              </p>
-            </div>
-            <div className="mt-space-md pt-2 border-t border-outline-variant/30 flex items-center justify-between">
-              <span className="inline-flex items-center gap-1 font-mono-data text-mono-data text-secondary font-semibold">
-                <CheckCircle2 className="w-3.5 h-3.5" />
-                All gateways green • 0 bounces
+          {/* Card 3: SMS & Email Outbox */}
+          <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-5 hover:border-slate-300 transition-all">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                Gateway Outbox Total
               </span>
-              <span className="font-label-sm text-label-sm text-on-surface-variant">SN-RELAY</span>
+              <div className="w-10 h-10 rounded-xl bg-sky-50 flex items-center justify-center text-sky-600">
+                <Send className="w-5 h-5" />
+              </div>
+            </div>
+            <div className="mt-3">
+              <div className="text-2xl font-bold tracking-tight text-slate-900 tabular-nums">
+                14,820 <span className="text-xs font-normal text-slate-500">Dispatches</span>
+              </div>
+              <div className="mt-2 flex items-center justify-between text-xs text-slate-500 font-medium">
+                <span>SMS: 99.4% • Email: 84.6%</span>
+                <span className="text-emerald-600 font-semibold">0 Bounces</span>
+              </div>
             </div>
           </div>
 
-          {/* Card 4 */}
-          <div className="bg-surface-container-lowest border border-outline-variant/40 shadow-sm p-space-md relative overflow-hidden flex flex-col justify-between">
-            <div className="absolute left-0 top-0 bottom-0 w-1 bg-error"></div>
-            <div>
-              <div className="flex items-center justify-between mb-1">
-                <span className="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-semibold">
-                  Pending Dean & Registrar Sign-Off
-                </span>
-                <AlertTriangle className="w-5 h-5 text-error" />
-              </div>
-              <div className="flex items-baseline gap-2">
-                <span className="font-headline-lg text-headline-lg text-primary font-bold tracking-tight">3</span>
-                <span className="font-label-md text-label-md text-error font-medium">In Queue</span>
-              </div>
-              <p className="font-body-sm text-body-sm text-on-surface-variant mt-1">
-                2 Academic Senate • 1 Fee Ledger Memo
-              </p>
-            </div>
-            <div className="mt-space-md pt-2 border-t border-outline-variant/30 flex items-center justify-between">
-              <span className="inline-flex items-center gap-1 font-mono-data text-mono-data text-error font-semibold">
-                <AlertTriangle className="w-3.5 h-3.5" />
-                Urgent Review Required
+          {/* Card 4: Pending Sign-Off */}
+          <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-5 hover:border-slate-300 transition-all">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                Pending Dean Sign-Off
               </span>
-              <button
-                onClick={() => showToast("Authorizing Dean signature token for 3 pending notices.")}
-                className="font-label-sm text-label-sm uppercase bg-error/10 text-error px-2 py-0.5 hover:bg-error hover:text-on-error transition-colors font-bold"
-              >
-                AUTHORIZE
-              </button>
+              <div className="w-10 h-10 rounded-xl bg-rose-50 flex items-center justify-center text-rose-600">
+                <AlertTriangle className="w-5 h-5" />
+              </div>
+            </div>
+            <div className="mt-3">
+              <div className="text-2xl font-bold tracking-tight text-slate-900 tabular-nums">
+                3 <span className="text-xs font-normal text-slate-500">In Queue</span>
+              </div>
+              <div className="mt-2 flex items-center justify-between text-xs font-medium">
+                <span className="text-slate-500">2 Senate • 1 Fee Memo</span>
+                <button
+                  onClick={() => showToast("Authorizing Dean signature token for 3 pending notices...")}
+                  className="px-2 py-0.5 rounded-lg bg-rose-50 text-rose-700 hover:bg-rose-100 font-semibold transition-colors"
+                >
+                  AUTHORIZE
+                </button>
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Filter & Cadre Categorization Matrix */}
-        <div className="bg-surface-container-lowest border border-outline-variant/40 shadow-sm">
+        {/* Cadre Navigation Ribbon & Filters */}
+        <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-4 space-y-4">
           {/* Cadre Tabs */}
-          <div className="flex border-b border-outline-variant/30 overflow-x-auto">
-            <button
-              onClick={() => setActiveCadreTab("all")}
-              className={`px-space-md py-3 font-label-md text-label-md uppercase tracking-wider flex items-center gap-2 whitespace-nowrap transition-colors ${
-                activeCadreTab === "all"
-                  ? "border-b-2 border-primary text-primary font-bold bg-surface-container-low"
-                  : "text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low"
-              }`}
-            >
-              <span>All Notices</span>
-              <span className="px-1.5 py-0.5 bg-primary text-on-primary text-label-sm font-mono-data font-bold">28</span>
-            </button>
-            <button
-              onClick={() => setActiveCadreTab("student")}
-              className={`px-space-md py-3 font-label-md text-label-md uppercase tracking-wider flex items-center gap-2 whitespace-nowrap transition-colors ${
-                activeCadreTab === "student"
-                  ? "border-b-2 border-primary text-primary font-bold bg-surface-container-low"
-                  : "text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low"
-              }`}
-            >
-              <span>Student Only</span>
-              <span className="px-1.5 py-0.5 bg-surface-container text-on-surface-variant text-label-sm font-mono-data font-semibold">14</span>
-            </button>
-            <button
-              onClick={() => setActiveCadreTab("faculty")}
-              className={`px-space-md py-3 font-label-md text-label-md uppercase tracking-wider flex items-center gap-2 whitespace-nowrap transition-colors ${
-                activeCadreTab === "faculty"
-                  ? "border-b-2 border-primary text-primary font-bold bg-surface-container-low"
-                  : "text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low"
-              }`}
-            >
-              <span>Faculty & Staff</span>
-              <span className="px-1.5 py-0.5 bg-surface-container text-on-surface-variant text-label-sm font-mono-data font-semibold">8</span>
-            </button>
-            <button
-              onClick={() => setActiveCadreTab("exam")}
-              className={`px-space-md py-3 font-label-md text-label-md uppercase tracking-wider flex items-center gap-2 whitespace-nowrap transition-colors ${
-                activeCadreTab === "exam"
-                  ? "border-b-2 border-primary text-primary font-bold bg-surface-container-low"
-                  : "text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low"
-              }`}
-            >
-              <span>Examination & Datesheet</span>
-              <span className="px-1.5 py-0.5 bg-surface-container text-on-surface-variant text-label-sm font-mono-data font-semibold">4</span>
-            </button>
-            <button
-              onClick={() => setActiveCadreTab("emergency")}
-              className={`px-space-md py-3 font-label-md text-label-md uppercase tracking-wider flex items-center gap-2 whitespace-nowrap transition-colors ${
-                activeCadreTab === "emergency"
-                  ? "border-b-2 border-error text-error font-bold bg-error-container/30"
-                  : "text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low"
-              }`}
-            >
-              <span>Emergency & Advisory</span>
-              <span className="px-1.5 py-0.5 bg-error-container text-error text-label-sm font-mono-data font-bold">2</span>
-            </button>
-            <button
-              onClick={() => setActiveCadreTab("archive")}
-              className={`px-space-md py-3 font-label-md text-label-md uppercase tracking-wider flex items-center gap-2 whitespace-nowrap transition-colors ml-auto ${
-                activeCadreTab === "archive"
-                  ? "border-b-2 border-primary text-primary font-bold bg-surface-container-low"
-                  : "text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low"
-              }`}
-            >
-              <span>Archive / Expired</span>
-              <span className="px-1.5 py-0.5 bg-surface-container-high text-on-surface-variant text-label-sm font-mono-data font-semibold">142</span>
-            </button>
+          <div className="flex items-center gap-1.5 overflow-x-auto pb-1 border-b border-slate-100">
+            {[
+              { id: "all", label: "All Notices", count: notices.length },
+              { id: "student", label: "Student Only", count: notices.filter(n => n.cadre === "student").length },
+              { id: "faculty", label: "Faculty & Staff", count: notices.filter(n => n.cadre === "faculty").length },
+              { id: "exam", label: "Exam & Datesheet", count: notices.filter(n => n.cadre === "exam").length },
+              { id: "emergency", label: "Emergency & Advisory", count: notices.filter(n => n.cadre === "emergency").length },
+              { id: "archive", label: "Archive / Expired", count: 142 },
+            ].map(tab => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveCadreTab(tab.id as any)}
+                className={`px-3.5 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all flex items-center gap-2 ${
+                  activeCadreTab === tab.id
+                    ? tab.id === "emergency"
+                      ? "bg-rose-600 text-white shadow-xs"
+                      : "bg-indigo-600 text-white shadow-xs"
+                    : tab.id === "emergency"
+                    ? "text-rose-600 hover:bg-rose-50"
+                    : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
+                }`}
+              >
+                <span>{tab.label}</span>
+                <span
+                  className={`px-1.5 py-0.5 rounded-md text-[10px] font-mono font-bold ${
+                    activeCadreTab === tab.id
+                      ? "bg-white/20 text-white"
+                      : tab.id === "emergency"
+                      ? "bg-rose-100 text-rose-700"
+                      : "bg-slate-100 text-slate-600"
+                  }`}
+                >
+                  {tab.count}
+                </span>
+              </button>
+            ))}
           </div>
 
-          {/* Extended Filter Control Strip */}
-          <div className="p-space-md grid grid-cols-1 md:grid-cols-2 xl:grid-cols-12 gap-space-sm items-center bg-surface-container-low/40">
-            <div className="xl:col-span-4 relative">
-              <Search className="absolute left-space-sm top-2.5 w-4 h-4 text-on-surface-variant" />
+          {/* Extended Filter Ribbon */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-3 items-center">
+            <div className="lg:col-span-4 relative">
+              <Search className="absolute left-3 top-2.5 w-4 h-4 text-slate-400" />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={e => setSearchQuery(e.target.value)}
-                className="w-full bg-surface-container-lowest border border-outline-variant/60 pl-9 pr-3 py-1.5 font-body-sm text-body-sm text-on-surface focus:outline-none focus:border-primary-container placeholder:text-on-surface-variant/60"
-                placeholder="Filter notices by circular ref no., subject keywords, author..."
+                placeholder="Search circular ref no., subject keywords, author..."
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl pl-9 pr-3 py-2 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all"
               />
             </div>
-            <div className="xl:col-span-2">
+
+            <div className="lg:col-span-2">
               <select
                 value={selectedAudience}
                 onChange={e => setSelectedAudience(e.target.value)}
-                className="w-full bg-surface-container-lowest border border-outline-variant/60 px-2 py-1.5 font-body-sm text-body-sm text-on-surface focus:outline-none focus:border-primary-container"
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
               >
-                <option value="all">AUDIENCE: All Audiences</option>
-                <option value="all">Everyone (Campus-Wide)</option>
+                <option value="all">All Audiences</option>
+                <option value="everyone">Everyone (Campus-Wide)</option>
                 <option value="b.tech">Undergraduate (B.Tech)</option>
                 <option value="postgraduate">Postgraduate (M.Sc/MBA)</option>
                 <option value="faculty">Faculty & Teaching Staff</option>
                 <option value="administrative">Administrative Cadre</option>
               </select>
             </div>
-            <div className="xl:col-span-2">
+
+            <div className="lg:col-span-2">
               <select
                 value={selectedDept}
                 onChange={e => setSelectedDept(e.target.value)}
-                className="w-full bg-surface-container-lowest border border-outline-variant/60 px-2 py-1.5 font-body-sm text-body-sm text-on-surface focus:outline-none focus:border-primary-container"
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
               >
-                <option value="all">DEPARTMENT: All Depts</option>
+                <option value="all">All Departments</option>
                 <option value="senate">Academic Senate</option>
                 <option value="coe">Controller of Exams</option>
-                <option value="bursar">Bursar & Student Accounts</option>
+                <option value="bursar">Bursar & Accounts</option>
                 <option value="research">Dean of Research</option>
                 <option value="facilities">Campus Security</option>
               </select>
             </div>
-            <div className="xl:col-span-2">
+
+            <div className="lg:col-span-2">
               <select
                 value={selectedPriority}
                 onChange={e => setSelectedPriority(e.target.value)}
-                className="w-full bg-surface-container-lowest border border-outline-variant/60 px-2 py-1.5 font-body-sm text-body-sm text-on-surface focus:outline-none focus:border-primary-container"
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
               >
-                <option value="all">PRIORITY: All Priorities</option>
-                <option value="URGENT">Crimson / Urgent Priority</option>
+                <option value="all">All Priorities</option>
+                <option value="URGENT">Urgent Action</option>
                 <option value="HIGH">High Priority</option>
                 <option value="REGULATION">Academic Regulation</option>
                 <option value="EMERGENCY">Emergency Advisory</option>
               </select>
             </div>
-            <div className="xl:col-span-2 flex items-center gap-space-xs">
+
+            <div className="lg:col-span-2 flex items-center gap-2">
               <select
                 value={selectedChannel}
                 onChange={e => setSelectedChannel(e.target.value)}
-                className="w-full bg-surface-container-lowest border border-outline-variant/60 px-2 py-1.5 font-body-sm text-body-sm text-on-surface focus:outline-none focus:border-primary-container"
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
               >
-                <option value="all">CHANNEL: All Channels</option>
+                <option value="all">All Channels</option>
                 <option value="portal">Web Portal + Mobile</option>
                 <option value="sms">SMS Gateway Only</option>
                 <option value="kiosk">Noticeboard Kiosk</option>
@@ -685,8 +652,8 @@ export default function CampusNoticesPage() {
                   setSelectedPriority("all");
                   setSelectedChannel("all");
                 }}
-                className="px-2.5 py-1.5 bg-surface-container-lowest border border-outline-variant/60 hover:bg-surface-container text-on-surface-variant hover:text-on-surface transition-colors"
                 title="Reset Filters"
+                className="p-2 text-slate-500 hover:text-slate-800 bg-slate-50 border border-slate-200 rounded-xl hover:bg-slate-100 transition-colors shrink-0"
               >
                 <RotateCcw className="w-4 h-4" />
               </button>
@@ -694,51 +661,49 @@ export default function CampusNoticesPage() {
           </div>
         </div>
 
-        {/* Main Body Split Layout: Ledger & Interactive Inspector Studio */}
-        <div className="grid grid-cols-1 xl:grid-cols-12 gap-gutter items-start">
-          {/* LEFT COLUMN: Master Notices & Circulars Ledger Table (7 of 12 cols / ~58-60%) */}
-          <div className="xl:col-span-7 bg-surface-container-lowest border border-outline-variant/40 shadow-sm flex flex-col">
-            {/* Table Action Header Bar */}
-            <div className="p-space-md border-b border-outline-variant/30 flex flex-wrap items-center justify-between gap-space-sm bg-surface-container-low/20">
-              <div className="flex items-center gap-space-md">
-                <label className="inline-flex items-center gap-2 cursor-pointer font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-semibold">
+        {/* Main Body Split Layout: Master Notices Ledger (7 cols) vs Interactive Inspector Studio (5 cols) */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+          {/* LEFT COLUMN: Master Notices & Circulars Ledger Table (7 of 12 cols / ~58%) */}
+          <div className="lg:col-span-7 bg-white rounded-2xl border border-slate-200/80 shadow-xs overflow-hidden flex flex-col">
+            {/* Table Action Bar */}
+            <div className="p-4 border-b border-slate-100 flex flex-wrap items-center justify-between gap-3 bg-slate-50/50">
+              <div className="flex items-center gap-3">
+                <label className="inline-flex items-center gap-2 cursor-pointer text-xs font-semibold text-slate-700">
                   <input
                     type="checkbox"
                     checked={selectedNoticeIds.length > 0 && selectedNoticeIds.length === filteredNotices.length}
                     onChange={e => handleSelectAll(e.target.checked)}
-                    className="w-4 h-4 rounded-none accent-primary border-outline cursor-pointer"
+                    className="w-4 h-4 rounded text-indigo-600 focus:ring-indigo-500 border-slate-300"
                   />
                   <span>Select All</span>
                 </label>
-                <div className="h-4 w-px bg-outline-variant/40"></div>
-                <div className="flex items-center gap-1">
+                <div className="h-4 w-px bg-slate-200" />
+                <div className="flex items-center gap-1.5">
                   <button
                     onClick={() => showToast(`Published ${selectedNoticeIds.length} notices to live channels.`)}
-                    className="px-2 py-1 bg-surface-container-lowest border border-outline-variant/60 text-on-surface font-label-sm text-label-sm uppercase hover:bg-surface-container-low transition-colors"
+                    className="px-2.5 py-1 text-xs font-semibold text-slate-700 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors shadow-2xs"
                   >
                     Publish
                   </button>
                   <button
                     onClick={() => showToast(`Archived ${selectedNoticeIds.length} notices.`)}
-                    className="px-2 py-1 bg-surface-container-lowest border border-outline-variant/60 text-on-surface font-label-sm text-label-sm uppercase hover:bg-surface-container-low transition-colors"
+                    className="px-2.5 py-1 text-xs font-semibold text-slate-700 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors shadow-2xs"
                   >
                     Archive
                   </button>
                   <button
                     onClick={() => showToast(`Generating PDF Digest for ${selectedNoticeIds.length} items.`)}
-                    className="px-2 py-1 bg-surface-container-lowest border border-outline-variant/60 text-on-surface font-label-sm text-label-sm uppercase hover:bg-surface-container-low transition-colors"
+                    className="px-2.5 py-1 text-xs font-semibold text-slate-700 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors shadow-2xs"
                   >
                     PDF Digest
                   </button>
                 </div>
               </div>
-              <div className="flex items-center gap-2">
-                <span className="font-mono-data text-mono-data text-on-surface-variant">
-                  Showing {filteredNotices.length} of 28 Active Bulletins
+
+              <div className="flex items-center gap-2 text-xs text-slate-500">
+                <span className="font-mono">
+                  Showing {filteredNotices.length} of {notices.length} Notices
                 </span>
-                <button className="p-1 hover:bg-surface-container text-on-surface-variant hover:text-on-surface">
-                  <Sliders className="w-4 h-4" />
-                </button>
               </div>
             </div>
 
@@ -746,59 +711,36 @@ export default function CampusNoticesPage() {
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse">
                 <thead>
-                  <tr className="bg-surface-container-low border-b border-outline-variant/40">
-                    <th className="w-10 px-3 py-2 text-center">
-                      <span className="sr-only">Row Select</span>
+                  <tr className="bg-slate-50/80 border-b border-slate-200/80 text-[11px] font-bold text-slate-500 uppercase tracking-wider">
+                    <th className="w-10 px-3 py-3 text-center">
+                      <span className="sr-only">Select</span>
                     </th>
-                    <th className="px-3 py-2.5 font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">
-                      Circular Ref & Priority
-                    </th>
-                    <th className="px-3 py-2.5 font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">
-                      Title & Notice Summary
-                    </th>
-                    <th className="px-3 py-2.5 font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">
-                      Target Audience
-                    </th>
-                    <th className="px-3 py-2.5 font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">
-                      Dispatched Channels
-                    </th>
-                    <th className="px-3 py-2.5 font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">
-                      Published / Expiry
-                    </th>
-                    <th className="px-3 py-2.5 font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">
-                      Read Reach
-                    </th>
-                    <th className="w-20 px-3 py-2.5 text-right font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">
-                      Actions
-                    </th>
+                    <th className="px-3 py-3">Circular Ref</th>
+                    <th className="px-3 py-3">Title & Summary</th>
+                    <th className="px-3 py-3">Audience</th>
+                    <th className="px-3 py-3">Channels</th>
+                    <th className="px-3 py-3">Valid Until</th>
+                    <th className="px-3 py-3">Reach</th>
+                    <th className="w-16 px-3 py-3 text-right">Actions</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-outline-variant/20 font-body-sm text-body-sm text-on-surface">
+                <tbody className="divide-y divide-slate-100 text-xs">
                   {filteredNotices.map(notice => {
                     const isSelected = selectedNotice.id === notice.id;
                     const isChecked = selectedNoticeIds.includes(notice.id);
-
-                    const badgeColor =
-                      notice.priority === "URGENT" || notice.priority === "EMERGENCY"
-                        ? "bg-error text-on-error"
-                        : notice.priority === "HIGH"
-                        ? "bg-secondary-container text-on-secondary-container"
-                        : notice.priority === "FACULTY"
-                        ? "bg-primary-container text-on-primary"
-                        : "bg-surface-container-highest text-primary";
 
                     return (
                       <tr
                         key={notice.id}
                         onClick={() => setSelectedNotice(notice)}
-                        className={`transition-colors cursor-pointer ${
+                        className={`cursor-pointer transition-colors ${
                           isSelected
-                            ? "bg-primary/5 hover:bg-primary/10 border-l-4 border-primary"
-                            : "hover:bg-surface-container-low/60"
+                            ? "bg-indigo-50/60 hover:bg-indigo-50 border-l-4 border-indigo-600"
+                            : "hover:bg-slate-50/70"
                         }`}
                       >
                         <td
-                          className="px-3 py-3 text-center"
+                          className="px-3 py-3.5 text-center"
                           onClick={e => {
                             e.stopPropagation();
                             toggleSelectNotice(notice.id);
@@ -808,98 +750,92 @@ export default function CampusNoticesPage() {
                             type="checkbox"
                             checked={isChecked}
                             onChange={() => toggleSelectNotice(notice.id)}
-                            className="w-3.5 h-3.5 rounded-none accent-primary border-outline"
+                            className="w-4 h-4 rounded text-indigo-600 focus:ring-indigo-500 border-slate-300"
                           />
                         </td>
-                        <td className="px-3 py-3 align-top whitespace-nowrap">
+                        <td className="px-3 py-3.5 align-top whitespace-nowrap">
                           <div className="flex flex-col gap-1">
-                            <span className="font-mono-data text-mono-data font-bold text-primary">
-                              {notice.refNo}
-                            </span>
-                            <span className={`inline-block px-1.5 py-0.5 font-label-sm text-label-sm font-semibold tracking-wider text-center ${badgeColor}`}>
+                            <span className="font-mono font-bold text-slate-900">{notice.refNo}</span>
+                            <span
+                              className={`inline-block px-2 py-0.5 rounded-md text-[10px] font-bold border tracking-wider text-center ${getPriorityBadgeClass(
+                                notice.priority
+                              )}`}
+                            >
                               {notice.priorityLabel}
                             </span>
                           </div>
                         </td>
-                        <td className="px-3 py-3 align-top max-w-xs">
+                        <td className="px-3 py-3.5 align-top max-w-xs">
                           <div className="flex flex-col">
-                            <span className="font-headline-sm text-body-md font-bold text-primary hover:underline">
+                            <span className="font-semibold text-slate-900 line-clamp-1 hover:text-indigo-600 transition-colors">
                               {notice.title}
                             </span>
-                            <span className="font-label-sm text-label-sm text-secondary font-medium">
-                              By: {notice.author}
-                            </span>
-                            <p className="text-on-surface-variant line-clamp-2 mt-1 font-body-sm text-body-sm">
+                            <span className="text-[11px] text-slate-400 font-medium">By: {notice.author}</span>
+                            <p className="text-slate-500 line-clamp-2 mt-1 text-[11px] leading-relaxed">
                               {notice.summary}
                             </p>
                           </div>
                         </td>
-                        <td className="px-3 py-3 align-top whitespace-nowrap">
-                          <span className="font-mono-data text-mono-data text-primary font-medium">
-                            {notice.audience}
-                          </span>
-                          <div className="text-on-surface-variant text-[0.6875rem]">
-                            {notice.enrolledCount}
-                          </div>
+                        <td className="px-3 py-3.5 align-top whitespace-nowrap">
+                          <span className="font-medium text-slate-800">{notice.audience}</span>
+                          <div className="text-[10px] text-slate-400 font-mono mt-0.5">{notice.enrolledCount}</div>
                         </td>
-                        <td className="px-3 py-3 align-top">
-                          <div className="flex items-center gap-1.5 text-on-surface-variant">
+                        <td className="px-3 py-3.5 align-top whitespace-nowrap">
+                          <div className="flex items-center gap-1 text-slate-400">
                             {notice.channels.portal && (
-                              <span title="Web Portal Active">
-                                <Monitor className="w-4 h-4 text-secondary" />
+                              <span title="Web Portal Active" className="p-1 rounded bg-indigo-50 text-indigo-600">
+                                <Monitor className="w-3.5 h-3.5" />
                               </span>
                             )}
                             {notice.channels.app && (
-                              <span title="Mobile App Push Sent">
-                                <Smartphone className="w-4 h-4 text-secondary" />
+                              <span title="Mobile App Push Sent" className="p-1 rounded bg-emerald-50 text-emerald-600">
+                                <Smartphone className="w-3.5 h-3.5" />
                               </span>
                             )}
                             {notice.channels.sms && (
-                              <span title="SMS Gateway Delivered">
-                                <Send className="w-4 h-4 text-secondary" />
+                              <span title="SMS Gateway Delivered" className="p-1 rounded bg-sky-50 text-sky-600">
+                                <Send className="w-3.5 h-3.5" />
                               </span>
                             )}
                             {notice.channels.email && (
-                              <span title="Official Email Sent">
-                                <Mail className="w-4 h-4 text-secondary" />
+                              <span title="Official Email Sent" className="p-1 rounded bg-amber-50 text-amber-600">
+                                <Mail className="w-3.5 h-3.5" />
                               </span>
                             )}
                             {notice.channels.kiosk && (
-                              <span title="Noticeboard Kiosk Active">
-                                <Radio className="w-4 h-4 text-secondary" />
+                              <span title="Noticeboard Kiosk Active" className="p-1 rounded bg-purple-50 text-purple-600">
+                                <Radio className="w-3.5 h-3.5" />
                               </span>
                             )}
                           </div>
                         </td>
-                        <td className="px-3 py-3 align-top whitespace-nowrap">
-                          <div className="font-mono-data text-mono-data">{notice.publishDate}</div>
-                          <div className="text-error font-mono-data text-[0.6875rem] font-medium">
+                        <td className="px-3 py-3.5 align-top whitespace-nowrap">
+                          <div className="font-mono text-slate-700">{notice.publishDate}</div>
+                          <div className="text-rose-600 font-mono text-[10px] font-semibold mt-0.5">
                             Exp: {notice.expiryDate}
                           </div>
                         </td>
-                        <td className="px-3 py-3 align-top whitespace-nowrap">
+                        <td className="px-3 py-3.5 align-top whitespace-nowrap">
                           <div className="flex flex-col gap-1">
-                            <div className="flex items-center justify-between font-mono-data text-mono-data">
-                              <span className="font-bold text-primary">{notice.readReach}%</span>
-                            </div>
-                            <div className="w-16 h-1.5 bg-surface-container-high overflow-hidden">
+                            <span className="font-mono font-bold text-slate-900">{notice.readReach}%</span>
+                            <div className="w-14 h-1.5 bg-slate-100 rounded-full overflow-hidden">
                               <div
-                                className="h-full bg-secondary"
+                                className="h-full bg-emerald-500 rounded-full"
                                 style={{ width: `${notice.readReach}%` }}
-                              ></div>
+                              />
                             </div>
                           </div>
                         </td>
-                        <td className="px-3 py-3 align-top text-right whitespace-nowrap">
-                          <div className="flex items-center justify-end gap-1 text-on-surface-variant">
+                        <td className="px-3 py-3.5 align-top text-right whitespace-nowrap">
+                          <div className="flex items-center justify-end gap-1 text-slate-400">
                             <button
                               onClick={e => {
                                 e.stopPropagation();
                                 setSelectedNotice(notice);
                                 setActiveStudioTab("letterhead");
                               }}
-                              className="p-1 hover:text-primary hover:bg-surface-container"
-                              title="View Live Preview"
+                              className="p-1 rounded-lg hover:text-indigo-600 hover:bg-indigo-50 transition-colors"
+                              title="View Live Letterhead"
                             >
                               <Eye className="w-4 h-4" />
                             </button>
@@ -909,20 +845,10 @@ export default function CampusNoticesPage() {
                                 setSelectedNotice(notice);
                                 setActiveStudioTab("studio");
                               }}
-                              className="p-1 hover:text-primary hover:bg-surface-container"
+                              className="p-1 rounded-lg hover:text-indigo-600 hover:bg-indigo-50 transition-colors"
                               title="Edit Circular"
                             >
                               <Edit className="w-4 h-4" />
-                            </button>
-                            <button
-                              onClick={e => {
-                                e.stopPropagation();
-                                showToast(`Menu opened for ${notice.refNo}`);
-                              }}
-                              className="p-1 hover:text-primary hover:bg-surface-container"
-                              title="Options"
-                            >
-                              <MoreVertical className="w-4 h-4" />
                             </button>
                           </div>
                         </td>
@@ -934,102 +860,100 @@ export default function CampusNoticesPage() {
             </div>
 
             {/* Table Pagination Footer */}
-            <div className="p-space-md border-t border-outline-variant/30 flex flex-wrap items-center justify-between gap-space-sm bg-surface-container-low/20">
-              <span className="font-mono-data text-mono-data text-on-surface-variant">
-                Page 1 of 5 (Total {notices.length} Active Notices)
+            <div className="p-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3 bg-slate-50/50">
+              <span className="text-xs text-slate-500 font-mono">
+                Page 1 of 5 (Total {notices.length} Active Bulletins)
               </span>
-              <div className="inline-flex items-center gap-1 font-label-md text-label-md">
+              <div className="inline-flex items-center gap-1 text-xs">
                 <button
                   disabled
-                  className="px-2.5 py-1 bg-surface-container-lowest border border-outline-variant/60 text-on-surface-variant opacity-50 cursor-not-allowed"
+                  className="px-2.5 py-1 bg-white border border-slate-200 text-slate-400 rounded-lg cursor-not-allowed opacity-50"
                 >
                   Prev
                 </button>
-                <button className="px-3 py-1 bg-primary text-on-primary font-bold border border-primary font-mono-data">
-                  1
-                </button>
-                <button className="px-3 py-1 bg-surface-container-lowest border border-outline-variant/60 hover:bg-surface-container-low text-on-surface font-mono-data">
+                <button className="px-3 py-1 bg-indigo-600 text-white font-bold rounded-lg font-mono">1</button>
+                <button className="px-3 py-1 bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 rounded-lg font-mono">
                   2
                 </button>
-                <button className="px-3 py-1 bg-surface-container-lowest border border-outline-variant/60 hover:bg-surface-container-low text-on-surface font-mono-data">
+                <button className="px-3 py-1 bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 rounded-lg font-mono">
                   3
                 </button>
-                <button className="px-2.5 py-1 bg-surface-container-lowest border border-outline-variant/60 text-on-surface hover:bg-surface-container-low">
+                <button className="px-2.5 py-1 bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 rounded-lg">
                   Next
                 </button>
               </div>
             </div>
           </div>
 
-          {/* RIGHT COLUMN: Interactive Notice Studio & Live Official Bulletin Preview Drawer (5 of 12 cols / ~40-42%) */}
-          <div className="xl:col-span-5 flex flex-col gap-space-md">
+          {/* RIGHT COLUMN: Interactive Notice Studio & Live Official Letterhead Preview (5 of 12 cols / ~42%) */}
+          <div className="lg:col-span-5 flex flex-col gap-5">
             {/* Live Inspector Card Container */}
-            <div className="bg-surface-container-lowest border border-outline-variant/40 shadow-sm flex flex-col">
-              {/* Studio Header Segmented Switcher */}
-              <div className="flex border-b border-outline-variant/30 bg-surface-container-low/30">
+            <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs overflow-hidden flex flex-col">
+              {/* Studio Segmented Switcher */}
+              <div className="flex border-b border-slate-100 bg-slate-50/80 p-1.5 gap-1">
                 <button
                   onClick={() => setActiveStudioTab("letterhead")}
-                  className={`flex-1 py-2.5 px-3 font-label-sm text-label-sm uppercase tracking-wider text-center font-bold flex items-center justify-center gap-1.5 transition-colors ${
+                  className={`flex-1 py-2 px-3 rounded-xl text-xs font-semibold text-center flex items-center justify-center gap-1.5 transition-all ${
                     activeStudioTab === "letterhead"
-                      ? "border-b-2 border-primary text-primary bg-surface-container-lowest"
-                      : "text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low"
+                      ? "bg-white text-indigo-600 shadow-2xs font-bold"
+                      : "text-slate-500 hover:text-slate-900 hover:bg-slate-100"
                   }`}
                 >
-                  <Eye className="w-4 h-4" />
+                  <Eye className="w-3.5 h-3.5" />
                   <span>Official Letterhead</span>
                 </button>
                 <button
                   onClick={() => setActiveStudioTab("studio")}
-                  className={`flex-1 py-2.5 px-3 font-label-sm text-label-sm uppercase tracking-wider text-center font-bold flex items-center justify-center gap-1.5 transition-colors ${
+                  className={`flex-1 py-2 px-3 rounded-xl text-xs font-semibold text-center flex items-center justify-center gap-1.5 transition-all ${
                     activeStudioTab === "studio"
-                      ? "border-b-2 border-primary text-primary bg-surface-container-lowest"
-                      : "text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low"
+                      ? "bg-white text-indigo-600 shadow-2xs font-bold"
+                      : "text-slate-500 hover:text-slate-900 hover:bg-slate-100"
                   }`}
                 >
-                  <Edit className="w-4 h-4" />
+                  <Edit className="w-3.5 h-3.5" />
                   <span>Notice Studio</span>
                 </button>
                 <button
                   onClick={() => setActiveStudioTab("dispatch")}
-                  className={`flex-1 py-2.5 px-3 font-label-sm text-label-sm uppercase tracking-wider text-center font-bold flex items-center justify-center gap-1.5 transition-colors ${
+                  className={`flex-1 py-2 px-3 rounded-xl text-xs font-semibold text-center flex items-center justify-center gap-1.5 transition-all ${
                     activeStudioTab === "dispatch"
-                      ? "border-b-2 border-primary text-primary bg-surface-container-lowest"
-                      : "text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low"
+                      ? "bg-white text-indigo-600 shadow-2xs font-bold"
+                      : "text-slate-500 hover:text-slate-900 hover:bg-slate-100"
                   }`}
                 >
-                  <Radio className="w-4 h-4" />
+                  <Radio className="w-3.5 h-3.5" />
                   <span>Dispatch Matrix</span>
                 </button>
               </div>
 
               {/* TAB 1: FORMAL INSTITUTIONAL LETTERHEAD */}
               {activeStudioTab === "letterhead" && (
-                <div className="p-space-lg bg-surface border-b border-outline-variant/30">
-                  <div className="bg-surface-container-lowest border border-outline-variant/50 p-space-lg shadow-sm relative">
+                <div className="p-5 bg-slate-50/40">
+                  <div className="bg-white rounded-xl border border-slate-200/90 p-5 shadow-xs relative">
                     {/* Letterhead Header Strip */}
-                    <div className="border-b-2 border-primary pb-space-sm mb-space-md">
+                    <div className="border-b-2 border-slate-900 pb-3 mb-4">
                       <div className="flex items-start justify-between">
                         <div className="flex items-center gap-3">
-                          <div className="w-12 h-12 bg-primary flex items-center justify-center text-on-primary">
-                            <Building className="w-7 h-7" />
+                          <div className="w-11 h-11 rounded-xl bg-indigo-600 flex items-center justify-center text-white shrink-0 shadow-xs">
+                            <Building className="w-6 h-6" />
                           </div>
-                          <div className="flex flex-col">
-                            <span className="font-headline-sm text-headline-sm uppercase tracking-tight text-primary font-bold">
+                          <div>
+                            <span className="text-sm font-bold text-slate-900 tracking-tight block">
                               Apex Institute of Technology & Management
                             </span>
-                            <span className="font-label-sm text-label-sm uppercase text-on-surface-variant tracking-wider">
+                            <span className="text-[11px] font-medium text-slate-500 block">
                               Office of Academic Affairs • Autonomous Academic Council
                             </span>
-                            <span className="font-mono-data text-[0.625rem] text-secondary tracking-widest uppercase">
-                              REG. CODE: APX-EDU-AUT-2011 • NORTH CAMPUS
+                            <span className="text-[10px] font-mono text-indigo-600 tracking-wider">
+                              REG: APX-EDU-AUT-2011 • NORTH CAMPUS
                             </span>
                           </div>
                         </div>
                         <div className="text-right">
-                          <span className="font-label-sm text-[0.625rem] uppercase tracking-widest text-on-surface-variant block font-bold">
+                          <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
                             Document Type
                           </span>
-                          <span className="font-mono-data text-mono-data font-bold text-primary">
+                          <span className="text-xs font-bold font-mono text-slate-900">
                             OFFICIAL CIRCULAR
                           </span>
                         </div>
@@ -1037,88 +961,97 @@ export default function CampusNoticesPage() {
                     </div>
 
                     {/* Metadata Bar */}
-                    <div className="grid grid-cols-2 gap-2 pb-space-sm mb-space-md border-b border-outline-variant/30 font-mono-data text-[0.6875rem]">
+                    <div className="grid grid-cols-2 gap-2 pb-3 mb-3 border-b border-slate-100 text-[11px] font-mono">
                       <div>
-                        <span className="text-on-surface-variant uppercase font-semibold">Ref No:</span>
-                        <span className="font-bold text-primary ml-1">{selectedNotice.refNo}</span>
+                        <span className="text-slate-400 uppercase font-semibold">Ref No:</span>
+                        <span className="font-bold text-slate-900 ml-1.5">{selectedNotice.refNo}</span>
                       </div>
                       <div className="text-right">
-                        <span className="text-on-surface-variant uppercase font-semibold">Date of Issue:</span>
-                        <span className="font-bold text-primary ml-1">{selectedNotice.publishDate}</span>
+                        <span className="text-slate-400 uppercase font-semibold">Issue Date:</span>
+                        <span className="font-bold text-slate-900 ml-1.5">{selectedNotice.publishDate}</span>
                       </div>
-                      <div className="col-span-2">
-                        <span className="text-on-surface-variant uppercase font-semibold">Security Digest:</span>
-                        <span className="font-mono-data text-[0.625rem] text-secondary ml-1 font-bold">
-                          {selectedNotice.securityHash}
-                        </span>
+                      <div className="col-span-2 flex items-center justify-between text-[10px] text-slate-400">
+                        <div className="truncate">
+                          <span className="font-semibold">Security Digest: </span>
+                          <span className="font-mono text-indigo-600 font-semibold">{selectedNotice.securityHash}</span>
+                        </div>
+                        <button
+                          onClick={() => {
+                            if (typeof navigator !== "undefined" && navigator.clipboard) {
+                              navigator.clipboard.writeText(selectedNotice.securityHash);
+                            }
+                            showToast("Security digest copied to clipboard.");
+                          }}
+                          className="hover:text-indigo-600 p-0.5 ml-1 shrink-0"
+                          title="Copy Digest"
+                        >
+                          <Copy className="w-3 h-3" />
+                        </button>
                       </div>
                     </div>
 
                     {/* Urgent Action Callout Banner */}
                     {(selectedNotice.priority === "URGENT" || selectedNotice.priority === "EMERGENCY") && (
-                      <div className="bg-error text-on-error px-3 py-1.5 mb-space-md flex items-center justify-between">
-                        <span className="font-label-sm text-label-sm uppercase tracking-widest font-bold flex items-center gap-1.5">
-                          <AlertTriangle className="w-4 h-4" />
-                          ACTION REQUIRED // MANDATORY COMPLIANCE
+                      <div className="bg-rose-50 border border-rose-200/80 rounded-lg p-2.5 mb-3 flex items-center justify-between text-rose-700">
+                        <span className="text-[11px] uppercase font-bold tracking-wider flex items-center gap-1.5">
+                          <AlertTriangle className="w-3.5 h-3.5 text-rose-600" />
+                          Action Required // Mandatory Compliance
                         </span>
-                        <span className="font-mono-data text-[0.6875rem] font-semibold">
+                        <span className="font-mono text-[10px] font-bold text-rose-800">
                           DEADLINE: {selectedNotice.expiryDate}
                         </span>
                       </div>
                     )}
 
                     {/* Circular Subject */}
-                    <div className="mb-space-md">
-                      <span className="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-bold block mb-0.5">
-                        SUBJECT:
+                    <div className="mb-3">
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-0.5">
+                        Subject:
                       </span>
-                      <h2 className="font-headline-sm text-headline-sm text-primary font-bold leading-tight">
+                      <h2 className="text-base font-bold text-slate-900 leading-snug">
                         {selectedNotice.title}
                       </h2>
                     </div>
 
                     {/* Addressed To */}
-                    <div className="mb-space-md p-2 bg-surface-container-low border border-outline-variant/40">
-                      <span className="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-bold block">
+                    <div className="mb-3 p-2.5 rounded-lg bg-slate-50 border border-slate-200/80">
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">
                         Addressed To:
                       </span>
-                      <span className="font-body-sm text-body-sm font-semibold text-primary">
-                        {selectedNotice.audience} • {selectedNotice.enrolledCount}
+                      <span className="text-xs font-semibold text-slate-800">
+                        {selectedNotice.audience} • <span className="font-normal text-slate-500">{selectedNotice.enrolledCount}</span>
                       </span>
                     </div>
 
                     {/* Formal Body Content */}
-                    <div className="space-y-space-sm font-body-sm text-body-sm text-on-surface leading-relaxed text-justify mb-space-lg whitespace-pre-line">
+                    <div className="space-y-2 text-xs text-slate-700 leading-relaxed text-justify mb-5 whitespace-pre-line">
                       {selectedNotice.body}
                     </div>
 
-                    {/* Signatory & Digital Seal Grid */}
-                    <div className="pt-space-md border-t border-outline-variant/40 grid grid-cols-2 items-end">
+                    {/* Signatory & Digital Seal */}
+                    <div className="pt-3 border-t border-slate-100 grid grid-cols-2 items-end">
                       <div className="flex items-center gap-2">
-                        <div className="w-14 h-14 border border-secondary bg-surface-container flex flex-col items-center justify-center p-1 text-center">
-                          <CheckCircle2 className="w-5 h-5 text-secondary" />
-                          <span className="font-label-sm text-[0.5625rem] font-bold text-primary uppercase leading-tight mt-0.5">
-                            Apex Valid Seal
+                        <div className="w-12 h-12 rounded-lg border border-emerald-300 bg-emerald-50 flex flex-col items-center justify-center p-1 text-center shrink-0">
+                          <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                          <span className="text-[8px] font-bold text-emerald-800 uppercase leading-tight mt-0.5">
+                            Apex Seal
                           </span>
                         </div>
-                        <div className="flex flex-col font-mono-data text-[0.625rem] text-on-surface-variant">
-                          <span className="text-secondary font-bold">SECURE SIGNATURE</span>
-                          <span>Token: {selectedNotice.token}</span>
+                        <div className="flex flex-col text-[10px] font-mono text-slate-500">
+                          <span className="text-emerald-700 font-bold">SECURE SIGNATURE</span>
+                          <span className="truncate">Token: {selectedNotice.token}</span>
                           <span>Timestamp: 09:30:14 UTC</span>
                         </div>
                       </div>
                       <div className="text-right flex flex-col items-end">
-                        <div className="font-mono-data text-secondary italic font-semibold text-sm mb-0.5">
+                        <div className="font-serif italic font-bold text-slate-800 text-sm mb-0.5">
                           Margaret Vance
                         </div>
-                        <span className="font-label-md text-label-md text-primary font-bold uppercase">
+                        <span className="text-xs text-slate-900 font-bold uppercase">
                           Dr. Margaret Vance
                         </span>
-                        <span className="font-label-sm text-label-sm text-on-surface-variant uppercase">
-                          Super Admin & Dean of Academic Affairs
-                        </span>
-                        <span className="font-label-sm text-[0.625rem] text-on-surface-variant uppercase">
-                          Apex Institute of Tech & Mgmt
+                        <span className="text-[10px] text-slate-500">
+                          Dean of Academic Affairs
                         </span>
                       </div>
                     </div>
@@ -1128,62 +1061,62 @@ export default function CampusNoticesPage() {
 
               {/* TAB 2: NOTICE STUDIO (LIVE EDITOR) */}
               {activeStudioTab === "studio" && (
-                <div className="p-space-md space-y-space-md bg-surface-container-low/20">
+                <div className="p-5 space-y-4 bg-slate-50/30">
                   <div className="space-y-1">
-                    <label className="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-bold">
+                    <label className="text-xs font-semibold text-slate-700">
                       Subject / Circular Title
                     </label>
                     <input
                       type="text"
                       value={selectedNotice.title}
                       onChange={e => setSelectedNotice({ ...selectedNotice, title: e.target.value })}
-                      className="w-full bg-surface-container-lowest border border-outline-variant/60 p-2 font-body-sm text-body-sm text-on-surface focus:outline-none focus:border-primary"
+                      className="w-full bg-white border border-slate-200 rounded-xl p-2.5 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all"
                     />
                   </div>
 
-                  <div className="grid grid-cols-2 gap-space-sm">
+                  <div className="grid grid-cols-2 gap-3">
                     <div className="space-y-1">
-                      <label className="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-bold">
+                      <label className="text-xs font-semibold text-slate-700">
                         Target Audience
                       </label>
                       <input
                         type="text"
                         value={selectedNotice.audience}
                         onChange={e => setSelectedNotice({ ...selectedNotice, audience: e.target.value })}
-                        className="w-full bg-surface-container-lowest border border-outline-variant/60 p-2 font-body-sm text-body-sm text-on-surface focus:outline-none focus:border-primary"
+                        className="w-full bg-white border border-slate-200 rounded-xl p-2.5 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
                       />
                     </div>
                     <div className="space-y-1">
-                      <label className="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-bold">
+                      <label className="text-xs font-semibold text-slate-700">
                         Expiry Date
                       </label>
                       <input
                         type="text"
                         value={selectedNotice.expiryDate}
                         onChange={e => setSelectedNotice({ ...selectedNotice, expiryDate: e.target.value })}
-                        className="w-full bg-surface-container-lowest border border-outline-variant/60 p-2 font-body-sm text-body-sm text-on-surface focus:outline-none focus:border-primary"
+                        className="w-full bg-white border border-slate-200 rounded-xl p-2.5 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
                       />
                     </div>
                   </div>
 
                   <div className="space-y-1">
-                    <label className="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-bold">
-                      Circular Body & Regulatory Directives
+                    <label className="text-xs font-semibold text-slate-700">
+                      Circular Body & Directives
                     </label>
                     <textarea
                       rows={6}
                       value={selectedNotice.body}
                       onChange={e => setSelectedNotice({ ...selectedNotice, body: e.target.value })}
-                      className="w-full bg-surface-container-lowest border border-outline-variant/60 p-2 font-body-sm text-body-sm text-on-surface focus:outline-none focus:border-primary"
+                      className="w-full bg-white border border-slate-200 rounded-xl p-2.5 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
                     />
                   </div>
 
-                  <div className="p-space-sm bg-surface-container-lowest border border-outline-variant/40 space-y-2">
-                    <span className="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-bold block">
+                  <div className="p-3 bg-white rounded-xl border border-slate-200/80 space-y-2">
+                    <span className="text-xs font-semibold text-slate-700 block">
                       Active Broadcast Channels
                     </span>
-                    <div className="grid grid-cols-3 gap-2">
-                      <label className="flex items-center gap-1.5 font-label-sm text-label-sm cursor-pointer">
+                    <div className="grid grid-cols-3 gap-2 text-xs">
+                      <label className="flex items-center gap-1.5 cursor-pointer text-slate-700">
                         <input
                           type="checkbox"
                           checked={selectedNotice.channels.portal}
@@ -1193,11 +1126,11 @@ export default function CampusNoticesPage() {
                               channels: { ...selectedNotice.channels, portal: e.target.checked }
                             })
                           }
-                          className="accent-primary"
+                          className="rounded text-indigo-600 focus:ring-indigo-500"
                         />
                         <span>Portal Web</span>
                       </label>
-                      <label className="flex items-center gap-1.5 font-label-sm text-label-sm cursor-pointer">
+                      <label className="flex items-center gap-1.5 cursor-pointer text-slate-700">
                         <input
                           type="checkbox"
                           checked={selectedNotice.channels.app}
@@ -1207,11 +1140,11 @@ export default function CampusNoticesPage() {
                               channels: { ...selectedNotice.channels, app: e.target.checked }
                             })
                           }
-                          className="accent-primary"
+                          className="rounded text-indigo-600 focus:ring-indigo-500"
                         />
                         <span>App Push</span>
                       </label>
-                      <label className="flex items-center gap-1.5 font-label-sm text-label-sm cursor-pointer">
+                      <label className="flex items-center gap-1.5 cursor-pointer text-slate-700">
                         <input
                           type="checkbox"
                           checked={selectedNotice.channels.sms}
@@ -1221,11 +1154,11 @@ export default function CampusNoticesPage() {
                               channels: { ...selectedNotice.channels, sms: e.target.checked }
                             })
                           }
-                          className="accent-primary"
+                          className="rounded text-indigo-600 focus:ring-indigo-500"
                         />
                         <span>SMS Gateway</span>
                       </label>
-                      <label className="flex items-center gap-1.5 font-label-sm text-label-sm cursor-pointer">
+                      <label className="flex items-center gap-1.5 cursor-pointer text-slate-700">
                         <input
                           type="checkbox"
                           checked={selectedNotice.channels.email}
@@ -1235,11 +1168,11 @@ export default function CampusNoticesPage() {
                               channels: { ...selectedNotice.channels, email: e.target.checked }
                             })
                           }
-                          className="accent-primary"
+                          className="rounded text-indigo-600 focus:ring-indigo-500"
                         />
-                        <span>Official Email</span>
+                        <span>Email Relay</span>
                       </label>
-                      <label className="flex items-center gap-1.5 font-label-sm text-label-sm cursor-pointer">
+                      <label className="flex items-center gap-1.5 cursor-pointer text-slate-700">
                         <input
                           type="checkbox"
                           checked={selectedNotice.channels.kiosk}
@@ -1249,7 +1182,7 @@ export default function CampusNoticesPage() {
                               channels: { ...selectedNotice.channels, kiosk: e.target.checked }
                             })
                           }
-                          className="accent-primary"
+                          className="rounded text-indigo-600 focus:ring-indigo-500"
                         />
                         <span>Signage Kiosks</span>
                       </label>
@@ -1259,7 +1192,7 @@ export default function CampusNoticesPage() {
                   <div className="flex items-center justify-end gap-2 pt-2">
                     <button
                       onClick={() => showToast("Changes saved to active circular draft.")}
-                      className="px-4 py-2 bg-primary text-on-primary font-label-md text-label-md uppercase tracking-wider font-semibold hover:bg-primary-container transition-colors"
+                      className="px-4 py-2 bg-indigo-600 text-white rounded-xl text-xs font-semibold hover:bg-indigo-700 transition-colors shadow-xs"
                     >
                       Save Circular Edits
                     </button>
@@ -1269,73 +1202,73 @@ export default function CampusNoticesPage() {
 
               {/* TAB 3: DISPATCH MATRIX */}
               {activeStudioTab === "dispatch" && (
-                <div className="p-space-md space-y-space-md bg-surface-container-low/20">
-                  <div className="space-y-space-sm">
-                    <span className="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-bold block">
+                <div className="p-5 space-y-4 bg-slate-50/30">
+                  <div className="space-y-2">
+                    <span className="text-xs font-semibold text-slate-700 block">
                       Multi-Channel Delivery Breakdown
                     </span>
-                    <div className="space-y-2">
-                      <div className="p-space-sm bg-surface-container-lowest border border-outline-variant/40 flex items-center justify-between">
-                        <div className="flex items-center gap-2">
-                          <Monitor className="w-5 h-5 text-secondary" />
+                    <div className="space-y-2.5">
+                      <div className="p-3 bg-white rounded-xl border border-slate-200/80 flex items-center justify-between shadow-2xs">
+                        <div className="flex items-center gap-2.5">
+                          <div className="w-8 h-8 rounded-lg bg-indigo-50 flex items-center justify-center text-indigo-600">
+                            <Monitor className="w-4 h-4" />
+                          </div>
                           <div>
-                            <div className="font-headline-sm text-body-md font-bold text-primary">Web Portal</div>
-                            <div className="font-mono-data text-[0.6875rem] text-on-surface-variant">
-                              Active Student / Faculty Feed
-                            </div>
+                            <div className="text-xs font-bold text-slate-900">Web Portal</div>
+                            <div className="text-[10px] text-slate-400">Active Student / Faculty Feed</div>
                           </div>
                         </div>
                         <div className="text-right">
-                          <span className="font-mono-data text-body-sm font-bold text-secondary">3,740 Read</span>
-                          <div className="font-label-sm text-[0.625rem] text-on-surface-variant uppercase">96.1% Reach</div>
+                          <span className="text-xs font-bold text-emerald-600 font-mono">3,740 Read</span>
+                          <div className="text-[10px] text-slate-400 font-medium">96.1% Reach</div>
                         </div>
                       </div>
 
-                      <div className="p-space-sm bg-surface-container-lowest border border-outline-variant/40 flex items-center justify-between">
-                        <div className="flex items-center gap-2">
-                          <Smartphone className="w-5 h-5 text-secondary" />
+                      <div className="p-3 bg-white rounded-xl border border-slate-200/80 flex items-center justify-between shadow-2xs">
+                        <div className="flex items-center gap-2.5">
+                          <div className="w-8 h-8 rounded-lg bg-emerald-50 flex items-center justify-center text-emerald-600">
+                            <Smartphone className="w-4 h-4" />
+                          </div>
                           <div>
-                            <div className="font-headline-sm text-body-md font-bold text-primary">FCM & APNS Mobile Push</div>
-                            <div className="font-mono-data text-[0.6875rem] text-on-surface-variant">
-                              Instant Handset Broadcast
-                            </div>
+                            <div className="text-xs font-bold text-slate-900">Mobile Push (FCM/APNS)</div>
+                            <div className="text-[10px] text-slate-400">Instant Handset Broadcast</div>
                           </div>
                         </div>
                         <div className="text-right">
-                          <span className="font-mono-data text-body-sm font-bold text-secondary">3,420 Acked</span>
-                          <div className="font-label-sm text-[0.625rem] text-on-surface-variant uppercase">14ms latency</div>
+                          <span className="text-xs font-bold text-emerald-600 font-mono">3,420 Acked</span>
+                          <div className="text-[10px] text-slate-400 font-medium">14ms latency</div>
                         </div>
                       </div>
 
-                      <div className="p-space-sm bg-surface-container-lowest border border-outline-variant/40 flex items-center justify-between">
-                        <div className="flex items-center gap-2">
-                          <Send className="w-5 h-5 text-secondary" />
+                      <div className="p-3 bg-white rounded-xl border border-slate-200/80 flex items-center justify-between shadow-2xs">
+                        <div className="flex items-center gap-2.5">
+                          <div className="w-8 h-8 rounded-lg bg-sky-50 flex items-center justify-center text-sky-600">
+                            <Send className="w-4 h-4" />
+                          </div>
                           <div>
-                            <div className="font-headline-sm text-body-md font-bold text-primary">Twilio SMS Gateway</div>
-                            <div className="font-mono-data text-[0.6875rem] text-on-surface-variant">
-                              Carrier Transit Carrier Trunk
-                            </div>
+                            <div className="text-xs font-bold text-slate-900">Twilio SMS Gateway</div>
+                            <div className="text-[10px] text-slate-400">Carrier Transit Trunk</div>
                           </div>
                         </div>
                         <div className="text-right">
-                          <span className="font-mono-data text-body-sm font-bold text-secondary">3,380 Delivered</span>
-                          <div className="font-label-sm text-[0.625rem] text-on-surface-variant uppercase">40 in queue</div>
+                          <span className="text-xs font-bold text-sky-600 font-mono">3,380 Sent</span>
+                          <div className="text-[10px] text-slate-400 font-medium">40 in queue</div>
                         </div>
                       </div>
 
-                      <div className="p-space-sm bg-surface-container-lowest border border-outline-variant/40 flex items-center justify-between">
-                        <div className="flex items-center gap-2">
-                          <Radio className="w-5 h-5 text-secondary" />
+                      <div className="p-3 bg-white rounded-xl border border-slate-200/80 flex items-center justify-between shadow-2xs">
+                        <div className="flex items-center gap-2.5">
+                          <div className="w-8 h-8 rounded-lg bg-purple-50 flex items-center justify-center text-purple-600">
+                            <Radio className="w-4 h-4" />
+                          </div>
                           <div>
-                            <div className="font-headline-sm text-body-md font-bold text-primary">Digital Signage Displays</div>
-                            <div className="font-mono-data text-[0.6875rem] text-on-surface-variant">
-                              Campus Atrium & Hall Kiosks
-                            </div>
+                            <div className="text-xs font-bold text-slate-900">Campus Signage Displays</div>
+                            <div className="text-[10px] text-slate-400">Atrium & Quad Kiosks</div>
                           </div>
                         </div>
                         <div className="text-right">
-                          <span className="font-mono-data text-body-sm font-bold text-primary">6 / 6 Live</span>
-                          <div className="font-label-sm text-[0.625rem] text-secondary uppercase font-semibold">1080p Stream OK</div>
+                          <span className="text-xs font-bold text-purple-600 font-mono">6 / 6 Live</span>
+                          <div className="text-[10px] text-emerald-600 font-semibold">1080p Stream OK</div>
                         </div>
                       </div>
                     </div>
@@ -1343,75 +1276,77 @@ export default function CampusNoticesPage() {
 
                   <button
                     onClick={() => showToast("Triggered re-dispatch retry for unacknowledged channels.")}
-                    className="w-full py-2 bg-surface-container text-primary hover:bg-surface-container-high font-label-md text-label-md uppercase tracking-wider font-semibold transition-colors"
+                    className="w-full py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-semibold transition-colors"
                   >
                     Retry Pending / Failed Receptors
                   </button>
                 </div>
               )}
 
-              {/* Multi-Channel Dispatch Telemetry Box */}
-              <div className="p-space-md border-b border-outline-variant/30 bg-surface-container-low/30">
-                <span className="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-bold block mb-2">
-                  Live Dispatch Pipeline Status
+              {/* Multi-Channel Telemetry Box */}
+              <div className="p-4 border-t border-slate-100 bg-slate-50/50">
+                <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider block mb-2">
+                  Live Dispatch Status
                 </span>
-                <div className="grid grid-cols-2 gap-space-xs font-body-sm text-body-sm">
-                  <div className="p-2 bg-surface-container-lowest border border-outline-variant/40 flex items-center justify-between">
-                    <span className="flex items-center gap-1.5 font-label-sm text-label-sm text-on-surface-variant">
-                      <Monitor className="w-4 h-4 text-secondary" />
+                <div className="grid grid-cols-2 gap-2 text-xs">
+                  <div className="p-2.5 bg-white rounded-xl border border-slate-200/80 flex items-center justify-between">
+                    <span className="flex items-center gap-1.5 text-slate-600">
+                      <Monitor className="w-3.5 h-3.5 text-indigo-600" />
                       Student Portal
                     </span>
-                    <span className="font-mono-data text-mono-data text-secondary font-semibold">100% Synced</span>
+                    <span className="font-mono text-emerald-600 font-bold">100% Synced</span>
                   </div>
-                  <div className="p-2 bg-surface-container-lowest border border-outline-variant/40 flex items-center justify-between">
-                    <span className="flex items-center gap-1.5 font-label-sm text-label-sm text-on-surface-variant">
-                      <Smartphone className="w-4 h-4 text-secondary" />
+                  <div className="p-2.5 bg-white rounded-xl border border-slate-200/80 flex items-center justify-between">
+                    <span className="flex items-center gap-1.5 text-slate-600">
+                      <Smartphone className="w-3.5 h-3.5 text-emerald-600" />
                       App Push
                     </span>
-                    <span className="font-mono-data text-mono-data text-secondary font-semibold">3,420 Sent</span>
+                    <span className="font-mono text-emerald-600 font-bold">3,420 Sent</span>
                   </div>
-                  <div className="p-2 bg-surface-container-lowest border border-outline-variant/40 flex items-center justify-between">
-                    <span className="flex items-center gap-1.5 font-label-sm text-label-sm text-on-surface-variant">
-                      <Send className="w-4 h-4 text-secondary" />
+                  <div className="p-2.5 bg-white rounded-xl border border-slate-200/80 flex items-center justify-between">
+                    <span className="flex items-center gap-1.5 text-slate-600">
+                      <Send className="w-3.5 h-3.5 text-sky-600" />
                       SMS Alert
                     </span>
-                    <span className="font-mono-data text-mono-data text-secondary font-semibold">3,380 / 40 Queue</span>
+                    <span className="font-mono text-sky-600 font-bold">3,380 Sent</span>
                   </div>
-                  <div className="p-2 bg-surface-container-lowest border border-outline-variant/40 flex items-center justify-between">
-                    <span className="flex items-center gap-1.5 font-label-sm text-label-sm text-on-surface-variant">
-                      <Printer className="w-4 h-4 text-secondary" />
-                      A4 Print Ready
+                  <div className="p-2.5 bg-white rounded-xl border border-slate-200/80 flex items-center justify-between">
+                    <span className="flex items-center gap-1.5 text-slate-600">
+                      <Printer className="w-3.5 h-3.5 text-slate-600" />
+                      A4 Ready
                     </span>
-                    <span className="font-mono-data text-mono-data text-primary font-semibold">Vector PDF OK</span>
+                    <span className="font-mono text-indigo-600 font-bold">Vector PDF</span>
                   </div>
                 </div>
               </div>
 
-              {/* Bottom Action Buttons in Inspector */}
-              <div className="p-space-md bg-surface-container-lowest flex flex-wrap items-center justify-between gap-space-xs">
-                <button
-                  onClick={() => {
-                    window.print();
-                    showToast("Sending circular to print spooler...");
-                  }}
-                  className="inline-flex items-center gap-1.5 px-space-md py-2 bg-primary text-on-primary font-label-md text-label-md uppercase tracking-wider hover:bg-primary-container transition-colors shadow-sm"
-                >
-                  <Printer className="w-4 h-4" />
-                  <span>Print Official PDF</span>
-                </button>
-                <button
-                  onClick={() => showToast(`SMS Reminder dispatched to all recipients of ${selectedNotice.refNo}`)}
-                  className="inline-flex items-center gap-1.5 px-space-md py-2 bg-surface-container-lowest text-primary font-label-md text-label-md uppercase tracking-wider border border-outline-variant/60 hover:bg-surface-container-low transition-colors"
-                >
-                  <Send className="w-4 h-4 text-error" />
-                  <span>Send SMS Reminder</span>
-                </button>
+              {/* Bottom Actions */}
+              <div className="p-4 border-t border-slate-100 bg-white flex flex-wrap items-center justify-between gap-2">
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => {
+                      window.print();
+                      showToast("Sending circular to print spooler...");
+                    }}
+                    className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-indigo-600 text-white text-xs font-semibold rounded-xl hover:bg-indigo-700 transition-colors shadow-xs"
+                  >
+                    <Printer className="w-3.5 h-3.5" />
+                    <span>Print PDF</span>
+                  </button>
+                  <button
+                    onClick={() => showToast(`SMS Reminder dispatched to all recipients of ${selectedNotice.refNo}`)}
+                    className="inline-flex items-center gap-1.5 px-3 py-2 bg-white border border-slate-200 text-slate-700 text-xs font-semibold rounded-xl hover:bg-slate-50 transition-colors shadow-2xs"
+                  >
+                    <Send className="w-3.5 h-3.5 text-sky-600" />
+                    <span>SMS Reminder</span>
+                  </button>
+                </div>
                 <button
                   onClick={() => {
                     setNotices(notices.filter(n => n.id !== selectedNotice.id));
                     showToast(`Circular ${selectedNotice.refNo} has been revoked.`);
                   }}
-                  className="px-space-sm py-2 text-on-surface-variant hover:text-error font-label-md text-label-md uppercase tracking-wider transition-colors"
+                  className="px-2.5 py-2 text-rose-600 hover:text-rose-700 hover:bg-rose-50 text-xs font-semibold rounded-xl transition-colors"
                 >
                   Revoke Notice
                 </button>
@@ -1419,29 +1354,29 @@ export default function CampusNoticesPage() {
             </div>
 
             {/* Quick Emergency Broadcast Card */}
-            <div className="bg-primary text-on-primary p-space-md shadow-sm border border-primary-container relative overflow-hidden">
-              <div className="flex items-center justify-between mb-space-sm">
+            <div className="bg-gradient-to-br from-rose-900 to-rose-950 text-white rounded-2xl p-5 shadow-xs border border-rose-800 relative overflow-hidden">
+              <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center gap-2">
-                  <Radio className="w-6 h-6 text-secondary-container" />
-                  <span className="font-headline-sm text-headline-sm uppercase tracking-tight font-bold">
+                  <Flame className="w-5 h-5 text-rose-400" />
+                  <span className="text-sm font-bold tracking-tight">
                     Urgent Broadcast Override
                   </span>
                 </div>
-                <span className="font-mono-data text-[0.6875rem] px-2 py-0.5 bg-surface-container-lowest text-primary font-bold">
+                <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-200 border border-rose-500/30 font-bold">
                   LEVEL-1 PRIORITY
                 </span>
               </div>
-              <p className="font-body-sm text-body-sm text-on-primary-container mb-space-md">
-                Broadcast emergency advisories (weather cancellations, security alerts, power outages) instantaneously to all phone numbers, mobile app push notifications, and campus digital signboards.
+              <p className="text-xs text-rose-200/90 leading-relaxed mb-4">
+                Instantly flash emergency advisories (weather cancellations, security alerts, power outages) to all phone numbers, student apps, and 6 campus digital signboards.
               </p>
-              <div className="flex items-center justify-between pt-2 border-t border-on-primary-container/20">
-                <span className="font-mono-data text-mono-data text-secondary-container">Turnaround: ~15 seconds</span>
+              <div className="flex items-center justify-between pt-3 border-t border-rose-800/80">
+                <span className="text-[11px] font-mono text-rose-300">Turnaround: ~15s</span>
                 <button
                   onClick={() => setIsEmergencyModalOpen(true)}
-                  className="inline-flex items-center gap-1.5 px-space-md py-1.5 bg-error text-on-error font-label-md text-label-md uppercase tracking-wider hover:bg-error-container hover:text-on-error-container transition-colors font-bold"
+                  className="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold rounded-xl shadow-xs transition-colors"
                 >
-                  <AlertTriangle className="w-4 h-4" />
-                  <span>Issue Immediate Alert</span>
+                  <AlertTriangle className="w-3.5 h-3.5" />
+                  <span>Issue Alert</span>
                 </button>
               </div>
             </div>
@@ -1449,40 +1384,39 @@ export default function CampusNoticesPage() {
         </div>
 
         {/* Bottom Multi-Channel Gateway Telemetry & Infrastructure Strip */}
-        <div className="bg-surface-container-lowest border border-outline-variant/40 p-space-md shadow-sm">
-          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-space-md">
-            {/* Left: Gateway Health Telemetry Items */}
-            <div className="flex flex-wrap items-center gap-space-lg">
+        <div className="bg-white rounded-2xl border border-slate-200/80 p-4 shadow-xs">
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+            <div className="flex flex-wrap items-center gap-5">
               <div className="flex items-center gap-2">
-                <span className="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-bold">
-                  INFRASTRUCTURE PIPELINES:
+                <Wifi className="w-4 h-4 text-indigo-600" />
+                <span className="text-xs font-bold text-slate-700 uppercase tracking-wider">
+                  Pipelines:
                 </span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="h-2.5 w-2.5 rounded-full bg-secondary"></span>
-                <span className="font-body-sm text-body-sm text-on-surface font-medium">SMS Gateway (Twilio/AWS SNS):</span>
-                <span className="font-mono-data text-mono-data text-secondary font-semibold">99.8% Uptime</span>
+                <span className="h-2 w-2 rounded-full bg-emerald-500"></span>
+                <span className="text-xs text-slate-600">Twilio / AWS SMS:</span>
+                <span className="text-xs font-mono font-semibold text-emerald-600">99.8% Uptime</span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="h-2.5 w-2.5 rounded-full bg-secondary"></span>
-                <span className="font-body-sm text-body-sm text-on-surface font-medium">SMTP Transactional Relays:</span>
-                <span className="font-mono-data text-mono-data text-secondary font-semibold">100% Verified</span>
+                <span className="h-2 w-2 rounded-full bg-emerald-500"></span>
+                <span className="text-xs text-slate-600">SMTP Relays:</span>
+                <span className="text-xs font-mono font-semibold text-emerald-600">100% Verified</span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="h-2.5 w-2.5 rounded-full bg-secondary"></span>
-                <span className="font-body-sm text-body-sm text-on-surface font-medium">Push Notification Core (FCM/APNS):</span>
-                <span className="font-mono-data text-mono-data text-primary font-semibold">24ms Latency</span>
+                <span className="h-2 w-2 rounded-full bg-emerald-500"></span>
+                <span className="text-xs text-slate-600">FCM / APNS Push:</span>
+                <span className="text-xs font-mono font-semibold text-indigo-600">24ms Latency</span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="h-2.5 w-2.5 rounded-full bg-secondary"></span>
-                <span className="font-body-sm text-body-sm text-on-surface font-medium">Digital Signage Displays:</span>
-                <span className="font-mono-data text-mono-data text-primary font-semibold">6 / 6 Kiosks Online</span>
+                <span className="h-2 w-2 rounded-full bg-emerald-500"></span>
+                <span className="text-xs text-slate-600">Digital Signage:</span>
+                <span className="text-xs font-mono font-semibold text-purple-600">6 / 6 Online</span>
               </div>
             </div>
-            {/* Right: Action status */}
-            <div className="flex items-center gap-space-sm font-mono-data text-mono-data text-on-surface-variant">
-              <Clock className="w-4 h-4 text-secondary" />
-              <span>Last Synchronized: Real-Time Stream</span>
+            <div className="flex items-center gap-2 text-xs font-mono text-slate-400">
+              <Clock className="w-3.5 h-3.5 text-indigo-600" />
+              <span>Real-Time Stream Active</span>
             </div>
           </div>
         </div>
@@ -1490,18 +1424,20 @@ export default function CampusNoticesPage() {
 
       {/* MODAL 1: + DRAFT NEW NOTICE */}
       {isDraftModalOpen && (
-        <div className="fixed inset-0 z-50 bg-primary/70 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
-          <div className="bg-surface-container-lowest border border-outline-variant/60 shadow-2xl max-w-2xl w-full p-6 space-y-4 my-8">
-            <div className="flex items-center justify-between border-b border-outline-variant/30 pb-3">
+        <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto">
+          <div className="bg-white rounded-2xl border border-slate-200 shadow-2xl max-w-2xl w-full p-6 space-y-4 my-8 animate-in fade-in zoom-in-95">
+            <div className="flex items-center justify-between border-b border-slate-100 pb-3">
               <div className="flex items-center gap-2">
-                <PlusCircle className="w-5 h-5 text-secondary" />
-                <h3 className="font-headline-sm text-headline-sm uppercase tracking-tight text-primary font-bold">
+                <div className="w-8 h-8 rounded-lg bg-indigo-50 flex items-center justify-center text-indigo-600">
+                  <PlusCircle className="w-4 h-4" />
+                </div>
+                <h3 className="text-base font-bold text-slate-900">
                   Draft New Campus Circular
                 </h3>
               </div>
               <button
                 onClick={() => setIsDraftModalOpen(false)}
-                className="text-on-surface-variant hover:text-on-surface p-1"
+                className="text-slate-400 hover:text-slate-600 p-1 rounded-lg hover:bg-slate-100 transition-colors"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -1510,31 +1446,31 @@ export default function CampusNoticesPage() {
             <form onSubmit={handleSaveDraft} className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-1">
-                  <label className="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-bold">
-                    Circular Reference No.
+                  <label className="text-xs font-semibold text-slate-700">
+                    Circular Ref No.
                   </label>
                   <input
                     type="text"
                     value={newNotice.refNo}
                     onChange={e => setNewNotice({ ...newNotice, refNo: e.target.value })}
-                    className="w-full bg-surface-container-low border border-outline-variant/60 p-2 font-mono-data text-body-sm text-on-surface focus:outline-none focus:border-primary"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs font-mono text-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
                   />
                 </div>
                 <div className="space-y-1">
-                  <label className="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-bold">
+                  <label className="text-xs font-semibold text-slate-700">
                     Issuing Authority / Dept
                   </label>
                   <input
                     type="text"
                     value={newNotice.author}
                     onChange={e => setNewNotice({ ...newNotice, author: e.target.value })}
-                    className="w-full bg-surface-container-low border border-outline-variant/60 p-2 font-body-sm text-body-sm text-on-surface focus:outline-none focus:border-primary"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
                   />
                 </div>
               </div>
 
               <div className="space-y-1">
-                <label className="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-bold">
+                <label className="text-xs font-semibold text-slate-700">
                   Subject / Heading
                 </label>
                 <input
@@ -1543,19 +1479,19 @@ export default function CampusNoticesPage() {
                   placeholder="e.g. End-Semester Laboratory Schedule Revision..."
                   value={newNotice.title}
                   onChange={e => setNewNotice({ ...newNotice, title: e.target.value })}
-                  className="w-full bg-surface-container-low border border-outline-variant/60 p-2 font-body-sm text-body-sm text-on-surface focus:outline-none focus:border-primary"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
                 />
               </div>
 
-              <div className="grid grid-cols-3 gap-4">
+              <div className="grid grid-cols-3 gap-3">
                 <div className="space-y-1">
-                  <label className="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-bold">
+                  <label className="text-xs font-semibold text-slate-700">
                     Target Cadre
                   </label>
                   <select
                     value={newNotice.cadre}
                     onChange={e => setNewNotice({ ...newNotice, cadre: e.target.value as Notice["cadre"] })}
-                    className="w-full bg-surface-container-low border border-outline-variant/60 p-2 font-body-sm text-body-sm text-on-surface focus:outline-none focus:border-primary"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
                   >
                     <option value="student">Student Cohort</option>
                     <option value="faculty">Faculty & Staff</option>
@@ -1565,13 +1501,13 @@ export default function CampusNoticesPage() {
                   </select>
                 </div>
                 <div className="space-y-1">
-                  <label className="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-bold">
+                  <label className="text-xs font-semibold text-slate-700">
                     Priority Tier
                   </label>
                   <select
                     value={newNotice.priority}
                     onChange={e => setNewNotice({ ...newNotice, priority: e.target.value as Notice["priority"] })}
-                    className="w-full bg-surface-container-low border border-outline-variant/60 p-2 font-body-sm text-body-sm text-on-surface focus:outline-none focus:border-primary"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
                   >
                     <option value="URGENT">Urgent Action</option>
                     <option value="HIGH">High Priority</option>
@@ -1582,20 +1518,20 @@ export default function CampusNoticesPage() {
                   </select>
                 </div>
                 <div className="space-y-1">
-                  <label className="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-bold">
+                  <label className="text-xs font-semibold text-slate-700">
                     Expiry Date
                   </label>
                   <input
                     type="date"
                     value={newNotice.expiryDate}
                     onChange={e => setNewNotice({ ...newNotice, expiryDate: e.target.value })}
-                    className="w-full bg-surface-container-low border border-outline-variant/60 p-2 font-body-sm text-body-sm text-on-surface focus:outline-none focus:border-primary"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
                   />
                 </div>
               </div>
 
               <div className="space-y-1">
-                <label className="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-bold">
+                <label className="text-xs font-semibold text-slate-700">
                   Summary Teaser
                 </label>
                 <input
@@ -1604,12 +1540,12 @@ export default function CampusNoticesPage() {
                   placeholder="1-2 sentences shown on mobile and card previews..."
                   value={newNotice.summary}
                   onChange={e => setNewNotice({ ...newNotice, summary: e.target.value })}
-                  className="w-full bg-surface-container-low border border-outline-variant/60 p-2 font-body-sm text-body-sm text-on-surface focus:outline-none focus:border-primary"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
                 />
               </div>
 
               <div className="space-y-1">
-                <label className="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-bold">
+                <label className="text-xs font-semibold text-slate-700">
                   Verbatim Notice Body (Official Letterhead)
                 </label>
                 <textarea
@@ -1617,16 +1553,16 @@ export default function CampusNoticesPage() {
                   placeholder="Enter full formal text, deadlines, rules, laboratory venues..."
                   value={newNotice.body}
                   onChange={e => setNewNotice({ ...newNotice, body: e.target.value })}
-                  className="w-full bg-surface-container-low border border-outline-variant/60 p-2 font-body-sm text-body-sm text-on-surface focus:outline-none focus:border-primary"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
                 />
               </div>
 
-              <div className="p-3 bg-surface-container-low border border-outline-variant/40 space-y-2">
-                <span className="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-bold block">
+              <div className="p-3 bg-slate-50 rounded-xl border border-slate-200/80 space-y-2">
+                <span className="text-xs font-semibold text-slate-700 block">
                   Select Dispatch Pipeline Channels
                 </span>
-                <div className="grid grid-cols-3 gap-2">
-                  <label className="flex items-center gap-2 cursor-pointer font-body-sm text-body-sm">
+                <div className="grid grid-cols-3 gap-2 text-xs">
+                  <label className="flex items-center gap-1.5 cursor-pointer text-slate-700">
                     <input
                       type="checkbox"
                       checked={newNotice.channels.portal}
@@ -1636,11 +1572,11 @@ export default function CampusNoticesPage() {
                           channels: { ...newNotice.channels, portal: e.target.checked }
                         })
                       }
-                      className="accent-primary"
+                      className="rounded text-indigo-600 focus:ring-indigo-500"
                     />
                     <span>Web Portal</span>
                   </label>
-                  <label className="flex items-center gap-2 cursor-pointer font-body-sm text-body-sm">
+                  <label className="flex items-center gap-1.5 cursor-pointer text-slate-700">
                     <input
                       type="checkbox"
                       checked={newNotice.channels.app}
@@ -1650,11 +1586,11 @@ export default function CampusNoticesPage() {
                           channels: { ...newNotice.channels, app: e.target.checked }
                         })
                       }
-                      className="accent-primary"
+                      className="rounded text-indigo-600 focus:ring-indigo-500"
                     />
                     <span>App Push (FCM)</span>
                   </label>
-                  <label className="flex items-center gap-2 cursor-pointer font-body-sm text-body-sm">
+                  <label className="flex items-center gap-1.5 cursor-pointer text-slate-700">
                     <input
                       type="checkbox"
                       checked={newNotice.channels.sms}
@@ -1664,11 +1600,11 @@ export default function CampusNoticesPage() {
                           channels: { ...newNotice.channels, sms: e.target.checked }
                         })
                       }
-                      className="accent-primary"
+                      className="rounded text-indigo-600 focus:ring-indigo-500"
                     />
                     <span>SMS Gateway</span>
                   </label>
-                  <label className="flex items-center gap-2 cursor-pointer font-body-sm text-body-sm">
+                  <label className="flex items-center gap-1.5 cursor-pointer text-slate-700">
                     <input
                       type="checkbox"
                       checked={newNotice.channels.email}
@@ -1678,11 +1614,11 @@ export default function CampusNoticesPage() {
                           channels: { ...newNotice.channels, email: e.target.checked }
                         })
                       }
-                      className="accent-primary"
+                      className="rounded text-indigo-600 focus:ring-indigo-500"
                     />
                     <span>Official Email</span>
                   </label>
-                  <label className="flex items-center gap-2 cursor-pointer font-body-sm text-body-sm">
+                  <label className="flex items-center gap-1.5 cursor-pointer text-slate-700">
                     <input
                       type="checkbox"
                       checked={newNotice.channels.kiosk}
@@ -1692,24 +1628,24 @@ export default function CampusNoticesPage() {
                           channels: { ...newNotice.channels, kiosk: e.target.checked }
                         })
                       }
-                      className="accent-primary"
+                      className="rounded text-indigo-600 focus:ring-indigo-500"
                     />
                     <span>Campus Kiosks</span>
                   </label>
                 </div>
               </div>
 
-              <div className="flex items-center justify-end gap-3 pt-3 border-t border-outline-variant/30">
+              <div className="flex items-center justify-end gap-3 pt-3 border-t border-slate-100">
                 <button
                   type="button"
                   onClick={() => setIsDraftModalOpen(false)}
-                  className="px-4 py-2 border border-outline-variant/60 font-label-md text-label-md uppercase tracking-wider text-on-surface hover:bg-surface-container"
+                  className="px-4 py-2 border border-slate-200 text-xs font-semibold rounded-xl text-slate-600 hover:bg-slate-50 transition-colors"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-6 py-2 bg-primary text-on-primary font-label-md text-label-md uppercase tracking-wider font-semibold hover:bg-primary-container transition-colors shadow-sm"
+                  className="px-5 py-2 bg-indigo-600 text-white text-xs font-semibold rounded-xl hover:bg-indigo-700 transition-colors shadow-xs"
                 >
                   Publish Notice
                 </button>
@@ -1721,38 +1657,40 @@ export default function CampusNoticesPage() {
 
       {/* MODAL 2: URGENT EMERGENCY ALERT OVERRIDE */}
       {isEmergencyModalOpen && (
-        <div className="fixed inset-0 z-50 bg-error/40 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-surface-container-lowest border-2 border-error shadow-2xl max-w-lg w-full p-6 space-y-4">
-            <div className="flex items-center gap-3 text-error">
-              <AlertTriangle className="w-8 h-8" />
+        <div className="fixed inset-0 z-50 bg-rose-950/60 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl border-2 border-rose-500 shadow-2xl max-w-lg w-full p-6 space-y-4 animate-in fade-in zoom-in-95">
+            <div className="flex items-center gap-3 text-rose-600">
+              <div className="w-10 h-10 rounded-xl bg-rose-50 flex items-center justify-center shrink-0">
+                <AlertTriangle className="w-6 h-6 text-rose-600" />
+              </div>
               <div>
-                <h3 className="font-headline-sm text-headline-sm uppercase font-bold tracking-tight">
-                  CONFIRM EMERGENCY BROADCAST
+                <h3 className="text-base font-bold text-slate-900">
+                  Confirm Emergency Broadcast
                 </h3>
-                <span className="font-mono-data text-[0.6875rem] uppercase font-bold text-on-surface-variant">
+                <span className="text-[11px] font-mono font-bold text-rose-600">
                   LEVEL-1 PRIORITY OVERRIDE
                 </span>
               </div>
             </div>
 
-            <p className="font-body-sm text-body-sm text-on-surface leading-relaxed">
+            <p className="text-xs text-slate-600 leading-relaxed">
               This action will immediately trigger SMS dispatches to all registered phone numbers (4,200+), push high-priority alert banners across the mobile app, and flash emergency advisories on all 6 physical campus digital signage kiosks.
             </p>
 
-            <div className="p-3 bg-error/10 border border-error/30 text-error font-mono-data text-body-sm">
+            <div className="p-3 bg-rose-50 rounded-xl border border-rose-200 text-rose-700 text-xs font-mono">
               Estimated delivery latency: 12 - 18 seconds across all cellular and IP nodes.
             </div>
 
             <div className="flex items-center justify-end gap-3 pt-2">
               <button
                 onClick={() => setIsEmergencyModalOpen(false)}
-                className="px-4 py-2 border border-outline-variant/60 font-label-md text-label-md uppercase tracking-wider"
+                className="px-4 py-2 border border-slate-200 text-xs font-semibold rounded-xl text-slate-600 hover:bg-slate-50"
               >
                 Abort
               </button>
               <button
                 onClick={handleTriggerEmergencyAlert}
-                className="px-6 py-2 bg-error text-on-error font-label-md text-label-md uppercase tracking-wider font-bold hover:bg-error-container transition-colors shadow-md"
+                className="px-5 py-2 bg-rose-600 text-white text-xs font-bold rounded-xl hover:bg-rose-700 transition-colors shadow-xs"
               >
                 Execute Broadcast
               </button>
@@ -1763,59 +1701,72 @@ export default function CampusNoticesPage() {
 
       {/* MODAL 3: SCHEDULED QUEUE */}
       {isScheduledQueueOpen && (
-        <div className="fixed inset-0 z-50 bg-primary/70 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-surface-container-lowest border border-outline-variant/60 shadow-2xl max-w-xl w-full p-6 space-y-4">
-            <div className="flex items-center justify-between border-b border-outline-variant/30 pb-3">
+        <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl border border-slate-200 shadow-2xl max-w-xl w-full p-6 space-y-4 animate-in fade-in zoom-in-95">
+            <div className="flex items-center justify-between border-b border-slate-100 pb-3">
               <div className="flex items-center gap-2">
-                <Clock className="w-5 h-5 text-secondary" />
-                <h3 className="font-headline-sm text-headline-sm uppercase tracking-tight text-primary font-bold">
+                <div className="w-8 h-8 rounded-lg bg-indigo-50 flex items-center justify-center text-indigo-600">
+                  <Clock className="w-4 h-4" />
+                </div>
+                <h3 className="text-base font-bold text-slate-900">
                   Automated Scheduled Queue (4 Pending)
                 </h3>
               </div>
-              <button onClick={() => setIsScheduledQueueOpen(false)} className="p-1">
+              <button
+                onClick={() => setIsScheduledQueueOpen(false)}
+                className="p-1 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100"
+              >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
-            <div className="space-y-3">
-              <div className="p-3 bg-surface-container-low border border-outline-variant/40 flex items-center justify-between">
+            <div className="space-y-2.5">
+              <div className="p-3 bg-slate-50 rounded-xl border border-slate-200/80 flex items-center justify-between">
                 <div>
-                  <div className="font-mono-data text-label-sm text-primary font-bold">APX/SCH/2024-91</div>
-                  <div className="font-body-sm text-body-sm font-semibold">Library Books Return & Fine Amnesty Week</div>
-                  <div className="font-mono-data text-[0.6875rem] text-on-surface-variant">Scheduled: June 1, 2024 @ 08:00 EST</div>
+                  <div className="font-mono text-xs text-indigo-600 font-bold">APX/SCH/2024-91</div>
+                  <div className="text-xs font-semibold text-slate-800">Library Books Return & Fine Amnesty Week</div>
+                  <div className="font-mono text-[10px] text-slate-400 mt-0.5">Scheduled: June 1, 2024 @ 08:00 EST</div>
                 </div>
-                <span className="px-2 py-0.5 bg-surface-container-high text-primary font-mono-data text-label-sm font-semibold">QUEUED</span>
+                <span className="px-2 py-0.5 rounded-md bg-indigo-50 text-indigo-700 font-mono text-[10px] font-bold">
+                  QUEUED
+                </span>
               </div>
-              <div className="p-3 bg-surface-container-low border border-outline-variant/40 flex items-center justify-between">
+              <div className="p-3 bg-slate-50 rounded-xl border border-slate-200/80 flex items-center justify-between">
                 <div>
-                  <div className="font-mono-data text-label-sm text-primary font-bold">APX/SCH/2024-92</div>
-                  <div className="font-body-sm text-body-sm font-semibold">Placement Drive: Google & Microsoft On-Campus Interviews</div>
-                  <div className="font-mono-data text-[0.6875rem] text-on-surface-variant">Scheduled: June 3, 2024 @ 09:00 EST</div>
+                  <div className="font-mono text-xs text-indigo-600 font-bold">APX/SCH/2024-92</div>
+                  <div className="text-xs font-semibold text-slate-800">Placement Drive: Google & Microsoft Interviews</div>
+                  <div className="font-mono text-[10px] text-slate-400 mt-0.5">Scheduled: June 3, 2024 @ 09:00 EST</div>
                 </div>
-                <span className="px-2 py-0.5 bg-surface-container-high text-primary font-mono-data text-label-sm font-semibold">QUEUED</span>
+                <span className="px-2 py-0.5 rounded-md bg-indigo-50 text-indigo-700 font-mono text-[10px] font-bold">
+                  QUEUED
+                </span>
               </div>
-              <div className="p-3 bg-surface-container-low border border-outline-variant/40 flex items-center justify-between">
+              <div className="p-3 bg-slate-50 rounded-xl border border-slate-200/80 flex items-center justify-between">
                 <div>
-                  <div className="font-mono-data text-label-sm text-primary font-bold">APX/SCH/2024-93</div>
-                  <div className="font-body-sm text-body-sm font-semibold">Summer Internship Diary Sign-Off Directive</div>
-                  <div className="font-mono-data text-[0.6875rem] text-on-surface-variant">Scheduled: June 5, 2024 @ 10:00 EST</div>
+                  <div className="font-mono text-xs text-indigo-600 font-bold">APX/SCH/2024-93</div>
+                  <div className="text-xs font-semibold text-slate-800">Summer Internship Diary Sign-Off Directive</div>
+                  <div className="font-mono text-[10px] text-slate-400 mt-0.5">Scheduled: June 5, 2024 @ 10:00 EST</div>
                 </div>
-                <span className="px-2 py-0.5 bg-surface-container-high text-primary font-mono-data text-label-sm font-semibold">QUEUED</span>
+                <span className="px-2 py-0.5 rounded-md bg-indigo-50 text-indigo-700 font-mono text-[10px] font-bold">
+                  QUEUED
+                </span>
               </div>
-              <div className="p-3 bg-surface-container-low border border-outline-variant/40 flex items-center justify-between">
+              <div className="p-3 bg-slate-50 rounded-xl border border-slate-200/80 flex items-center justify-between">
                 <div>
-                  <div className="font-mono-data text-label-sm text-primary font-bold">APX/SCH/2024-94</div>
-                  <div className="font-body-sm text-body-sm font-semibold">Hostel Vacating & Luggage Room Protocol</div>
-                  <div className="font-mono-data text-[0.6875rem] text-on-surface-variant">Scheduled: June 10, 2024 @ 12:00 EST</div>
+                  <div className="font-mono text-xs text-indigo-600 font-bold">APX/SCH/2024-94</div>
+                  <div className="text-xs font-semibold text-slate-800">Hostel Vacating & Luggage Room Protocol</div>
+                  <div className="font-mono text-[10px] text-slate-400 mt-0.5">Scheduled: June 10, 2024 @ 12:00 EST</div>
                 </div>
-                <span className="px-2 py-0.5 bg-surface-container-high text-primary font-mono-data text-label-sm font-semibold">QUEUED</span>
+                <span className="px-2 py-0.5 rounded-md bg-indigo-50 text-indigo-700 font-mono text-[10px] font-bold">
+                  QUEUED
+                </span>
               </div>
             </div>
 
             <div className="flex justify-end pt-2">
               <button
                 onClick={() => setIsScheduledQueueOpen(false)}
-                className="px-4 py-2 bg-primary text-on-primary font-label-md text-label-md uppercase tracking-wider"
+                className="px-4 py-2 bg-indigo-600 text-white rounded-xl text-xs font-semibold hover:bg-indigo-700"
               >
                 Close
               </button>
@@ -1826,35 +1777,40 @@ export default function CampusNoticesPage() {
 
       {/* MODAL 4: BROADCAST CONFIG */}
       {isBroadcastConfigOpen && (
-        <div className="fixed inset-0 z-50 bg-primary/70 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-surface-container-lowest border border-outline-variant/60 shadow-2xl max-w-lg w-full p-6 space-y-4">
-            <div className="flex items-center justify-between border-b border-outline-variant/30 pb-3">
+        <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl border border-slate-200 shadow-2xl max-w-lg w-full p-6 space-y-4 animate-in fade-in zoom-in-95">
+            <div className="flex items-center justify-between border-b border-slate-100 pb-3">
               <div className="flex items-center gap-2">
-                <Radio className="w-5 h-5 text-secondary" />
-                <h3 className="font-headline-sm text-headline-sm uppercase tracking-tight text-primary font-bold">
+                <div className="w-8 h-8 rounded-lg bg-indigo-50 flex items-center justify-center text-indigo-600">
+                  <Radio className="w-4 h-4" />
+                </div>
+                <h3 className="text-base font-bold text-slate-900">
                   Broadcast Infrastructure Config
                 </h3>
               </div>
-              <button onClick={() => setIsBroadcastConfigOpen(false)} className="p-1">
+              <button
+                onClick={() => setIsBroadcastConfigOpen(false)}
+                className="p-1 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100"
+              >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
-            <div className="space-y-3 font-body-sm text-body-sm">
-              <div className="p-3 bg-surface-container-low border border-outline-variant/40 space-y-1">
-                <div className="font-bold text-primary">Twilio SMS Trunk Routing</div>
-                <div className="text-on-surface-variant font-mono-data text-[0.75rem]">Trunk SID: TK_APX_NORTH_SMS_99812</div>
-                <div className="text-secondary font-semibold font-mono-data text-[0.75rem]">Throughput: 120 messages / sec</div>
+            <div className="space-y-3 text-xs">
+              <div className="p-3 bg-slate-50 rounded-xl border border-slate-200/80 space-y-1">
+                <div className="font-bold text-slate-900">Twilio SMS Trunk Routing</div>
+                <div className="text-slate-500 font-mono text-[11px]">Trunk SID: TK_APX_NORTH_SMS_99812</div>
+                <div className="text-emerald-600 font-semibold font-mono text-[11px]">Throughput: 120 msgs / sec</div>
               </div>
-              <div className="p-3 bg-surface-container-low border border-outline-variant/40 space-y-1">
-                <div className="font-bold text-primary">Firebase Cloud Messaging (FCM)</div>
-                <div className="text-on-surface-variant font-mono-data text-[0.75rem]">Topic: /topics/campus_all_broadcast</div>
-                <div className="text-secondary font-semibold font-mono-data text-[0.75rem]">APNS Voip Token fallback: ACTIVE</div>
+              <div className="p-3 bg-slate-50 rounded-xl border border-slate-200/80 space-y-1">
+                <div className="font-bold text-slate-900">Firebase Cloud Messaging (FCM)</div>
+                <div className="text-slate-500 font-mono text-[11px]">Topic: /topics/campus_all_broadcast</div>
+                <div className="text-emerald-600 font-semibold font-mono text-[11px]">APNS VoIP Fallback: ACTIVE</div>
               </div>
-              <div className="p-3 bg-surface-container-low border border-outline-variant/40 space-y-1">
-                <div className="font-bold text-primary">Physical Signage WebSocket Gateway</div>
-                <div className="text-on-surface-variant font-mono-data text-[0.75rem]">Endpoint: wss://signage.apex.edu/stream/live</div>
-                <div className="text-secondary font-semibold font-mono-data text-[0.75rem]">Heartbeat: 5000ms • Active Displays: 6 / 6</div>
+              <div className="p-3 bg-slate-50 rounded-xl border border-slate-200/80 space-y-1">
+                <div className="font-bold text-slate-900">Physical Signage WebSocket Gateway</div>
+                <div className="text-slate-500 font-mono text-[11px]">Endpoint: wss://signage.apex.edu/stream/live</div>
+                <div className="text-indigo-600 font-semibold font-mono text-[11px]">Heartbeat: 5000ms • Displays: 6 / 6 Online</div>
               </div>
             </div>
 
@@ -1864,7 +1820,7 @@ export default function CampusNoticesPage() {
                   setIsBroadcastConfigOpen(false);
                   showToast("Broadcast gateway configuration validated.");
                 }}
-                className="px-4 py-2 bg-primary text-on-primary font-label-md text-label-md uppercase tracking-wider"
+                className="px-4 py-2 bg-indigo-600 text-white rounded-xl text-xs font-semibold hover:bg-indigo-700"
               >
                 Save & Verify Pipes
               </button>
@@ -1875,4 +1831,3 @@ export default function CampusNoticesPage() {
     </div>
   );
 }
-
