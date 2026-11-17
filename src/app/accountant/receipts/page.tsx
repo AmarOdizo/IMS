@@ -22,11 +22,13 @@ import {
   User,
   CreditCard,
   Landmark,
-  Banknote,
+  Coins,
   Send,
   Eye,
   Check,
   Share2,
+  ExternalLink,
+  Sparkles,
 } from "lucide-react";
 
 interface FeeItem {
@@ -123,8 +125,8 @@ const mockReceipts: ReceiptRecord[] = [
     },
     security: {
       hash: "a89f3e498172bc901e8234fa889210ecb772d148be92381274910293847120fe",
-      cashierName: "Praveen Sharma, FCA",
-      cashierId: "CASHIER-409",
+      cashierName: "Rajesh Kumar (Chief Cashier)",
+      cashierId: "EMP-FIN-309",
       tillId: "TILL-02",
     },
   },
@@ -169,8 +171,8 @@ const mockReceipts: ReceiptRecord[] = [
     },
     security: {
       hash: "b72e11947209afb34710123cb9948210fe912384712039487120398471294801",
-      cashierName: "Praveen Sharma, FCA",
-      cashierId: "CASHIER-409",
+      cashierName: "Rajesh Kumar (Chief Cashier)",
+      cashierId: "EMP-FIN-309",
       tillId: "TILL-02",
     },
   },
@@ -213,8 +215,8 @@ const mockReceipts: ReceiptRecord[] = [
     },
     security: {
       hash: "c33140abfe782910398471203984712039487120938471209384712093847120",
-      cashierName: "Praveen Sharma, FCA",
-      cashierId: "CASHIER-409",
+      cashierName: "Rajesh Kumar (Chief Cashier)",
+      cashierId: "EMP-FIN-309",
       tillId: "TILL-02",
     },
   },
@@ -258,8 +260,8 @@ const mockReceipts: ReceiptRecord[] = [
     },
     security: {
       hash: "d4481290fe372910398471209384712093847120938471209384712093847120",
-      cashierName: "Praveen Sharma, FCA",
-      cashierId: "CASHIER-409",
+      cashierName: "Rajesh Kumar (Chief Cashier)",
+      cashierId: "EMP-FIN-309",
       tillId: "TILL-02",
     },
   },
@@ -303,8 +305,8 @@ const mockReceipts: ReceiptRecord[] = [
     },
     security: {
       hash: "e559103984712093847120938471209384712093847120938471209384712093",
-      cashierName: "Praveen Sharma, FCA",
-      cashierId: "CASHIER-409",
+      cashierName: "Rajesh Kumar (Chief Cashier)",
+      cashierId: "EMP-FIN-309",
       tillId: "TILL-02",
     },
   },
@@ -348,15 +350,15 @@ const mockReceipts: ReceiptRecord[] = [
     },
     security: {
       hash: "f660192830192830192830192830192830192830192830192830192830192830",
-      cashierName: "Praveen Sharma, FCA",
-      cashierId: "CASHIER-409",
+      cashierName: "Rajesh Kumar (Chief Cashier)",
+      cashierId: "EMP-FIN-309",
       tillId: "TILL-02",
     },
   },
 ];
 
 export default function AccountantFeeReceiptsPage() {
-  const [receipts, setReceipts] = useState<ReceiptRecord[]>(mockReceipts);
+  const [receipts] = useState<ReceiptRecord[]>(mockReceipts);
   const [selectedReceiptId, setSelectedReceiptId] = useState<string>("1");
   const [filterTab, setFilterTab] = useState<"All" | "Cleared" | "Clearing">("All");
   const [searchQuery, setSearchQuery] = useState("");
@@ -367,7 +369,6 @@ export default function AccountantFeeReceiptsPage() {
   const [isVerifyHashModalOpen, setIsVerifyHashModalOpen] = useState(false);
   const [verifyInputHash, setVerifyInputHash] = useState("");
   const [verifyResult, setVerifyResult] = useState<"success" | "fail" | null>(null);
-
   const [isBatchPrintModalOpen, setIsBatchPrintModalOpen] = useState(false);
 
   const selectedReceipt = receipts.find((r) => r.id === selectedReceiptId) || receipts[0];
@@ -405,54 +406,89 @@ export default function AccountantFeeReceiptsPage() {
     setVerifyResult(found ? "success" : "fail");
   };
 
+  const handleExportManifestCSV = () => {
+    const csvHeader =
+      "Receipt No,Date,Time,Candidate,Roll No,Course,Payment Mode,Reference,Amount (INR),Status\n";
+    const csvRows = filteredReceipts
+      .map(
+        (r) =>
+          `"${r.receiptNo}","${r.date}","${r.time}","${r.student.name}","${r.student.rollNo}","${r.student.course}","${r.mode}","${r.paymentDetails.refNo}",${r.amount},"${r.status}"`
+      )
+      .join("\n");
+    const blob = new Blob([csvHeader + csvRows], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", `receipts_manifest_${new Date().toISOString().slice(0, 10)}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    showToast("Receipts manifest exported as CSV!");
+  };
+
   return (
-    <div className="flex flex-col w-full pb-16 font-body text-on-surface">
+    <div className="p-4 sm:p-6 md:p-8 space-y-6 max-w-[1600px] mx-auto font-sans text-slate-800">
       {/* Toast Notification */}
       {toastMessage && (
-        <div className="fixed bottom-6 right-6 z-50 bg-primary-container text-on-primary px-4 py-3 shadow-lg flex items-center gap-2 border border-secondary font-mono text-xs animate-in slide-in-from-bottom">
-          <CheckCircle2 className="w-4 h-4 text-secondary-container" />
+        <div className="fixed bottom-6 right-6 z-50 bg-[#3D405B] text-white px-5 py-3.5 rounded-2xl shadow-2xl flex items-center gap-3 border border-slate-600 text-xs sm:text-sm font-semibold animate-in slide-in-from-bottom duration-200">
+          <CheckCircle2 className="h-5 w-5 text-emerald-400 shrink-0" />
           <span>{toastMessage}</span>
+          <button
+            onClick={() => setToastMessage(null)}
+            className="ml-2 text-slate-400 hover:text-white p-1 rounded-lg"
+          >
+            <X className="h-4 w-4" />
+          </button>
         </div>
       )}
 
-      {/* Top Command Header & Financial Breadcrumb */}
-      <div className="bg-surface-container-lowest p-4 mb-4 shadow-xs border border-[#d5e3fc]">
-        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3">
-          <div className="flex flex-col">
-            <div className="flex items-center gap-1 font-mono text-[11px] text-secondary uppercase tracking-wider mb-1">
-              <span>Accounts &amp; Bursar Portal</span>
-              <span className="text-outline-variant">/</span>
+      {/* Top Header Banner */}
+      <div className="bg-white rounded-2xl p-5 sm:p-6 md:p-7 border border-slate-200 shadow-xs relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-96 h-full bg-gradient-to-l from-amber-50/70 via-blue-50/40 to-transparent pointer-events-none"></div>
+
+        <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+          <div className="space-y-2">
+            <div className="flex items-center gap-2 text-xs text-slate-500 font-medium">
+              <Link href="/accountant" className="text-amber-700 hover:underline">
+                Accounts Directorate
+              </Link>
+              <span>/</span>
               <span>Receipts &amp; Counter Vouchers</span>
-              <span className="text-outline-variant">/</span>
-              <span className="text-primary font-bold">Fee Receipts Vault</span>
+              <span>/</span>
+              <span className="text-[#3D405B] font-bold">Fee Receipts Vault</span>
             </div>
-            <div className="flex items-center gap-3">
-              <h1 className="text-xl font-bold font-headline text-primary tracking-tight">
-                Official Fee Receipts &amp; Voucher Studio
-              </h1>
-              <span className="px-2 py-0.5 bg-secondary-container text-primary font-mono text-[11px] font-bold border border-[#a8c4f0]">
-                TILL #02 ACTIVE
-              </span>
+
+            <div>
+              <div className="flex flex-wrap items-center gap-2.5">
+                <h1 className="text-2xl sm:text-3xl font-bold text-[#3D405B] tracking-tight">
+                  Official Fee Receipts &amp; Voucher Studio 🧾
+                </h1>
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-50 text-emerald-700 text-xs font-semibold rounded-full border border-emerald-200">
+                  <span className="w-2 h-2 rounded-full bg-emerald-600 animate-pulse"></span>
+                  Till #02 Active &bull; Cashier Verified
+                </span>
+              </div>
+              <p className="text-xs sm:text-sm text-slate-500 mt-1">
+                Official institutional receipts vault. Generate, inspect, cryptographically verify, and print authenticated fee vouchers.
+              </p>
             </div>
           </div>
 
-          {/* Top Actions */}
-          <div className="flex flex-wrap items-center gap-2">
+          {/* Action Buttons */}
+          <div className="flex flex-wrap items-center gap-2.5">
             <button
               onClick={() => setIsBatchPrintModalOpen(true)}
-              type="button"
-              className="flex items-center gap-1.5 px-3 py-1.5 bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-mono text-xs uppercase tracking-wider transition-colors border border-[#cbd5e1] font-semibold cursor-pointer"
+              className="inline-flex items-center gap-2 px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-xl border border-slate-200 shadow-2xs transition-all cursor-pointer"
             >
-              <Printer className="w-3.5 h-3.5 text-secondary" />
-              <span>Batch Print Today's Vouchers</span>
+              <Printer className="w-4 h-4 text-slate-600" />
+              <span>Batch Print Today</span>
             </button>
             <button
-              onClick={() => showToast("Downloading Manifest PDF for 6 Today's Vouchers...")}
-              type="button"
-              className="flex items-center gap-1.5 px-3 py-1.5 bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-mono text-xs uppercase tracking-wider transition-colors border border-[#cbd5e1] font-semibold cursor-pointer"
+              onClick={handleExportManifestCSV}
+              className="inline-flex items-center gap-2 px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-xl border border-slate-200 shadow-2xs transition-all cursor-pointer"
             >
-              <Download className="w-3.5 h-3.5 text-secondary" />
-              <span>Export Manifest (PDF)</span>
+              <Download className="w-4 h-4 text-slate-600" />
+              <span>Export Manifest</span>
             </button>
             <button
               onClick={() => {
@@ -460,86 +496,125 @@ export default function AccountantFeeReceiptsPage() {
                 setVerifyResult(null);
                 setIsVerifyHashModalOpen(true);
               }}
-              type="button"
-              className="flex items-center gap-1.5 px-3 py-1.5 bg-primary text-on-primary hover:bg-primary/95 font-mono text-xs uppercase tracking-wider transition-colors font-bold shadow-xs cursor-pointer"
+              className="inline-flex items-center gap-2 px-4 py-2.5 bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold rounded-xl shadow-xs transition-all cursor-pointer"
             >
-              <ShieldCheck className="w-3.5 h-3.5" />
-              <span>Verify Receipt Hash</span>
+              <ShieldCheck className="w-4 h-4" />
+              <span>Verify Hash</span>
             </button>
           </div>
         </div>
       </div>
 
-      {/* Operational Telemetry Bar (4 Cards) */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
-        <div className="bg-surface-container-lowest p-3 flex items-center justify-between border border-[#d5e3fc] shadow-xs">
-          <div className="flex flex-col">
-            <span className="text-[10px] font-mono text-on-surface-variant uppercase tracking-wider font-semibold">
-              Today's Realized
-            </span>
-            <span className="text-xl font-bold font-mono text-primary">₹1,77,500</span>
+      {/* 4 Telemetry Metric Cards */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        {/* Card 1 */}
+        <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs hover:shadow-sm transition-all flex flex-col justify-between">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-semibold text-slate-500">Today&apos;s Realized</span>
+            <div className="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
+              <Coins className="w-4 h-4" />
+            </div>
           </div>
-          <div className="p-2 bg-surface-container text-secondary">
-            <Banknote className="w-5 h-5" />
+          <div className="mt-3">
+            <div className="text-2xl font-bold text-[#3D405B] tracking-tight font-mono">
+              ₹1,77,500
+            </div>
+            <div className="text-xs text-emerald-600 font-bold mt-1">
+              +14.2% vs yesterday
+            </div>
           </div>
-        </div>
-
-        <div className="bg-surface-container-lowest p-3 flex items-center justify-between border border-[#d5e3fc] shadow-xs">
-          <div className="flex flex-col">
-            <span className="text-[10px] font-mono text-on-surface-variant uppercase tracking-wider font-semibold">
-              Receipts Stamped
-            </span>
-            <span className="text-xl font-bold font-mono text-primary">6 Vouchers</span>
-          </div>
-          <div className="p-2 bg-surface-container text-secondary">
-            <FileText className="w-5 h-5" />
+          <div className="pt-2.5 mt-2.5 border-t border-slate-100 text-xs text-slate-500 flex justify-between">
+            <span>Till Session</span>
+            <span className="font-semibold text-emerald-700">Till #02 Open</span>
           </div>
         </div>
 
-        <div className="bg-surface-container-lowest p-3 flex items-center justify-between border border-[#d5e3fc] shadow-xs">
-          <div className="flex flex-col">
-            <span className="text-[10px] font-mono text-on-surface-variant uppercase tracking-wider font-semibold">
-              Avg Realization / Slip
-            </span>
-            <span className="text-xl font-bold font-mono text-primary">₹29,583</span>
+        {/* Card 2 */}
+        <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs hover:shadow-sm transition-all flex flex-col justify-between">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-semibold text-slate-500">Receipts Stamped</span>
+            <div className="w-9 h-9 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
+              <FileText className="w-4 h-4" />
+            </div>
           </div>
-          <div className="p-2 bg-surface-container text-secondary">
-            <CreditCard className="w-5 h-5" />
+          <div className="mt-3">
+            <div className="text-2xl font-bold text-[#3D405B] tracking-tight font-mono">
+              6 Vouchers
+            </div>
+            <div className="text-xs text-blue-700 font-semibold mt-1">
+              Series REC-2025
+            </div>
+          </div>
+          <div className="pt-2.5 mt-2.5 border-t border-slate-100 text-xs text-slate-500 flex justify-between">
+            <span>Audit Status</span>
+            <span className="font-semibold text-blue-700">100% In Sync</span>
           </div>
         </div>
 
-        <div className="bg-surface-container-lowest p-3 flex items-center justify-between border border-[#d5e3fc] shadow-xs">
-          <div className="flex flex-col">
-            <span className="text-[10px] font-mono text-on-surface-variant uppercase tracking-wider font-semibold">
-              Pending Clearing (CTS)
-            </span>
-            <span className="text-xl font-bold font-mono text-error">₹40,000 (1 Chq)</span>
+        {/* Card 3 */}
+        <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs hover:shadow-sm transition-all flex flex-col justify-between">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-semibold text-slate-500">Avg Intake / Slip</span>
+            <div className="w-9 h-9 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center">
+              <CreditCard className="w-4 h-4" />
+            </div>
           </div>
-          <div className="p-2 bg-surface-container text-error">
-            <Clock className="w-5 h-5" />
+          <div className="mt-3">
+            <div className="text-2xl font-bold text-[#3D405B] tracking-tight font-mono">
+              ₹29,583
+            </div>
+            <div className="text-xs text-purple-700 font-semibold mt-1">
+              Median Realization
+            </div>
+          </div>
+          <div className="pt-2.5 mt-2.5 border-t border-slate-100 text-xs text-slate-500 flex justify-between">
+            <span>Realization Range</span>
+            <span className="font-semibold text-slate-700">₹25k - ₹50k</span>
+          </div>
+        </div>
+
+        {/* Card 4 */}
+        <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs hover:shadow-sm transition-all flex flex-col justify-between">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-semibold text-slate-500">Pending Clearing (CTS)</span>
+            <div className="w-9 h-9 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center">
+              <Clock className="w-4 h-4" />
+            </div>
+          </div>
+          <div className="mt-3">
+            <div className="text-2xl font-bold text-amber-700 tracking-tight font-mono">
+              ₹40,000
+            </div>
+            <div className="text-xs text-amber-800 font-semibold mt-1">
+              1 Cheque in Transit
+            </div>
+          </div>
+          <div className="pt-2.5 mt-2.5 border-t border-slate-100 text-xs text-slate-500 flex justify-between">
+            <span>Bank Clearing</span>
+            <span className="font-semibold text-amber-800">CTS-2010 Value Date</span>
           </div>
         </div>
       </div>
 
-      {/* Master Workspace: Two-Column Split (Catalog Left 42% / Master Document Right 58%) */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-start">
-        {/* LEFT COLUMN: Receipt Registry & Filtering (5 Cols / 42%) */}
-        <div className="lg:col-span-5 flex flex-col gap-3">
-          {/* Search Box */}
-          <div className="bg-surface-container-lowest p-3 border border-[#d5e3fc] shadow-xs flex flex-col gap-2">
+      {/* Master Workspace: Two-Column Split (Left 5 Cols / Right 7 Cols) */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        {/* LEFT COLUMN: Receipt Registry & Filtering (5 Cols) */}
+        <div className="lg:col-span-5 space-y-4">
+          {/* Search Box & Segmented Tabs */}
+          <div className="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-xs space-y-3">
             <div className="relative">
-              <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant" />
+              <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search Receipt No, Roll, or Student..."
-                className="w-full bg-surface-container-low pl-9 pr-3 py-2 text-xs border border-[#cbd5e1] focus:border-secondary focus:outline-none font-mono"
+                className="w-full bg-slate-50 pl-10 pr-3 py-2 text-xs border border-slate-200 rounded-xl focus:border-amber-600 focus:outline-none transition-colors"
               />
             </div>
 
             {/* Segmented Filter Tabs */}
-            <div className="flex items-center gap-1 border-b border-[#cbd5e1] pt-1">
+            <div className="flex items-center gap-1.5 p-1 bg-slate-100 rounded-xl">
               {(["All", "Cleared", "Clearing"] as const).map((tab) => {
                 const count =
                   tab === "All"
@@ -547,14 +622,15 @@ export default function AccountantFeeReceiptsPage() {
                     : tab === "Cleared"
                     ? receipts.filter((r) => r.status === "Cleared").length
                     : receipts.filter((r) => r.status === "Clearing").length;
+                const isActive = filterTab === tab;
                 return (
                   <button
                     key={tab}
                     onClick={() => setFilterTab(tab)}
-                    className={`flex-1 py-1.5 text-[11px] font-mono uppercase font-bold tracking-wider transition-colors border-b-2 -mb-[2px] ${
-                      filterTab === tab
-                        ? "border-amber-600 text-amber-700 bg-amber-50/50"
-                        : "border-transparent text-on-surface-variant hover:text-on-surface"
+                    className={`flex-1 py-1.5 text-xs font-semibold rounded-lg transition-all cursor-pointer ${
+                      isActive
+                        ? "bg-amber-600 text-white shadow-xs font-bold"
+                        : "text-slate-600 hover:text-slate-800"
                     }`}
                   >
                     {tab} ({count})
@@ -564,62 +640,62 @@ export default function AccountantFeeReceiptsPage() {
             </div>
           </div>
 
-          {/* High Density Receipt Items List */}
-          <div className="flex flex-col gap-2">
+          {/* Receipt Card List */}
+          <div className="space-y-2.5">
             {filteredReceipts.map((receipt) => {
               const isSelected = receipt.id === selectedReceipt.id;
               return (
                 <div
                   key={receipt.id}
                   onClick={() => setSelectedReceiptId(receipt.id)}
-                  className={`p-3 bg-surface-container-lowest shadow-xs cursor-pointer border transition-all ${
+                  className={`p-4 bg-white rounded-2xl cursor-pointer border transition-all ${
                     isSelected
-                      ? "border-primary bg-surface-container-lowest shadow-md border-l-4 border-l-primary"
-                      : "border-[#d5e3fc] hover:border-secondary hover:bg-surface-container-low"
+                      ? "border-amber-600 shadow-sm ring-2 ring-amber-600/20"
+                      : "border-slate-200 hover:border-slate-300 hover:shadow-2xs"
                   }`}
                 >
-                  <div className="flex items-start justify-between mb-1">
+                  <div className="flex items-start justify-between mb-1.5">
                     <div className="flex items-center gap-2">
-                      <span className="font-mono text-xs font-bold text-primary">
+                      <span className="font-mono text-xs font-bold text-blue-600">
                         {receipt.receiptNo}
                       </span>
                       <span
-                        className={`px-1.5 py-0.2 font-mono text-[10px] uppercase font-bold tracking-wider ${
+                        className={`px-2 py-0.5 text-[10px] font-bold rounded-full ${
                           receipt.mode === "UPI"
-                            ? "bg-secondary-container text-primary"
+                            ? "bg-blue-50 text-blue-700 border border-blue-200"
                             : receipt.mode === "Cash"
-                            ? "bg-emerald-100 text-emerald-800"
+                            ? "bg-emerald-50 text-emerald-700 border border-emerald-200"
                             : receipt.mode === "NEFT"
-                            ? "bg-indigo-100 text-indigo-800"
+                            ? "bg-indigo-50 text-indigo-700 border border-indigo-200"
                             : receipt.mode === "POS Card"
-                            ? "bg-amber-100 text-amber-800"
-                            : "bg-orange-100 text-orange-800"
+                            ? "bg-purple-50 text-purple-700 border border-purple-200"
+                            : "bg-amber-50 text-amber-700 border border-amber-200"
                         }`}
                       >
                         {receipt.mode}
                       </span>
                       {receipt.status === "Clearing" && (
-                        <span className="px-1.5 py-0.2 bg-amber-100 text-amber-900 font-mono text-[9px] uppercase font-bold">
+                        <span className="px-2 py-0.5 bg-amber-100 text-amber-900 font-bold text-[9px] rounded-full">
                           CTS IN CLEARING
                         </span>
                       )}
                     </div>
-                    <div className="font-mono text-xs font-bold text-primary">
-                      ₹{receipt.amount.toLocaleString("en-IN")}.00
+                    <div className="font-mono text-xs font-bold text-[#3D405B]">
+                      ₹{receipt.amount.toLocaleString("en-IN")}
                     </div>
                   </div>
 
-                  <div className="flex items-center justify-between text-xs text-on-surface-variant mb-2">
-                    <span className="font-semibold text-on-surface">{receipt.student.name}</span>
-                    <span className="font-mono text-[11px]">{receipt.student.rollNo}</span>
+                  <div className="flex items-center justify-between text-xs mb-2">
+                    <span className="font-bold text-[#3D405B]">{receipt.student.name}</span>
+                    <span className="font-mono text-[11px] text-slate-500">{receipt.student.rollNo}</span>
                   </div>
 
-                  <div className="flex items-center justify-between pt-1 border-t border-[#e2e8f0] text-on-surface-variant font-mono text-[10px]">
-                    <span className="flex items-center gap-1">
-                      <Clock className="w-3 h-3 text-secondary" />
+                  <div className="flex items-center justify-between pt-2 border-t border-slate-100 text-xs text-slate-500">
+                    <span className="flex items-center gap-1 font-mono text-[11px]">
+                      <Clock className="w-3 h-3 text-slate-400" />
                       {receipt.date}, {receipt.time}
                     </span>
-                    <span className="text-secondary font-semibold">
+                    <span className="font-medium text-slate-600 truncate max-w-[150px]">
                       {receipt.student.course.split(" - ")[0]}
                     </span>
                   </div>
@@ -628,364 +704,356 @@ export default function AccountantFeeReceiptsPage() {
             })}
           </div>
 
-          {/* Catalog Pagination */}
-          <div className="bg-surface-container-lowest p-2 border border-[#d5e3fc] flex items-center justify-between text-xs font-mono">
-            <span className="text-on-surface-variant text-[11px]">
-              Showing 1-6 of 1,842 receipts
+          {/* Catalog Pagination Footer */}
+          <div className="bg-white p-3 rounded-2xl border border-slate-200 flex items-center justify-between text-xs text-slate-500">
+            <span>
+              Showing {filteredReceipts.length} of {receipts.length} vouchers
             </span>
-            <div className="flex items-center gap-1">
-              <button className="px-2 py-0.5 border border-[#cbd5e1] text-[10px] font-bold uppercase hover:bg-surface-container">
+            <div className="flex items-center gap-1 font-semibold">
+              <button className="px-2.5 py-1 bg-slate-50 border border-slate-200 rounded-lg text-slate-400 cursor-not-allowed">
                 Prev
               </button>
-              <button className="px-2 py-0.5 bg-primary text-on-primary text-[10px] font-bold">
+              <button className="px-2.5 py-1 bg-amber-600 text-white rounded-lg shadow-2xs">
                 1
               </button>
-              <button className="px-2 py-0.5 border border-[#cbd5e1] text-[10px] font-bold uppercase hover:bg-surface-container">
-                2
-              </button>
-              <button className="px-2 py-0.5 border border-[#cbd5e1] text-[10px] font-bold uppercase hover:bg-surface-container">
-                3
-              </button>
-              <button className="px-2 py-0.5 border border-[#cbd5e1] text-[10px] font-bold uppercase hover:bg-surface-container">
+              <button className="px-2.5 py-1 bg-slate-50 border border-slate-200 rounded-lg text-slate-600 hover:bg-slate-100">
                 Next
               </button>
             </div>
           </div>
         </div>
 
-        {/* RIGHT COLUMN: Master Printable Receipt Document & Studio Controls (7 Cols / 58%) */}
-        <div className="lg:col-span-7 flex flex-col gap-3">
+        {/* RIGHT COLUMN: Master Printable Receipt Document & Studio Controls (7 Cols) */}
+        <div className="lg:col-span-7 space-y-4">
           {/* Studio Top Action Bar */}
-          <div className="bg-surface-container-lowest p-3 border border-[#d5e3fc] shadow-xs flex flex-wrap items-center justify-between gap-2">
-            <div className="flex items-center gap-2 font-mono text-xs">
-              <span className="font-bold text-primary">Inspecting Voucher:</span>
-              <span className="px-2 py-0.5 bg-surface-container text-primary font-bold border border-[#cbd5e1]">
+          <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs flex flex-wrap items-center justify-between gap-3">
+            <div className="flex items-center gap-2 text-xs">
+              <span className="font-bold text-[#3D405B]">Inspecting:</span>
+              <span className="px-2.5 py-1 bg-slate-100 text-blue-600 font-mono font-bold rounded-lg">
                 {selectedReceipt.receiptNo}
               </span>
               <span
-                className={`px-2 py-0.5 font-bold text-[10px] uppercase ${
+                className={`px-2.5 py-0.5 font-bold text-[11px] rounded-full border ${
                   selectedReceipt.status === "Cleared"
-                    ? "bg-emerald-100 text-emerald-800"
-                    : "bg-amber-100 text-amber-800"
+                    ? "bg-emerald-50 text-emerald-700 border-emerald-200"
+                    : "bg-amber-50 text-amber-700 border-amber-200"
                 }`}
               >
-                {selectedReceipt.status === "Cleared" ? "STATUS: CLEARED" : "STATUS: CLEARING"}
+                {selectedReceipt.status === "Cleared" ? "Cleared & Verified" : "CTS Clearing"}
               </span>
             </div>
 
             <div className="flex items-center gap-2">
               <button
                 onClick={handlePrint}
-                className="flex items-center gap-1 px-3 py-1.5 bg-primary text-on-primary hover:bg-primary/90 text-xs font-mono uppercase font-bold tracking-wider shadow-xs cursor-pointer"
+                className="inline-flex items-center gap-1.5 px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold rounded-xl shadow-xs transition-all cursor-pointer"
               >
                 <Printer className="w-3.5 h-3.5" />
-                <span>Print Official Receipt</span>
+                <span>Print Receipt</span>
               </button>
               <button
                 onClick={() =>
-                  showToast(`Downloading PDF for ${selectedReceipt.receiptNo}...`)
+                  showToast(`Downloading PDF slip for ${selectedReceipt.receiptNo}...`)
                 }
-                className="flex items-center gap-1 px-3 py-1.5 bg-surface-container-high hover:bg-surface-container-highest text-on-surface text-xs font-mono uppercase font-bold tracking-wider border border-[#cbd5e1] cursor-pointer"
+                className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-xl border border-slate-200 transition-colors cursor-pointer"
               >
-                <Download className="w-3.5 h-3.5 text-secondary" />
-                <span>Download PDF</span>
+                <Download className="w-3.5 h-3.5 text-slate-500" />
+                <span>PDF Slip</span>
               </button>
             </div>
           </div>
 
-          {/* MASTER PRINTABLE RECEIPT CONTAINER (Institutional Brutalist Layout) */}
+          {/* MASTER PRINTABLE RECEIPT CONTAINER */}
           <div
             id="printable-receipt"
-            className="bg-white p-6 border-2 border-primary text-[#3D405B] shadow-md relative select-text"
+            className="bg-white p-6 sm:p-8 rounded-2xl border-2 border-[#3D405B] text-[#3D405B] shadow-sm relative select-text space-y-5"
           >
             {/* Optional Duplicate Watermark */}
             {isDuplicateStamp && (
               <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none z-10">
-                <span className="text-7xl font-extrabold uppercase font-mono text-error/15 -rotate-45 border-4 border-error/20 px-8 py-4">
+                <span className="text-6xl sm:text-7xl font-extrabold uppercase font-mono text-rose-500/15 -rotate-45 border-4 border-rose-500/20 px-8 py-4 rounded-2xl">
                   DUPLICATE VOUCHER
                 </span>
               </div>
             )}
 
-            {/* 1. Institutional Document Header */}
-            <div className="flex items-start gap-4 pb-4 border-b-2 border-primary mb-4">
-              <div className="w-14 h-14 bg-primary text-white flex flex-col items-center justify-center font-bold font-serif text-xl border border-primary shrink-0">
+            {/* 1. Document Header */}
+            <div className="flex items-start gap-4 pb-4 border-b-2 border-slate-200">
+              <div className="w-14 h-14 bg-[#3D405B] text-white flex flex-col items-center justify-center font-bold text-xl rounded-2xl shadow-xs shrink-0">
                 <span>APX</span>
-                <span className="text-[8px] font-mono tracking-widest font-normal">INST</span>
+                <span className="text-[8px] tracking-widest font-normal">INST</span>
               </div>
-              <div className="flex-1">
+              <div className="flex-1 min-w-0">
                 <div className="flex items-center justify-between">
-                  <h2 className="text-base font-bold uppercase tracking-tight text-primary font-headline">
+                  <h2 className="text-base sm:text-lg font-bold uppercase tracking-tight text-[#3D405B]">
                     Apex Institute of Technology &amp; Management
                   </h2>
-                  <span className="font-mono text-[9px] uppercase px-1.5 py-0.5 bg-gray-100 border border-gray-300 font-bold">
+                  <span className="font-mono text-[9px] uppercase px-2 py-0.5 bg-slate-100 border border-slate-200 font-bold rounded-md">
                     FORM F-04 / REV 2025
                   </span>
                 </div>
-                <p className="text-[10px] text-gray-600 uppercase font-sans tracking-wide leading-tight mt-0.5">
-                  Approved by AICTE, New Delhi &bull; Affiliated to State Technological University &bull; Accredited NAAC 'A+'
+                <p className="text-[10px] text-slate-500 uppercase tracking-wide leading-tight mt-0.5">
+                  Approved by AICTE, New Delhi &bull; State Technological University &bull; NAAC &apos;A+&apos;
                 </p>
-                <p className="text-[10px] text-gray-500 font-mono leading-tight mt-0.5">
+                <p className="text-[10px] text-slate-400 font-mono leading-tight mt-0.5">
                   Knowledge Park III, Institutional Area, Greater Noida, UP - 201306 | accounts@apexinstitute.edu.in
                 </p>
-                <div className="mt-2 inline-block px-2.5 py-0.5 bg-primary text-white font-mono text-[10px] font-bold uppercase tracking-widest">
+                <div className="mt-2 inline-block px-3 py-1 bg-amber-600 text-white font-mono text-[10px] font-bold uppercase tracking-wider rounded-lg">
                   OFFICIAL FEE REALIZATION VOUCHER &amp; COUNTER RECEIPT
                 </div>
               </div>
             </div>
 
             {/* 2. Receipt Meta Coordinates (Bento Strip) */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-2 p-2 bg-gray-50 border border-gray-300 mb-4 font-mono text-xs">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 p-3 bg-slate-50 rounded-xl border border-slate-200 font-mono text-xs">
               <div>
-                <span className="text-[9px] uppercase text-gray-500 block">Voucher No.</span>
-                <span className="font-bold text-primary">{selectedReceipt.receiptNo}</span>
+                <span className="text-[9px] uppercase text-slate-400 block font-bold">Voucher No.</span>
+                <span className="font-bold text-blue-600">{selectedReceipt.receiptNo}</span>
               </div>
               <div>
-                <span className="text-[9px] uppercase text-gray-500 block">Issue Date &amp; Time</span>
-                <span className="font-bold text-primary">
+                <span className="text-[9px] uppercase text-slate-400 block font-bold">Issue Date &amp; Time</span>
+                <span className="font-bold text-slate-800">
                   {selectedReceipt.date}, {selectedReceipt.time}
                 </span>
               </div>
               <div>
-                <span className="text-[9px] uppercase text-gray-500 block">Academic Session</span>
-                <span className="font-bold text-primary">AY 2025-26 (Sem {selectedReceipt.student.semester.split(" ")[0]})</span>
+                <span className="text-[9px] uppercase text-slate-400 block font-bold">Academic Session</span>
+                <span className="font-bold text-slate-800">AY 2025-26 ({selectedReceipt.student.semester})</span>
               </div>
               <div>
-                <span className="text-[9px] uppercase text-gray-500 block">Counter &amp; Terminal</span>
-                <span className="font-bold text-primary">
+                <span className="text-[9px] uppercase text-slate-400 block font-bold">Counter &amp; Terminal</span>
+                <span className="font-bold text-slate-800">
                   {selectedReceipt.security.tillId} ({selectedReceipt.security.cashierId})
                 </span>
               </div>
             </div>
 
             {/* 3. Student Particulars Card */}
-            <div className="border border-gray-300 p-3 mb-4 bg-white">
-              <div className="text-[10px] uppercase font-bold text-secondary font-mono tracking-wider mb-2 border-b border-gray-200 pb-1">
+            <div className="border border-slate-200 p-4 rounded-xl bg-white space-y-2">
+              <div className="text-[10px] uppercase font-bold text-amber-800 font-mono tracking-wider pb-1 border-b border-slate-100">
                 Candidate &amp; Academic Particulars
               </div>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-3 text-xs">
                 <div>
-                  <span className="text-gray-500 text-[10px] block font-mono">Student Name:</span>
-                  <span className="font-bold text-primary uppercase">{selectedReceipt.student.name}</span>
+                  <span className="text-slate-400 text-[10px] block">Student Name:</span>
+                  <span className="font-bold text-[#3D405B] uppercase">{selectedReceipt.student.name}</span>
                 </div>
                 <div>
-                  <span className="text-gray-500 text-[10px] block font-mono">Roll / Enrollment No:</span>
-                  <span className="font-bold font-mono text-primary">{selectedReceipt.student.rollNo}</span>
+                  <span className="text-slate-400 text-[10px] block">Roll / Enrollment No:</span>
+                  <span className="font-bold font-mono text-blue-600">{selectedReceipt.student.rollNo}</span>
                 </div>
                 <div>
-                  <span className="text-gray-500 text-[10px] block font-mono">Course &amp; Discipline:</span>
-                  <span className="font-semibold">{selectedReceipt.student.course}</span>
+                  <span className="text-slate-400 text-[10px] block">Course &amp; Discipline:</span>
+                  <span className="font-semibold text-slate-700">{selectedReceipt.student.course}</span>
                 </div>
                 <div>
-                  <span className="text-gray-500 text-[10px] block font-mono">Academic Batch:</span>
-                  <span className="font-mono">{selectedReceipt.student.batch} ({selectedReceipt.student.semester})</span>
+                  <span className="text-slate-400 text-[10px] block">Academic Batch:</span>
+                  <span className="font-mono text-slate-700">{selectedReceipt.student.batch}</span>
                 </div>
                 <div>
-                  <span className="text-gray-500 text-[10px] block font-mono">Father / Guardian:</span>
-                  <span>{selectedReceipt.student.guardian}</span>
+                  <span className="text-slate-400 text-[10px] block">Father / Guardian:</span>
+                  <span className="text-slate-700">{selectedReceipt.student.guardian}</span>
                 </div>
                 <div>
-                  <span className="text-gray-500 text-[10px] block font-mono">Registered Contact:</span>
-                  <span className="font-mono">{selectedReceipt.student.phone}</span>
+                  <span className="text-slate-400 text-[10px] block">Registered Contact:</span>
+                  <span className="font-mono text-slate-700">{selectedReceipt.student.phone}</span>
                 </div>
               </div>
             </div>
 
             {/* 4. Itemized Fee Assessment & Realization Table */}
-            <div className="mb-4">
-              <div className="text-[10px] uppercase font-bold text-secondary font-mono tracking-wider mb-1">
+            <div className="space-y-2">
+              <div className="text-[10px] uppercase font-bold text-amber-800 font-mono tracking-wider">
                 Itemized Fee Head Assessment &amp; Realization
               </div>
-              <table className="w-full text-xs border border-gray-300">
-                <thead>
-                  <tr className="bg-gray-100 text-left font-mono text-[10px] uppercase text-gray-700 border-b border-gray-300">
-                    <th className="p-2 border-r border-gray-300 w-10 text-center">#</th>
-                    <th className="p-2 border-r border-gray-300">Fee Head Description</th>
-                    <th className="p-2 border-r border-gray-300 w-32 font-mono">Ledger Code</th>
-                    <th className="p-2 border-r border-gray-300 w-28 text-right font-mono">Assessed</th>
-                    <th className="p-2 w-28 text-right font-mono">Realized (₹)</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-200">
-                  {selectedReceipt.fees.map((f) => (
-                    <tr key={f.sno} className="hover:bg-gray-50 font-sans">
-                      <td className="p-2 border-r border-gray-300 text-center font-mono text-[11px] text-gray-600">
-                        {f.sno}
+              <div className="rounded-xl border border-slate-200 overflow-hidden">
+                <table className="w-full text-xs">
+                  <thead>
+                    <tr className="bg-slate-50 text-left font-mono text-[10px] uppercase text-slate-600 border-b border-slate-200">
+                      <th className="p-2.5 w-10 text-center">#</th>
+                      <th className="p-2.5">Fee Head Description</th>
+                      <th className="p-2.5 w-32 font-mono">Ledger Code</th>
+                      <th className="p-2.5 w-28 text-right font-mono">Assessed</th>
+                      <th className="p-2.5 w-28 text-right font-mono">Realized (₹)</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-slate-100">
+                    {selectedReceipt.fees.map((f) => (
+                      <tr key={f.sno} className="hover:bg-slate-50/60 font-sans">
+                        <td className="p-2.5 text-center font-mono text-[11px] text-slate-500">
+                          {f.sno}
+                        </td>
+                        <td className="p-2.5 font-medium text-slate-800">
+                          {f.description}
+                        </td>
+                        <td className="p-2.5 font-mono text-[10px] text-slate-500">
+                          {f.code}
+                        </td>
+                        <td className="p-2.5 text-right font-mono text-slate-600">
+                          ₹{f.billed.toLocaleString("en-IN")}.00
+                        </td>
+                        <td className="p-2.5 text-right font-mono font-bold text-[#3D405B]">
+                          ₹{f.realized.toLocaleString("en-IN")}.00
+                        </td>
+                      </tr>
+                    ))}
+                    <tr className="bg-slate-50 font-bold border-t-2 border-slate-300">
+                      <td colSpan={4} className="p-2.5 text-right uppercase font-mono text-[11px] text-slate-700">
+                        Net Amount Realized This Voucher:
                       </td>
-                      <td className="p-2 border-r border-gray-300 font-medium">
-                        {f.description}
-                      </td>
-                      <td className="p-2 border-r border-gray-300 font-mono text-[10px] text-gray-600">
-                        {f.code}
-                      </td>
-                      <td className="p-2 border-r border-gray-300 text-right font-mono text-gray-600">
-                        ₹{f.billed.toLocaleString("en-IN")}.00
-                      </td>
-                      <td className="p-2 text-right font-mono font-bold text-primary">
-                        ₹{f.realized.toLocaleString("en-IN")}.00
+                      <td className="p-2.5 text-right font-mono text-sm text-emerald-700">
+                        ₹{selectedReceipt.amount.toLocaleString("en-IN")}.00
                       </td>
                     </tr>
-                  ))}
-                  <tr className="bg-gray-100 font-bold border-t-2 border-primary">
-                    <td colSpan={4} className="p-2 text-right uppercase font-mono text-[11px]">
-                      Net Amount Realized This Voucher:
-                    </td>
-                    <td className="p-2 text-right font-mono text-sm text-primary">
-                      ₹{selectedReceipt.amount.toLocaleString("en-IN")}.00
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+                  </tbody>
+                </table>
+              </div>
 
               {/* Amount in words */}
-              <div className="mt-1.5 p-2 bg-gray-50 border border-gray-300 flex items-center justify-between text-xs">
-                <span className="font-mono text-[10px] uppercase text-gray-500">In Words:</span>
-                <span className="font-bold text-primary uppercase font-mono tracking-wide text-[11px]">
+              <div className="p-3 bg-slate-50 rounded-xl border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between text-xs gap-1">
+                <span className="font-mono text-[10px] uppercase text-slate-400 font-bold">In Words:</span>
+                <span className="font-bold text-[#3D405B] uppercase font-mono tracking-wide text-[11px]">
                   {selectedReceipt.amountInWords}
                 </span>
               </div>
             </div>
 
-            {/* 5. Payment Instrument & Gateway Verification Matrix */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-2 p-2.5 bg-gray-50 border border-gray-300 mb-4 font-mono text-[11px]">
+            {/* 5. Payment Instrument Details */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 p-3 bg-slate-50 rounded-xl border border-slate-200 font-mono text-[11px]">
               <div>
-                <span className="text-[9px] uppercase text-gray-500 block">Tender Mode</span>
-                <span className="font-bold text-primary">{selectedReceipt.paymentDetails.modeFull}</span>
+                <span className="text-[9px] uppercase text-slate-400 block font-bold">Tender Mode</span>
+                <span className="font-bold text-[#3D405B]">{selectedReceipt.paymentDetails.modeFull}</span>
               </div>
               <div>
-                <span className="text-[9px] uppercase text-gray-500 block">Bank / UTR / Chq Ref</span>
-                <span className="font-bold text-primary">{selectedReceipt.paymentDetails.refNo}</span>
+                <span className="text-[9px] uppercase text-slate-400 block font-bold">Bank / UTR / Chq Ref</span>
+                <span className="font-bold text-blue-600">{selectedReceipt.paymentDetails.refNo}</span>
               </div>
               <div>
-                <span className="text-[9px] uppercase text-gray-500 block">Bank / Gateway Pool</span>
-                <span className="font-medium text-gray-700">{selectedReceipt.paymentDetails.bankName}</span>
+                <span className="text-[9px] uppercase text-slate-400 block font-bold">Gateway Pool</span>
+                <span className="font-medium text-slate-700">{selectedReceipt.paymentDetails.bankName}</span>
               </div>
               <div>
-                <span className="text-[9px] uppercase text-gray-500 block">Clearing / Auth Code</span>
+                <span className="text-[9px] uppercase text-slate-400 block font-bold">Auth Code</span>
                 <span className="font-bold text-emerald-700">{selectedReceipt.paymentDetails.authCode}</span>
               </div>
             </div>
 
-            {/* 6. Cumulative Financial Balance Summary */}
-            <div className="grid grid-cols-5 gap-2 p-2 bg-primary text-white mb-4 text-center font-mono text-xs">
-              <div className="border-r border-white/20 px-1">
-                <span className="text-[9px] uppercase text-gray-300 block">Total Assessed</span>
+            {/* 6. Financial Balance Summary */}
+            <div className="grid grid-cols-5 gap-2 p-3 bg-[#3D405B] text-white rounded-xl text-center font-mono text-xs">
+              <div className="border-r border-white/10 px-1">
+                <span className="text-[9px] uppercase text-slate-400 block font-bold">Total Assessed</span>
                 <span className="font-bold">₹{selectedReceipt.balanceSummary.totalFee.toLocaleString("en-IN")}</span>
               </div>
-              <div className="border-r border-white/20 px-1">
-                <span className="text-[9px] uppercase text-gray-300 block">Concession</span>
+              <div className="border-r border-white/10 px-1">
+                <span className="text-[9px] uppercase text-slate-400 block font-bold">Concession</span>
                 <span className="font-bold">-₹{selectedReceipt.balanceSummary.concession.toLocaleString("en-IN")}</span>
               </div>
-              <div className="border-r border-white/20 px-1">
-                <span className="text-[9px] uppercase text-gray-300 block">Previously Paid</span>
+              <div className="border-r border-white/10 px-1">
+                <span className="text-[9px] uppercase text-slate-400 block font-bold">Previously Paid</span>
                 <span className="font-bold">₹{selectedReceipt.balanceSummary.previouslyPaid.toLocaleString("en-IN")}</span>
               </div>
-              <div className="border-r border-white/20 px-1 bg-white/10">
-                <span className="text-[9px] uppercase text-secondary-container block font-bold">This Voucher</span>
+              <div className="border-r border-white/10 px-1 bg-white/10 rounded-lg">
+                <span className="text-[9px] uppercase text-amber-300 block font-bold">This Voucher</span>
                 <span className="font-bold text-amber-300">₹{selectedReceipt.balanceSummary.currentRealized.toLocaleString("en-IN")}</span>
               </div>
               <div className="px-1">
-                <span className="text-[9px] uppercase text-gray-300 block">Pending Dues</span>
+                <span className="text-[9px] uppercase text-slate-400 block font-bold">Pending Dues</span>
                 <span className="font-bold text-rose-300">₹{selectedReceipt.balanceSummary.balancePending.toLocaleString("en-IN")}</span>
               </div>
             </div>
 
-            {/* 7. Security Hash, Dynamic QR Code, and Bursar Execution Stamps */}
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-3 items-end pt-2 border-t border-gray-300">
-              {/* Left QR & SHA256 */}
+            {/* 7. Security Hash & Cashier Signatures */}
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-end pt-3 border-t border-slate-200">
               <div className="md:col-span-7 flex items-center gap-3">
-                <div className="w-16 h-16 border-2 border-primary bg-white p-1 flex items-center justify-center shrink-0">
-                  {/* Vector simulated QR Code */}
+                <div className="w-16 h-16 border-2 border-[#3D405B] rounded-xl bg-white p-1 flex items-center justify-center shrink-0">
                   <div className="grid grid-cols-4 gap-0.5 w-full h-full p-0.5">
-                    <div className="bg-primary rounded-none"></div>
-                    <div className="bg-primary rounded-none"></div>
+                    <div className="bg-[#3D405B] rounded-xs"></div>
+                    <div className="bg-[#3D405B] rounded-xs"></div>
                     <div className="bg-white"></div>
-                    <div className="bg-primary rounded-none"></div>
-                    <div className="bg-primary rounded-none"></div>
+                    <div className="bg-[#3D405B] rounded-xs"></div>
+                    <div className="bg-[#3D405B] rounded-xs"></div>
                     <div className="bg-white"></div>
-                    <div className="bg-primary rounded-none"></div>
-                    <div className="bg-primary rounded-none"></div>
+                    <div className="bg-[#3D405B] rounded-xs"></div>
+                    <div className="bg-[#3D405B] rounded-xs"></div>
                     <div className="bg-white"></div>
-                    <div className="bg-primary rounded-none"></div>
-                    <div className="bg-primary rounded-none"></div>
+                    <div className="bg-[#3D405B] rounded-xs"></div>
+                    <div className="bg-[#3D405B] rounded-xs"></div>
                     <div className="bg-white"></div>
-                    <div className="bg-primary rounded-none"></div>
+                    <div className="bg-[#3D405B] rounded-xs"></div>
                     <div className="bg-white"></div>
-                    <div className="bg-primary rounded-none"></div>
-                    <div className="bg-primary rounded-none"></div>
+                    <div className="bg-[#3D405B] rounded-xs"></div>
+                    <div className="bg-[#3D405B] rounded-xs"></div>
                   </div>
                 </div>
-                <div className="flex flex-col">
-                  <span className="text-[9px] font-mono text-gray-500 uppercase font-semibold">
-                    Cryptographic Ledger Fingerprint (SHA-256)
+                <div className="space-y-0.5">
+                  <span className="text-[9px] font-mono text-slate-400 uppercase font-bold block">
+                    Cryptographic Ledger Hash (SHA-256)
                   </span>
-                  <span className="font-mono text-[9px] text-gray-700 break-all select-all leading-tight">
+                  <span className="font-mono text-[9px] text-slate-700 break-all select-all leading-tight block">
                     {selectedReceipt.security.hash}
                   </span>
-                  <span className="text-[8px] font-mono text-emerald-700 font-bold mt-1 flex items-center gap-1">
-                    <CheckCircle2 className="w-2.5 h-2.5" /> VERIFIED BY CENTRAL BURSAR NODE #02
+                  <span className="text-[9px] font-mono text-emerald-700 font-bold flex items-center gap-1 pt-0.5">
+                    <CheckCircle2 className="w-3 h-3" /> VERIFIED BY CENTRAL BURSAR NODE #02
                   </span>
                 </div>
               </div>
 
-              {/* Right: Cashier Signature Block */}
               <div className="md:col-span-5 flex justify-end gap-3 text-right">
                 <div className="flex flex-col items-center">
-                  <div className="h-10 w-28 border-b border-dashed border-gray-400 flex items-end justify-center pb-1">
-                    <span className="font-serif italic text-sm text-primary tracking-wider">
-                      P. Sharma
+                  <div className="h-10 w-28 border-b border-dashed border-slate-300 flex items-end justify-center pb-1">
+                    <span className="font-serif italic text-sm text-[#3D405B] tracking-wider">
+                      R. Kumar
                     </span>
                   </div>
-                  <span className="text-[9px] font-mono font-bold uppercase text-primary mt-0.5">
-                    Authorized Cashier
+                  <span className="text-[9px] font-mono font-bold uppercase text-[#3D405B] mt-1">
+                    Chief Cashier
                   </span>
-                  <span className="text-[8px] font-mono text-gray-500">
+                  <span className="text-[8px] font-mono text-slate-400">
                     {selectedReceipt.security.cashierName}
                   </span>
                 </div>
 
                 <div className="flex flex-col items-center">
-                  <div className="h-12 w-14 border border-primary/40 text-primary flex flex-col items-center justify-center p-0.5 text-center">
+                  <div className="h-12 w-14 border border-[#3D405B]/30 rounded-lg text-[#3D405B] flex flex-col items-center justify-center p-0.5 text-center">
                     <span className="text-[6px] font-mono uppercase font-bold">SEAL OF BURSAR</span>
                     <span className="text-[8px] font-bold">APEX</span>
                     <span className="text-[6px] font-mono">ACCOUNTS</span>
                   </div>
-                  <span className="text-[8px] font-mono text-gray-500 mt-0.5">Official Stamp</span>
+                  <span className="text-[8px] font-mono text-slate-400 mt-1">Official Stamp</span>
                 </div>
               </div>
             </div>
 
-            {/* Disclaimer */}
-            <div className="mt-4 pt-2 border-t border-gray-200 text-[8px] text-gray-400 font-mono text-center">
-              This is a computer-generated institutional receipt issued under Apex Institute Financial Ordinance Rule §12. Cheque / DD receipts are valid subject to CTS clearing realization. Dues must be settled within the grace window to prevent academic examination barring.
+            <div className="pt-2 border-t border-slate-100 text-[9px] text-slate-400 font-mono text-center">
+              This is an official computer-generated institutional receipt issued under Apex Institute Financial Regulations. Cheque / DD receipts are valid subject to CTS clearing.
             </div>
           </div>
 
-          {/* Action Bar Beneath Master Receipt Voucher */}
-          <div className="bg-surface-container-lowest p-3 border border-[#d5e3fc] shadow-xs flex flex-wrap items-center justify-between gap-2">
+          {/* Action Bar Beneath Master Receipt */}
+          <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs flex flex-wrap items-center justify-between gap-3 text-xs">
             <div className="flex items-center gap-2">
               <button
                 onClick={() =>
                   showToast(
-                    `Receipt ${selectedReceipt.receiptNo} emailed to ${selectedReceipt.student.email} & Guardian`
+                    `Receipt ${selectedReceipt.receiptNo} emailed to ${selectedReceipt.student.email} & Parent`
                   )
                 }
-                className="flex items-center gap-1.5 px-3 py-1.5 bg-surface-container hover:bg-surface-container-high text-on-surface font-mono text-xs uppercase tracking-wider font-semibold border border-[#cbd5e1] cursor-pointer"
+                className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-xl transition-colors cursor-pointer"
               >
-                <Mail className="w-3.5 h-3.5 text-secondary" />
-                <span>Email to Student &amp; Guardian</span>
+                <Mail className="w-3.5 h-3.5 text-amber-600" />
+                <span>Email to Student &amp; Parent</span>
               </button>
 
               <button
                 onClick={() =>
                   showToast(
-                    `SMS notification dispatched to registered mobile: ${selectedReceipt.student.phone}`
+                    `SMS notification dispatched to mobile: ${selectedReceipt.student.phone}`
                   )
                 }
-                className="flex items-center gap-1.5 px-3 py-1.5 bg-surface-container hover:bg-surface-container-high text-on-surface font-mono text-xs uppercase tracking-wider font-semibold border border-[#cbd5e1] cursor-pointer"
+                className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-xl transition-colors cursor-pointer"
               >
-                <MessageSquare className="w-3.5 h-3.5 text-secondary" />
-                <span>Send SMS Acknowledgement</span>
+                <MessageSquare className="w-3.5 h-3.5 text-blue-600" />
+                <span>Send SMS Alert</span>
               </button>
             </div>
 
@@ -998,14 +1066,14 @@ export default function AccountantFeeReceiptsPage() {
                     : "Duplicate voucher watermark applied."
                 );
               }}
-              className={`flex items-center gap-1.5 px-3 py-1.5 font-mono text-xs uppercase tracking-wider font-bold border transition-colors cursor-pointer ${
+              className={`inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold rounded-xl border transition-all cursor-pointer ${
                 isDuplicateStamp
-                  ? "bg-error text-on-error border-error"
-                  : "bg-surface-container-highest text-primary border-[#cbd5e1] hover:bg-surface-container-high"
+                  ? "bg-rose-50 text-rose-700 border-rose-200"
+                  : "bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100"
               }`}
             >
               <Copy className="w-3.5 h-3.5" />
-              <span>{isDuplicateStamp ? "Remove Duplicate Stamp" : "Duplicate Voucher Stamp"}</span>
+              <span>{isDuplicateStamp ? "Remove Duplicate Stamp" : "Apply Duplicate Stamp"}</span>
             </button>
           </div>
         </div>
@@ -1013,29 +1081,36 @@ export default function AccountantFeeReceiptsPage() {
 
       {/* Verify Hash Modal */}
       {isVerifyHashModalOpen && (
-        <div className="fixed inset-0 z-50 bg-[#3D405B]/60 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-surface-container-lowest border border-primary w-full max-w-lg p-5 shadow-2xl animate-in zoom-in-95">
-            <div className="flex items-center justify-between border-b border-[#d5e3fc] pb-3 mb-4">
-              <div className="flex items-center gap-2">
-                <ShieldCheck className="w-5 h-5 text-secondary" />
-                <h3 className="font-headline font-bold text-base text-primary uppercase tracking-tight">
-                  Cryptographic Voucher Verification
-                </h3>
+        <div className="fixed inset-0 z-50 bg-[#3D405B]/50 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4">
+          <div className="bg-white max-w-lg w-full rounded-2xl border border-slate-200 shadow-2xl p-5 sm:p-6 flex flex-col gap-4 animate-in fade-in zoom-in-95 duration-150">
+            <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+              <div className="flex items-center gap-2.5">
+                <div className="w-10 h-10 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center font-bold">
+                  <ShieldCheck className="w-5 h-5 text-amber-700" />
+                </div>
+                <div>
+                  <h3 className="text-base font-bold text-[#3D405B]">
+                    Cryptographic Voucher Verification
+                  </h3>
+                  <span className="text-xs text-slate-500">
+                    Bursar Central Ledger Cross-Check
+                  </span>
+                </div>
               </div>
               <button
                 onClick={() => setIsVerifyHashModalOpen(false)}
-                className="p-1 hover:bg-surface-container text-on-surface-variant cursor-pointer"
+                className="p-1 hover:bg-slate-100 rounded-lg text-slate-400 hover:text-slate-700 transition-colors cursor-pointer"
               >
-                <X className="w-4 h-4" />
+                <X className="w-5 h-5" />
               </button>
             </div>
 
-            <p className="text-xs text-on-surface-variant font-mono mb-3">
+            <p className="text-xs text-slate-600 leading-relaxed">
               Enter any SHA-256 voucher fingerprint hash or Receipt Number to cross-validate against the central institutional ledger.
             </p>
 
-            <div className="flex flex-col gap-2 mb-4">
-              <label className="text-[11px] font-mono uppercase font-bold text-secondary">
+            <div className="space-y-2">
+              <label className="text-xs font-bold text-[#3D405B]">
                 Ledger Hash or Receipt No:
               </label>
               <div className="flex gap-2">
@@ -1044,11 +1119,11 @@ export default function AccountantFeeReceiptsPage() {
                   value={verifyInputHash}
                   onChange={(e) => setVerifyInputHash(e.target.value)}
                   placeholder="Paste SHA-256 hash or REC-2025-XXXX..."
-                  className="flex-1 bg-surface-container-low p-2 text-xs font-mono border border-[#cbd5e1] focus:border-secondary focus:outline-none"
+                  className="flex-1 bg-slate-50 p-2.5 text-xs font-mono border border-slate-200 rounded-xl focus:border-amber-600 focus:outline-none"
                 />
                 <button
                   onClick={handleVerifyHash}
-                  className="px-4 py-2 bg-primary text-on-primary font-mono text-xs font-bold uppercase cursor-pointer"
+                  className="px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white font-semibold text-xs rounded-xl shadow-xs cursor-pointer"
                 >
                   Verify
                 </button>
@@ -1056,11 +1131,11 @@ export default function AccountantFeeReceiptsPage() {
             </div>
 
             {verifyResult === "success" && (
-              <div className="p-3 bg-emerald-50 border border-emerald-300 text-emerald-900 text-xs font-mono flex items-start gap-2">
+              <div className="p-3.5 bg-emerald-50 border border-emerald-200 text-emerald-900 text-xs rounded-xl flex items-start gap-2.5">
                 <CheckCircle2 className="w-4 h-4 text-emerald-700 shrink-0 mt-0.5" />
                 <div>
-                  <div className="font-bold uppercase">MATCH CONFIRMED &amp; AUTHENTICATED</div>
-                  <div>
+                  <div className="font-bold">MATCH CONFIRMED &amp; AUTHENTICATED</div>
+                  <div className="text-[11px] mt-0.5">
                     This hash corresponds to genuine voucher <strong>{selectedReceipt.receiptNo}</strong> issued to {selectedReceipt.student.name} on {selectedReceipt.date}. Central ledger state: UNMODIFIED.
                   </div>
                 </div>
@@ -1068,21 +1143,21 @@ export default function AccountantFeeReceiptsPage() {
             )}
 
             {verifyResult === "fail" && (
-              <div className="p-3 bg-rose-50 border border-rose-300 text-rose-900 text-xs font-mono flex items-start gap-2">
+              <div className="p-3.5 bg-rose-50 border border-rose-200 text-rose-900 text-xs rounded-xl flex items-start gap-2.5">
                 <AlertCircle className="w-4 h-4 text-rose-700 shrink-0 mt-0.5" />
                 <div>
-                  <div className="font-bold uppercase">HASH MISMATCH / UNVERIFIED RECORD</div>
-                  <div>
+                  <div className="font-bold">HASH MISMATCH / UNVERIFIED RECORD</div>
+                  <div className="text-[11px] mt-0.5">
                     The entered hash does not match any sealed receipt record in the bursar registry. Possibility of tampering or invalid reference.
                   </div>
                 </div>
               </div>
             )}
 
-            <div className="mt-4 pt-3 border-t border-[#d5e3fc] flex justify-end">
+            <div className="pt-2 border-t border-slate-100 flex justify-end">
               <button
                 onClick={() => setIsVerifyHashModalOpen(false)}
-                className="px-4 py-1.5 bg-surface-container text-on-surface font-mono text-xs uppercase font-bold hover:bg-surface-container-high cursor-pointer"
+                className="px-4 py-2 border border-slate-200 text-xs font-semibold text-slate-700 hover:bg-slate-100 rounded-xl cursor-pointer"
               >
                 Close
               </button>
@@ -1093,62 +1168,67 @@ export default function AccountantFeeReceiptsPage() {
 
       {/* Batch Print Modal */}
       {isBatchPrintModalOpen && (
-        <div className="fixed inset-0 z-50 bg-[#3D405B]/60 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-surface-container-lowest border border-primary w-full max-w-md p-5 shadow-2xl animate-in zoom-in-95">
-            <div className="flex items-center justify-between border-b border-[#d5e3fc] pb-3 mb-4">
-              <div className="flex items-center gap-2">
-                <Printer className="w-5 h-5 text-secondary" />
-                <h3 className="font-headline font-bold text-base text-primary uppercase tracking-tight">
-                  Batch Print Counter Vouchers
-                </h3>
+        <div className="fixed inset-0 z-50 bg-[#3D405B]/50 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4">
+          <div className="bg-white max-w-md w-full rounded-2xl border border-slate-200 shadow-2xl p-5 sm:p-6 flex flex-col gap-4 animate-in fade-in zoom-in-95 duration-150">
+            <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+              <div className="flex items-center gap-2.5">
+                <div className="w-10 h-10 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center font-bold">
+                  <Printer className="w-5 h-5 text-amber-700" />
+                </div>
+                <div>
+                  <h3 className="text-base font-bold text-[#3D405B]">
+                    Batch Print Counter Vouchers
+                  </h3>
+                  <span className="text-xs text-slate-500">
+                    Day-End Cashier Spooler
+                  </span>
+                </div>
               </div>
               <button
                 onClick={() => setIsBatchPrintModalOpen(false)}
-                className="p-1 hover:bg-surface-container text-on-surface-variant cursor-pointer"
+                className="p-1 hover:bg-slate-100 rounded-lg text-slate-400 hover:text-slate-700 transition-colors cursor-pointer"
               >
-                <X className="w-4 h-4" />
+                <X className="w-5 h-5" />
               </button>
             </div>
 
-            <div className="flex flex-col gap-3 text-xs font-mono mb-4">
-              <div className="p-2.5 bg-surface-container-low border border-[#cbd5e1]">
-                <div className="flex justify-between mb-1">
-                  <span className="text-gray-500">Selected Till:</span>
-                  <span className="font-bold text-primary">TILL-02 (CASHIER-409)</span>
-                </div>
-                <div className="flex justify-between mb-1">
-                  <span className="text-gray-500">Date Range:</span>
-                  <span className="font-bold text-primary">Today (28 Mar 2025)</span>
-                </div>
-                <div className="flex justify-between mb-1">
-                  <span className="text-gray-500">Total Vouchers:</span>
-                  <span className="font-bold text-primary">6 Receipts</span>
+            <div className="space-y-3 text-xs">
+              <div className="p-3.5 bg-slate-50 rounded-xl border border-slate-200 space-y-1.5">
+                <div className="flex justify-between">
+                  <span className="text-slate-500">Selected Till:</span>
+                  <span className="font-bold text-[#3D405B]">TILL-02 (CASHIER-309)</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-500">Gross Realization:</span>
-                  <span className="font-bold text-primary">₹1,77,500.00</span>
+                  <span className="text-slate-500">Date Range:</span>
+                  <span className="font-semibold text-slate-700">Today (28 Mar 2025)</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-slate-500">Total Vouchers:</span>
+                  <span className="font-bold text-blue-600">6 Receipts</span>
+                </div>
+                <div className="flex justify-between pt-1 border-t border-slate-200 font-bold">
+                  <span className="text-slate-600">Gross Realization:</span>
+                  <span className="text-emerald-700 font-mono">₹1,77,500.00</span>
                 </div>
               </div>
 
-              <div className="flex items-center gap-2 text-on-surface">
-                <input type="checkbox" id="includeAuditSummary" defaultChecked className="rounded-none" />
-                <label htmlFor="includeAuditSummary" className="text-[11px] cursor-pointer">
-                  Include Day-End Cashier Settlement Sheet
+              <div className="space-y-2">
+                <label className="flex items-center gap-2 text-slate-700 cursor-pointer">
+                  <input type="checkbox" defaultChecked className="w-4 h-4 accent-amber-600 rounded" />
+                  <span>Include Day-End Cashier Settlement Sheet</span>
                 </label>
-              </div>
 
-              <div className="flex items-center gap-2 text-on-surface">
-                <input type="checkbox" id="twoPerPage" defaultChecked className="rounded-none" />
-                <label htmlFor="twoPerPage" className="text-[11px] cursor-pointer">
-                  Print 2 Vouchers Per A4 Page (Institutional Eco Mode)
+                <label className="flex items-center gap-2 text-slate-700 cursor-pointer">
+                  <input type="checkbox" defaultChecked className="w-4 h-4 accent-amber-600 rounded" />
+                  <span>Print 2 Vouchers Per A4 Page (Eco Mode)</span>
                 </label>
               </div>
             </div>
 
-            <div className="flex items-center justify-end gap-2 pt-3 border-t border-[#d5e3fc]">
+            <div className="flex items-center justify-end gap-2.5 pt-2 border-t border-slate-100">
               <button
                 onClick={() => setIsBatchPrintModalOpen(false)}
-                className="px-3 py-1.5 bg-surface-container hover:bg-surface-container-high text-on-surface font-mono text-xs uppercase font-semibold cursor-pointer"
+                className="px-4 py-2 border border-slate-200 text-xs font-semibold text-slate-700 hover:bg-slate-100 rounded-xl cursor-pointer"
               >
                 Cancel
               </button>
@@ -1158,9 +1238,10 @@ export default function AccountantFeeReceiptsPage() {
                   showToast("Spooling 6 vouchers to thermal / network printer...");
                   setTimeout(() => window.print(), 300);
                 }}
-                className="px-4 py-1.5 bg-primary text-on-primary hover:bg-primary/95 font-mono text-xs uppercase font-bold tracking-wider cursor-pointer shadow-xs"
+                className="px-5 py-2 bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold rounded-xl flex items-center gap-1.5 transition-all shadow-xs cursor-pointer"
               >
-                Send to Printer
+                <Printer className="w-4 h-4" />
+                <span>Send to Printer</span>
               </button>
             </div>
           </div>
@@ -1169,4 +1250,3 @@ export default function AccountantFeeReceiptsPage() {
     </div>
   );
 }
-
