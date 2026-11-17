@@ -22,7 +22,8 @@ import {
   Save,
   X,
   RotateCcw,
-  CheckCircle2
+  CheckCircle2,
+  Eye
 } from "lucide-react";
 
 interface Subject {
@@ -251,6 +252,69 @@ export default function CoursesPage() {
   const [newCourseCredits, setNewCourseCredits] = useState(160);
   const [newCourseTuition, setNewCourseTuition] = useState(185000);
   const [newCourseCategory, setNewCourseCategory] = useState<Course["category"]>("Eng & Tech");
+
+  // View & Edit Course Modals State
+  const [isViewCourseModalOpen, setIsViewCourseModalOpen] = useState(false);
+  const [viewingCourse, setViewingCourse] = useState<Course>(initialCourses[0]);
+
+  const [isEditCourseModalOpen, setIsEditCourseModalOpen] = useState(false);
+  const [editingCourse, setEditingCourse] = useState<Course>(initialCourses[0]);
+  const [editCourseCode, setEditCourseCode] = useState("");
+  const [editCourseTitle, setEditCourseTitle] = useState("");
+  const [editCourseDept, setEditCourseDept] = useState("Dept of Computing & IT");
+  const [editCourseDuration, setEditCourseDuration] = useState("4 Yrs (8 Sems)");
+  const [editCourseCredits, setEditCourseCredits] = useState(160);
+  const [editCourseTuition, setEditCourseTuition] = useState(185000);
+  const [editCourseCategory, setEditCourseCategory] = useState<Course["category"]>("Eng & Tech");
+  const [editCourseStatus, setEditCourseStatus] = useState<Course["status"]>("Active");
+
+  const handleOpenViewModal = (c: Course) => {
+    setViewingCourse(c);
+    setSelectedCourse(c);
+    setIsViewCourseModalOpen(true);
+  };
+
+  const handleOpenEditModal = (c: Course) => {
+    setEditingCourse(c);
+    setEditCourseCode(c.code);
+    setEditCourseTitle(c.title);
+    setEditCourseDept(c.department);
+    setEditCourseDuration(c.duration);
+    setEditCourseCredits(c.credits);
+    setEditCourseTuition(c.tuitionYear);
+    setEditCourseCategory(c.category);
+    setEditCourseStatus(c.status);
+    setIsEditCourseModalOpen(true);
+  };
+
+  const handleSaveEditedCourse = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!editCourseCode.trim() || !editCourseTitle.trim()) {
+      alert("Please enter program code and title");
+      return;
+    }
+
+    const updated: Course = {
+      ...editingCourse,
+      code: editCourseCode.trim().toUpperCase(),
+      title: editCourseTitle.trim(),
+      department: editCourseDept,
+      duration: editCourseDuration,
+      semesters: editCourseDuration.includes("2") ? 4 : editCourseDuration.includes("3") ? 6 : 8,
+      credits: Number(editCourseCredits),
+      tuitionYear: Number(editCourseTuition),
+      totalTuition: Number(editCourseTuition) * (editCourseDuration.includes("2") ? 2 : 4),
+      category: editCourseCategory,
+      status: editCourseStatus
+    };
+
+    setCourses(prev => prev.map(c => c.id === editingCourse.id ? updated : c));
+    if (selectedCourse.id === editingCourse.id) {
+      setSelectedCourse(updated);
+    }
+    setIsEditCourseModalOpen(false);
+    showToast(`Degree Program ${updated.code} updated successfully!`);
+  };
 
   const showToast = (msg: string) => {
     setToastMessage(msg);
@@ -537,47 +601,54 @@ export default function CoursesPage() {
         {/* Left Column (8 cols): Catalog Table */}
         <div className="xl:col-span-8 space-y-4">
           {/* Filter & Search Toolbar Card */}
-          <div className="bg-white p-4.5 rounded-2xl border border-slate-200/80 shadow-xs space-y-3">
+          <div className="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-xs space-y-3.5">
             {/* Segmented Program Tabs */}
-            <div className="flex items-center overflow-x-auto gap-2">
+            <div className="flex items-center gap-1.5 overflow-x-auto pb-1 border-b border-slate-100">
               {[
-                { id: "All", label: "All Programs (24)" },
-                { id: "Eng & Tech", label: "Eng & Tech (10)" },
-                { id: "Management & Business", label: "Management (6)" },
-                { id: "Applied Sciences", label: "Applied Sciences (5)" },
-                { id: "Design & Media", label: "Design & Media (3)" }
+                { id: "All", label: "All Programs", count: courses.length },
+                { id: "Eng & Tech", label: "Engineering & Tech", count: courses.filter(c => c.category === "Eng & Tech").length },
+                { id: "Management & Business", label: "Management", count: courses.filter(c => c.category === "Management & Business").length },
+                { id: "Applied Sciences", label: "Applied Sciences", count: courses.filter(c => c.category === "Applied Sciences").length },
+                { id: "Design & Media", label: "Design & Media", count: courses.filter(c => c.category === "Design & Media").length }
               ].map((tab) => (
                 <button
                   key={tab.id}
                   onClick={() => setActiveCategory(tab.id)}
-                  className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-colors cursor-pointer whitespace-nowrap ${
+                  className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all flex items-center gap-2 ${
                     activeCategory === tab.id
-                      ? "bg-[#3D405B] text-white shadow-xs"
-                      : "bg-slate-100 text-slate-600 hover:text-slate-900"
+                      ? "bg-indigo-600 text-white shadow-xs"
+                      : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
                   }`}
                 >
-                  {tab.label}
+                  <span>{tab.label}</span>
+                  <span
+                    className={`px-1.5 py-0.5 rounded-md text-[10px] font-mono font-bold ${
+                      activeCategory === tab.id ? "bg-white/20 text-white" : "bg-slate-100 text-slate-600"
+                    }`}
+                  >
+                    {tab.count}
+                  </span>
                 </button>
               ))}
             </div>
 
             {/* Query Controls Bar */}
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-2.5 items-center pt-1 border-t border-slate-100">
-              <div className="md:col-span-5 relative">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-3 items-center">
+              <div className="lg:col-span-5 relative">
                 <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
                 <input
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Search code, title or department..."
-                  className="w-full bg-slate-50 hover:bg-slate-100/70 focus:bg-white text-slate-800 pl-9 pr-3 py-2 text-xs border border-slate-200 rounded-xl focus:outline-none focus:border-[#3D405B] focus:ring-2 focus:ring-slate-100 transition-all placeholder:text-slate-400"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl pl-9 pr-3 py-2 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all"
                 />
               </div>
-              <div className="md:col-span-3">
+              <div className="lg:col-span-3">
                 <select
                   value={departmentFilter}
                   onChange={(e) => setDepartmentFilter(e.target.value)}
-                  className="w-full bg-slate-50 hover:bg-slate-100/70 focus:bg-white text-xs px-3 py-2 border border-slate-200 rounded-xl focus:outline-none focus:border-[#3D405B] text-slate-800"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
                 >
                   <option value="all">All Departments</option>
                   <option value="computing">Computing &amp; IT</option>
@@ -587,25 +658,25 @@ export default function CoursesPage() {
                   <option value="design">Faculty of Design</option>
                 </select>
               </div>
-              <div className="md:col-span-2">
+              <div className="lg:col-span-2">
                 <select
                   value={durationFilter}
                   onChange={(e) => setDurationFilter(e.target.value)}
-                  className="w-full bg-slate-50 hover:bg-slate-100/70 focus:bg-white text-xs px-3 py-2 border border-slate-200 rounded-xl focus:outline-none focus:border-[#3D405B] text-slate-800"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
                 >
-                  <option value="all">Duration</option>
-                  <option value="4">4 Years (8 Sem)</option>
-                  <option value="2">2 Years (4 Sem)</option>
-                  <option value="3">3 Years (6 Sem)</option>
+                  <option value="all">All Durations</option>
+                  <option value="4">4 Yrs (8 Sem)</option>
+                  <option value="2">2 Yrs (4 Sem)</option>
+                  <option value="3">3 Yrs (6 Sem)</option>
                 </select>
               </div>
-              <div className="md:col-span-2 flex items-center gap-1.5">
+              <div className="lg:col-span-2 flex items-center gap-2">
                 <select
                   value={statusFilter}
                   onChange={(e) => setStatusFilter(e.target.value)}
-                  className="w-full bg-slate-50 hover:bg-slate-100/70 focus:bg-white text-xs px-3 py-2 border border-slate-200 rounded-xl focus:outline-none focus:border-[#3D405B] text-slate-800"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
                 >
-                  <option value="all">Status: All</option>
+                  <option value="all">All Status</option>
                   <option value="act">Active</option>
                   <option value="rev">Review</option>
                 </select>
@@ -615,11 +686,13 @@ export default function CoursesPage() {
                     setDepartmentFilter("all");
                     setDurationFilter("all");
                     setStatusFilter("all");
+                    setActiveCategory("All");
+                    showToast("Course filters reset to default.");
                   }}
-                  className="p-2 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-xl border border-slate-200 transition-colors cursor-pointer shrink-0"
+                  className="p-2 bg-slate-50 hover:bg-slate-100 text-slate-500 hover:text-slate-800 rounded-xl border border-slate-200 transition-colors shrink-0"
                   title="Reset Filters"
                 >
-                  <RotateCcw className="w-3.5 h-3.5" />
+                  <RotateCcw className="w-4 h-4" />
                 </button>
               </div>
             </div>
@@ -627,125 +700,166 @@ export default function CoursesPage() {
 
           {/* High-Density Course Directory Table */}
           <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs overflow-hidden">
+            <div className="p-4 border-b border-slate-100 flex flex-wrap items-center justify-between gap-3 bg-slate-50/50">
+              <div className="flex items-center gap-2">
+                <BookOpen className="w-4 h-4 text-indigo-600" />
+                <span className="text-xs font-bold text-slate-800 uppercase tracking-wider">
+                  Degree Programs Ledger
+                </span>
+              </div>
+              <span className="text-xs text-slate-500 font-mono">
+                Showing {filteredCourses.length} of {courses.length} Programs
+              </span>
+            </div>
+
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse text-xs">
                 <thead>
-                  <tr className="bg-slate-50/70 text-slate-500 text-[10px] uppercase tracking-wider font-semibold border-b border-slate-100">
-                    <th className="py-2.5 px-4 font-semibold">Code &amp; Course Title</th>
-                    <th className="py-2.5 px-4 font-semibold">Faculty / Dept</th>
-                    <th className="py-2.5 px-4 font-semibold">Duration</th>
-                    <th className="py-2.5 px-4 font-semibold">Credits</th>
-                    <th className="py-2.5 px-4 font-semibold">Tuition / Year</th>
-                    <th className="py-2.5 px-4 font-semibold">Batches</th>
-                    <th className="py-2.5 px-4 font-semibold">Subjects</th>
-                    <th className="py-2.5 px-4 font-semibold">Status</th>
-                    <th className="py-2.5 px-4 font-semibold text-right">Actions</th>
+                  <tr className="bg-slate-50/80 text-slate-500 text-[11px] uppercase tracking-wider font-bold border-b border-slate-200/80">
+                    <th className="py-3 px-4">Code &amp; Course Title</th>
+                    <th className="py-3 px-4">Faculty / Dept</th>
+                    <th className="py-3 px-4">Duration</th>
+                    <th className="py-3 px-4">Credits</th>
+                    <th className="py-3 px-4">Tuition / Year</th>
+                    <th className="py-3 px-4">Batches</th>
+                    <th className="py-3 px-4">Subjects</th>
+                    <th className="py-3 px-4">Status</th>
+                    <th className="py-3 px-4 text-right">Actions</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100">
-                  {filteredCourses.map((c) => {
-                    const isSelected = selectedCourse.id === c.id;
-                    return (
-                      <tr
-                        key={c.id}
-                        onClick={() => setSelectedCourse(c)}
-                        className={`hover:bg-slate-50/60 transition-colors cursor-pointer ${
-                          isSelected ? "bg-blue-50/50 border-l-4 border-[#3D405B]" : ""
-                        }`}
-                      >
-                        <td className="py-3 px-4">
-                          <div>
-                            <div className="font-mono font-bold text-[#3D405B]">
-                              {c.code}
-                            </div>
-                            <div className="text-slate-700 font-medium truncate max-w-[190px]">
-                              {c.title}
-                            </div>
-                          </div>
-                        </td>
-                        <td className="py-3 px-4 text-slate-500 truncate max-w-[140px]">
-                          {c.department}
-                        </td>
-                        <td className="py-3 px-4 font-mono text-slate-700">
-                          {c.duration}
-                        </td>
-                        <td className="py-3 px-4 font-mono text-slate-700">
-                          {c.credits} CR
-                        </td>
-                        <td className="py-3 px-4">
-                          <span className="font-mono font-semibold text-[#3D405B] block">
-                            ₹{c.tuitionYear.toLocaleString("en-IN")}
-                          </span>
-                          <span className="text-[10px] text-slate-400 block font-mono">
-                            Tot: ₹{c.totalTuition.toLocaleString("en-IN")}
-                          </span>
-                        </td>
-                        <td className="py-3 px-4 font-mono text-slate-700">
-                          {c.batches}
-                        </td>
-                        <td className="py-3 px-4 font-mono font-semibold text-[#3D405B]">
-                          {c.subjectsCount}
-                        </td>
-                        <td className="py-3 px-4">
-                          <span
-                            className={`px-2.5 py-0.5 text-[10px] font-semibold rounded-full ${
-                              c.status === "Active"
-                                ? "bg-emerald-50 text-emerald-700 border border-emerald-200"
-                                : "bg-amber-50 text-amber-700 border border-amber-200"
-                            }`}
+                  {filteredCourses.length === 0 ? (
+                    <tr>
+                      <td colSpan={9} className="py-12 text-center">
+                        <div className="flex flex-col items-center justify-center text-slate-400">
+                          <BookOpen className="w-10 h-10 mb-2 text-slate-300" />
+                          <p className="text-sm font-semibold text-slate-700">No matching degree programs found</p>
+                          <p className="text-xs text-slate-400 mt-0.5">Try clearing your search query or adjusting your filters</p>
+                          <button
+                            onClick={() => {
+                              setSearchQuery("");
+                              setDepartmentFilter("all");
+                              setDurationFilter("all");
+                              setStatusFilter("all");
+                              setActiveCategory("All");
+                            }}
+                            className="mt-3 px-3 py-1.5 bg-indigo-50 text-indigo-600 hover:bg-indigo-100 rounded-xl text-xs font-semibold transition-colors"
                           >
-                            {c.status}
-                          </span>
-                        </td>
-                        <td
-                          className="py-3 px-4 text-right"
-                          onClick={(e) => e.stopPropagation()}
+                            Reset All Filters
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ) : (
+                    filteredCourses.map((c) => {
+                      const isSelected = selectedCourse.id === c.id;
+                      return (
+                        <tr
+                          key={c.id}
+                          onClick={() => setSelectedCourse(c)}
+                          className={`hover:bg-slate-50/70 transition-colors cursor-pointer ${
+                            isSelected ? "bg-indigo-50/60 hover:bg-indigo-50 border-l-4 border-indigo-600" : ""
+                          }`}
                         >
-                          <div className="flex items-center justify-end gap-1">
-                            <button
-                              onClick={() => {
-                                setSelectedCourse(c);
-                                showToast(`Curriculum Studio focused on ${c.code}`);
-                              }}
-                              className="p-1.5 hover:bg-slate-100 text-slate-500 hover:text-[#3D405B] rounded-lg transition-colors cursor-pointer"
-                              title="View Syllabus"
+                          <td className="py-3 px-4">
+                            <div>
+                              <span className="font-mono font-bold text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded text-[11px] inline-block mb-1 border border-indigo-100">
+                                {c.code}
+                              </span>
+                              <div className="text-slate-900 font-bold leading-snug">
+                                {c.title}
+                              </div>
+                              <span className="text-[10px] text-slate-400 font-medium">
+                                {c.category}
+                              </span>
+                            </div>
+                          </td>
+                          <td className="py-3 px-4 text-slate-600">
+                            {c.department}
+                          </td>
+                          <td className="py-3 px-4 font-mono text-slate-700 whitespace-nowrap">
+                            {c.duration}
+                          </td>
+                          <td className="py-3 px-4 font-mono font-semibold text-slate-800 whitespace-nowrap">
+                            {c.credits} CR
+                          </td>
+                          <td className="py-3 px-4 whitespace-nowrap">
+                            <span className="font-mono font-bold text-slate-900 block">
+                              ₹{c.tuitionYear.toLocaleString("en-IN")}
+                            </span>
+                            <span className="text-[10px] text-slate-400 block font-mono">
+                              Tot: ₹{c.totalTuition.toLocaleString("en-IN")}
+                            </span>
+                          </td>
+                          <td className="py-3 px-4 font-mono text-slate-700">
+                            {c.batches}
+                          </td>
+                          <td className="py-3 px-4 font-mono font-semibold text-slate-800">
+                            {c.subjectsCount}
+                          </td>
+                          <td className="py-3 px-4 whitespace-nowrap">
+                            <span
+                              className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 text-[10px] font-semibold rounded-full border ${
+                                c.status === "Active"
+                                  ? "bg-emerald-50 text-emerald-700 border-emerald-200"
+                                  : "bg-amber-50 text-amber-700 border-amber-200"
+                              }`}
                             >
-                              <BookOpen className="w-4 h-4" />
-                            </button>
-                            <button
-                              onClick={() => showToast(`Editing manifest for ${c.code}`)}
-                              className="p-1.5 hover:bg-slate-100 text-slate-500 hover:text-blue-600 rounded-lg transition-colors cursor-pointer"
-                              title="Edit Course"
-                            >
-                              <Edit className="w-4 h-4" />
-                            </button>
-                          </div>
-                        </td>
-                      </tr>
-                    );
-                  })}
+                              <span
+                                className={`w-1.5 h-1.5 rounded-full ${
+                                  c.status === "Active" ? "bg-emerald-500 animate-pulse" : "bg-amber-500"
+                                }`}
+                              />
+                              <span>{c.status}</span>
+                            </span>
+                          </td>
+                          <td
+                            className="py-3 px-4 text-right whitespace-nowrap"
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            <div className="flex items-center justify-end gap-1">
+                              <button
+                                onClick={() => handleOpenViewModal(c)}
+                                className="p-1.5 hover:bg-indigo-50 text-slate-400 hover:text-indigo-600 rounded-lg transition-colors cursor-pointer"
+                                title="View Course Details"
+                              >
+                                <Eye className="w-4 h-4" />
+                              </button>
+                              <button
+                                onClick={() => handleOpenEditModal(c)}
+                                className="p-1.5 hover:bg-indigo-50 text-slate-400 hover:text-indigo-600 rounded-lg transition-colors cursor-pointer"
+                                title="Edit Program"
+                              >
+                                <Edit className="w-4 h-4" />
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      );
+                    })
+                  )}
                 </tbody>
               </table>
             </div>
 
             {/* Table Footer */}
-            <div className="px-4 py-2.5 bg-slate-50/80 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500 border-t border-slate-100">
+            <div className="px-4 py-3 bg-slate-50/80 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500 border-t border-slate-100">
               <span>
                 Showing <strong className="text-slate-800 font-mono">1 - {filteredCourses.length}</strong> of{" "}
-                <strong className="text-slate-800 font-mono">24</strong> Programs
+                <strong className="text-slate-800 font-mono">{courses.length}</strong> Programs
               </span>
               <div className="flex items-center gap-1 font-mono text-xs">
-                <button className="px-2 py-1 bg-white hover:bg-slate-100 text-slate-600 rounded border border-slate-200 cursor-pointer">
+                <button className="px-2.5 py-1 bg-white hover:bg-slate-100 text-slate-600 rounded-lg border border-slate-200 cursor-pointer">
                   <ChevronLeft className="w-3.5 h-3.5" />
                 </button>
-                <button className="px-2.5 py-1 bg-[#3D405B] text-white font-semibold rounded">1</button>
-                <button className="px-2.5 py-1 bg-white hover:bg-slate-100 text-slate-600 rounded border border-slate-200 cursor-pointer">
+                <button className="px-3 py-1 bg-indigo-600 text-white font-bold rounded-lg">1</button>
+                <button className="px-3 py-1 bg-white hover:bg-slate-100 text-slate-600 rounded-lg border border-slate-200 cursor-pointer">
                   2
                 </button>
-                <button className="px-2.5 py-1 bg-white hover:bg-slate-100 text-slate-600 rounded border border-slate-200 cursor-pointer">
+                <button className="px-3 py-1 bg-white hover:bg-slate-100 text-slate-600 rounded-lg border border-slate-200 cursor-pointer">
                   3
                 </button>
-                <button className="px-2 py-1 bg-white hover:bg-slate-100 text-slate-600 rounded border border-slate-200 cursor-pointer">
+                <button className="px-2.5 py-1 bg-white hover:bg-slate-100 text-slate-600 rounded-lg border border-slate-200 cursor-pointer">
                   <ChevronRight className="w-3.5 h-3.5" />
                 </button>
               </div>
@@ -1122,6 +1236,348 @@ export default function CoursesPage() {
                 >
                   <Plus className="w-4 h-4" />
                   <span>Register Course</span>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* View Course Details Modal */}
+      {isViewCourseModalOpen && viewingCourse && (
+        <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-4 z-50 animate-in fade-in">
+          <div className="bg-white max-w-xl w-full rounded-2xl shadow-2xl border border-slate-200 overflow-hidden">
+            <div className="p-4 bg-[#3D405B] text-white flex items-center justify-between">
+              <div className="flex items-center gap-2.5">
+                <div className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center">
+                  <BookOpen className="w-4 h-4 text-indigo-200" />
+                </div>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className="font-mono text-xs font-bold bg-white/20 px-2 py-0.5 rounded text-white">
+                      {viewingCourse.code}
+                    </span>
+                    <span className="text-[11px] text-white/80 font-medium">
+                      {viewingCourse.category}
+                    </span>
+                  </div>
+                  <h3 className="font-bold text-sm text-white mt-0.5">
+                    {viewingCourse.title}
+                  </h3>
+                </div>
+              </div>
+              <button
+                onClick={() => setIsViewCourseModalOpen(false)}
+                className="p-1 text-white/80 hover:text-white rounded-lg hover:bg-white/10 transition-colors cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="p-6 space-y-5 text-xs">
+              {/* Department & Status Header banner */}
+              <div className="flex items-center justify-between p-3 bg-slate-50 rounded-xl border border-slate-100">
+                <div>
+                  <span className="text-[10px] text-slate-400 uppercase font-bold tracking-wider block">
+                    Academic Department
+                  </span>
+                  <span className="font-semibold text-slate-800 text-xs">
+                    {viewingCourse.department}
+                  </span>
+                </div>
+                <div className="text-right">
+                  <span className="text-[10px] text-slate-400 uppercase font-bold tracking-wider block mb-1">
+                    Accreditation Status
+                  </span>
+                  <span
+                    className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 text-[10px] font-semibold rounded-full border ${
+                      viewingCourse.status === "Active"
+                        ? "bg-emerald-50 text-emerald-700 border-emerald-200"
+                        : "bg-amber-50 text-amber-700 border-amber-200"
+                    }`}
+                  >
+                    <span
+                      className={`w-1.5 h-1.5 rounded-full ${
+                        viewingCourse.status === "Active" ? "bg-emerald-500 animate-pulse" : "bg-amber-500"
+                      }`}
+                    />
+                    <span>{viewingCourse.status}</span>
+                  </span>
+                </div>
+              </div>
+
+              {/* Metrics Grid */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                <div className="p-3 bg-slate-50/80 rounded-xl border border-slate-200/70">
+                  <span className="text-[10px] uppercase font-bold text-slate-400 block mb-1">
+                    Duration
+                  </span>
+                  <span className="text-xs font-bold text-slate-800 font-mono">
+                    {viewingCourse.duration}
+                  </span>
+                  <span className="text-[10px] text-slate-500 block mt-0.5">
+                    {viewingCourse.semesters} Semesters
+                  </span>
+                </div>
+
+                <div className="p-3 bg-slate-50/80 rounded-xl border border-slate-200/70">
+                  <span className="text-[10px] uppercase font-bold text-slate-400 block mb-1">
+                    Required Credits
+                  </span>
+                  <span className="text-xs font-bold text-slate-800 font-mono">
+                    {viewingCourse.credits} CR
+                  </span>
+                  <span className="text-[10px] text-slate-500 block mt-0.5">
+                    Total Curriculum
+                  </span>
+                </div>
+
+                <div className="p-3 bg-slate-50/80 rounded-xl border border-slate-200/70">
+                  <span className="text-[10px] uppercase font-bold text-slate-400 block mb-1">
+                    Tuition / Year
+                  </span>
+                  <span className="text-xs font-bold text-slate-900 font-mono">
+                    ₹{viewingCourse.tuitionYear.toLocaleString("en-IN")}
+                  </span>
+                  <span className="text-[10px] text-slate-500 block mt-0.5">
+                    Per Academic Annum
+                  </span>
+                </div>
+
+                <div className="p-3 bg-slate-50/80 rounded-xl border border-slate-200/70">
+                  <span className="text-[10px] uppercase font-bold text-slate-400 block mb-1">
+                    Est. Total Fee
+                  </span>
+                  <span className="text-xs font-bold text-indigo-700 font-mono">
+                    ₹{viewingCourse.totalTuition.toLocaleString("en-IN")}
+                  </span>
+                  <span className="text-[10px] text-slate-500 block mt-0.5">
+                    Full Program Cost
+                  </span>
+                </div>
+              </div>
+
+              {/* Batches & Curriculum overview */}
+              <div className="grid grid-cols-2 gap-3">
+                <div className="p-3 bg-indigo-50/40 rounded-xl border border-indigo-100 flex items-center justify-between">
+                  <div>
+                    <span className="text-[10px] uppercase font-bold text-indigo-600 block">
+                      Enrolled Batches
+                    </span>
+                    <span className="text-sm font-bold text-slate-800 font-mono mt-0.5 block">
+                      {viewingCourse.batches} Active Batches
+                    </span>
+                  </div>
+                  <Layers className="w-5 h-5 text-indigo-500" />
+                </div>
+
+                <div className="p-3 bg-emerald-50/40 rounded-xl border border-emerald-100 flex items-center justify-between">
+                  <div>
+                    <span className="text-[10px] uppercase font-bold text-emerald-600 block">
+                      Catalogued Subjects
+                    </span>
+                    <span className="text-sm font-bold text-slate-800 font-mono mt-0.5 block">
+                      {viewingCourse.subjectsCount} Modular Courses
+                    </span>
+                  </div>
+                  <BookOpen className="w-5 h-5 text-emerald-500" />
+                </div>
+              </div>
+
+              {/* Footer CTA */}
+              <div className="pt-4 border-t border-slate-100 flex items-center justify-between">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsViewCourseModalOpen(false);
+                    setSelectedCourse(viewingCourse);
+                    showToast(`Opened ${viewingCourse.code} in Curriculum Studio`);
+                  }}
+                  className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-xl transition-colors cursor-pointer flex items-center gap-1.5"
+                >
+                  <Sliders className="w-3.5 h-3.5" />
+                  <span>Inspect in Studio</span>
+                </button>
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setIsViewCourseModalOpen(false);
+                      handleOpenEditModal(viewingCourse);
+                    }}
+                    className="px-4 py-2 bg-indigo-50 hover:bg-indigo-100 text-indigo-600 font-semibold rounded-xl transition-colors cursor-pointer flex items-center gap-1.5"
+                  >
+                    <Edit className="w-3.5 h-3.5" />
+                    <span>Edit Program</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setIsViewCourseModalOpen(false)}
+                    className="px-4 py-2 bg-[#3D405B] hover:bg-[#2E3046] text-white font-semibold rounded-xl transition-colors cursor-pointer"
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Edit Course Modal */}
+      {isEditCourseModalOpen && editingCourse && (
+        <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-4 z-50 animate-in fade-in">
+          <div className="bg-white max-w-lg w-full rounded-2xl shadow-2xl border border-slate-200 overflow-hidden">
+            <div className="p-4 bg-[#3D405B] text-white flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Edit className="w-5 h-5 text-indigo-200" />
+                <div>
+                  <h3 className="font-bold text-sm">
+                    Edit Degree Program
+                  </h3>
+                  <span className="text-[10px] text-white/70 font-mono">
+                    Updating {editingCourse.code}
+                  </span>
+                </div>
+              </div>
+              <button
+                onClick={() => setIsEditCourseModalOpen(false)}
+                className="p-1 text-white/80 hover:text-white rounded-lg hover:bg-white/10 transition-colors cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <form onSubmit={handleSaveEditedCourse} className="p-6 space-y-4 text-xs">
+              <div className="grid grid-cols-2 gap-3">
+                <div className="flex flex-col gap-1.5">
+                  <label className="font-bold text-slate-700 uppercase text-[10px]">
+                    Course Code *
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={editCourseCode}
+                    onChange={(e) => setEditCourseCode(e.target.value)}
+                    className="p-2.5 border border-slate-200 bg-slate-50 hover:bg-slate-100/70 focus:bg-white rounded-xl focus:outline-none focus:border-[#3D405B] focus:ring-2 focus:ring-slate-100 transition-all text-xs font-mono font-bold"
+                  />
+                </div>
+                <div className="flex flex-col gap-1.5">
+                  <label className="font-bold text-slate-700 uppercase text-[10px]">
+                    Program Domain
+                  </label>
+                  <select
+                    value={editCourseCategory}
+                    onChange={(e) => setEditCourseCategory(e.target.value as Course["category"])}
+                    className="p-2.5 border border-slate-200 bg-slate-50 hover:bg-slate-100/70 focus:bg-white rounded-xl focus:outline-none focus:border-[#3D405B] focus:ring-2 focus:ring-slate-100 transition-all text-xs"
+                  >
+                    <option value="Eng & Tech">Eng &amp; Tech</option>
+                    <option value="Management & Business">Management &amp; Business</option>
+                    <option value="Applied Sciences">Applied Sciences</option>
+                    <option value="Design & Media">Design &amp; Media</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="flex flex-col gap-1.5">
+                <label className="font-bold text-slate-700 uppercase text-[10px]">
+                  Full Degree Title *
+                </label>
+                <input
+                  type="text"
+                  required
+                  value={editCourseTitle}
+                  onChange={(e) => setEditCourseTitle(e.target.value)}
+                  className="p-2.5 border border-slate-200 bg-slate-50 hover:bg-slate-100/70 focus:bg-white rounded-xl focus:outline-none focus:border-[#3D405B] focus:ring-2 focus:ring-slate-100 transition-all text-xs font-medium"
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div className="flex flex-col gap-1.5">
+                  <label className="font-bold text-slate-700 uppercase text-[10px]">
+                    Department
+                  </label>
+                  <select
+                    value={editCourseDept}
+                    onChange={(e) => setEditCourseDept(e.target.value)}
+                    className="p-2.5 border border-slate-200 bg-slate-50 hover:bg-slate-100/70 focus:bg-white rounded-xl focus:outline-none focus:border-[#3D405B] focus:ring-2 focus:ring-slate-100 transition-all text-xs"
+                  >
+                    <option>Dept of Computing &amp; IT</option>
+                    <option>Dept of AI &amp; Robotics</option>
+                    <option>School of Management</option>
+                    <option>Dept of ECE</option>
+                    <option>Dept of Applied Sciences</option>
+                    <option>Faculty of Design</option>
+                  </select>
+                </div>
+                <div className="flex flex-col gap-1.5">
+                  <label className="font-bold text-slate-700 uppercase text-[10px]">
+                    Duration &amp; Semesters
+                  </label>
+                  <select
+                    value={editCourseDuration}
+                    onChange={(e) => setEditCourseDuration(e.target.value)}
+                    className="p-2.5 border border-slate-200 bg-slate-50 hover:bg-slate-100/70 focus:bg-white rounded-xl focus:outline-none focus:border-[#3D405B] focus:ring-2 focus:ring-slate-100 transition-all text-xs"
+                  >
+                    <option>4 Yrs (8 Sems)</option>
+                    <option>2 Yrs (4 Sems)</option>
+                    <option>3 Yrs (6 Sems)</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-3 gap-3">
+                <div className="flex flex-col gap-1.5">
+                  <label className="font-bold text-slate-700 uppercase text-[10px]">
+                    Credits (CR)
+                  </label>
+                  <input
+                    type="number"
+                    value={editCourseCredits}
+                    onChange={(e) => setEditCourseCredits(parseInt(e.target.value) || 0)}
+                    className="p-2.5 border border-slate-200 bg-slate-50 hover:bg-slate-100/70 focus:bg-white rounded-xl focus:outline-none focus:border-[#3D405B] focus:ring-2 focus:ring-slate-100 transition-all text-xs font-mono"
+                  />
+                </div>
+                <div className="flex flex-col gap-1.5">
+                  <label className="font-bold text-slate-700 uppercase text-[10px]">
+                    Tuition / Yr (₹)
+                  </label>
+                  <input
+                    type="number"
+                    value={editCourseTuition}
+                    onChange={(e) => setEditCourseTuition(parseInt(e.target.value) || 0)}
+                    className="p-2.5 border border-slate-200 bg-slate-50 hover:bg-slate-100/70 focus:bg-white rounded-xl focus:outline-none focus:border-[#3D405B] focus:ring-2 focus:ring-slate-100 transition-all text-xs font-mono"
+                  />
+                </div>
+                <div className="flex flex-col gap-1.5">
+                  <label className="font-bold text-slate-700 uppercase text-[10px]">
+                    Status
+                  </label>
+                  <select
+                    value={editCourseStatus}
+                    onChange={(e) => setEditCourseStatus(e.target.value as Course["status"])}
+                    className="p-2.5 border border-slate-200 bg-slate-50 hover:bg-slate-100/70 focus:bg-white rounded-xl focus:outline-none focus:border-[#3D405B] focus:ring-2 focus:ring-slate-100 transition-all text-xs font-semibold"
+                  >
+                    <option value="Active">Active</option>
+                    <option value="Under Review">Under Review</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="pt-4 border-t border-slate-100 flex items-center justify-end gap-2.5">
+                <button
+                  type="button"
+                  onClick={() => setIsEditCourseModalOpen(false)}
+                  className="px-4 py-2 border border-slate-200 text-slate-700 font-semibold rounded-xl hover:bg-slate-50 transition-colors cursor-pointer"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="px-5 py-2 bg-[#3D405B] hover:bg-[#2E3046] text-white font-semibold rounded-xl transition-all shadow-xs hover:shadow cursor-pointer flex items-center gap-1.5"
+                >
+                  <Save className="w-4 h-4" />
+                  <span>Update Program</span>
                 </button>
               </div>
             </form>
