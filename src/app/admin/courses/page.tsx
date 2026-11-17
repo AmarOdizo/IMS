@@ -19,7 +19,6 @@ import {
   ChevronRight,
   Sliders,
   ShieldAlert,
-  GraduationCap,
   Save,
   X,
   RotateCcw,
@@ -750,40 +749,6 @@ export default function CoursesPage() {
                   <ChevronRight className="w-3.5 h-3.5" />
                 </button>
               </div>
-            </div>
-          </div>
-
-          {/* Academic Accreditation Card */}
-          <div className="bg-white p-4.5 rounded-2xl border border-slate-200/80 shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
-                <GraduationCap className="w-5 h-5" />
-              </div>
-              <div>
-                <h4 className="text-xs font-bold text-[#3D405B] uppercase tracking-wide">
-                  Curriculum Compliance Framework
-                </h4>
-                <p className="text-xs text-slate-500 mt-0.5">
-                  All active schemes audited under Washington Accord Tier-1 guidelines with automatic prerequisite chain locks.
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-3 shrink-0 sm:border-l sm:border-slate-100 sm:pl-4">
-              <div className="flex flex-col text-right">
-                <span className="text-[10px] uppercase font-bold text-slate-400">
-                  Elective Ratio
-                </span>
-                <span className="font-mono font-bold text-[#3D405B] text-xs">28.4% UG</span>
-              </div>
-              <svg className="w-20 h-6 text-emerald-500" fill="none" viewBox="0 0 100 30">
-                <path
-                  d="M0 25 L15 20 L30 22 L45 10 L60 14 L75 5 L90 8 L100 2"
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeWidth="2.5"
-                />
-              </svg>
             </div>
           </div>
         </div>
