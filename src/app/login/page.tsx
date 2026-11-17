@@ -115,6 +115,7 @@ export default function LoginPage() {
     if (target) {
       setIdentifier(target.defaultEmail);
       setPassword("••••••••••••");
+      showToast(`Selected: ${target.title} (${target.portalRoute})`);
     }
   };
 
@@ -122,23 +123,14 @@ export default function LoginPage() {
     e.preventDefault();
     setLoading(true);
     setErrorMessage(null);
-
-    // Simulate login verification
-    setTimeout(() => {
-      setLoading(false);
-      router.push(activeRole.portalRoute);
-    }, 450);
+    window.location.href = activeRole.portalRoute;
   };
 
   const handleQuickDemo = (roleId: RoleType) => {
-    handleRoleSelect(roleId);
     const target = roles.find((r) => r.id === roleId);
     if (target) {
       setLoading(true);
-      setTimeout(() => {
-        setLoading(false);
-        router.push(target.portalRoute);
-      }, 300);
+      window.location.href = target.portalRoute;
     }
   };
 
@@ -148,7 +140,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-surface-container-lowest text-on-surface flex flex-col justify-between font-body select-none">
+    <div className="min-h-screen bg-surface-container-lowest text-on-surface flex flex-col justify-between font-body">
       {/* Toast Notification */}
       {toastMessage && (
         <div className="fixed top-6 right-6 z-50 bg-primary-container text-on-primary px-4 py-3 shadow-lg flex items-center gap-2 border border-secondary font-mono text-xs animate-in slide-in-from-top">
@@ -263,7 +255,7 @@ export default function LoginPage() {
           {/* Right Column (7 Cols): Authentication Form */}
           <div className="lg:col-span-7 p-6 md:p-8 flex flex-col justify-between bg-white">
             <div>
-              <div className="flex items-center justify-between border-b border-slate-200 pb-3 mb-5">
+              <div className="flex items-center justify-between border-b border-slate-200 pb-3 mb-4">
                 <div>
                   <h3 className="text-lg font-bold font-headline text-[#3D405B] uppercase tracking-tight">
                     Credential Verification
@@ -275,6 +267,57 @@ export default function LoginPage() {
                 <span className="text-[10px] font-mono px-2 py-1 bg-slate-100 rounded-lg font-bold text-slate-700 border border-slate-200">
                   RBAC V4.2
                 </span>
+              </div>
+
+              {/* Role Selection Tabs Inside Right Column (Mobile & Desktop Friendly) */}
+              <div className="mb-4 bg-slate-50 p-2.5 rounded-2xl border border-slate-200/80">
+                <div className="flex items-center justify-between mb-2 px-1">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-slate-600 flex items-center gap-1.5 font-mono">
+                    <ShieldCheck className="w-3.5 h-3.5 text-[#355C7D]" />
+                    <span>Select Role / Portal:</span>
+                  </span>
+                  <span className="text-[10px] font-mono font-semibold text-[#355C7D]">
+                    {activeRole.portalRoute}
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5">
+                  {roles.map((r) => {
+                    const Icon = r.icon;
+                    const isSelected = selectedRole === r.id;
+                    return (
+                      <button
+                        key={r.id}
+                        type="button"
+                        onClick={() => handleRoleSelect(r.id)}
+                        className={`p-2 rounded-xl border text-left transition-all cursor-pointer flex items-center gap-2 ${
+                          isSelected
+                            ? "bg-[#355C7D] text-white border-[#355C7D] shadow-sm font-bold ring-2 ring-[#355C7D]/30"
+                            : "bg-white hover:bg-slate-100 text-slate-700 border-slate-200"
+                        }`}
+                      >
+                        <div
+                          className={`p-1 rounded-lg shrink-0 ${
+                            isSelected ? "bg-white/20 text-white" : "bg-slate-100 text-[#355C7D]"
+                          }`}
+                        >
+                          <Icon className="w-3.5 h-3.5" />
+                        </div>
+                        <div className="min-w-0">
+                          <span className="text-xs truncate block font-bold leading-tight">
+                            {r.id === "admin"
+                              ? "Admin"
+                              : r.id === "teacher"
+                              ? "Faculty"
+                              : r.id === "student"
+                              ? "Student"
+                              : "Accounts"}
+                          </span>
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
 
               {errorMessage && (
@@ -358,11 +401,10 @@ export default function LoginPage() {
                 {/* Submit Action */}
                 <button
                   type="submit"
-                  disabled={loading}
-                  className="mt-2 w-full py-3.5 bg-[#355C7D] hover:bg-[#2b4c68] text-white uppercase font-bold text-xs tracking-wider transition-all shadow-md flex items-center justify-center gap-2 rounded-xl cursor-pointer"
+                  className="mt-2 w-full py-3.5 bg-[#355C7D] hover:bg-[#2b4c68] active:scale-[0.99] text-white uppercase font-bold text-xs tracking-wider transition-all shadow-md flex items-center justify-center gap-2 rounded-xl cursor-pointer"
                 >
                   {loading ? (
-                    <span>Verifying Credentials &amp; Session Tokens...</span>
+                    <span>Opening {activeRole.title} Portal...</span>
                   ) : (
                     <>
                       <span>Enter {activeRole.title} Workspace</span>
@@ -370,6 +412,39 @@ export default function LoginPage() {
                     </>
                   )}
                 </button>
+
+                {/* 1-Click Fast Access Portals Bar */}
+                <div className="pt-3 border-t border-slate-100 space-y-1.5">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block font-mono">
+                    Instant 1-Click Direct Portal Jump:
+                  </span>
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5">
+                    <Link
+                      href="/admin"
+                      className="py-2 px-2 bg-blue-50 hover:bg-blue-100 text-blue-700 font-bold text-xs rounded-xl border border-blue-200 transition-colors flex items-center justify-center gap-1 cursor-pointer font-mono shadow-2xs"
+                    >
+                      <span>🛡️ Admin</span>
+                    </Link>
+                    <Link
+                      href="/staff"
+                      className="py-2 px-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 font-bold text-xs rounded-xl border border-emerald-200 transition-colors flex items-center justify-center gap-1 cursor-pointer font-mono shadow-2xs"
+                    >
+                      <span>👨‍🏫 Faculty</span>
+                    </Link>
+                    <Link
+                      href="/student"
+                      className="py-2 px-2 bg-amber-50 hover:bg-amber-100 text-amber-700 font-bold text-xs rounded-xl border border-amber-200 transition-colors flex items-center justify-center gap-1 cursor-pointer font-mono shadow-2xs"
+                    >
+                      <span>🎓 Student</span>
+                    </Link>
+                    <Link
+                      href="/accountant"
+                      className="py-2 px-2 bg-purple-50 hover:bg-purple-100 text-purple-700 font-bold text-xs rounded-xl border border-purple-200 transition-colors flex items-center justify-center gap-1 cursor-pointer font-mono shadow-2xs"
+                    >
+                      <span>💼 Accounts</span>
+                    </Link>
+                  </div>
+                </div>
               </form>
             </div>
 
