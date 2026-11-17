@@ -53,10 +53,21 @@
   background: #94a3b8;
 }
 
-/* Student & Staff Portal 80% scale presentation on 100% browser zoom */
+/* Student, Staff, Admin & Accountant Portal 80% scale presentation on 100% browser zoom */
 .student-zoom-wrapper,
 .staff-zoom-wrapper,
 .admin-zoom-wrapper,
+.accountant-zoom-wrapper,
 .portal-zoom-wrapper {
   zoom: 0.8;
+}
+
+@media (max-width: 1023px) {
+  .student-zoom-wrapper,
+  .staff-zoom-wrapper,
+  .admin-zoom-wrapper,
+  .accountant-zoom-wrapper,
+  .portal-zoom-wrapper {
+    zoom: 1;
+  }
 }

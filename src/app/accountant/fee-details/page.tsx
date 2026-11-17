@@ -18,12 +18,18 @@ import {
   User,
   ChevronRight,
   TrendingUp,
-  Building,
+  Building2,
   ShieldCheck,
   Send,
   Eye,
   SlidersHorizontal,
-  Table
+  Table,
+  Phone,
+  ArrowRight,
+  FileText,
+  Calendar,
+  Sparkles,
+  Coins,
 } from "lucide-react";
 
 interface StudentLedger {
@@ -301,7 +307,7 @@ const mockStudents: StudentLedger[] = [
 ];
 
 export default function StudentFeeDetailsPage() {
-  const [students, setStudents] = useState<StudentLedger[]>(mockStudents);
+  const [students] = useState<StudentLedger[]>(mockStudents);
   const [selectedStudent, setSelectedStudent] = useState<StudentLedger>(mockStudents[0]);
   const [searchQuery, setSearchQuery] = useState("");
   const [courseFilter, setCourseFilter] = useState("All Courses");
@@ -310,11 +316,21 @@ export default function StudentFeeDetailsPage() {
   const [concessionFilter, setConcessionFilter] = useState("All Concessions");
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [isLedgerModalOpen, setIsLedgerModalOpen] = useState(false);
+  const [reminderModalStudent, setReminderModalStudent] = useState<StudentLedger | null>(null);
 
   const showToast = (msg: string) => {
     setToastMessage(msg);
     setTimeout(() => setToastMessage(null), 3500);
   };
+
+  const statusCounts = useMemo(() => {
+    return {
+      ALL: students.length,
+      CLEARED: students.filter((s) => s.status === "Cleared").length,
+      PARTIAL: students.filter((s) => s.status === "Partial").length,
+      OVERDUE: students.filter((s) => s.status === "Overdue").length,
+    };
+  }, [students]);
 
   const filteredStudents = useMemo(() => {
     return students.filter((s) => {
@@ -324,7 +340,8 @@ export default function StudentFeeDetailsPage() {
         s.phone.includes(searchQuery);
 
       const matchCourse =
-        courseFilter === "All Courses" || s.course.includes(courseFilter.replace("B.Tech ", "").replace(" (CSE)", ""));
+        courseFilter === "All Courses" ||
+        s.course.toLowerCase().includes(courseFilter.toLowerCase().replace("b.tech ", ""));
 
       const matchStatus =
         statusFilter === "ALL" ||
@@ -343,758 +360,938 @@ export default function StudentFeeDetailsPage() {
     });
   }, [students, searchQuery, courseFilter, statusFilter, concessionFilter]);
 
-  const handleExportXLS = () => {
-    showToast("Master student fee ledger exported to Excel (XLS) format!");
-  };
-
-  const handleSendReminder = (student: StudentLedger) => {
-    showToast(`Payment reminder dispatch queued via Email & SMS to ${student.name} (+91 98765 43210)!`);
+  const handleExportCSV = () => {
+    const csvHeader =
+      "Student ID,Name,Roll,Course,Semester,Total Fee,Concession,Net Payable,Paid,Pending,Status,Last Date,Phone\n";
+    const csvRows = filteredStudents
+      .map(
+        (s) =>
+          `"${s.id}","${s.name}","${s.roll}","${s.course}","${s.semester}",${s.totalFee},${s.concessionAmount},${s.netPayable},${s.paidAmount},${s.pendingAmount},"${s.status}","${s.lastDate}","${s.phone}"`
+      )
+      .join("\n");
+    const blob = new Blob([csvHeader + csvRows], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", `student_fee_ledgers_${new Date().toISOString().slice(0, 10)}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    showToast("Master student fee ledger exported as CSV!");
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-surface">
+    <div className="p-4 sm:p-6 md:p-8 space-y-6 max-w-[1600px] mx-auto font-sans text-slate-800">
       {/* Toast Notification */}
       {toastMessage && (
-        <div className="fixed bottom-6 right-6 z-50 bg-primary text-on-primary px-4 py-3 rounded shadow-xl flex items-center gap-3 border border-secondary text-xs uppercase tracking-wider font-semibold animate-in fade-in slide-in-from-bottom-3 duration-200">
-          <CheckCircle2 className="h-4 w-4 text-[#047857]" />
+        <div className="fixed bottom-6 right-6 z-50 bg-[#3D405B] text-white px-5 py-3.5 rounded-2xl shadow-2xl flex items-center gap-3 border border-slate-600 text-xs sm:text-sm font-semibold animate-in slide-in-from-bottom duration-200">
+          <CheckCircle2 className="h-5 w-5 text-emerald-400 shrink-0" />
           <span>{toastMessage}</span>
-          <button onClick={() => setToastMessage(null)} className="ml-2 hover:opacity-75">
-            <X className="h-3.5 w-3.5" />
+          <button
+            onClick={() => setToastMessage(null)}
+            className="ml-2 text-slate-400 hover:text-white p-1 rounded-lg"
+          >
+            <X className="h-4 w-4" />
           </button>
         </div>
       )}
 
-      {/* Main Container */}
-      <div className="p-6 flex flex-col gap-6">
-        {/* Top Operational Context & Actions */}
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-1">
-          <div className="flex flex-col gap-1">
-            <div className="flex items-center gap-2 font-mono text-xs text-secondary uppercase tracking-wider">
-              <Link href="/accountant" className="hover:text-primary transition-colors">
-                Accounts &amp; Bursar Portal
+      {/* Top Operational Context & Actions */}
+      <div className="bg-white rounded-2xl p-5 sm:p-6 md:p-7 border border-slate-200 shadow-xs relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-96 h-full bg-gradient-to-l from-amber-50/70 via-blue-50/40 to-transparent pointer-events-none"></div>
+
+        <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+          <div className="space-y-2">
+            <div className="flex items-center gap-2 text-xs text-slate-500 font-medium">
+              <Link href="/accountant" className="text-amber-700 hover:underline">
+                Accounts Directorate
               </Link>
-              <span className="text-outline">/</span>
+              <span>/</span>
               <span>Fee Ledgers</span>
-              <span className="text-outline">/</span>
-              <span className="text-primary font-bold">Student Fee Directory &amp; Ledger Audit</span>
+              <span>/</span>
+              <span className="text-[#3D405B] font-bold">Student Fee Directory</span>
             </div>
-            <div className="flex items-baseline gap-3">
-              <h1 className="text-2xl lg:text-3xl font-bold uppercase tracking-tight text-primary">
-                Student Fee Directory &amp; Outstanding Ledgers
-              </h1>
-              <span className="hidden sm:inline-flex items-center px-2 py-0.5 bg-surface-container font-mono text-secondary text-[11px] font-bold uppercase rounded-xs">
-                LIVE AUDIT SYNCHRONIZED
-              </span>
+
+            <div>
+              <div className="flex flex-wrap items-center gap-2.5">
+                <h1 className="text-2xl sm:text-3xl font-bold text-[#3D405B] tracking-tight">
+                  Student Fee Directory &amp; Outstanding Ledgers 📑
+                </h1>
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-50 text-emerald-700 text-xs font-semibold rounded-full border border-emerald-200">
+                  <span className="w-2 h-2 rounded-full bg-emerald-600 animate-pulse"></span>
+                  Live Audit Synchronized
+                </span>
+              </div>
+              <p className="text-xs sm:text-sm text-slate-500 mt-1">
+                Real-time student fee accounting, installment schedules, concession waivers, and collection audit trails.
+              </p>
             </div>
           </div>
 
-          {/* CTA Cluster */}
-          <div className="flex flex-wrap items-center gap-2">
+          {/* Action Button Cluster */}
+          <div className="flex flex-wrap items-center gap-2.5">
             <button
-              onClick={handleExportXLS}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-surface-container-lowest text-primary font-mono text-xs font-bold uppercase tracking-wider hover:bg-surface-container-high border border-[#cbd5e1] shadow-xs rounded-xs transition-colors cursor-pointer"
+              onClick={handleExportCSV}
+              className="inline-flex items-center gap-2 px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-xl border border-slate-200 shadow-2xs transition-all cursor-pointer"
             >
-              <Download className="h-3.5 w-3.5 text-secondary" />
-              <span>Export Master (XLS)</span>
+              <Download className="w-4 h-4 text-slate-600" />
+              <span>Export Master (CSV)</span>
             </button>
             <Link
               href="/accountant/pending-dues"
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-error-container text-on-error-container font-mono text-xs font-bold uppercase tracking-wider hover:bg-error hover:text-on-error shadow-xs rounded-xs transition-colors cursor-pointer"
+              className="inline-flex items-center gap-2 px-4 py-2.5 bg-rose-50 hover:bg-rose-100 text-rose-700 text-xs font-semibold rounded-xl border border-rose-200 shadow-2xs transition-all"
             >
-              <AlertTriangle className="h-3.5 w-3.5" />
-              <span>Generate Defaulter Notice (PDF)</span>
+              <AlertTriangle className="w-4 h-4 text-rose-600" />
+              <span>Defaulters (82)</span>
             </Link>
             <Link
               href="/accountant/record-payment"
-              className="inline-flex items-center gap-1.5 px-4 py-2 bg-primary text-on-primary font-mono text-xs font-bold uppercase tracking-wider hover:bg-primary-container shadow-xs rounded-xs transition-colors cursor-pointer"
+              className="inline-flex items-center gap-2 px-4 py-2.5 bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold rounded-xl shadow-xs transition-all"
             >
-              <CreditCard className="h-3.5 w-3.5 text-secondary-container" />
+              <CreditCard className="w-4 h-4" />
               <span>+ New Payment Entry</span>
             </Link>
           </div>
         </div>
+      </div>
 
-        {/* Real-Time Metrics Tile Array (5 Cards) */}
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-3.5">
-          {/* Tile 1 */}
-          <div className="bg-surface-container-lowest p-4 flex flex-col justify-between border border-[#cbd5e1] shadow-xs relative overflow-hidden border-l-4 border-l-primary rounded-sm">
-            <div className="flex items-center justify-between">
-              <span className="text-[11px] font-mono text-on-surface-variant uppercase tracking-wider font-bold">
-                Total Billed
-              </span>
-              <Building className="h-4 w-4 text-secondary" />
+      {/* Real-Time Metrics Tile Array (5 Cards) */}
+      <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+        {/* Card 1 */}
+        <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs hover:shadow-sm transition-all flex flex-col justify-between">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-semibold text-slate-500">Total Billed</span>
+            <div className="w-9 h-9 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
+              <Building2 className="w-4 h-4" />
             </div>
-            <div className="mt-2 flex items-baseline justify-between">
-              <span className="text-2xl font-bold font-mono text-primary">1,842</span>
-              <span className="font-mono text-on-surface-variant text-[11px]">AY 24-25</span>
-            </div>
-            <div className="mt-1 font-mono text-[11px] text-secondary font-bold">₹27.63 Cr Gross Demand</div>
           </div>
-
-          {/* Tile 2 */}
-          <div className="bg-surface-container-lowest p-4 flex flex-col justify-between border border-[#cbd5e1] shadow-xs relative overflow-hidden border-l-4 border-l-secondary rounded-sm">
-            <div className="flex items-center justify-between">
-              <span className="text-[11px] font-mono text-on-surface-variant uppercase tracking-wider font-bold">
-                Fully Paid
-              </span>
-              <CheckCircle2 className="h-4 w-4 text-[#047857]" />
+          <div className="mt-3">
+            <div className="text-2xl font-bold text-[#3D405B] tracking-tight font-mono">
+              1,842
             </div>
-            <div className="mt-2 flex items-baseline justify-between">
-              <span className="text-2xl font-bold font-mono text-primary">1,380</span>
-              <span className="font-mono text-[#047857] text-[11px] font-bold">74.9%</span>
+            <div className="text-xs text-blue-700 font-semibold mt-1">
+              ₹27.63 Cr Gross Demand
             </div>
-            <div className="mt-1 font-mono text-[11px] text-secondary font-semibold">NOC Cleared</div>
           </div>
-
-          {/* Tile 3 */}
-          <div className="bg-surface-container-lowest p-4 flex flex-col justify-between border border-[#cbd5e1] shadow-xs relative overflow-hidden border-l-4 border-l-secondary-container rounded-sm">
-            <div className="flex items-center justify-between">
-              <span className="text-[11px] font-mono text-on-surface-variant uppercase tracking-wider font-bold">
-                Partial Dues
-              </span>
-              <Clock className="h-4 w-4 text-secondary" />
-            </div>
-            <div className="mt-2 flex items-baseline justify-between">
-              <span className="text-2xl font-bold font-mono text-primary">380</span>
-              <span className="font-mono text-secondary text-[11px] font-bold">20.6%</span>
-            </div>
-            <div className="mt-1 font-mono text-[11px] text-on-surface-variant font-semibold">Active Tranche Plan</div>
-          </div>
-
-          {/* Tile 4 */}
-          <div className="bg-surface-container-lowest p-4 flex flex-col justify-between border border-[#cbd5e1] shadow-xs relative overflow-hidden border-l-4 border-l-error rounded-sm">
-            <div className="flex items-center justify-between">
-              <span className="text-[11px] font-mono text-error uppercase tracking-wider font-bold">
-                Overdue / Defaulters
-              </span>
-              <AlertTriangle className="h-4 w-4 text-error" />
-            </div>
-            <div className="mt-2 flex items-baseline justify-between">
-              <span className="text-2xl font-bold font-mono text-error">82</span>
-              <span className="font-mono text-error text-[11px] font-bold">4.5%</span>
-            </div>
-            <div className="mt-1 font-mono text-[11px] text-error font-bold">Hall Ticket Restricted</div>
-          </div>
-
-          {/* Tile 5 */}
-          <div className="bg-surface-container-lowest p-4 flex flex-col justify-between border border-[#cbd5e1] shadow-xs relative overflow-hidden col-span-2 md:col-span-1 border-l-4 border-l-tertiary-container rounded-sm">
-            <div className="flex items-center justify-between">
-              <span className="text-[11px] font-mono text-on-surface-variant uppercase tracking-wider font-bold">
-                Net Uncollected
-              </span>
-              <Receipt className="h-4 w-4 text-secondary" />
-            </div>
-            <div className="mt-2 flex items-baseline justify-between">
-              <span className="text-2xl font-bold font-mono text-on-surface">₹46.50 L</span>
-              <span className="font-mono text-secondary text-[11px]">Due Current Term</span>
-            </div>
-            <div className="mt-1 font-mono text-[11px] text-secondary font-semibold">Target Rec.: 15 May</div>
+          <div className="pt-2.5 mt-2.5 border-t border-slate-100 text-xs text-slate-500 flex justify-between">
+            <span>Enrolled Students</span>
+            <span className="font-semibold text-slate-700">AY 24-25</span>
           </div>
         </div>
 
-        {/* Search & Filtration Canvas */}
-        <div className="bg-surface-container-lowest p-4 border border-[#cbd5e1] shadow-xs rounded-sm flex flex-col gap-3">
-          {/* Row 1: Query & High-Density Selects */}
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-3 items-center">
-            <div className="md:col-span-4 relative flex items-center">
-              <Search className="h-4 w-4 absolute left-3 text-secondary" />
-              <input
-                type="text"
-                placeholder="Search student name, roll number, phone..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full h-9 pl-9 pr-3 bg-surface-container-low font-mono text-xs text-on-surface placeholder:text-outline border border-[#cbd5e1] rounded-xs focus:outline-none focus:border-secondary"
-              />
-            </div>
-            <div className="md:col-span-2">
-              <select
-                value={courseFilter}
-                onChange={(e) => setCourseFilter(e.target.value)}
-                className="w-full h-9 px-2.5 bg-surface-container-low font-mono text-xs text-on-surface border border-[#cbd5e1] rounded-xs focus:outline-none"
-              >
-                <option>All Courses</option>
-                <option>B.Tech Computer Science (CSE)</option>
-                <option>B.Tech Electronics (ECE)</option>
-                <option>M.Tech Data Systems</option>
-                <option>BCA</option>
-                <option>MCA</option>
-              </select>
-            </div>
-            <div className="md:col-span-2">
-              <select
-                value={batchFilter}
-                onChange={(e) => setBatchFilter(e.target.value)}
-                className="w-full h-9 px-2.5 bg-surface-container-low font-mono text-xs text-on-surface border border-[#cbd5e1] rounded-xs focus:outline-none"
-              >
-                <option>All Batches</option>
-                <option>Batch 2023-27 (Sem IV)</option>
-                <option>Batch 2022-26 (Sem VI)</option>
-                <option>Batch 2024-28 (Sem II)</option>
-              </select>
-            </div>
-            <div className="md:col-span-2">
-              <select
-                value={statusFilter}
-                onChange={(e) => setStatusFilter(e.target.value)}
-                className="w-full h-9 px-2.5 bg-surface-container-low font-mono text-xs text-on-surface border border-[#cbd5e1] rounded-xs focus:outline-none"
-              >
-                <option value="ALL">All Payment Statuses</option>
-                <option value="CLEARED">Fully Paid [Green]</option>
-                <option value="PARTIAL">Partial Paid [Amber]</option>
-                <option value="OVERDUE">Overdue / Defaulter [Red]</option>
-              </select>
-            </div>
-            <div className="md:col-span-2">
-              <select
-                value={concessionFilter}
-                onChange={(e) => setConcessionFilter(e.target.value)}
-                className="w-full h-9 px-2.5 bg-surface-container-low font-mono text-xs text-on-surface border border-[#cbd5e1] rounded-xs focus:outline-none"
-              >
-                <option value="All Concessions">All Concessions</option>
-                <option value="General">General (Full Fee)</option>
-                <option value="Merit">Merit 15% Waiver</option>
-                <option value="Honor">Dean&apos;s Honor (20%)</option>
-                <option value="Sports">Sports Quota</option>
-              </select>
+        {/* Card 2 */}
+        <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs hover:shadow-sm transition-all flex flex-col justify-between">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-semibold text-slate-500">Fully Cleared</span>
+            <div className="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
+              <CheckCircle2 className="w-4 h-4" />
             </div>
           </div>
-
-          {/* Row 2: Status Quick Filter Segmented Pills */}
-          <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-[#eff4ff]">
-            <div className="flex items-center gap-1 font-mono text-xs">
-              <button
-                onClick={() => setStatusFilter("ALL")}
-                className={`px-3 py-1 font-bold uppercase rounded-xs transition-colors ${
-                  statusFilter === "ALL"
-                    ? "bg-amber-600 text-white"
-                    : "bg-surface-container-low text-on-surface hover:bg-surface-container"
-                }`}
-              >
-                All Students (1,842)
-              </button>
-              <button
-                onClick={() => setStatusFilter("CLEARED")}
-                className={`px-3 py-1 font-bold uppercase rounded-xs transition-colors ${
-                  statusFilter === "CLEARED"
-                    ? "bg-amber-600 text-white"
-                    : "bg-surface-container-low text-on-surface hover:bg-surface-container"
-                }`}
-              >
-                Fully Cleared (1,380)
-              </button>
-              <button
-                onClick={() => setStatusFilter("PARTIAL")}
-                className={`px-3 py-1 font-bold uppercase rounded-xs transition-colors ${
-                  statusFilter === "PARTIAL"
-                    ? "bg-amber-600 text-white"
-                    : "bg-surface-container-low text-on-surface hover:bg-surface-container"
-                }`}
-              >
-                Partial Balance (380)
-              </button>
-              <button
-                onClick={() => setStatusFilter("OVERDUE")}
-                className={`px-3 py-1 font-bold uppercase rounded-xs transition-colors ${
-                  statusFilter === "OVERDUE"
-                    ? "bg-error text-on-error"
-                    : "bg-surface-container-low text-error hover:bg-error-container"
-                }`}
-              >
-                Overdue Defaulters (82)
-              </button>
+          <div className="mt-3">
+            <div className="text-2xl font-bold text-[#3D405B] tracking-tight font-mono">
+              1,380
             </div>
+            <div className="text-xs text-emerald-600 font-bold mt-1">
+              74.9% Realized
+            </div>
+          </div>
+          <div className="pt-2.5 mt-2.5 border-t border-slate-100 text-xs text-slate-500 flex justify-between">
+            <span>NOC Cleared</span>
+            <span className="font-semibold text-emerald-600">Zero Dues</span>
+          </div>
+        </div>
 
-            <span className="font-mono text-xs text-secondary">
-              Displaying <strong className="text-on-surface">{filteredStudents.length}</strong> of 1,842 Records
+        {/* Card 3 */}
+        <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs hover:shadow-sm transition-all flex flex-col justify-between">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-semibold text-slate-500">Partial Balance</span>
+            <div className="w-9 h-9 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center">
+              <Clock className="w-4 h-4" />
+            </div>
+          </div>
+          <div className="mt-3">
+            <div className="text-2xl font-bold text-[#3D405B] tracking-tight font-mono">
+              380
+            </div>
+            <div className="text-xs text-amber-700 font-semibold mt-1">
+              20.6% on Tranche
+            </div>
+          </div>
+          <div className="pt-2.5 mt-2.5 border-t border-slate-100 text-xs text-slate-500 flex justify-between">
+            <span>Active EMI Plans</span>
+            <span className="font-semibold text-amber-700">In Schedule</span>
+          </div>
+        </div>
+
+        {/* Card 4 */}
+        <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs hover:shadow-sm transition-all flex flex-col justify-between">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-semibold text-slate-500">Overdue Defaulters</span>
+            <div className="w-9 h-9 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center">
+              <AlertTriangle className="w-4 h-4" />
+            </div>
+          </div>
+          <div className="mt-3">
+            <div className="text-2xl font-bold text-rose-600 tracking-tight font-mono">
+              82
+            </div>
+            <div className="text-xs text-rose-700 font-semibold mt-1">
+              4.5% Past Cutoff
+            </div>
+          </div>
+          <div className="pt-2.5 mt-2.5 border-t border-slate-100 text-xs text-slate-500 flex justify-between">
+            <span>Admit Card Holds</span>
+            <span className="font-semibold text-rose-600">Restricted</span>
+          </div>
+        </div>
+
+        {/* Card 5 */}
+        <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs hover:shadow-sm transition-all flex flex-col justify-between col-span-2 md:col-span-1">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-semibold text-slate-500">Net Uncollected</span>
+            <div className="w-9 h-9 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center">
+              <Receipt className="w-4 h-4" />
+            </div>
+          </div>
+          <div className="mt-3">
+            <div className="text-2xl font-bold text-[#3D405B] tracking-tight font-mono">
+              ₹46.50 L
+            </div>
+            <div className="text-xs text-purple-700 font-semibold mt-1">
+              Due Current Term
+            </div>
+          </div>
+          <div className="pt-2.5 mt-2.5 border-t border-slate-100 text-xs text-slate-500 flex justify-between">
+            <span>Target Deadline</span>
+            <span className="font-semibold text-slate-700">15 May 2025</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Search & Filtration Toolbar */}
+      <div className="bg-white p-5 sm:p-6 rounded-2xl border border-slate-200 shadow-xs space-y-4">
+        {/* Row 1: Search and Select dropdowns */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-3 items-center">
+          <div className="lg:col-span-4 relative flex items-center">
+            <Search className="h-4 w-4 absolute left-3.5 text-slate-400" />
+            <input
+              type="text"
+              placeholder="Search student name, roll number, phone..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full h-10 pl-10 pr-3 bg-slate-50 text-xs text-slate-800 placeholder:text-slate-400 border border-slate-200 rounded-xl focus:outline-none focus:border-amber-600 transition-colors"
+            />
+          </div>
+
+          <div className="lg:col-span-2">
+            <select
+              value={courseFilter}
+              onChange={(e) => setCourseFilter(e.target.value)}
+              className="w-full h-10 px-3 bg-slate-50 text-xs text-slate-700 border border-slate-200 rounded-xl focus:outline-none focus:border-amber-600"
+            >
+              <option>All Courses</option>
+              <option>B.Tech Computer Science (CSE)</option>
+              <option>B.Tech Electronics (ECE)</option>
+              <option>M.Tech Data Systems</option>
+              <option>BCA</option>
+              <option>MCA</option>
+            </select>
+          </div>
+
+          <div className="lg:col-span-2">
+            <select
+              value={batchFilter}
+              onChange={(e) => setBatchFilter(e.target.value)}
+              className="w-full h-10 px-3 bg-slate-50 text-xs text-slate-700 border border-slate-200 rounded-xl focus:outline-none focus:border-amber-600"
+            >
+              <option>All Batches</option>
+              <option>Batch 2023-27 (Sem IV)</option>
+              <option>Batch 2022-26 (Sem VI)</option>
+              <option>Batch 2024-28 (Sem II)</option>
+            </select>
+          </div>
+
+          <div className="lg:col-span-2">
+            <select
+              value={statusFilter}
+              onChange={(e) => setStatusFilter(e.target.value)}
+              className="w-full h-10 px-3 bg-slate-50 text-xs text-slate-700 border border-slate-200 rounded-xl focus:outline-none focus:border-amber-600"
+            >
+              <option value="ALL">All Payment Statuses</option>
+              <option value="CLEARED">Fully Paid</option>
+              <option value="PARTIAL">Partial Balance</option>
+              <option value="OVERDUE">Overdue Defaulters</option>
+            </select>
+          </div>
+
+          <div className="lg:col-span-2">
+            <select
+              value={concessionFilter}
+              onChange={(e) => setConcessionFilter(e.target.value)}
+              className="w-full h-10 px-3 bg-slate-50 text-xs text-slate-700 border border-slate-200 rounded-xl focus:outline-none focus:border-amber-600"
+            >
+              <option value="All Concessions">All Concessions</option>
+              <option value="General">General (Full Fee)</option>
+              <option value="Merit">Merit 15% Waiver</option>
+              <option value="Honor">Dean&apos;s Honor (20%)</option>
+              <option value="Sports">Sports Quota</option>
+            </select>
+          </div>
+        </div>
+
+        {/* Row 2: Quick Filter Pills with Dynamic Counts */}
+        <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-slate-100">
+          <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none text-xs">
+            <button
+              onClick={() => setStatusFilter("ALL")}
+              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl font-semibold transition-all cursor-pointer ${
+                statusFilter === "ALL"
+                  ? "bg-amber-600 text-white shadow-xs font-bold"
+                  : "bg-slate-50 text-slate-600 hover:bg-slate-100 border border-slate-200"
+              }`}
+            >
+              <span>All Students</span>
+              <span className={`text-[10px] px-1.5 py-0.2 rounded-full font-bold ${
+                statusFilter === "ALL" ? "bg-white/25 text-white" : "bg-slate-200 text-slate-600"
+              }`}>
+                {statusCounts.ALL}
+              </span>
+            </button>
+
+            <button
+              onClick={() => setStatusFilter("CLEARED")}
+              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl font-semibold transition-all cursor-pointer ${
+                statusFilter === "CLEARED"
+                  ? "bg-emerald-600 text-white shadow-xs font-bold"
+                  : "bg-slate-50 text-slate-600 hover:bg-slate-100 border border-slate-200"
+              }`}
+            >
+              <span>Fully Cleared</span>
+              <span className={`text-[10px] px-1.5 py-0.2 rounded-full font-bold ${
+                statusFilter === "CLEARED" ? "bg-white/25 text-white" : "bg-slate-200 text-slate-600"
+              }`}>
+                {statusCounts.CLEARED}
+              </span>
+            </button>
+
+            <button
+              onClick={() => setStatusFilter("PARTIAL")}
+              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl font-semibold transition-all cursor-pointer ${
+                statusFilter === "PARTIAL"
+                  ? "bg-amber-600 text-white shadow-xs font-bold"
+                  : "bg-slate-50 text-slate-600 hover:bg-slate-100 border border-slate-200"
+              }`}
+            >
+              <span>Partial Balance</span>
+              <span className={`text-[10px] px-1.5 py-0.2 rounded-full font-bold ${
+                statusFilter === "PARTIAL" ? "bg-white/25 text-white" : "bg-slate-200 text-slate-600"
+              }`}>
+                {statusCounts.PARTIAL}
+              </span>
+            </button>
+
+            <button
+              onClick={() => setStatusFilter("OVERDUE")}
+              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl font-semibold transition-all cursor-pointer ${
+                statusFilter === "OVERDUE"
+                  ? "bg-rose-600 text-white shadow-xs font-bold"
+                  : "bg-slate-50 text-rose-700 hover:bg-rose-50 border border-rose-200"
+              }`}
+            >
+              <span>Overdue Defaulters</span>
+              <span className={`text-[10px] px-1.5 py-0.2 rounded-full font-bold ${
+                statusFilter === "OVERDUE" ? "bg-white/25 text-white" : "bg-rose-100 text-rose-700"
+              }`}>
+                {statusCounts.OVERDUE}
+              </span>
+            </button>
+          </div>
+
+          <span className="text-xs text-slate-500 font-medium">
+            Showing <strong className="text-slate-800">{filteredStudents.length}</strong> of {students.length} Records
+          </span>
+        </div>
+      </div>
+
+      {/* Primary Split Surface: Master Ledger (8 cols) & Real-Time Student Audit Inspector (4 cols) */}
+      <div className="grid grid-cols-1 xl:grid-cols-12 gap-6 items-start">
+        {/* Left Data Grid Canvas (8 cols on XL) */}
+        <div className="xl:col-span-8 bg-white border border-slate-200 shadow-xs rounded-2xl flex flex-col overflow-hidden">
+          <div className="px-5 py-4 bg-slate-50 border-b border-slate-200 flex items-center justify-between">
+            <div className="flex items-center gap-2.5">
+              <Table className="h-4 w-4 text-amber-700" />
+              <span className="text-sm font-bold text-[#3D405B]">
+                Consolidated Fee Ledger Directory
+              </span>
+            </div>
+            <span className="text-xs font-semibold text-slate-500 font-mono">
+              CURRENCY: INR (₹)
             </span>
           </div>
-        </div>
 
-        {/* Primary Split Surface: Master Ledger & Real-Time Student Audit Inspector */}
-        <div className="grid grid-cols-1 xl:grid-cols-12 gap-6 items-start">
-          {/* Left Data Grid Canvas (8 cols on XL) */}
-          <div className="xl:col-span-8 bg-surface-container-lowest border border-[#cbd5e1] shadow-xs rounded-sm flex flex-col overflow-hidden">
-            <div className="px-4 py-3 bg-surface-container-low border-b border-[#cbd5e1] flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <Table className="h-4 w-4 text-primary" />
-                <span className="font-mono text-xs uppercase tracking-wider text-on-surface font-bold">
-                  Consolidated Fee Ledger Records
-                </span>
-              </div>
-              <span className="font-mono text-xs text-secondary font-bold">
-                INSTITUTIONAL CURRENCY: INR (₹)
-              </span>
-            </div>
-
-            <div className="overflow-x-auto">
-              <table className="w-full text-left font-mono text-xs">
-                <thead>
-                  <tr className="bg-surface-container text-on-surface-variant font-bold uppercase tracking-wider text-[11px] border-b border-[#cbd5e1]">
-                    <th className="py-2.5 px-3">Student / ID</th>
-                    <th className="py-2.5 px-2">Total Fee</th>
-                    <th className="py-2.5 px-2">Concession</th>
-                    <th className="py-2.5 px-2">Net Payable</th>
-                    <th className="py-2.5 px-2">Paid</th>
-                    <th className="py-2.5 px-2">Pending</th>
-                    <th className="py-2.5 px-2">Status</th>
-                    <th className="py-2.5 px-2">Last Date</th>
-                    <th className="py-2.5 px-3 text-right">Ledger Actions</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-surface-container">
-                  {filteredStudents.map((s) => {
-                    const isInspecting = selectedStudent.id === s.id;
-                    return (
-                      <tr
-                        key={s.id}
-                        className={`transition-colors cursor-pointer ${
-                          isInspecting
-                            ? "bg-surface-container-high"
-                            : s.status === "Overdue"
-                            ? "bg-error-container/20 hover:bg-error-container/30"
-                            : "hover:bg-surface-container-low"
-                        }`}
-                        onClick={() => setSelectedStudent(s)}
-                      >
-                        <td className="py-2.5 px-3">
-                          <div className="flex items-center gap-2">
-                            <div
-                              className={`w-7 h-7 flex items-center justify-center font-bold text-xs rounded-xs ${
-                                isInspecting
-                                  ? "bg-primary text-on-primary"
-                                  : s.status === "Overdue"
-                                  ? "bg-error text-on-error"
-                                  : "bg-surface-container text-on-surface"
-                              }`}
-                            >
-                              {s.avatar}
-                            </div>
-                            <div className="flex flex-col">
-                              <span className="font-sans font-bold text-primary flex items-center gap-1">
-                                {s.name}
-                                {isInspecting && (
-                                  <span className="w-1.5 h-1.5 bg-secondary inline-block rounded-xs" title="Inspector Active"></span>
-                                )}
-                              </span>
-                              <span className="text-[11px] text-secondary">
-                                {s.roll} • {s.semester}
-                              </span>
-                            </div>
-                          </div>
-                        </td>
-                        <td className="py-2.5 px-2">₹{s.totalFee.toLocaleString("en-IN")}</td>
-                        <td className="py-2.5 px-2 text-secondary">
-                          {s.concessionAmount > 0 ? (
-                            <span>
-                              -₹{s.concessionAmount.toLocaleString("en-IN")}{" "}
-                              <span className="text-[10px] text-on-surface-variant">({s.concessionTag})</span>
-                            </span>
-                          ) : (
-                            <span className="text-outline">—</span>
-                          )}
-                        </td>
-                        <td className="py-2.5 px-2 font-bold text-on-surface">
-                          ₹{s.netPayable.toLocaleString("en-IN")}
-                        </td>
-                        <td className="py-2.5 px-2">₹{s.paidAmount.toLocaleString("en-IN")}</td>
-                        <td className="py-2.5 px-2 font-bold text-error">
-                          ₹{s.pendingAmount.toLocaleString("en-IN")}
-                        </td>
-                        <td className="py-2.5 px-2">
-                          <span
-                            className={`inline-block px-1.5 py-0.5 text-[10px] font-bold uppercase rounded-xs ${
-                              s.status === "Cleared"
-                                ? "bg-tertiary-fixed text-on-tertiary-fixed font-bold"
-                                : s.status === "Partial"
-                                ? "bg-secondary-fixed text-on-secondary-fixed-variant font-bold"
-                                : "bg-error text-on-error font-bold"
+          <div className="overflow-x-auto">
+            <table className="w-full text-left text-xs">
+              <thead>
+                <tr className="bg-slate-50/80 text-slate-600 font-bold border-b border-slate-200">
+                  <th className="py-3 px-4">Student / ID</th>
+                  <th className="py-3 px-3">Total Fee</th>
+                  <th className="py-3 px-3">Concession</th>
+                  <th className="py-3 px-3">Net Payable</th>
+                  <th className="py-3 px-3">Paid</th>
+                  <th className="py-3 px-3">Pending</th>
+                  <th className="py-3 px-3">Status</th>
+                  <th className="py-3 px-3">Last Date</th>
+                  <th className="py-3 px-4 text-right">Actions</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-100 font-sans">
+                {filteredStudents.map((s) => {
+                  const isInspecting = selectedStudent.id === s.id;
+                  return (
+                    <tr
+                      key={s.id}
+                      onClick={() => setSelectedStudent(s)}
+                      className={`transition-colors cursor-pointer group ${
+                        isInspecting
+                          ? "bg-amber-50/70"
+                          : s.status === "Overdue"
+                          ? "hover:bg-rose-50/40"
+                          : "hover:bg-slate-50/80"
+                      }`}
+                    >
+                      <td className="py-3 px-4">
+                        <div className="flex items-center gap-2.5">
+                          <div
+                            className={`w-8 h-8 flex items-center justify-center font-bold text-xs rounded-xl ${
+                              isInspecting
+                                ? "bg-amber-600 text-white shadow-xs"
+                                : s.status === "Overdue"
+                                ? "bg-rose-100 text-rose-700"
+                                : "bg-slate-100 text-slate-700"
                             }`}
                           >
-                            {s.status}
-                          </span>
-                        </td>
-                        <td className="py-2.5 px-2 text-[11px] text-on-surface-variant">{s.lastDate}</td>
-                        <td className="py-2.5 px-3 text-right">
-                          <div className="flex items-center justify-end gap-1">
-                            <button
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                setSelectedStudent(s);
-                                setIsLedgerModalOpen(true);
-                              }}
-                              className="px-2 py-1 bg-surface-container-high hover:bg-surface-variant text-primary font-bold text-[10px] uppercase rounded-xs"
-                            >
-                              Ledger
-                            </button>
-                            {s.pendingAmount > 0 ? (
-                              <Link
-                                href={`/accountant/record-payment?roll=${s.roll}`}
-                                onClick={(e) => e.stopPropagation()}
-                                className="px-2 py-1 bg-primary text-on-primary hover:bg-primary-container font-bold text-[10px] uppercase rounded-xs"
-                              >
-                                Pay
-                              </Link>
-                            ) : (
-                              <span className="px-2 py-1 bg-surface-container-low text-outline text-[10px] font-bold uppercase rounded-xs cursor-not-allowed">
-                                Paid
-                              </span>
-                            )}
+                            {s.avatar}
                           </div>
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
+                          <div className="flex flex-col min-w-0">
+                            <span className="font-bold text-[#3D405B] flex items-center gap-1.5">
+                              {s.name}
+                              {isInspecting && (
+                                <span className="w-1.5 h-1.5 bg-amber-600 rounded-full" title="Active Inspector"></span>
+                              )}
+                            </span>
+                            <span className="text-[11px] text-slate-500 font-mono">
+                              {s.roll} &bull; {s.semester}
+                            </span>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="py-3 px-3 font-mono text-slate-700">
+                        ₹{s.totalFee.toLocaleString("en-IN")}
+                      </td>
+                      <td className="py-3 px-3">
+                        {s.concessionAmount > 0 ? (
+                          <div className="flex flex-col">
+                            <span className="text-amber-800 font-semibold font-mono">
+                              -₹{s.concessionAmount.toLocaleString("en-IN")}
+                            </span>
+                            <span className="text-[10px] text-slate-500 font-medium">
+                              {s.concessionTag}
+                            </span>
+                          </div>
+                        ) : (
+                          <span className="text-slate-400 font-mono">—</span>
+                        )}
+                      </td>
+                      <td className="py-3 px-3 font-bold text-[#3D405B] font-mono">
+                        ₹{s.netPayable.toLocaleString("en-IN")}
+                      </td>
+                      <td className="py-3 px-3 font-mono text-emerald-700 font-semibold">
+                        ₹{s.paidAmount.toLocaleString("en-IN")}
+                      </td>
+                      <td className="py-3 px-3 font-mono font-bold text-rose-600">
+                        {s.pendingAmount > 0 ? (
+                          `₹${s.pendingAmount.toLocaleString("en-IN")}`
+                        ) : (
+                          <span className="text-emerald-600 font-medium font-sans text-xs">Nil</span>
+                        )}
+                      </td>
+                      <td className="py-3 px-3">
+                        <span
+                          className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 text-[11px] font-semibold rounded-full border ${
+                            s.status === "Cleared"
+                              ? "bg-emerald-50 text-emerald-700 border-emerald-200"
+                              : s.status === "Partial"
+                              ? "bg-amber-50 text-amber-700 border-amber-200"
+                              : "bg-rose-50 text-rose-700 border-rose-200"
+                          }`}
+                        >
+                          <span
+                            className={`w-1.5 h-1.5 rounded-full ${
+                              s.status === "Cleared"
+                                ? "bg-emerald-600"
+                                : s.status === "Partial"
+                                ? "bg-amber-600"
+                                : "bg-rose-600 animate-pulse"
+                            }`}
+                          ></span>
+                          {s.status}
+                        </span>
+                      </td>
+                      <td className="py-3 px-3 text-[11px] text-slate-500 whitespace-nowrap">
+                        {s.lastDate}
+                      </td>
+                      <td className="py-3 px-4 text-right">
+                        <div className="flex items-center justify-end gap-1.5">
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setSelectedStudent(s);
+                              setIsLedgerModalOpen(true);
+                            }}
+                            className="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs rounded-lg transition-colors cursor-pointer"
+                          >
+                            Ledger
+                          </button>
+                          {s.pendingAmount > 0 ? (
+                            <Link
+                              href={`/accountant/record-payment?roll=${s.roll}`}
+                              onClick={(e) => e.stopPropagation()}
+                              className="px-2.5 py-1 bg-amber-600 hover:bg-amber-700 text-white font-semibold text-xs rounded-lg transition-colors shadow-2xs"
+                            >
+                              Pay
+                            </Link>
+                          ) : (
+                            <span className="px-2 py-1 bg-slate-100 text-slate-400 font-medium text-xs rounded-lg">
+                              Paid
+                            </span>
+                          )}
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Table Pagination Footer */}
+          <div className="px-5 py-3.5 bg-slate-50 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
+            <span>
+              Showing 1 to {filteredStudents.length} of {students.length} students &bull; Page 1 of 1
+            </span>
+            <div className="flex items-center gap-1 font-semibold">
+              <button className="px-3 py-1 bg-white text-slate-400 border border-slate-200 rounded-lg cursor-not-allowed">
+                Prev
+              </button>
+              <button className="px-3 py-1 bg-amber-600 text-white rounded-lg shadow-2xs">
+                1
+              </button>
+              <button className="px-3 py-1 bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 rounded-lg">
+                Next
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Right Side Inspection Drawer (4 cols on XL) */}
+        <div className="xl:col-span-4 space-y-5">
+          {/* Active Student Dossier Card */}
+          <div className="bg-white p-5 sm:p-6 rounded-2xl border border-slate-200 shadow-xs relative overflow-hidden space-y-4">
+            <div className="absolute top-0 left-0 right-0 h-1.5 bg-amber-600"></div>
+
+            {/* Header with Avatar & Details */}
+            <div className="flex items-start justify-between pb-3 border-b border-slate-100 pt-1">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 bg-amber-100 text-amber-800 flex items-center justify-center font-bold text-base rounded-2xl shadow-2xs">
+                  {selectedStudent.avatar}
+                </div>
+                <div>
+                  <h3 className="text-base font-bold text-[#3D405B] leading-tight">
+                    {selectedStudent.name}
+                  </h3>
+                  <span className="text-xs text-blue-600 font-mono font-semibold block">
+                    {selectedStudent.roll}
+                  </span>
+                  <span className="text-[11px] text-slate-500">
+                    {selectedStudent.course} &bull; {selectedStudent.semester}
+                  </span>
+                </div>
+              </div>
+              <span
+                className={`px-2.5 py-0.5 text-xs font-semibold rounded-full border ${
+                  selectedStudent.status === "Cleared"
+                    ? "bg-emerald-50 text-emerald-700 border-emerald-200"
+                    : selectedStudent.status === "Partial"
+                    ? "bg-amber-50 text-amber-700 border-amber-200"
+                    : "bg-rose-50 text-rose-700 border-rose-200"
+                }`}
+              >
+                {selectedStudent.status}
+              </span>
             </div>
 
-            {/* Pagination / Technical Footer */}
-            <div className="px-4 py-2.5 bg-surface-container-low border-t border-[#cbd5e1] flex flex-col sm:flex-row items-center justify-between gap-2 font-mono text-xs">
-              <span className="text-on-surface-variant text-[11px]">
-                Showing 1 to {filteredStudents.length} of 1,842 students | Page 1 of 231
-              </span>
-              <div className="flex items-center gap-1 font-mono">
-                <button className="px-2 py-0.5 bg-surface-container-lowest text-outline font-bold rounded-xs cursor-not-allowed">
-                  PREV
+            {/* Meta Chips */}
+            <div className="grid grid-cols-2 gap-2.5 bg-slate-50 p-3 rounded-xl border border-slate-100 text-xs">
+              <div>
+                <span className="text-[10px] text-slate-400 font-medium block">Academic Advisor</span>
+                <span className="font-semibold text-slate-800 text-[11px] truncate block">
+                  {selectedStudent.advisor}
+                </span>
+              </div>
+              <div>
+                <span className="text-[10px] text-slate-400 font-medium block">Contact Tel</span>
+                <span className="font-semibold text-slate-800 text-[11px] block font-mono">
+                  {selectedStudent.phone}
+                </span>
+              </div>
+            </div>
+
+            {/* Detailed Fee Components Breakdown */}
+            <div className="space-y-2">
+              <div className="flex items-center justify-between pb-1">
+                <span className="text-xs font-bold text-[#3D405B]">
+                  Term Fee Components
+                </span>
+                <span className="text-[10px] font-semibold text-slate-500">
+                  AY 2024-25 (TERM II)
+                </span>
+              </div>
+
+              <div className="divide-y divide-slate-100 text-xs font-sans">
+                <div className="flex items-center justify-between py-1.5 text-slate-600">
+                  <span>Tuition &amp; Instruction Base</span>
+                  <span className="font-mono font-semibold text-slate-800">
+                    ₹{selectedStudent.components.tuition.toLocaleString("en-IN")}
+                  </span>
+                </div>
+                <div className="flex items-center justify-between py-1.5 text-slate-600">
+                  <span>Advanced Compute &amp; Lab Access</span>
+                  <span className="font-mono font-semibold text-slate-800">
+                    ₹{selectedStudent.components.lab.toLocaleString("en-IN")}
+                  </span>
+                </div>
+                <div className="flex items-center justify-between py-1.5 text-slate-600">
+                  <span>Central Library &amp; Exam Fee</span>
+                  <span className="font-mono font-semibold text-slate-800">
+                    ₹{selectedStudent.components.libraryExam.toLocaleString("en-IN")}
+                  </span>
+                </div>
+                <div className="flex items-center justify-between py-1.5 text-slate-600">
+                  <span>Campus Amenities &amp; Sports</span>
+                  <span className="font-mono font-semibold text-slate-800">
+                    ₹{selectedStudent.components.amenities.toLocaleString("en-IN")}
+                  </span>
+                </div>
+
+                <div className="flex items-center justify-between py-2 bg-slate-50 px-3 rounded-lg font-bold text-[#3D405B] mt-1">
+                  <span>Gross Academic Assessment</span>
+                  <span className="font-mono">₹{selectedStudent.totalFee.toLocaleString("en-IN")}</span>
+                </div>
+
+                {selectedStudent.concessionAmount > 0 && (
+                  <div className="flex items-center justify-between py-2 px-3 bg-amber-50 rounded-lg text-amber-900 font-semibold mt-1">
+                    <div className="flex flex-col">
+                      <span className="text-xs">Institutional Concession</span>
+                      <span className="text-[10px] text-amber-700">{selectedStudent.concessionTag}</span>
+                    </div>
+                    <span className="font-mono">
+                      -₹{selectedStudent.concessionAmount.toLocaleString("en-IN")}
+                    </span>
+                  </div>
+                )}
+
+                <div className="flex items-center justify-between py-2.5 px-3 bg-[#3D405B] text-white rounded-xl font-bold mt-2">
+                  <span className="text-xs uppercase tracking-wider">Net Payable Obligation</span>
+                  <span className="text-base font-mono">
+                    ₹{selectedStudent.netPayable.toLocaleString("en-IN")}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Tranche / Installment Timeline */}
+            <div className="space-y-2 pt-1">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold text-[#3D405B]">
+                  Installment Tranches
+                </span>
+                <span className="text-[10px] text-slate-500 font-semibold">
+                  {selectedStudent.tranches.length} Scheduled
+                </span>
+              </div>
+
+              <div className="space-y-2">
+                {selectedStudent.tranches.map((tranche, idx) => (
+                  <div
+                    key={idx}
+                    className={`p-2.5 rounded-xl border flex items-center justify-between text-xs ${
+                      tranche.status === "Paid"
+                        ? "bg-slate-50 border-slate-200"
+                        : "bg-rose-50/70 border-rose-200"
+                    }`}
+                  >
+                    <div className="flex items-center gap-2.5">
+                      {tranche.status === "Paid" ? (
+                        <CheckCircle2 className="h-4 w-4 text-emerald-600 shrink-0" />
+                      ) : (
+                        <Clock className="h-4 w-4 text-rose-600 shrink-0" />
+                      )}
+                      <div>
+                        <span
+                          className={`font-bold block ${
+                            tranche.status === "Paid" ? "text-slate-800" : "text-rose-700"
+                          }`}
+                        >
+                          {tranche.title}: ₹{tranche.amount.toLocaleString("en-IN")}
+                        </span>
+                        <span className="text-[10px] text-slate-500 block">
+                          {tranche.status === "Paid"
+                            ? `Txn #${tranche.txnId} &bull; ${tranche.mode}`
+                            : `Due Date: ${tranche.date}`}
+                        </span>
+                      </div>
+                    </div>
+                    <span
+                      className={`px-2 py-0.5 text-[10px] font-bold rounded-full ${
+                        tranche.status === "Paid"
+                          ? "bg-emerald-100 text-emerald-800"
+                          : "bg-rose-100 text-rose-800"
+                      }`}
+                    >
+                      {tranche.status}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* CTA Button Cluster */}
+            <div className="space-y-2 pt-2 border-t border-slate-100">
+              {selectedStudent.pendingAmount > 0 ? (
+                <Link
+                  href={`/accountant/record-payment?roll=${selectedStudent.roll}`}
+                  className="w-full py-2.5 bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold rounded-xl flex items-center justify-center gap-2 shadow-xs transition-all"
+                >
+                  <CreditCard className="h-4 w-4" />
+                  <span>Receive Pending (₹{selectedStudent.pendingAmount.toLocaleString("en-IN")})</span>
+                </Link>
+              ) : (
+                <button
+                  disabled
+                  className="w-full py-2.5 bg-emerald-50 text-emerald-700 text-xs font-bold rounded-xl flex items-center justify-center gap-2 border border-emerald-200 cursor-not-allowed"
+                >
+                  <CheckCircle2 className="h-4 w-4 text-emerald-600" />
+                  <span>Fee Fully Cleared (No Dues)</span>
                 </button>
-                <button className="px-2.5 py-0.5 bg-primary text-on-primary font-bold rounded-xs">1</button>
-                <button className="px-2.5 py-0.5 bg-surface-container-lowest text-on-surface hover:bg-surface-container rounded-xs">
-                  2
+              )}
+
+              <div className="grid grid-cols-2 gap-2">
+                <button
+                  onClick={() => setIsLedgerModalOpen(true)}
+                  className="py-2 bg-slate-50 hover:bg-slate-100 text-slate-700 text-xs font-semibold rounded-xl border border-slate-200 flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+                >
+                  <Printer className="h-3.5 w-3.5 text-slate-500" />
+                  <span>Ledger PDF</span>
                 </button>
-                <button className="px-2.5 py-0.5 bg-surface-container-lowest text-on-surface hover:bg-surface-container rounded-xs">
-                  3
-                </button>
-                <span className="px-1 text-outline">...</span>
-                <button className="px-2.5 py-0.5 bg-surface-container-lowest text-on-surface hover:bg-surface-container rounded-xs">
-                  231
-                </button>
-                <button className="px-2 py-0.5 bg-surface-container-lowest text-primary hover:bg-surface-container font-bold rounded-xs">
-                  NEXT
+                <button
+                  onClick={() => setReminderModalStudent(selectedStudent)}
+                  className="py-2 bg-slate-50 hover:bg-slate-100 text-slate-700 text-xs font-semibold rounded-xl border border-slate-200 flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+                >
+                  <Mail className="h-3.5 w-3.5 text-amber-600" />
+                  <span>Send Alert</span>
                 </button>
               </div>
             </div>
           </div>
 
-          {/* Right Side Inspection Drawer: Deep Dive Ledger for Selected Student (4 cols on XL) */}
-          <div className="xl:col-span-4 flex flex-col gap-4">
-            {/* Active Student Dossier Card */}
-            <div className="bg-surface-container-lowest p-4 border border-[#cbd5e1] shadow-xs relative overflow-hidden rounded-sm flex flex-col gap-3">
-              <div className="absolute top-0 left-0 right-0 h-1 bg-primary"></div>
-
-              {/* Header with Inspection ID */}
-              <div className="flex items-start justify-between pb-2 border-b border-[#cbd5e1]">
-                <div className="flex gap-2.5">
-                  <div className="w-11 h-11 bg-primary text-on-primary flex items-center justify-center font-bold text-sm rounded-xs">
-                    {selectedStudent.avatar}
-                  </div>
-                  <div className="flex flex-col">
-                    <span className="text-base font-bold text-primary leading-tight font-sans">
-                      {selectedStudent.name}
-                    </span>
-                    <span className="font-mono text-xs text-secondary font-bold">
-                      {selectedStudent.roll}
-                    </span>
-                    <span className="font-mono text-on-surface-variant text-[11px]">
-                      {selectedStudent.course} • {selectedStudent.semester}
-                    </span>
-                  </div>
-                </div>
-                <span
-                  className={`px-2 py-0.5 font-mono text-[10px] font-bold uppercase rounded-xs ${
-                    selectedStudent.status === "Cleared"
-                      ? "bg-tertiary-fixed text-on-tertiary-fixed"
-                      : selectedStudent.status === "Partial"
-                      ? "bg-secondary-fixed text-on-secondary-fixed-variant"
-                      : "bg-error text-on-error"
-                  }`}
-                >
-                  {selectedStudent.status}
-                </span>
+          {/* Counter Audit Node Card */}
+          <div className="bg-[#3D405B] text-white p-5 rounded-2xl shadow-xs space-y-2">
+            <div className="flex items-center justify-between pb-2 border-b border-slate-600">
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></span>
+                <span className="text-xs font-bold">Counter Till #02 Active</span>
               </div>
-
-              {/* Meta Chips */}
-              <div className="grid grid-cols-2 gap-2 bg-surface-container-low p-2 rounded-xs font-mono text-xs">
-                <div className="flex flex-col">
-                  <span className="text-[10px] uppercase text-outline font-bold">Academic Advisor</span>
-                  <span className="text-on-surface font-semibold text-[11px] truncate">
-                    {selectedStudent.advisor}
-                  </span>
-                </div>
-                <div className="flex flex-col">
-                  <span className="text-[10px] uppercase text-outline font-bold">Contact Tel</span>
-                  <span className="text-on-surface font-semibold text-[11px]">
-                    {selectedStudent.phone}
-                  </span>
-                </div>
-              </div>
-
-              {/* Detailed Fee Component Breakdown Matrix */}
-              <div className="flex flex-col gap-1">
-                <div className="flex items-center justify-between pb-1">
-                  <span className="text-xs font-mono uppercase tracking-wider text-primary font-bold">
-                    Term Fee Components
-                  </span>
-                  <span className="font-mono text-secondary text-[10px] font-bold">AY 2024-25 (TERM II)</span>
-                </div>
-                <div className="flex flex-col divide-y divide-surface-container font-mono text-xs">
-                  <div className="flex items-center justify-between py-1 text-[11px]">
-                    <span className="text-on-surface-variant">Tuition &amp; Instruction Base</span>
-                    <span className="text-on-surface font-semibold">
-                      ₹{selectedStudent.components.tuition.toLocaleString("en-IN")}
-                    </span>
-                  </div>
-                  <div className="flex items-center justify-between py-1 text-[11px]">
-                    <span className="text-on-surface-variant">Advanced Compute &amp; Lab Access</span>
-                    <span className="text-on-surface font-semibold">
-                      ₹{selectedStudent.components.lab.toLocaleString("en-IN")}
-                    </span>
-                  </div>
-                  <div className="flex items-center justify-between py-1 text-[11px]">
-                    <span className="text-on-surface-variant">Central Library &amp; Exam Fee</span>
-                    <span className="text-on-surface font-semibold">
-                      ₹{selectedStudent.components.libraryExam.toLocaleString("en-IN")}
-                    </span>
-                  </div>
-                  <div className="flex items-center justify-between py-1 text-[11px]">
-                    <span className="text-on-surface-variant">Campus Amenities &amp; Union</span>
-                    <span className="text-on-surface font-semibold">
-                      ₹{selectedStudent.components.amenities.toLocaleString("en-IN")}
-                    </span>
-                  </div>
-                  <div className="flex items-center justify-between py-1.5 bg-surface-container-low px-2 rounded-xs font-bold text-primary">
-                    <span>Gross Academic Assessment</span>
-                    <span>₹{selectedStudent.totalFee.toLocaleString("en-IN")}</span>
-                  </div>
-                  {selectedStudent.concessionAmount > 0 && (
-                    <div className="flex items-center justify-between py-1.5 px-2 bg-surface-container rounded-xs">
-                      <div className="flex flex-col">
-                        <span className="text-secondary font-bold text-[11px]">Institutional Concession</span>
-                        <span className="text-[9px] text-on-surface-variant">{selectedStudent.concessionTag}</span>
-                      </div>
-                      <span className="text-secondary font-bold">
-                        -₹{selectedStudent.concessionAmount.toLocaleString("en-IN")}
-                      </span>
-                    </div>
-                  )}
-                  <div className="flex items-center justify-between py-2 px-2 bg-surface-container-high font-bold text-primary rounded-xs">
-                    <span className="text-xs uppercase tracking-wider">Net Payable Obligation</span>
-                    <span className="text-base font-mono">
-                      ₹{selectedStudent.netPayable.toLocaleString("en-IN")}
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Tranche / Installment Timeline & Audit Record */}
-              <div className="flex flex-col gap-1.5 mt-1">
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-mono uppercase tracking-wider text-primary font-bold">
-                    Installment Tranche Schedule
-                  </span>
-                  <span className="font-mono text-secondary text-[10px] font-bold">
-                    {selectedStudent.tranches.length} Planned
-                  </span>
-                </div>
-                <div className="flex flex-col gap-1.5 font-mono text-xs">
-                  {selectedStudent.tranches.map((tranche, idx) => (
-                    <div
-                      key={idx}
-                      className={`p-2 rounded-xs flex items-center justify-between border ${
-                        tranche.status === "Paid"
-                          ? "bg-surface-container-low border-[#cbd5e1]"
-                          : "bg-error-container/30 border-error/30"
-                      }`}
-                    >
-                      <div className="flex items-center gap-2">
-                        {tranche.status === "Paid" ? (
-                          <CheckCircle2 className="h-4 w-4 text-[#047857]" />
-                        ) : (
-                          <Clock className="h-4 w-4 text-error" />
-                        )}
-                        <div className="flex flex-col">
-                          <span
-                            className={`font-bold text-[11px] ${
-                              tranche.status === "Paid" ? "text-on-surface" : "text-error"
-                            }`}
-                          >
-                            {tranche.title}: ₹{tranche.amount.toLocaleString("en-IN")}
-                          </span>
-                          <span className="text-[10px] text-secondary">
-                            {tranche.status === "Paid"
-                              ? `Txn #${tranche.txnId} • Paid via ${tranche.mode}`
-                              : `DUE DATE: ${tranche.date}`}
-                          </span>
-                        </div>
-                      </div>
-                      <span
-                        className={`px-1.5 py-0.5 text-[9px] font-bold uppercase rounded-xs ${
-                          tranche.status === "Paid"
-                            ? "bg-[#ecfdf5] text-[#047857]"
-                            : "bg-error text-on-error"
-                        }`}
-                      >
-                        {tranche.status}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* CTA Button Cluster */}
-              <div className="flex flex-col gap-2 pt-2 border-t border-[#cbd5e1]">
-                {selectedStudent.pendingAmount > 0 ? (
-                  <Link
-                    href={`/accountant/record-payment?roll=${selectedStudent.roll}`}
-                    className="w-full py-2 bg-primary text-on-primary font-mono text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 hover:bg-primary-container shadow-xs transition-colors rounded-xs"
-                  >
-                    <CreditCard className="h-4 w-4 text-secondary-container" />
-                    <span>Receive Pending (₹{selectedStudent.pendingAmount.toLocaleString("en-IN")})</span>
-                  </Link>
-                ) : (
-                  <button
-                    disabled
-                    className="w-full py-2 bg-surface-container text-on-surface-variant font-mono text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 rounded-xs cursor-not-allowed opacity-75"
-                  >
-                    <CheckCircle2 className="h-4 w-4 text-[#047857]" />
-                    <span>Fee Fully Cleared (No Dues)</span>
-                  </button>
-                )}
-
-                <div className="grid grid-cols-2 gap-2">
-                  <button
-                    onClick={() => setIsLedgerModalOpen(true)}
-                    className="w-full py-1.5 bg-surface-container text-on-surface hover:bg-surface-container-high font-mono text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-1 rounded-xs border border-[#cbd5e1] cursor-pointer"
-                  >
-                    <Printer className="h-3.5 w-3.5" />
-                    <span>Full Ledger PDF</span>
-                  </button>
-                  <button
-                    onClick={() => handleSendReminder(selectedStudent)}
-                    className="w-full py-1.5 bg-surface-container text-on-surface hover:bg-surface-container-high font-mono text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-1 rounded-xs border border-[#cbd5e1] cursor-pointer"
-                  >
-                    <Mail className="h-3.5 w-3.5 text-secondary" />
-                    <span>Send Reminder</span>
-                  </button>
-                </div>
-              </div>
+              <span className="text-[10px] uppercase font-bold text-amber-300">
+                Staff ID: EMP-FIN-309
+              </span>
             </div>
-
-            {/* Counter Audit Node Card */}
-            <div className="bg-surface-container-lowest p-4 border border-[#cbd5e1] shadow-xs rounded-sm flex flex-col gap-2">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-1.5">
-                  <span className="w-2 h-2 bg-secondary inline-block rounded-xs animate-pulse"></span>
-                  <span className="font-mono text-xs uppercase tracking-wider text-primary font-bold">
-                    Counter Audit #02 Node
-                  </span>
-                </div>
-                <span className="font-mono text-secondary text-[10px] font-bold">ACTIVE OPERATOR</span>
-              </div>
-              <div className="font-mono text-[11px] text-on-surface-variant leading-relaxed">
-                Logged Operator: <strong className="text-on-surface">Rajesh Kumar (Bursar)</strong>
-                <br />
-                Session Collected Today: <strong className="text-primary font-bold">₹3,85,000 (24 Receipts)</strong>
-                <br />
-                Next Scheduled Vault Handover: <span className="text-secondary font-bold">17:00 IST</span>
-              </div>
+            <div className="text-xs text-slate-300 space-y-1">
+              <div>Operator: <strong className="text-white">Rajesh Kumar (Chief Cashier)</strong></div>
+              <div>Today&apos;s Realized: <strong className="text-emerald-400 font-mono font-bold">₹3,85,000 (24 Receipts)</strong></div>
+              <div className="text-[11px] text-slate-400">Vault Transfer Cutoff: <strong className="text-slate-200">17:00 IST</strong></div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* MODAL: Full Ledger Statement Preview Modal */}
+      {/* MODAL 1: Full Ledger Statement Preview Modal */}
       {isLedgerModalOpen && (
-        <div className="fixed inset-0 z-50 bg-[#3D405B]/60 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-surface-container-lowest max-w-xl w-full border-2 border-primary shadow-2xl p-6 flex flex-col gap-4 animate-in fade-in zoom-in-95 duration-150">
-            <div className="flex items-start justify-between border-b border-[#cbd5e1] pb-3">
-              <div className="flex items-center gap-2.5">
-                <div className="h-10 w-10 bg-primary text-secondary-container font-bold flex items-center justify-center rounded-xs">
-                  <Table className="h-5 w-5" />
+        <div className="fixed inset-0 z-50 bg-[#3D405B]/50 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4">
+          <div className="bg-white max-w-xl w-full rounded-2xl border border-slate-200 shadow-2xl p-5 sm:p-6 flex flex-col gap-4 animate-in fade-in zoom-in-95 duration-150">
+            <div className="flex items-start justify-between border-b border-slate-100 pb-3">
+              <div className="flex items-center gap-3">
+                <div className="h-10 w-10 bg-amber-100 text-amber-800 font-bold flex items-center justify-center rounded-xl">
+                  <Table className="h-5 w-5 text-amber-700" />
                 </div>
                 <div>
-                  <h3 className="text-base font-bold uppercase text-primary">Student Ledger Statement</h3>
-                  <span className="font-mono text-xs text-secondary font-bold">
-                    {selectedStudent.name} • {selectedStudent.roll}
+                  <h3 className="text-base font-bold text-[#3D405B]">
+                    Student Ledger Statement
+                  </h3>
+                  <span className="text-xs text-blue-600 font-mono font-semibold">
+                    {selectedStudent.name} &bull; {selectedStudent.roll}
                   </span>
                 </div>
               </div>
               <button
                 onClick={() => setIsLedgerModalOpen(false)}
-                className="text-outline hover:text-primary p-1 cursor-pointer"
+                className="text-slate-400 hover:text-slate-700 p-1 rounded-lg cursor-pointer"
               >
                 <X className="h-5 w-5" />
               </button>
             </div>
 
-            <div className="p-4 bg-surface-container-low border border-[#cbd5e1] rounded-xs font-mono text-xs space-y-3">
-              <div className="text-center border-b border-[#cbd5e1] pb-2">
-                <span className="font-headline text-sm font-bold text-primary uppercase block">
-                  Apex Institute of Technology
+            <div className="p-4 bg-slate-50 border border-slate-200 rounded-xl text-xs space-y-3">
+              <div className="text-center border-b border-slate-200 pb-2.5">
+                <span className="text-sm font-bold text-[#3D405B] block">
+                  Apex Institute of Technology &amp; Management
                 </span>
-                <span className="text-[10px] text-on-surface-variant block">
-                  Official Bursar Ledger Statement • Academic Year 2024-25
+                <span className="text-[11px] text-slate-500 block">
+                  Official Bursar Ledger Statement &bull; Academic Year 2024-25
                 </span>
               </div>
 
-              <div className="grid grid-cols-2 gap-2 text-[11px]">
+              <div className="grid grid-cols-2 gap-3 text-xs">
                 <div>
-                  <span className="text-outline block text-[9px] uppercase">Candidate:</span>
-                  <span className="font-bold text-primary">{selectedStudent.name}</span>
+                  <span className="text-slate-400 block text-[10px]">Candidate:</span>
+                  <span className="font-bold text-[#3D405B]">{selectedStudent.name}</span>
                 </div>
                 <div>
-                  <span className="text-outline block text-[9px] uppercase">Roll / Enrolment:</span>
-                  <span className="font-bold text-secondary">{selectedStudent.roll}</span>
+                  <span className="text-slate-400 block text-[10px]">Roll / Enrolment:</span>
+                  <span className="font-bold text-blue-600 font-mono">{selectedStudent.roll}</span>
                 </div>
                 <div>
-                  <span className="text-outline block text-[9px] uppercase">Programme:</span>
-                  <span>{selectedStudent.course}</span>
+                  <span className="text-slate-400 block text-[10px]">Programme:</span>
+                  <span className="text-slate-700">{selectedStudent.course}</span>
                 </div>
                 <div>
-                  <span className="text-outline block text-[9px] uppercase">Current Standing:</span>
-                  <span className="font-bold text-primary">{selectedStudent.status}</span>
+                  <span className="text-slate-400 block text-[10px]">Current Status:</span>
+                  <span className="font-bold text-[#3D405B]">{selectedStudent.status}</span>
                 </div>
               </div>
 
-              <div className="border border-[#cbd5e1] p-3 bg-surface-container-lowest rounded-xs space-y-1.5 text-xs">
-                <div className="flex justify-between">
+              <div className="border border-slate-200 p-3 bg-white rounded-xl space-y-2 text-xs">
+                <div className="flex justify-between text-slate-600">
                   <span>Gross Tuition &amp; Lab Levy:</span>
-                  <span className="font-bold">₹{selectedStudent.totalFee.toLocaleString("en-IN")}</span>
+                  <span className="font-mono font-bold text-slate-800">
+                    ₹{selectedStudent.totalFee.toLocaleString("en-IN")}
+                  </span>
                 </div>
-                <div className="flex justify-between text-secondary">
+                <div className="flex justify-between text-amber-800 font-semibold">
                   <span>Concessions Applied:</span>
-                  <span className="font-bold">-₹{selectedStudent.concessionAmount.toLocaleString("en-IN")}</span>
+                  <span className="font-mono">
+                    -₹{selectedStudent.concessionAmount.toLocaleString("en-IN")}
+                  </span>
                 </div>
-                <div className="flex justify-between border-t border-[#cbd5e1] pt-1 font-bold">
+                <div className="flex justify-between border-t border-slate-200 pt-1.5 font-bold text-[#3D405B]">
                   <span>Net Assessed Demand:</span>
-                  <span>₹{selectedStudent.netPayable.toLocaleString("en-IN")}</span>
+                  <span className="font-mono">₹{selectedStudent.netPayable.toLocaleString("en-IN")}</span>
                 </div>
-                <div className="flex justify-between text-[#047857]">
+                <div className="flex justify-between text-emerald-700 font-semibold">
                   <span>Total Amount Realized:</span>
-                  <span className="font-bold">₹{selectedStudent.paidAmount.toLocaleString("en-IN")}</span>
+                  <span className="font-mono">₹{selectedStudent.paidAmount.toLocaleString("en-IN")}</span>
                 </div>
-                <div className="flex justify-between border-t border-[#cbd5e1] pt-1 text-error font-bold">
+                <div className="flex justify-between border-t border-slate-200 pt-1.5 text-rose-600 font-bold">
                   <span>Outstanding Dues Balance:</span>
-                  <span>₹{selectedStudent.pendingAmount.toLocaleString("en-IN")}</span>
+                  <span className="font-mono">₹{selectedStudent.pendingAmount.toLocaleString("en-IN")}</span>
                 </div>
               </div>
             </div>
 
-            <div className="flex justify-end gap-2 pt-2 border-t border-[#cbd5e1]">
+            <div className="flex justify-end gap-2.5 pt-2 border-t border-slate-100">
               <button
                 onClick={() => setIsLedgerModalOpen(false)}
-                className="px-4 py-2 border border-[#cbd5e1] text-xs font-mono font-bold uppercase hover:bg-surface-container"
+                className="px-4 py-2 border border-slate-200 text-xs font-semibold text-slate-700 hover:bg-slate-100 rounded-xl transition-colors cursor-pointer"
               >
                 Close
               </button>
               <button
                 onClick={() => {
-                  showToast("Cryptographically signed Student Ledger Statement PDF downloaded!");
-                  setIsLedgerModalOpen(false);
+                  showToast("Student Ledger Statement sent to counter printer!");
+                  window.print();
                 }}
-                className="px-4 py-2 bg-primary text-on-primary text-xs font-mono font-bold uppercase tracking-wider flex items-center gap-1.5 hover:bg-primary-container"
+                className="px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold rounded-xl flex items-center gap-1.5 transition-all shadow-xs cursor-pointer"
               >
-                <Download className="h-4 w-4" />
-                <span>Download Official Statement PDF</span>
+                <Printer className="h-4 w-4" />
+                <span>Print Ledger Statement</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* MODAL 2: Send Reminder Alert Modal */}
+      {reminderModalStudent && (
+        <div className="fixed inset-0 z-50 bg-[#3D405B]/50 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4">
+          <div className="bg-white max-w-md w-full rounded-2xl border border-slate-200 shadow-2xl p-5 sm:p-6 flex flex-col gap-4 animate-in fade-in zoom-in-95 duration-150">
+            <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+              <div className="flex items-center gap-2.5">
+                <Mail className="w-5 h-5 text-amber-600" />
+                <h3 className="text-base font-bold text-[#3D405B]">
+                  Send Fee Clearance Alert
+                </h3>
+              </div>
+              <button
+                onClick={() => setReminderModalStudent(null)}
+                className="p-1 hover:bg-slate-100 rounded-lg text-slate-400 hover:text-slate-700 transition-colors cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="p-3.5 bg-slate-50 rounded-xl border border-slate-200 text-xs space-y-1.5">
+              <div className="flex justify-between">
+                <span className="text-slate-500">Student:</span>
+                <span className="font-bold text-[#3D405B]">
+                  {reminderModalStudent.name} ({reminderModalStudent.roll})
+                </span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-slate-500">Guardian Contact:</span>
+                <span className="text-slate-700 font-medium">
+                  {reminderModalStudent.guardian}
+                </span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-slate-500">Pending Dues:</span>
+                <span className="font-bold text-rose-600 font-mono">
+                  ₹{reminderModalStudent.pendingAmount.toLocaleString("en-IN")}
+                </span>
+              </div>
+            </div>
+
+            <div className="p-3 bg-amber-50 rounded-xl border border-amber-200 text-xs text-amber-900 leading-relaxed">
+              <span className="font-bold block mb-1">Notice Template Preview:</span>
+              &ldquo;Dear Student/Parent, a pending fee balance of INR ₹{reminderModalStudent.pendingAmount.toLocaleString("en-IN")} is registered for {reminderModalStudent.name}. Please settle before the upcoming term assessment cutoff. — Apex Bursar Directorate&rdquo;
+            </div>
+
+            <div className="flex justify-end gap-2.5 pt-2 border-t border-slate-100">
+              <button
+                onClick={() => setReminderModalStudent(null)}
+                className="px-4 py-2 border border-slate-200 text-xs font-semibold text-slate-700 hover:bg-slate-100 rounded-xl transition-colors cursor-pointer"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={() => {
+                  showToast(
+                    `Fee reminder notification sent to ${reminderModalStudent.name} and parent!`
+                  );
+                  setReminderModalStudent(null);
+                }}
+                className="px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold rounded-xl flex items-center gap-1.5 transition-all shadow-xs cursor-pointer"
+              >
+                <Send className="w-3.5 h-3.5" />
+                <span>Dispatch Reminder</span>
               </button>
             </div>
           </div>
@@ -1103,4 +1300,3 @@ export default function StudentFeeDetailsPage() {
     </div>
   );
 }
-
