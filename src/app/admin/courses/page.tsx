@@ -6,7 +6,7 @@ import {
   BookOpen,
   Layers,
   Award,
-  DollarSign,
+  IndianRupee,
   Search,
   Plus,
   Download,
@@ -63,8 +63,8 @@ const initialCourses: Course[] = [
     duration: "4 Yrs (8 Sems)",
     semesters: 8,
     credits: 160,
-    tuitionYear: 8500,
-    totalTuition: 34000,
+    tuitionYear: 185000,
+    totalTuition: 740000,
     batches: 8,
     subjectsCount: 42,
     status: "Active",
@@ -78,8 +78,8 @@ const initialCourses: Course[] = [
     duration: "4 Yrs (8 Sems)",
     semesters: 8,
     credits: 164,
-    tuitionYear: 9200,
-    totalTuition: 36800,
+    tuitionYear: 210000,
+    totalTuition: 840000,
     batches: 4,
     subjectsCount: 38,
     status: "Active",
@@ -93,8 +93,8 @@ const initialCourses: Course[] = [
     duration: "2 Yrs (4 Sems)",
     semesters: 4,
     credits: 90,
-    tuitionYear: 12500,
-    totalTuition: 25000,
+    tuitionYear: 275000,
+    totalTuition: 550000,
     batches: 3,
     subjectsCount: 26,
     status: "Active",
@@ -108,8 +108,8 @@ const initialCourses: Course[] = [
     duration: "4 Yrs (8 Sems)",
     semesters: 8,
     credits: 158,
-    tuitionYear: 7800,
-    totalTuition: 31200,
+    tuitionYear: 165000,
+    totalTuition: 660000,
     batches: 6,
     subjectsCount: 40,
     status: "Active",
@@ -123,8 +123,8 @@ const initialCourses: Course[] = [
     duration: "2 Yrs (4 Sems)",
     semesters: 4,
     credits: 84,
-    tuitionYear: 6900,
-    totalTuition: 13800,
+    tuitionYear: 140000,
+    totalTuition: 280000,
     batches: 2,
     subjectsCount: 22,
     status: "Active",
@@ -138,8 +138,8 @@ const initialCourses: Course[] = [
     duration: "4 Yrs (8 Sems)",
     semesters: 8,
     credits: 150,
-    tuitionYear: 8200,
-    totalTuition: 32800,
+    tuitionYear: 195000,
+    totalTuition: 780000,
     batches: 3,
     subjectsCount: 32,
     status: "Pending Rev",
@@ -250,7 +250,7 @@ export default function CoursesPage() {
   const [newCourseDept, setNewCourseDept] = useState("Dept of Computing & IT");
   const [newCourseDuration, setNewCourseDuration] = useState("4 Yrs (8 Sems)");
   const [newCourseCredits, setNewCourseCredits] = useState(160);
-  const [newCourseTuition, setNewCourseTuition] = useState(8500);
+  const [newCourseTuition, setNewCourseTuition] = useState(185000);
   const [newCourseCategory, setNewCourseCategory] = useState<Course["category"]>("Eng & Tech");
 
   const showToast = (msg: string) => {
@@ -518,16 +518,16 @@ export default function CoursesPage() {
               Tuition Benchmark
             </span>
             <div className="w-10 h-10 rounded-xl bg-indigo-50/80 border border-indigo-100 text-indigo-600 flex items-center justify-center shrink-0">
-              <DollarSign className="w-5 h-5" />
+              <IndianRupee className="w-5 h-5" />
             </div>
           </div>
           <div className="mt-3.5">
-            <div className="text-2xl font-bold text-[#3D405B] tracking-tight">$4.2K - $12.5K</div>
+            <div className="text-2xl font-bold text-[#3D405B] tracking-tight">₹1.40L - ₹2.75L</div>
             <div className="flex items-center gap-1.5 text-xs text-slate-500 mt-1">
               <span className="inline-flex items-center text-indigo-600 font-semibold">
                 100% Configured
               </span>
-              <span>Avg: $6,400/yr</span>
+              <span>Avg: ₹1.95L / yr</span>
             </div>
           </div>
         </div>
@@ -675,10 +675,10 @@ export default function CoursesPage() {
                         </td>
                         <td className="py-3 px-4">
                           <span className="font-mono font-semibold text-[#3D405B] block">
-                            ${c.tuitionYear.toLocaleString()}
+                            ₹{c.tuitionYear.toLocaleString("en-IN")}
                           </span>
                           <span className="text-[10px] text-slate-400 block font-mono">
-                            Tot: ${c.totalTuition.toLocaleString()}
+                            Tot: ₹{c.totalTuition.toLocaleString("en-IN")}
                           </span>
                         </td>
                         <td className="py-3 px-4 font-mono text-slate-700">
@@ -807,7 +807,7 @@ export default function CoursesPage() {
               </h2>
               <div className="flex items-center justify-between text-xs text-slate-300 pt-0.5">
                 <span>Duration: <strong className="text-white font-mono">{selectedCourse.duration}</strong></span>
-                <span>Total Fees: <strong className="text-white font-mono">${selectedCourse.totalTuition.toLocaleString()}</strong></span>
+                <span>Total Fees: <strong className="text-white font-mono">₹{selectedCourse.totalTuition.toLocaleString("en-IN")}</strong></span>
               </div>
             </div>
 
@@ -1132,7 +1132,7 @@ export default function CoursesPage() {
                 </div>
                 <div className="flex flex-col gap-1.5">
                   <label className="font-bold text-slate-700 uppercase text-[10px]">
-                    Tuition Fee Per Annum ($)
+                    Tuition Fee Per Annum (₹)
                   </label>
                   <input
                     type="number"
