@@ -7,7 +7,7 @@ import {
   CreditCard,
   QrCode,
   DollarSign,
-  Building,
+  Building2,
   CheckCircle2,
   AlertTriangle,
   Receipt,
@@ -24,7 +24,11 @@ import {
   Sparkles,
   Phone,
   Mail,
-  GraduationCap
+  GraduationCap,
+  Calendar,
+  Coins,
+  Download,
+  Check,
 } from "lucide-react";
 
 interface StudentProfile {
@@ -111,6 +115,17 @@ const mockStudentProfiles: Record<string, StudentProfile> = {
   },
 };
 
+interface CounterTxn {
+  time: string;
+  receiptNo: string;
+  studentName: string;
+  roll: string;
+  course: string;
+  mode: string;
+  amount: number;
+  status: string;
+}
+
 function RecordPaymentContent() {
   const searchParams = useSearchParams();
   const initialRoll = searchParams.get("roll") || "APX-2023-CS-042";
@@ -171,9 +186,10 @@ function RecordPaymentContent() {
   // Modals and Toasts
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const [generatedReceipt, setGeneratedReceipt] = useState<CounterTxn | null>(null);
 
   // Recent counter transactions state
-  const [recentBatch, setRecentBatch] = useState([
+  const [recentBatch, setRecentBatch] = useState<CounterTxn[]>([
     {
       time: "14:12:08",
       receiptNo: "REC-2025-0842",
@@ -200,7 +216,7 @@ function RecordPaymentContent() {
       studentName: "Tanvi Deshmukh",
       roll: "APX-2021-ME-055",
       course: "B.Tech Mech • Sem VIII",
-      mode: "POS #04",
+      mode: "POS Card",
       amount: 18500,
       status: "POSTED & VERIFIED",
     },
@@ -226,7 +242,7 @@ function RecordPaymentContent() {
     setIsConfirmModalOpen(false);
 
     // Create new receipt record
-    const newReceipt = {
+    const newReceipt: CounterTxn = {
       time: new Date().toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit", second: "2-digit" }),
       receiptNo: "REC-2025-0843",
       studentName: currentStudent.name,
@@ -247,929 +263,1050 @@ function RecordPaymentContent() {
     };
 
     setRecentBatch([newReceipt, ...recentBatch]);
+    setGeneratedReceipt(newReceipt);
     showToast(
-      `Payment of ₹${paymentAmount.toLocaleString("en-IN")} successfully registered! Receipt #REC-2025-0843 generated & sent via SMS.`
+      `Payment of ₹${paymentAmount.toLocaleString("en-IN")} successfully posted! Receipt #REC-2025-0843 generated.`
     );
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-surface">
+    <div className="p-4 sm:p-6 md:p-8 space-y-6 max-w-[1600px] mx-auto font-sans text-slate-800">
       {/* Toast Notification */}
       {toastMessage && (
-        <div className="fixed bottom-6 right-6 z-50 bg-primary text-on-primary px-4 py-3 rounded shadow-xl flex items-center gap-3 border border-secondary text-xs uppercase tracking-wider font-semibold animate-in fade-in slide-in-from-bottom-3 duration-200">
-          <CheckCircle2 className="h-4 w-4 text-[#047857]" />
+        <div className="fixed bottom-6 right-6 z-50 bg-[#3D405B] text-white px-5 py-3.5 rounded-2xl shadow-2xl flex items-center gap-3 border border-slate-600 text-xs sm:text-sm font-semibold animate-in slide-in-from-bottom duration-200">
+          <CheckCircle2 className="h-5 w-5 text-emerald-400 shrink-0" />
           <span>{toastMessage}</span>
-          <button onClick={() => setToastMessage(null)} className="ml-2 hover:opacity-75">
-            <X className="h-3.5 w-3.5" />
+          <button
+            onClick={() => setToastMessage(null)}
+            className="ml-2 text-slate-400 hover:text-white p-1 rounded-lg"
+          >
+            <X className="h-4 w-4" />
           </button>
         </div>
       )}
 
-      {/* Main Container */}
-      <div className="p-6 flex flex-col gap-6">
-        {/* Operational Breadcrumbs & Global State Header */}
-        <div className="flex flex-col gap-2 bg-surface-container-lowest p-4 border border-[#cbd5e1] shadow-xs rounded-sm">
-          <div className="flex flex-wrap items-center justify-between gap-2">
-            <div className="flex items-center gap-1.5 font-mono text-xs text-secondary uppercase tracking-wider">
-              <Link href="/accountant" className="hover:text-primary transition-colors">
-                Accounts &amp; Bursar Portal
+      {/* Operational Header Banner */}
+      <div className="bg-white rounded-2xl p-5 sm:p-6 md:p-7 border border-slate-200 shadow-xs relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-96 h-full bg-gradient-to-l from-amber-50/70 via-blue-50/40 to-transparent pointer-events-none"></div>
+
+        <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+          <div className="space-y-2">
+            <div className="flex items-center gap-2 text-xs text-slate-500 font-medium">
+              <Link href="/accountant" className="text-amber-700 hover:underline">
+                Accounts Directorate
               </Link>
-              <span className="text-outline">/</span>
+              <span>/</span>
               <span>Counter Cashier</span>
-              <span className="text-outline">/</span>
-              <span className="text-primary font-bold">Record Fee Payment</span>
+              <span>/</span>
+              <span className="text-[#3D405B] font-bold">Record Fee Payment</span>
             </div>
-            <div className="flex items-center gap-2 font-mono text-xs">
-              <span className="px-2.5 py-0.5 bg-tertiary-container text-on-tertiary-container font-bold uppercase rounded-xs">
-                COUNTER TILL #02 • MR. RAJESH KUMAR (VERIFIED RECEIVER)
-              </span>
-              <span className="px-2 py-0.5 bg-surface-container-high text-secondary font-semibold rounded-xs">
-                SESSION ID: CS-2025-0328-981
-              </span>
-            </div>
-          </div>
 
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-2 pt-1 border-t border-[#eff4ff]">
             <div>
-              <h1 className="text-2xl font-bold uppercase tracking-tight text-primary">
-                Record Manual Fee Payment &amp; Counter Register
-              </h1>
-              <p className="text-xs text-on-surface-variant mt-0.5">
-                STRICT MANUAL COUNTER MODE. All transactions generate instant immutable receipt numbers. Amount cannot exceed outstanding balance.
-              </p>
-            </div>
-            <div className="flex items-center gap-2 font-mono text-xs text-secondary font-bold">
-              <span className="flex h-2 w-2 relative">
-                <span className="animate-ping absolute inline-flex h-full w-full bg-secondary opacity-75 rounded-full"></span>
-                <span className="relative inline-flex h-2 w-2 bg-secondary rounded-full"></span>
-              </span>
-              <span>Bursar Ledger Synchronized</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Primary Split Grid: 65% Entry Form / 35% Ledger Calculation */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-          {/* LEFT COLUMN: Payment Entry Form (8 cols) */}
-          <div className="lg:col-span-8 flex flex-col gap-6">
-            {/* Section A: Student Identification & Verified Context */}
-            <div className="bg-surface-container-lowest p-4 border border-[#cbd5e1] shadow-xs rounded-sm flex flex-col gap-3">
-              <div className="flex items-center justify-between pb-2 border-b border-[#cbd5e1]">
-                <div className="flex items-center gap-2">
-                  <User className="h-4 w-4 text-primary" />
-                  <span className="font-mono text-xs font-bold uppercase tracking-wider text-primary">
-                    1. Student Identification &amp; Enrollment Validation
-                  </span>
-                </div>
-                <span className="font-mono text-xs text-[#047857] font-bold">
-                  STATUS: ENROLLED • CLEARANCE ACTIVE
+              <div className="flex flex-wrap items-center gap-2.5">
+                <h1 className="text-2xl sm:text-3xl font-bold text-[#3D405B] tracking-tight">
+                  Record Fee Payment &amp; Counter Register 💳
+                </h1>
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-50 text-emerald-700 text-xs font-semibold rounded-full border border-emerald-200">
+                  <span className="w-2 h-2 rounded-full bg-emerald-600 animate-pulse"></span>
+                  Till #02 Open &bull; Mr. Rajesh Kumar
                 </span>
               </div>
+              <p className="text-xs sm:text-sm text-slate-500 mt-1">
+                Official counter payment intake desk. Generates instant verified thermal receipts and updates student fee ledgers.
+              </p>
+            </div>
+          </div>
 
-              {/* Quick Switch Selector */}
-              <div className="flex flex-wrap items-center gap-2 font-mono text-xs">
-                <span className="text-outline uppercase text-[10px] font-bold">Quick Select Candidate:</span>
-                {Object.keys(mockStudentProfiles).map((roll) => (
+          <div className="flex items-center flex-wrap gap-2.5">
+            <Link
+              href="/accountant/fee-details"
+              className="inline-flex items-center gap-2 px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-xl border border-slate-200 shadow-2xs transition-all"
+            >
+              <FileText className="w-4 h-4 text-slate-600" />
+              <span>Fee Directory</span>
+            </Link>
+            <Link
+              href="/accountant/receipts"
+              className="inline-flex items-center gap-2 px-4 py-2.5 bg-amber-50 hover:bg-amber-100 text-amber-800 text-xs font-semibold rounded-xl border border-amber-200/80 shadow-2xs transition-all"
+            >
+              <Receipt className="w-4 h-4 text-amber-600" />
+              <span>Receipts Log</span>
+            </Link>
+          </div>
+        </div>
+      </div>
+
+      {/* Primary Split Grid: 8 Cols Entry Form / 4 Cols Ledger Calculation */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        {/* LEFT COLUMN: Payment Entry Form (8 cols) */}
+        <div className="lg:col-span-8 space-y-6">
+          {/* Section 1: Student Identification */}
+          <div className="bg-white p-5 sm:p-6 rounded-2xl border border-slate-200 shadow-xs space-y-4">
+            <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+              <div className="flex items-center gap-2">
+                <User className="h-4 w-4 text-amber-700" />
+                <h3 className="text-sm font-bold text-[#3D405B]">
+                  1. Student Identification &amp; Enrollment
+                </h3>
+              </div>
+              <span className="text-xs text-emerald-700 font-semibold bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">
+                Enrolled &bull; Clearance Active
+              </span>
+            </div>
+
+            {/* Quick Candidate Pills */}
+            <div className="flex flex-wrap items-center gap-2 text-xs">
+              <span className="text-slate-400 font-semibold text-[11px]">Quick Select Candidate:</span>
+              {Object.keys(mockStudentProfiles).map((roll) => {
+                const s = mockStudentProfiles[roll];
+                const isSelected = currentStudent.roll === roll;
+                return (
                   <button
                     key={roll}
                     type="button"
                     onClick={() => handleSelectStudent(roll)}
-                    className={`px-2.5 py-1 rounded-xs border text-[11px] font-bold cursor-pointer transition-colors ${
-                      currentStudent.roll === roll
-                        ? "bg-primary text-on-primary border-primary"
-                        : "bg-surface-container-low text-on-surface border-[#cbd5e1] hover:bg-surface-container"
+                    className={`px-3 py-1.5 rounded-xl border text-xs font-semibold cursor-pointer transition-all ${
+                      isSelected
+                        ? "bg-amber-600 text-white border-amber-600 shadow-xs font-bold"
+                        : "bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100"
                     }`}
                   >
-                    {mockStudentProfiles[roll].name} ({roll})
+                    {s.name} ({roll})
                   </button>
-                ))}
-              </div>
-
-              {/* Selected Student Identity Dossier */}
-              <div className="bg-surface-container-low p-4 border border-[#cbd5e1] rounded-xs flex flex-col md:flex-row gap-4 items-start shadow-xs">
-                <div className="relative shrink-0">
-                  <div className="w-20 h-24 bg-primary text-secondary-container flex flex-col items-center justify-center font-bold text-xl rounded-xs shadow-xs">
-                    <User className="h-10 w-10 text-secondary-fixed-dim" />
-                    <span className="text-[10px] font-mono mt-1 text-on-primary-container">STUDENT</span>
-                  </div>
-                  <span className="absolute bottom-0 right-0 bg-secondary text-on-secondary font-mono text-[9px] px-1 font-bold rounded-xs">
-                    {currentStudent.semester}
-                  </span>
-                </div>
-
-                <div className="flex flex-col justify-between flex-1 w-full gap-1">
-                  <div className="flex flex-wrap items-center justify-between gap-1">
-                    <div className="flex items-baseline gap-2">
-                      <span className="text-lg font-bold uppercase text-primary font-sans">
-                        {currentStudent.name}
-                      </span>
-                      <span className="font-mono text-xs text-secondary font-bold">
-                        {currentStudent.roll}
-                      </span>
-                    </div>
-                    <span className="px-2 py-0.5 bg-secondary-fixed text-on-secondary-fixed-variant font-mono text-[10px] font-bold uppercase rounded-xs">
-                      {currentStudent.course}
-                    </span>
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-1 font-mono text-xs text-on-surface-variant pt-1">
-                    <div className="flex items-center gap-1.5 truncate">
-                      <GraduationCap className="h-3.5 w-3.5 text-secondary" />
-                      <span>Batch: <strong className="text-on-surface">{currentStudent.batch}</strong></span>
-                    </div>
-                    <div className="flex items-center gap-1.5 truncate">
-                      <Mail className="h-3.5 w-3.5 text-secondary" />
-                      <span className="truncate">{currentStudent.email}</span>
-                    </div>
-                    <div className="flex items-center gap-1.5 truncate">
-                      <Phone className="h-3.5 w-3.5 text-secondary" />
-                      <span>{currentStudent.phone}</span>
-                    </div>
-                    <div className="flex items-center gap-1.5 truncate">
-                      <User className="h-3.5 w-3.5 text-secondary" />
-                      <span>G: {currentStudent.guardian}</span>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-2 pt-2 mt-1 bg-surface-container/60 px-2.5 py-1 text-[11px] font-mono rounded-xs">
-                    <span className="text-on-surface-variant font-bold">Scholarship / Aid:</span>
-                    <span className="text-primary font-bold">{currentStudent.scholarship}</span>
-                  </div>
-                </div>
-              </div>
+                );
+              })}
             </div>
 
-            {/* Section B: Payment Particulars & Fund Allocation */}
-            <div className="bg-surface-container-lowest p-4 border border-[#cbd5e1] shadow-xs rounded-sm flex flex-col gap-4">
-              <div className="flex items-center justify-between pb-2 border-b border-[#cbd5e1]">
-                <div className="flex items-center gap-2">
-                  <CreditCard className="h-4 w-4 text-primary" />
-                  <span className="font-mono text-xs font-bold uppercase tracking-wider text-primary">
-                    2. Payment Particulars &amp; Fund Allocation
-                  </span>
-                </div>
-                <span className="font-mono text-[11px] text-secondary font-bold uppercase">
-                  Counter Rule: Strict Allocation Check
+            {/* Selected Student Card */}
+            <div className="bg-slate-50 p-4 sm:p-5 rounded-2xl border border-slate-200/80 flex flex-col md:flex-row gap-4 items-start">
+              <div className="w-16 h-16 bg-amber-100 text-amber-800 rounded-2xl flex flex-col items-center justify-center font-bold text-lg shadow-2xs shrink-0">
+                <GraduationCap className="h-7 w-7 text-amber-700" />
+                <span className="text-[10px] font-mono mt-0.5 text-amber-800 font-bold">
+                  {currentStudent.semester}
                 </span>
               </div>
 
-              {/* Billable Component Allocation Checkboxes */}
-              <div className="flex flex-col gap-2 bg-surface-container-low p-3 border border-[#cbd5e1] rounded-xs font-mono text-xs">
-                <div className="flex items-center justify-between uppercase text-on-surface-variant font-bold text-[10px] pb-1 border-b border-[#cbd5e1]">
-                  <span>Billable Component Allocation (Semester IV)</span>
-                  <span>Allocated Amount (INR)</span>
+              <div className="flex-1 space-y-1.5 w-full">
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-base font-bold text-[#3D405B]">
+                      {currentStudent.name}
+                    </span>
+                    <span className="font-mono text-xs text-blue-600 font-semibold">
+                      {currentStudent.roll}
+                    </span>
+                  </div>
+                  <span className="px-2.5 py-0.5 bg-blue-50 text-blue-700 text-[11px] font-semibold rounded-full border border-blue-200">
+                    {currentStudent.course}
+                  </span>
                 </div>
 
-                <label className="flex items-center justify-between p-2 bg-surface-container-lowest hover:bg-surface-container cursor-pointer transition-colors border border-[#cbd5e1] rounded-xs">
-                  <div className="flex items-center gap-2.5">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1 text-xs text-slate-600 pt-1">
+                  <div>Batch: <strong className="text-slate-800">{currentStudent.batch}</strong></div>
+                  <div>Email: <span className="text-slate-700 font-mono">{currentStudent.email}</span></div>
+                  <div>Tel: <span className="text-slate-700 font-mono">{currentStudent.phone}</span></div>
+                  <div>Guardian: <span className="text-slate-700">{currentStudent.guardian}</span></div>
+                </div>
+
+                <div className="pt-2 flex items-center gap-2 text-xs">
+                  <span className="text-slate-500 font-medium">Scholarship / Concession:</span>
+                  <span className="px-2 py-0.5 bg-amber-100 text-amber-800 text-[11px] font-bold rounded-md">
+                    {currentStudent.scholarship}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Section 2: Payment Particulars & Fund Allocation */}
+          <div className="bg-white p-5 sm:p-6 rounded-2xl border border-slate-200 shadow-xs space-y-5">
+            <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+              <div className="flex items-center gap-2">
+                <CreditCard className="h-4 w-4 text-amber-700" />
+                <h3 className="text-sm font-bold text-[#3D405B]">
+                  2. Payment Particulars &amp; Fund Allocation
+                </h3>
+              </div>
+              <span className="text-xs text-slate-500 font-medium">
+                Till #02 Real-Time Settlement
+              </span>
+            </div>
+
+            {/* Billable Component Checkboxes */}
+            <div className="space-y-2">
+              <span className="text-xs font-bold text-[#3D405B] block">
+                Billable Fee Component Breakdown (Semester IV)
+              </span>
+
+              <div className="space-y-2">
+                <label className="flex items-center justify-between p-3 bg-slate-50 hover:bg-slate-100/80 cursor-pointer rounded-xl border border-slate-200 transition-colors">
+                  <div className="flex items-center gap-3">
                     <input
                       type="checkbox"
                       checked={compTuition}
                       onChange={(e) => setCompTuition(e.target.checked)}
-                      className="w-4 h-4 accent-primary rounded-none cursor-pointer"
+                      className="w-4 h-4 accent-amber-600 rounded cursor-pointer"
                     />
-                    <div className="flex flex-col">
-                      <span className="font-sans font-bold text-primary">Tuition Fee (Semester IV Standard Term)</span>
-                      <span className="text-[10px] text-on-surface-variant">Account Code: #REV-AC-1011 (Core Academics)</span>
+                    <div>
+                      <span className="font-semibold text-xs text-[#3D405B] block">
+                        Tuition Fee (Semester IV Standard Term)
+                      </span>
+                      <span className="text-[10px] text-slate-500">
+                        Account Code: #REV-AC-1011 (Core Academics)
+                      </span>
                     </div>
                   </div>
-                  <span className="font-bold text-primary text-sm">₹20,000.00</span>
+                  <span className="font-bold text-slate-800 font-mono text-sm">₹20,000.00</span>
                 </label>
 
-                <label className="flex items-center justify-between p-2 bg-surface-container-lowest hover:bg-surface-container cursor-pointer transition-colors border border-[#cbd5e1] rounded-xs">
-                  <div className="flex items-center gap-2.5">
+                <label className="flex items-center justify-between p-3 bg-slate-50 hover:bg-slate-100/80 cursor-pointer rounded-xl border border-slate-200 transition-colors">
+                  <div className="flex items-center gap-3">
                     <input
                       type="checkbox"
                       checked={compLab}
                       onChange={(e) => setCompLab(e.target.checked)}
-                      className="w-4 h-4 accent-primary rounded-none cursor-pointer"
+                      className="w-4 h-4 accent-amber-600 rounded cursor-pointer"
                     />
-                    <div className="flex flex-col">
-                      <span className="font-sans font-bold text-primary">Computer Lab &amp; Cloud Infrastructure</span>
-                      <span className="text-[10px] text-on-surface-variant">Account Code: #REV-AC-1044 (Computing Lab Till)</span>
+                    <div>
+                      <span className="font-semibold text-xs text-[#3D405B] block">
+                        Computer Lab &amp; Cloud Infrastructure
+                      </span>
+                      <span className="text-[10px] text-slate-500">
+                        Account Code: #REV-AC-1044 (Computing Lab Till)
+                      </span>
                     </div>
                   </div>
-                  <span className="font-bold text-primary text-sm">₹5,000.00</span>
+                  <span className="font-bold text-slate-800 font-mono text-sm">₹5,000.00</span>
                 </label>
 
-                <label className="flex items-center justify-between p-2 bg-surface-container-lowest hover:bg-surface-container cursor-pointer transition-colors border border-[#cbd5e1] rounded-xs">
-                  <div className="flex items-center gap-2.5">
+                <label className="flex items-center justify-between p-3 bg-slate-50 hover:bg-slate-100/80 cursor-pointer rounded-xl border border-slate-200 transition-colors">
+                  <div className="flex items-center gap-3">
                     <input
                       type="checkbox"
                       checked={compExam}
                       onChange={(e) => setCompExam(e.target.checked)}
-                      className="w-4 h-4 accent-primary rounded-none cursor-pointer"
+                      className="w-4 h-4 accent-amber-600 rounded cursor-pointer"
                     />
-                    <div className="flex flex-col">
-                      <span className="font-sans font-bold text-primary">Semester End Examination Assessment</span>
-                      <span className="text-[10px] text-on-surface-variant">Account Code: #REV-AC-2009 (Autonomous Exam Board)</span>
+                    <div>
+                      <span className="font-semibold text-xs text-[#3D405B] block">
+                        Semester End Examination Assessment
+                      </span>
+                      <span className="text-[10px] text-slate-500">
+                        Account Code: #REV-AC-2009 (Exam Board)
+                      </span>
                     </div>
                   </div>
-                  <span className="font-bold text-primary text-sm">₹2,500.00</span>
+                  <span className="font-bold text-slate-800 font-mono text-sm">₹2,500.00</span>
                 </label>
               </div>
+            </div>
 
-              {/* Amount and Date Group */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {/* Payment Amount Field */}
-                <div className="flex flex-col gap-1 font-mono text-xs">
-                  <div className="flex justify-between items-center">
-                    <label className="uppercase font-bold text-on-surface-variant text-[11px]">
-                      Payment Amount (₹ INR) <span className="text-error">*</span>
-                    </label>
-                    <span className="text-[10px] text-secondary font-bold">
-                      {paymentAmount === currentStudent.outstandingBalance ? "EXACT DUE MATCH" : "CUSTOM ENTRY"}
-                    </span>
-                  </div>
-                  <div className="relative">
-                    <span className="absolute inset-y-0 left-0 pl-3 flex items-center font-bold text-primary text-lg pointer-events-none">
-                      ₹
-                    </span>
-                    <input
-                      type="number"
-                      value={paymentAmount}
-                      onChange={(e) => setPaymentAmount(Number(e.target.value))}
-                      className="w-full pl-8 pr-3 py-2 bg-surface-container-lowest text-primary font-mono text-xl font-bold border border-[#cbd5e1] rounded-xs focus:outline-none focus:border-secondary"
-                    />
-                  </div>
-                  <div className="flex items-center justify-between text-[10px] text-on-surface-variant pt-0.5">
-                    <span>Outstanding balance: ₹{currentStudent.outstandingBalance.toLocaleString("en-IN")}</span>
-                    <span className="text-primary font-bold bg-secondary-fixed/50 px-1 py-0.2 rounded-xs">
-                      {projectedBalance === 0 ? "EXACTLY CLEARS TERM DUES" : `LEAVES ₹${projectedBalance.toLocaleString("en-IN")} DUE`}
-                    </span>
-                  </div>
+            {/* Amount and Value Date Fields */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
+              {/* Payment Amount */}
+              <div className="space-y-1.5">
+                <div className="flex justify-between items-center text-xs">
+                  <label className="font-bold text-[#3D405B]">
+                    Payment Amount (₹ INR) <span className="text-rose-600">*</span>
+                  </label>
+                  <span className="text-[10px] font-bold text-amber-700">
+                    {paymentAmount === currentStudent.outstandingBalance
+                      ? "EXACT DUE MATCH"
+                      : "CUSTOM ENTRY"}
+                  </span>
                 </div>
-
-                {/* Receipt Date Field */}
-                <div className="flex flex-col gap-1 font-mono text-xs">
-                  <div className="flex justify-between items-center">
-                    <label className="uppercase font-bold text-on-surface-variant text-[11px]">
-                      Receipt / Value Date <span className="text-error">*</span>
-                    </label>
-                    <span className="text-[10px] text-on-surface-variant">FISCAL DAY: CURRENT</span>
-                  </div>
+                <div className="relative">
+                  <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center font-bold text-slate-500 text-lg pointer-events-none">
+                    ₹
+                  </span>
                   <input
-                    type="date"
-                    value={receiptDate}
-                    onChange={(e) => setReceiptDate(e.target.value)}
-                    className="w-full px-3 py-2 bg-surface-container-lowest text-on-surface font-mono text-sm font-semibold border border-[#cbd5e1] rounded-xs focus:outline-none focus:border-secondary uppercase"
+                    type="number"
+                    value={paymentAmount}
+                    onChange={(e) => setPaymentAmount(Number(e.target.value))}
+                    className="w-full pl-9 pr-3.5 py-2.5 bg-slate-50 text-[#3D405B] font-mono text-xl font-bold border border-slate-200 rounded-xl focus:outline-none focus:border-amber-600"
                   />
-                  <span className="text-[10px] text-on-surface-variant pt-0.5">
-                    Current Open Till Date: 28 March 2025 (IST)
+                </div>
+                <div className="flex items-center justify-between text-[11px] text-slate-500">
+                  <span>Due: ₹{currentStudent.outstandingBalance.toLocaleString("en-IN")}</span>
+                  <span className="font-semibold text-emerald-600">
+                    {projectedBalance === 0
+                      ? "Clears Full Balance"
+                      : `Leaves ₹${projectedBalance.toLocaleString("en-IN")} due`}
                   </span>
                 </div>
               </div>
 
-              {/* Counter Tender Mode Selector */}
-              <div className="flex flex-col gap-1.5 pt-1 font-mono text-xs">
-                <label className="uppercase font-bold text-on-surface-variant text-[11px]">
-                  Counter Tender Mode <span className="text-error">*</span>
-                </label>
-                <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
-                  <button
-                    type="button"
-                    onClick={() => setPaymentMode("cash")}
-                    className={`flex flex-col items-center justify-center py-2 px-1 text-xs uppercase tracking-wider font-bold rounded-xs transition-colors gap-1 cursor-pointer border ${
-                      paymentMode === "cash"
-                        ? "bg-primary text-on-primary border-primary shadow-xs"
-                        : "bg-surface-container-low text-on-surface border-[#cbd5e1] hover:bg-surface-container"
-                    }`}
-                  >
-                    <DollarSign className="h-4 w-4" />
-                    <span>Cash</span>
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => setPaymentMode("upi")}
-                    className={`flex flex-col items-center justify-center py-2 px-1 text-xs uppercase tracking-wider font-bold rounded-xs transition-colors gap-1 cursor-pointer border ${
-                      paymentMode === "upi"
-                        ? "bg-primary text-on-primary border-primary shadow-xs"
-                        : "bg-surface-container-low text-on-surface border-[#cbd5e1] hover:bg-surface-container"
-                    }`}
-                  >
-                    <QrCode className="h-4 w-4" />
-                    <span>UPI Dynamic</span>
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => setPaymentMode("pos")}
-                    className={`flex flex-col items-center justify-center py-2 px-1 text-xs uppercase tracking-wider font-bold rounded-xs transition-colors gap-1 cursor-pointer border ${
-                      paymentMode === "pos"
-                        ? "bg-primary text-on-primary border-primary shadow-xs"
-                        : "bg-surface-container-low text-on-surface border-[#cbd5e1] hover:bg-surface-container"
-                    }`}
-                  >
-                    <CreditCard className="h-4 w-4" />
-                    <span>Card (POS)</span>
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => setPaymentMode("bank")}
-                    className={`flex flex-col items-center justify-center py-2 px-1 text-xs uppercase tracking-wider font-bold rounded-xs transition-colors gap-1 cursor-pointer border ${
-                      paymentMode === "bank"
-                        ? "bg-primary text-on-primary border-primary shadow-xs"
-                        : "bg-surface-container-low text-on-surface border-[#cbd5e1] hover:bg-surface-container"
-                    }`}
-                  >
-                    <Building className="h-4 w-4" />
-                    <span>NEFT / RTGS</span>
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => setPaymentMode("cheque")}
-                    className={`flex flex-col items-center justify-center py-2 px-1 text-xs uppercase tracking-wider font-bold rounded-xs transition-colors gap-1 cursor-pointer border ${
-                      paymentMode === "cheque"
-                        ? "bg-primary text-on-primary border-primary shadow-xs"
-                        : "bg-surface-container-low text-on-surface border-[#cbd5e1] hover:bg-surface-container"
-                    }`}
-                  >
-                    <FileText className="h-4 w-4" />
-                    <span>Cheque / DD</span>
-                  </button>
+              {/* Receipt Date */}
+              <div className="space-y-1.5">
+                <div className="flex justify-between items-center text-xs">
+                  <label className="font-bold text-[#3D405B]">
+                    Receipt / Value Date <span className="text-rose-600">*</span>
+                  </label>
+                  <span className="text-[10px] text-slate-400">TODAY</span>
                 </div>
-              </div>
-
-              {/* Mode-Specific Input Panel: Cash Denominations */}
-              {paymentMode === "cash" && (
-                <div className="bg-surface-container-low p-3.5 border border-[#cbd5e1] rounded-xs flex flex-col gap-2 font-mono text-xs">
-                  <div className="flex items-center justify-between pb-1">
-                    <span className="font-bold text-primary uppercase text-[11px]">
-                      Cash Drawer Verification &amp; Till #02 Denominations
-                    </span>
-                    <span className="text-secondary font-bold text-[10px]">Currency Count Match: 100%</span>
-                  </div>
-
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-                    <div className="bg-surface-container-lowest p-2 border border-[#cbd5e1] rounded-xs flex flex-col gap-1">
-                      <span className="text-[10px] text-on-surface-variant font-bold">₹500 Notes</span>
-                      <div className="flex items-center gap-1">
-                        <span className="text-[11px] text-outline">Qty:</span>
-                        <input
-                          type="number"
-                          value={denoms.n500}
-                          onChange={(e) => setDenoms({ ...denoms, n500: Number(e.target.value) })}
-                          className="w-full bg-surface-container px-1 py-0.5 font-bold text-primary text-center rounded-xs"
-                        />
-                      </div>
-                      <span className="text-[11px] text-right text-primary font-bold">
-                        = ₹{(denoms.n500 * 500).toLocaleString("en-IN")}
-                      </span>
-                    </div>
-
-                    <div className="bg-surface-container-lowest p-2 border border-[#cbd5e1] rounded-xs flex flex-col gap-1">
-                      <span className="text-[10px] text-on-surface-variant font-bold">₹200 Notes</span>
-                      <div className="flex items-center gap-1">
-                        <span className="text-[11px] text-outline">Qty:</span>
-                        <input
-                          type="number"
-                          value={denoms.n200}
-                          onChange={(e) => setDenoms({ ...denoms, n200: Number(e.target.value) })}
-                          className="w-full bg-surface-container px-1 py-0.5 font-bold text-primary text-center rounded-xs"
-                        />
-                      </div>
-                      <span className="text-[11px] text-right text-on-surface-variant">
-                        = ₹{(denoms.n200 * 200).toLocaleString("en-IN")}
-                      </span>
-                    </div>
-
-                    <div className="bg-surface-container-lowest p-2 border border-[#cbd5e1] rounded-xs flex flex-col gap-1">
-                      <span className="text-[10px] text-on-surface-variant font-bold">₹100 Notes</span>
-                      <div className="flex items-center gap-1">
-                        <span className="text-[11px] text-outline">Qty:</span>
-                        <input
-                          type="number"
-                          value={denoms.n100}
-                          onChange={(e) => setDenoms({ ...denoms, n100: Number(e.target.value) })}
-                          className="w-full bg-surface-container px-1 py-0.5 font-bold text-primary text-center rounded-xs"
-                        />
-                      </div>
-                      <span className="text-[11px] text-right text-on-surface-variant">
-                        = ₹{(denoms.n100 * 100).toLocaleString("en-IN")}
-                      </span>
-                    </div>
-
-                    <div className="bg-surface-container-lowest p-2 border border-[#cbd5e1] rounded-xs flex flex-col gap-1">
-                      <span className="text-[10px] text-on-surface-variant font-bold">₹50 / Coins</span>
-                      <div className="flex items-center gap-1">
-                        <span className="text-[11px] text-outline">Qty:</span>
-                        <input
-                          type="number"
-                          value={denoms.n50}
-                          onChange={(e) => setDenoms({ ...denoms, n50: Number(e.target.value) })}
-                          className="w-full bg-surface-container px-1 py-0.5 font-bold text-primary text-center rounded-xs"
-                        />
-                      </div>
-                      <span className="text-[11px] text-right text-on-surface-variant">
-                        = ₹{(denoms.n50 * 50).toLocaleString("en-IN")}
-                      </span>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center justify-between pt-1 border-t border-[#cbd5e1] text-[11px]">
-                    <span className="text-on-surface-variant">Cash Counting Machine Counter: #APX-CCM-02 (PASSED)</span>
-                    <span className="font-bold text-primary">
-                      Physical Tender Total: <strong className="text-secondary text-sm">₹{cashTotal.toLocaleString("en-IN")}.00</strong>
-                    </span>
-                  </div>
-                </div>
-              )}
-
-              {/* Mode-Specific Input Panel: Electronic (UPI, POS, Bank) */}
-              {(paymentMode === "upi" || paymentMode === "pos" || paymentMode === "bank") && (
-                <div className="bg-surface-container-low p-3.5 border border-[#cbd5e1] rounded-xs flex flex-col gap-2 font-mono text-xs">
-                  <div className="flex items-center justify-between pb-1">
-                    <span className="font-bold text-primary uppercase text-[11px]">
-                      {paymentMode === "upi"
-                        ? "UPI Dynamic Transaction Data"
-                        : paymentMode === "pos"
-                        ? "Point-of-Sale (POS) Terminal Auth"
-                        : "NEFT / RTGS Institutional Remittance"}
-                    </span>
-                    <span className="text-secondary font-bold text-[10px]">GATEWAY DIRECT PULL</span>
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    <div className="flex flex-col gap-1">
-                      <label className="text-[10px] uppercase font-bold text-on-surface-variant">
-                        Transaction UTR / Reference ID
-                      </label>
-                      <input
-                        type="text"
-                        value={utrRef}
-                        onChange={(e) => setUtrRef(e.target.value)}
-                        className="px-2.5 py-1.5 bg-surface-container-lowest font-mono text-xs border border-[#cbd5e1] rounded-xs focus:outline-none focus:border-secondary"
-                      />
-                    </div>
-                    <div className="flex flex-col gap-1">
-                      <label className="text-[10px] uppercase font-bold text-on-surface-variant">
-                        Bank / Origin Entity
-                      </label>
-                      <input
-                        type="text"
-                        value={bankEntity}
-                        onChange={(e) => setBankEntity(e.target.value)}
-                        className="px-2.5 py-1.5 bg-surface-container-lowest font-mono text-xs border border-[#cbd5e1] rounded-xs focus:outline-none focus:border-secondary"
-                      />
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* Mode-Specific Input Panel: Cheque */}
-              {paymentMode === "cheque" && (
-                <div className="bg-surface-container-low p-3.5 border border-[#cbd5e1] rounded-xs flex flex-col gap-2 font-mono text-xs">
-                  <div className="flex items-center justify-between pb-1">
-                    <span className="font-bold text-primary uppercase text-[11px]">
-                      Negotiable Instrument Particulars (CTS-2010 Only)
-                    </span>
-                    <span className="text-error font-bold text-[10px]">SUBJECT TO CLEARING</span>
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                    <div className="flex flex-col gap-1">
-                      <label className="text-[10px] uppercase font-bold text-on-surface-variant">
-                        Cheque / DD Number
-                      </label>
-                      <input
-                        type="text"
-                        value={chequeNo}
-                        onChange={(e) => setChequeNo(e.target.value)}
-                        className="px-2.5 py-1.5 bg-surface-container-lowest font-mono text-xs border border-[#cbd5e1] rounded-xs focus:outline-none focus:border-secondary"
-                      />
-                    </div>
-                    <div className="flex flex-col gap-1">
-                      <label className="text-[10px] uppercase font-bold text-on-surface-variant">
-                        Drawn Bank &amp; Branch
-                      </label>
-                      <input
-                        type="text"
-                        value={chequeBank}
-                        onChange={(e) => setChequeBank(e.target.value)}
-                        className="px-2.5 py-1.5 bg-surface-container-lowest font-mono text-xs border border-[#cbd5e1] rounded-xs focus:outline-none focus:border-secondary"
-                      />
-                    </div>
-                    <div className="flex flex-col gap-1">
-                      <label className="text-[10px] uppercase font-bold text-on-surface-variant">
-                        Instrument Date
-                      </label>
-                      <input
-                        type="date"
-                        value={chequeDate}
-                        onChange={(e) => setChequeDate(e.target.value)}
-                        className="px-2.5 py-1 bg-surface-container-lowest font-mono text-xs border border-[#cbd5e1] rounded-xs focus:outline-none focus:border-secondary"
-                      />
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* Remarks */}
-              <div className="flex flex-col gap-1 font-mono text-xs">
-                <label className="uppercase font-bold text-on-surface-variant text-[11px]">
-                  Counter Auditor Remarks &amp; Ledger Annotations
-                </label>
-                <textarea
-                  rows={2}
-                  value={remarks}
-                  onChange={(e) => setRemarks(e.target.value)}
-                  className="w-full p-2.5 bg-surface-container-low text-on-surface border border-[#cbd5e1] rounded-xs focus:outline-none focus:border-secondary font-mono text-xs"
+                <input
+                  type="date"
+                  value={receiptDate}
+                  onChange={(e) => setReceiptDate(e.target.value)}
+                  className="w-full px-3.5 py-2.5 bg-slate-50 text-slate-800 font-mono text-sm font-semibold border border-slate-200 rounded-xl focus:outline-none focus:border-amber-600"
                 />
-                <span className="text-[10px] text-on-surface-variant">
-                  Note will be irreversibly archived with transaction hash: #TXN-GL-849202
+                <span className="text-[11px] text-slate-500 block">
+                  Current Open Till: 28 March 2025 (IST)
                 </span>
               </div>
+            </div>
 
-              {/* Actions */}
-              <div className="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-[#cbd5e1]">
-                <div className="flex items-center gap-2">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setPaymentAmount(calculatedFromComponents);
-                      setRemarks("");
-                      showToast("Payment form fields reset.");
-                    }}
-                    className="px-3.5 py-2 bg-surface-container hover:bg-surface-container-high text-primary font-mono text-xs font-bold uppercase rounded-xs border border-[#cbd5e1] cursor-pointer"
-                  >
-                    Reset Form
-                  </button>
-                  <Link
-                    href="/accountant"
-                    className="px-3.5 py-2 bg-surface-container-low hover:bg-surface-container text-on-surface-variant font-mono text-xs font-bold uppercase rounded-xs border border-[#cbd5e1]"
-                  >
-                    Cancel
-                  </Link>
-                </div>
+            {/* Counter Tender Mode */}
+            <div className="space-y-2 pt-2">
+              <label className="text-xs font-bold text-[#3D405B] block">
+                Counter Tender Mode <span className="text-rose-600">*</span>
+              </label>
+
+              <div className="grid grid-cols-2 sm:grid-cols-5 gap-2.5">
+                <button
+                  type="button"
+                  onClick={() => setPaymentMode("cash")}
+                  className={`flex flex-col items-center justify-center py-2.5 px-2 text-xs font-bold rounded-xl transition-all gap-1.5 cursor-pointer border ${
+                    paymentMode === "cash"
+                      ? "bg-amber-600 text-white border-amber-600 shadow-xs"
+                      : "bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100"
+                  }`}
+                >
+                  <Coins className="h-4 w-4" />
+                  <span>Cash</span>
+                </button>
 
                 <button
                   type="button"
-                  onClick={() => setIsConfirmModalOpen(true)}
-                  className="flex items-center gap-2 px-6 py-2.5 bg-primary-container text-on-primary font-mono text-xs font-bold uppercase tracking-widest hover:bg-primary shadow-md rounded-xs cursor-pointer transition-colors"
+                  onClick={() => setPaymentMode("upi")}
+                  className={`flex flex-col items-center justify-center py-2.5 px-2 text-xs font-bold rounded-xl transition-all gap-1.5 cursor-pointer border ${
+                    paymentMode === "upi"
+                      ? "bg-amber-600 text-white border-amber-600 shadow-xs"
+                      : "bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100"
+                  }`}
                 >
-                  <ShieldCheck className="h-4 w-4 text-secondary-container" />
-                  <span>Preview &amp; Process Payment</span>
+                  <QrCode className="h-4 w-4" />
+                  <span>UPI Dynamic</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setPaymentMode("pos")}
+                  className={`flex flex-col items-center justify-center py-2.5 px-2 text-xs font-bold rounded-xl transition-all gap-1.5 cursor-pointer border ${
+                    paymentMode === "pos"
+                      ? "bg-amber-600 text-white border-amber-600 shadow-xs"
+                      : "bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100"
+                  }`}
+                >
+                  <CreditCard className="h-4 w-4" />
+                  <span>Card (POS)</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setPaymentMode("bank")}
+                  className={`flex flex-col items-center justify-center py-2.5 px-2 text-xs font-bold rounded-xl transition-all gap-1.5 cursor-pointer border ${
+                    paymentMode === "bank"
+                      ? "bg-amber-600 text-white border-amber-600 shadow-xs"
+                      : "bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100"
+                  }`}
+                >
+                  <Building2 className="h-4 w-4" />
+                  <span>NEFT / Wire</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setPaymentMode("cheque")}
+                  className={`flex flex-col items-center justify-center py-2.5 px-2 text-xs font-bold rounded-xl transition-all gap-1.5 cursor-pointer border ${
+                    paymentMode === "cheque"
+                      ? "bg-amber-600 text-white border-amber-600 shadow-xs"
+                      : "bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100"
+                  }`}
+                >
+                  <FileText className="h-4 w-4" />
+                  <span>Cheque / DD</span>
                 </button>
               </div>
             </div>
-          </div>
 
-          {/* RIGHT COLUMN: Real-Time Ledger State & Generation Card (4 cols) */}
-          <div className="lg:col-span-4 flex flex-col gap-6">
-            {/* Live Payment Ledger Breakdown Tile */}
-            <div className="bg-surface-container-lowest p-4 border border-[#cbd5e1] shadow-xs rounded-sm flex flex-col gap-3">
-              <div className="flex items-center justify-between pb-2 border-b border-[#cbd5e1]">
-                <div className="flex items-center gap-2">
-                  <Receipt className="h-4 w-4 text-primary" />
-                  <span className="font-mono text-xs font-bold uppercase tracking-wider text-primary">
-                    Real-time Student Ledger
+            {/* Mode Specific Panel: Cash Denominations */}
+            {paymentMode === "cash" && (
+              <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-3">
+                <div className="flex items-center justify-between pb-1 border-b border-slate-200">
+                  <span className="font-bold text-xs text-[#3D405B]">
+                    Cash Drawer Till #02 Note Denominations
+                  </span>
+                  <span className="text-emerald-700 font-semibold text-xs">
+                    Counting Match: 100%
                   </span>
                 </div>
-                <span className="font-mono text-secondary text-[11px] font-bold">TERM IV (EVEN)</span>
-              </div>
 
-              {/* Mathematical Progression List */}
-              <div className="flex flex-col gap-1.5 font-mono text-xs">
-                <div className="flex justify-between items-center py-1">
-                  <span className="text-on-surface-variant text-[11px]">Gross Approved Term Fee:</span>
-                  <span className="text-on-surface font-semibold">
-                    ₹{currentStudent.grossFee.toLocaleString("en-IN")}.00
-                  </span>
-                </div>
-                {currentStudent.concession > 0 && (
-                  <div className="flex justify-between items-center py-1 bg-surface-container-low px-2 rounded-xs">
-                    <span className="text-secondary font-medium text-[11px]">Merit Concession:</span>
-                    <span className="text-secondary font-bold">
-                      -₹{currentStudent.concession.toLocaleString("en-IN")}.00
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+                  <div className="bg-white p-2.5 border border-slate-200 rounded-xl space-y-1">
+                    <span className="text-[11px] font-bold text-slate-500">₹500 Notes</span>
+                    <input
+                      type="number"
+                      value={denoms.n500}
+                      onChange={(e) => setDenoms({ ...denoms, n500: Number(e.target.value) })}
+                      className="w-full bg-slate-50 px-2 py-1 font-bold text-[#3D405B] text-center rounded-lg border border-slate-200"
+                    />
+                    <span className="text-[11px] text-right block font-mono font-bold text-slate-700">
+                      = ₹{(denoms.n500 * 500).toLocaleString("en-IN")}
                     </span>
                   </div>
-                )}
-                <div className="flex justify-between items-center py-1 font-bold text-on-surface">
-                  <span className="text-[11px]">Net Payable Assessment:</span>
-                  <span>₹{currentStudent.netPayable.toLocaleString("en-IN")}.00</span>
-                </div>
-                <div className="flex justify-between items-center py-1 text-on-surface-variant text-[11px]">
-                  <span>Previously Cleared:</span>
-                  <span className="font-semibold text-primary">
-                    ₹{currentStudent.previouslyPaid.toLocaleString("en-IN")}.00
-                  </span>
-                </div>
 
-                <div className="h-px bg-[#cbd5e1] my-1"></div>
-
-                <div className="flex justify-between items-center py-1.5 bg-surface-container px-2 rounded-xs">
-                  <span className="font-bold text-on-surface uppercase text-[11px]">Outstanding Due Balance:</span>
-                  <span className="font-bold text-primary text-sm">
-                    ₹{currentStudent.outstandingBalance.toLocaleString("en-IN")}.00
-                  </span>
-                </div>
-
-                <div className="flex justify-between items-center py-1.5 bg-secondary-fixed/50 px-2 rounded-xs">
-                  <span className="font-bold text-primary uppercase text-[11px]">Payment Received Now:</span>
-                  <span className="font-bold text-primary text-sm">
-                    ₹{paymentAmount.toLocaleString("en-IN")}.00
-                  </span>
-                </div>
-
-                {/* Projected Balance Outcome */}
-                <div className="p-3 bg-surface-container-highest mt-1 rounded-xs flex flex-col gap-1">
-                  <div className="flex justify-between items-center">
-                    <span className="font-bold text-on-surface-variant uppercase text-[10px]">
-                      Projected Balance:
-                    </span>
-                    <span className="text-lg font-bold font-mono text-primary">
-                      ₹{projectedBalance.toLocaleString("en-IN")}.00
+                  <div className="bg-white p-2.5 border border-slate-200 rounded-xl space-y-1">
+                    <span className="text-[11px] font-bold text-slate-500">₹200 Notes</span>
+                    <input
+                      type="number"
+                      value={denoms.n200}
+                      onChange={(e) => setDenoms({ ...denoms, n200: Number(e.target.value) })}
+                      className="w-full bg-slate-50 px-2 py-1 font-bold text-[#3D405B] text-center rounded-lg border border-slate-200"
+                    />
+                    <span className="text-[11px] text-right block font-mono font-bold text-slate-700">
+                      = ₹{(denoms.n200 * 200).toLocaleString("en-IN")}
                     </span>
                   </div>
-                  <div className="flex items-center gap-1.5 pt-1 text-[10px] font-bold text-secondary">
-                    <CheckCircle2 className="h-3.5 w-3.5 text-[#047857]" />
-                    <span>
-                      {projectedBalance === 0
-                        ? "Ledger Status Post-Commit: FULLY CLEARED"
-                        : "Ledger Status Post-Commit: PARTIAL DUE REMAINING"}
+
+                  <div className="bg-white p-2.5 border border-slate-200 rounded-xl space-y-1">
+                    <span className="text-[11px] font-bold text-slate-500">₹100 Notes</span>
+                    <input
+                      type="number"
+                      value={denoms.n100}
+                      onChange={(e) => setDenoms({ ...denoms, n100: Number(e.target.value) })}
+                      className="w-full bg-slate-50 px-2 py-1 font-bold text-[#3D405B] text-center rounded-lg border border-slate-200"
+                    />
+                    <span className="text-[11px] text-right block font-mono font-bold text-slate-700">
+                      = ₹{(denoms.n100 * 100).toLocaleString("en-IN")}
+                    </span>
+                  </div>
+
+                  <div className="bg-white p-2.5 border border-slate-200 rounded-xl space-y-1">
+                    <span className="text-[11px] font-bold text-slate-500">₹50 Notes</span>
+                    <input
+                      type="number"
+                      value={denoms.n50}
+                      onChange={(e) => setDenoms({ ...denoms, n50: Number(e.target.value) })}
+                      className="w-full bg-slate-50 px-2 py-1 font-bold text-[#3D405B] text-center rounded-lg border border-slate-200"
+                    />
+                    <span className="text-[11px] text-right block font-mono font-bold text-slate-700">
+                      = ₹{(denoms.n50 * 50).toLocaleString("en-IN")}
                     </span>
                   </div>
                 </div>
-              </div>
 
-              {/* Progress Bar Representation */}
-              <div className="flex flex-col gap-1 pt-1 font-mono text-xs">
-                <div className="flex justify-between text-[11px] uppercase text-on-surface-variant">
-                  <span>Settlement Progress</span>
-                  <span className="font-bold text-primary">
-                    {Math.min(
-                      100,
-                      Math.round(
-                        ((currentStudent.previouslyPaid + paymentAmount) / currentStudent.netPayable) * 100
-                      )
-                    )}
-                    % Post-Payment
+                <div className="flex items-center justify-between pt-2 border-t border-slate-200 text-xs">
+                  <span className="text-slate-500">Counting Machine: #APX-CCM-02 (Verified)</span>
+                  <span className="font-bold text-[#3D405B]">
+                    Physical Tender Total: <strong className="text-emerald-700 text-sm font-mono">₹{cashTotal.toLocaleString("en-IN")}</strong>
                   </span>
                 </div>
-                <div className="w-full h-2.5 bg-surface-container flex overflow-hidden rounded-full">
-                  <div
-                    className="bg-primary-container h-full"
-                    style={{
-                      width: `${(currentStudent.previouslyPaid / currentStudent.netPayable) * 100}%`,
-                    }}
-                    title="Previously Paid"
-                  ></div>
-                  <div
-                    className="bg-secondary h-full"
-                    style={{
-                      width: `${(paymentAmount / currentStudent.netPayable) * 100}%`,
-                    }}
-                    title="Current Tender"
-                  ></div>
+              </div>
+            )}
+
+            {/* Mode Specific Panel: Electronic (UPI, POS, Bank) */}
+            {(paymentMode === "upi" || paymentMode === "pos" || paymentMode === "bank") && (
+              <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-3">
+                <span className="font-bold text-xs text-[#3D405B] block">
+                  {paymentMode === "upi"
+                    ? "UPI Reference Particulars"
+                    : paymentMode === "pos"
+                    ? "POS Card Authorization Particulars"
+                    : "NEFT / Direct Wire Particulars"}
+                </span>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                  <div className="space-y-1">
+                    <label className="text-slate-500 font-medium">Transaction UTR / Auth Reference</label>
+                    <input
+                      type="text"
+                      value={utrRef}
+                      onChange={(e) => setUtrRef(e.target.value)}
+                      className="w-full px-3 py-2 bg-white font-mono text-xs border border-slate-200 rounded-lg focus:outline-none focus:border-amber-600"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="text-slate-500 font-medium">Bank / Gateway Entity</label>
+                    <input
+                      type="text"
+                      value={bankEntity}
+                      onChange={(e) => setBankEntity(e.target.value)}
+                      className="w-full px-3 py-2 bg-white font-mono text-xs border border-slate-200 rounded-lg focus:outline-none focus:border-amber-600"
+                    />
+                  </div>
                 </div>
               </div>
+            )}
+
+            {/* Mode Specific Panel: Cheque */}
+            {paymentMode === "cheque" && (
+              <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-3">
+                <span className="font-bold text-xs text-[#3D405B] block">
+                  Cheque / Demand Draft Instrument Details
+                </span>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+                  <div className="space-y-1">
+                    <label className="text-slate-500 font-medium">Cheque / DD Number</label>
+                    <input
+                      type="text"
+                      value={chequeNo}
+                      onChange={(e) => setChequeNo(e.target.value)}
+                      className="w-full px-3 py-2 bg-white font-mono text-xs border border-slate-200 rounded-lg focus:outline-none focus:border-amber-600"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="text-slate-500 font-medium">Drawn Bank &amp; Branch</label>
+                    <input
+                      type="text"
+                      value={chequeBank}
+                      onChange={(e) => setChequeBank(e.target.value)}
+                      className="w-full px-3 py-2 bg-white text-xs border border-slate-200 rounded-lg focus:outline-none focus:border-amber-600"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="text-slate-500 font-medium">Instrument Date</label>
+                    <input
+                      type="date"
+                      value={chequeDate}
+                      onChange={(e) => setChequeDate(e.target.value)}
+                      className="w-full px-3 py-2 bg-white font-mono text-xs border border-slate-200 rounded-lg focus:outline-none focus:border-amber-600"
+                    />
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Remarks */}
+            <div className="space-y-1.5">
+              <label className="text-xs font-bold text-[#3D405B]">
+                Cashier Remarks &amp; Ledger Notes
+              </label>
+              <textarea
+                rows={2}
+                value={remarks}
+                onChange={(e) => setRemarks(e.target.value)}
+                className="w-full p-3 bg-slate-50 text-xs text-slate-800 border border-slate-200 rounded-xl focus:outline-none focus:border-amber-600"
+              />
             </div>
 
-            {/* Execution & Dispatch Preview Card */}
-            <div className="bg-surface-container-lowest p-4 border border-[#cbd5e1] shadow-xs rounded-sm flex flex-col gap-3 font-mono text-xs">
-              <div className="flex items-center justify-between pb-2 border-b border-[#cbd5e1]">
-                <div className="flex items-center gap-2">
-                  <Printer className="h-4 w-4 text-primary" />
-                  <span className="font-bold uppercase tracking-wider text-primary">
-                    Dispatch &amp; Vouchers
-                  </span>
-                </div>
-                <span className="px-2 py-0.5 bg-surface-container-high text-primary text-[10px] font-bold rounded-xs">
-                  READY TO POST
-                </span>
+            {/* Action Bar */}
+            <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-slate-100">
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setPaymentAmount(calculatedFromComponents);
+                    setRemarks("");
+                    showToast("Form fields reset to defaults.");
+                  }}
+                  className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-xl border border-slate-200 transition-colors cursor-pointer"
+                >
+                  Reset Form
+                </button>
+                <Link
+                  href="/accountant"
+                  className="px-4 py-2 bg-white hover:bg-slate-100 text-slate-600 text-xs font-semibold rounded-xl border border-slate-200 transition-colors"
+                >
+                  Cancel
+                </Link>
               </div>
 
-              {/* Next Generated Receipt Identifier */}
-              <div className="p-2.5 bg-surface-container-low border border-[#cbd5e1] rounded-xs flex flex-col gap-1">
-                <span className="text-[10px] text-on-surface-variant uppercase font-bold">
-                  Allocated System Receipt Number:
-                </span>
-                <div className="flex items-center justify-between">
-                  <span className="text-base text-primary font-bold tracking-wider">REC-2025-0843</span>
-                  <span className="px-1.5 py-0.2 bg-surface-container text-secondary text-[10px] rounded-xs">
-                    SERIES 2024-25
-                  </span>
-                </div>
-                <span className="text-[9px] text-on-surface-variant">
-                  Receipt sequence is locked and audited by Bursar Registrar Node.
-                </span>
-              </div>
-
-              {/* Multichannel Notification Pipeline */}
-              <div className="flex flex-col gap-2 pt-1 font-sans text-xs">
-                <span className="font-mono text-[10px] uppercase text-on-surface-variant font-bold">
-                  Automatic Notification Pipeline:
-                </span>
-                <label className="flex items-start gap-2 cursor-pointer">
-                  <input
-                    type="checkbox"
-                    checked={sendSMS}
-                    onChange={(e) => setSendSMS(e.target.checked)}
-                    className="mt-0.5 w-4 h-4 accent-primary rounded-none cursor-pointer"
-                  />
-                  <div className="flex flex-col">
-                    <span className="font-bold text-primary text-[11px]">SMS Receipt Confirmation</span>
-                    <span className="font-mono text-[10px] text-on-surface-variant">
-                      To Parent: {currentStudent.guardian.split(" ")[1] || "+91 98111 22334"} (NIC Gateway)
-                    </span>
-                  </div>
-                </label>
-
-                <label className="flex items-start gap-2 cursor-pointer">
-                  <input
-                    type="checkbox"
-                    checked={sendEmail}
-                    onChange={(e) => setSendEmail(e.target.checked)}
-                    className="mt-0.5 w-4 h-4 accent-primary rounded-none cursor-pointer"
-                  />
-                  <div className="flex flex-col">
-                    <span className="font-bold text-primary text-[11px]">Email Signed PDF Receipt</span>
-                    <span className="font-mono text-[10px] text-on-surface-variant">
-                      To Student: {currentStudent.email}
-                    </span>
-                  </div>
-                </label>
-
-                <label className="flex items-start gap-2 cursor-pointer">
-                  <input
-                    type="checkbox"
-                    checked={printVouchers}
-                    onChange={(e) => setPrintVouchers(e.target.checked)}
-                    className="mt-0.5 w-4 h-4 accent-primary rounded-none cursor-pointer"
-                  />
-                  <div className="flex flex-col">
-                    <span className="font-bold text-primary text-[11px]">Auto-Print Physical Vouchers</span>
-                    <span className="font-mono text-[10px] text-on-surface-variant">
-                      2 Copies (Thermal Till Print + Student A4 Counterfoil)
-                    </span>
-                  </div>
-                </label>
-              </div>
-
-              {/* Security Seal */}
-              <div className="p-2 bg-surface-container-high/60 border border-[#cbd5e1] rounded-xs flex items-center gap-2 text-on-surface-variant text-[10px]">
-                <ShieldCheck className="h-4 w-4 text-secondary shrink-0" />
-                <span className="leading-tight">
-                  SHA-256 Checksum will be stamped onto physical thermal voucher.
-                </span>
-              </div>
+              <button
+                type="button"
+                onClick={() => setIsConfirmModalOpen(true)}
+                className="inline-flex items-center gap-2 px-6 py-2.5 bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold rounded-xl shadow-xs transition-all cursor-pointer"
+              >
+                <ShieldCheck className="h-4 w-4" />
+                <span>Preview &amp; Process Payment</span>
+              </button>
             </div>
           </div>
         </div>
 
-        {/* Bottom Banner: Recent Counter Transactions */}
-        <div className="bg-surface-container-lowest p-4 border border-[#cbd5e1] shadow-xs rounded-sm flex flex-col gap-2 mt-2">
-          <div className="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-[#cbd5e1]">
-            <div className="flex items-center gap-2">
-              <History className="h-4 w-4 text-primary" />
-              <div className="flex items-baseline gap-2">
-                <span className="font-mono text-xs font-bold uppercase tracking-wider text-primary">
-                  Recent Counter Transactions (Today&apos;s Till #02 Batch)
+        {/* RIGHT COLUMN: Real-Time Ledger State (4 cols) */}
+        <div className="lg:col-span-4 space-y-6">
+          {/* Live Ledger Calculation Card */}
+          <div className="bg-white p-5 sm:p-6 rounded-2xl border border-slate-200 shadow-xs space-y-4">
+            <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+              <div className="flex items-center gap-2">
+                <Receipt className="h-4 w-4 text-amber-700" />
+                <h3 className="text-sm font-bold text-[#3D405B]">
+                  Real-Time Fee Ledger
+                </h3>
+              </div>
+              <span className="text-[11px] font-semibold text-slate-500">
+                Term IV (Even)
+              </span>
+            </div>
+
+            {/* Breakdown List */}
+            <div className="space-y-2 text-xs">
+              <div className="flex justify-between items-center text-slate-600">
+                <span>Gross Approved Fee:</span>
+                <span className="font-mono font-semibold text-slate-800">
+                  ₹{currentStudent.grossFee.toLocaleString("en-IN")}
                 </span>
-                <span className="font-mono text-secondary text-[11px]">LOGGED BY: RAJESH KUMAR</span>
+              </div>
+
+              {currentStudent.concession > 0 && (
+                <div className="flex justify-between items-center p-2 bg-amber-50 rounded-lg text-amber-900 font-semibold">
+                  <span>Merit Concession:</span>
+                  <span className="font-mono">
+                    -₹{currentStudent.concession.toLocaleString("en-IN")}
+                  </span>
+                </div>
+              )}
+
+              <div className="flex justify-between items-center font-bold text-[#3D405B]">
+                <span>Net Payable Obligation:</span>
+                <span className="font-mono">₹{currentStudent.netPayable.toLocaleString("en-IN")}</span>
+              </div>
+
+              <div className="flex justify-between items-center text-slate-500">
+                <span>Previously Cleared:</span>
+                <span className="font-mono text-emerald-700 font-semibold">
+                  ₹{currentStudent.previouslyPaid.toLocaleString("en-IN")}
+                </span>
+              </div>
+
+              <div className="pt-2 border-t border-slate-100 flex justify-between items-center font-bold">
+                <span className="text-slate-600">Current Outstanding:</span>
+                <span className="font-mono text-rose-600 text-sm">
+                  ₹{currentStudent.outstandingBalance.toLocaleString("en-IN")}
+                </span>
+              </div>
+
+              <div className="p-3 bg-amber-50/70 border border-amber-200 rounded-xl flex justify-between items-center">
+                <span className="font-bold text-amber-900">Payment Receiving Now:</span>
+                <span className="font-bold text-amber-800 font-mono text-base">
+                  ₹{paymentAmount.toLocaleString("en-IN")}
+                </span>
+              </div>
+
+              {/* Projected Balance Outcome */}
+              <div className="p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-1">
+                <div className="flex justify-between items-center">
+                  <span className="text-[11px] font-bold text-slate-500 uppercase">
+                    Projected Balance:
+                  </span>
+                  <span className="text-base font-bold font-mono text-[#3D405B]">
+                    ₹{projectedBalance.toLocaleString("en-IN")}
+                  </span>
+                </div>
+                <div className="flex items-center gap-1.5 text-[11px] font-semibold text-emerald-700">
+                  <CheckCircle2 className="h-3.5 w-3.5 text-emerald-600" />
+                  <span>
+                    {projectedBalance === 0
+                      ? "Status Post-Payment: FULLY CLEARED"
+                      : "Status Post-Payment: PARTIAL DUE REMAINING"}
+                  </span>
+                </div>
               </div>
             </div>
-            <div className="flex items-center gap-4 font-mono text-xs">
-              <span className="text-on-surface-variant text-[11px]">
-                34 RECEIPTS ISSUED TODAY • TOTAL CASH: ₹4,18,500
-              </span>
-              <Link
-                href="/accountant/payment-history"
-                className="font-bold text-primary hover:underline flex items-center gap-1 uppercase"
-              >
-                <span>Full Day Log</span>
-                <ArrowRight className="h-3 w-3" />
-              </Link>
+
+            {/* Progress Bar Representation */}
+            <div className="space-y-1.5 pt-1 text-xs">
+              <div className="flex justify-between text-[11px] text-slate-500">
+                <span>Settlement Progress</span>
+                <span className="font-bold text-slate-800">
+                  {Math.min(
+                    100,
+                    Math.round(
+                      ((currentStudent.previouslyPaid + paymentAmount) / currentStudent.netPayable) * 100
+                    )
+                  )}
+                  % Post-Payment
+                </span>
+              </div>
+              <div className="w-full h-2.5 bg-slate-100 flex overflow-hidden rounded-full">
+                <div
+                  className="bg-blue-600 h-full"
+                  style={{
+                    width: `${(currentStudent.previouslyPaid / currentStudent.netPayable) * 100}%`,
+                  }}
+                  title="Previously Paid"
+                ></div>
+                <div
+                  className="bg-amber-600 h-full"
+                  style={{
+                    width: `${(paymentAmount / currentStudent.netPayable) * 100}%`,
+                  }}
+                  title="Current Tender"
+                ></div>
+              </div>
             </div>
           </div>
 
-          <div className="overflow-x-auto">
-            <table className="w-full text-left font-mono text-xs">
-              <thead>
-                <tr className="bg-surface-container-low text-on-surface-variant font-bold uppercase tracking-wider text-[11px] border-b border-[#cbd5e1]">
-                  <th className="py-2 px-3">Time / Receipt No</th>
-                  <th className="py-2 px-3">Student Identifier</th>
-                  <th className="py-2 px-3">Department &amp; Sem</th>
-                  <th className="py-2 px-3">Payment Tender</th>
-                  <th className="py-2 px-3 text-right">Amount (INR)</th>
-                  <th className="py-2 px-3 text-center">Audit Status</th>
-                  <th className="py-2 px-3 text-right">Actions</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-surface-container text-on-surface">
-                {recentBatch.map((txn, idx) => (
-                  <tr key={idx} className="hover:bg-surface-container-low transition-colors">
-                    <td className="py-2 px-3 font-bold text-primary">
-                      {txn.time} <span className="text-secondary ml-1 font-normal">#{txn.receiptNo}</span>
-                    </td>
-                    <td className="py-2 px-3">
-                      <span className="font-bold font-sans text-on-surface">{txn.studentName}</span>
-                      <span className="text-on-surface-variant text-[11px] block">{txn.roll}</span>
-                    </td>
-                    <td className="py-2 px-3 text-on-surface-variant">{txn.course}</td>
-                    <td className="py-2 px-3 font-semibold text-primary">{txn.mode}</td>
-                    <td className="py-2 px-3 text-right font-bold text-primary">
-                      ₹{txn.amount.toLocaleString("en-IN")}.00
-                    </td>
-                    <td className="py-2 px-3 text-center">
-                      <span className="px-1.5 py-0.5 bg-secondary-fixed text-on-secondary-fixed-variant text-[10px] font-bold uppercase rounded-xs">
-                        {txn.status}
-                      </span>
-                    </td>
-                    <td className="py-2 px-3 text-right">
-                      <button
-                        onClick={() => showToast(`Reprinting receipt ${txn.receiptNo} on Till #02 thermal spooler...`)}
-                        className="px-2 py-1 bg-surface-container-high hover:bg-surface-variant text-primary font-mono text-[10px] uppercase font-bold rounded-xs inline-flex items-center gap-1 cursor-pointer"
-                      >
-                        <Printer className="h-3 w-3" />
-                        Reprint Slip
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          {/* Notification & Dispatch Pipeline */}
+          <div className="bg-white p-5 sm:p-6 rounded-2xl border border-slate-200 shadow-xs space-y-3.5">
+            <div className="flex items-center justify-between pb-2 border-b border-slate-100">
+              <div className="flex items-center gap-2">
+                <Printer className="h-4 w-4 text-amber-700" />
+                <h3 className="text-sm font-bold text-[#3D405B]">
+                  Dispatch &amp; Vouchers
+                </h3>
+              </div>
+              <span className="px-2 py-0.5 bg-emerald-50 text-emerald-700 text-[10px] font-bold rounded-full">
+                READY TO POST
+              </span>
+            </div>
+
+            <div className="p-3 bg-slate-50 rounded-xl border border-slate-200 space-y-1">
+              <span className="text-[10px] text-slate-400 font-bold uppercase">
+                Allocated System Receipt ID:
+              </span>
+              <div className="flex items-center justify-between">
+                <span className="text-base text-blue-600 font-mono font-bold">REC-2025-0843</span>
+                <span className="text-[10px] bg-slate-200 px-2 py-0.5 rounded-md font-semibold text-slate-700">
+                  SERIES 2024-25
+                </span>
+              </div>
+            </div>
+
+            <div className="space-y-2.5 text-xs">
+              <label className="flex items-start gap-2.5 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={sendSMS}
+                  onChange={(e) => setSendSMS(e.target.checked)}
+                  className="mt-0.5 w-4 h-4 accent-amber-600 rounded cursor-pointer"
+                />
+                <div>
+                  <span className="font-bold text-slate-800 block text-[11px]">SMS Receipt Confirmation</span>
+                  <span className="text-[10px] text-slate-500">
+                    To Guardian: {currentStudent.guardian.split(" ")[1] || "+91 98111 22334"}
+                  </span>
+                </div>
+              </label>
+
+              <label className="flex items-start gap-2.5 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={sendEmail}
+                  onChange={(e) => setSendEmail(e.target.checked)}
+                  className="mt-0.5 w-4 h-4 accent-amber-600 rounded cursor-pointer"
+                />
+                <div>
+                  <span className="font-bold text-slate-800 block text-[11px]">Email PDF Receipt</span>
+                  <span className="text-[10px] text-slate-500">
+                    To Student: {currentStudent.email}
+                  </span>
+                </div>
+              </label>
+
+              <label className="flex items-start gap-2.5 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={printVouchers}
+                  onChange={(e) => setPrintVouchers(e.target.checked)}
+                  className="mt-0.5 w-4 h-4 accent-amber-600 rounded cursor-pointer"
+                />
+                <div>
+                  <span className="font-bold text-slate-800 block text-[11px]">Print Counter Foil</span>
+                  <span className="text-[10px] text-slate-500">
+                    Direct trigger to Till #02 thermal spooler
+                  </span>
+                </div>
+              </label>
+            </div>
+
+            <div className="p-2.5 bg-slate-50 rounded-xl border border-slate-200 flex items-center gap-2 text-[10px] text-slate-500">
+              <ShieldCheck className="h-4 w-4 text-emerald-600 shrink-0" />
+              <span>SHA-256 cryptographically stamped on thermal receipt voucher.</span>
+            </div>
           </div>
+        </div>
+      </div>
+
+      {/* Bottom Section: Recent Counter Transactions */}
+      <div className="bg-white p-5 sm:p-6 rounded-2xl border border-slate-200 shadow-xs space-y-4">
+        <div className="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-slate-100">
+          <div className="flex items-center gap-2.5">
+            <History className="h-4 w-4 text-amber-700" />
+            <div>
+              <h3 className="text-sm font-bold text-[#3D405B]">
+                Recent Counter Transactions (Today&apos;s Till #02 Batch)
+              </h3>
+              <p className="text-xs text-slate-500">34 Receipts Issued Today &bull; Total Cash: ₹4,18,500</p>
+            </div>
+          </div>
+
+          <Link
+            href="/accountant/payment-history"
+            className="text-xs font-semibold text-amber-700 hover:text-amber-800 flex items-center gap-1"
+          >
+            <span>View Full Day Log</span>
+            <ArrowRight className="h-3.5 w-3.5" />
+          </Link>
+        </div>
+
+        <div className="overflow-x-auto rounded-xl border border-slate-200/80">
+          <table className="w-full text-left text-xs">
+            <thead>
+              <tr className="bg-slate-50 text-slate-600 font-bold border-b border-slate-200">
+                <th className="py-3 px-4">Time / Receipt No</th>
+                <th className="py-3 px-4">Student</th>
+                <th className="py-3 px-4">Department &amp; Sem</th>
+                <th className="py-3 px-4">Payment Tender</th>
+                <th className="py-3 px-4 text-right">Amount (INR)</th>
+                <th className="py-3 px-4 text-center">Status</th>
+                <th className="py-3 px-4 text-right">Action</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-100 font-sans">
+              {recentBatch.map((txn, idx) => (
+                <tr key={idx} className="hover:bg-slate-50/80 transition-colors">
+                  <td className="py-3 px-4 font-mono font-bold text-blue-600">
+                    {txn.time} <span className="text-slate-400 font-normal">#{txn.receiptNo}</span>
+                  </td>
+                  <td className="py-3 px-4">
+                    <span className="font-bold text-[#3D405B] block">{txn.studentName}</span>
+                    <span className="text-[11px] text-slate-500 font-mono">{txn.roll}</span>
+                  </td>
+                  <td className="py-3 px-4 text-slate-600">{txn.course}</td>
+                  <td className="py-3 px-4 font-semibold text-slate-800">{txn.mode}</td>
+                  <td className="py-3 px-4 text-right font-bold text-[#3D405B] font-mono">
+                    ₹{txn.amount.toLocaleString("en-IN")}
+                  </td>
+                  <td className="py-3 px-4 text-center">
+                    <span className="px-2 py-0.5 bg-emerald-50 text-emerald-700 text-[10px] font-bold rounded-full border border-emerald-200">
+                      {txn.status}
+                    </span>
+                  </td>
+                  <td className="py-3 px-4 text-right">
+                    <button
+                      onClick={() => {
+                        setGeneratedReceipt(txn);
+                      }}
+                      className="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-lg inline-flex items-center gap-1 cursor-pointer transition-colors"
+                    >
+                      <Printer className="h-3 w-3 text-slate-500" />
+                      <span>Print Slip</span>
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
 
       {/* CONFIRMATION MODAL */}
       {isConfirmModalOpen && (
-        <div className="fixed inset-0 z-50 bg-[#3D405B]/60 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-surface-container-lowest max-w-xl w-full border-2 border-primary shadow-2xl p-6 flex flex-col gap-4 animate-in fade-in zoom-in-95 duration-150">
-            <div className="flex items-start justify-between pb-3 border-b border-[#cbd5e1]">
-              <div>
-                <span className="font-mono text-[10px] uppercase text-secondary font-bold">
-                  BURSAR IMMUTABLE AUDIT CONFIRMATION
-                </span>
-                <h2 className="text-lg font-bold uppercase text-primary">
-                  Commit Payment To General Ledger?
-                </h2>
+        <div className="fixed inset-0 z-50 bg-[#3D405B]/50 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4">
+          <div className="bg-white max-w-lg w-full rounded-2xl border border-slate-200 shadow-2xl p-5 sm:p-6 flex flex-col gap-4 animate-in fade-in zoom-in-95 duration-150">
+            <div className="flex items-start justify-between pb-3 border-b border-slate-100">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center font-bold">
+                  <ShieldCheck className="w-5 h-5 text-amber-700" />
+                </div>
+                <div>
+                  <h3 className="text-base font-bold text-[#3D405B]">
+                    Commit Payment To General Ledger?
+                  </h3>
+                  <span className="text-xs text-slate-500">
+                    Bursar Immutable Audit Confirmation
+                  </span>
+                </div>
               </div>
               <button
                 onClick={() => setIsConfirmModalOpen(false)}
-                className="text-outline hover:text-primary p-1 cursor-pointer"
+                className="text-slate-400 hover:text-slate-700 p-1 rounded-lg cursor-pointer"
               >
                 <X className="h-5 w-5" />
               </button>
             </div>
 
-            <div className="bg-surface-container-low p-4 border border-[#cbd5e1] rounded-xs font-mono text-xs space-y-2">
+            <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 text-xs space-y-2">
               <div className="flex justify-between">
-                <span className="text-on-surface-variant">Receipt No:</span>
-                <span className="font-bold text-primary">REC-2025-0843 (AUTO-GENERATED)</span>
+                <span className="text-slate-500">Allocated Receipt:</span>
+                <span className="font-bold text-blue-600 font-mono">REC-2025-0843 (AUTO-GENERATED)</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-on-surface-variant">Student:</span>
-                <span className="font-bold text-on-surface">
+                <span className="text-slate-500">Student:</span>
+                <span className="font-bold text-[#3D405B]">
                   {currentStudent.name} ({currentStudent.roll})
                 </span>
               </div>
-              <div className="flex justify-between text-sm">
-                <span className="text-on-surface-variant">Total Amount Received:</span>
-                <span className="font-bold text-primary text-base">
-                  ₹{paymentAmount.toLocaleString("en-IN")}.00
+              <div className="flex justify-between items-center pt-1 border-t border-slate-200">
+                <span className="text-slate-600 font-bold">Total Amount Receiving:</span>
+                <span className="font-bold text-emerald-700 font-mono text-base">
+                  ₹{paymentAmount.toLocaleString("en-IN")}
                 </span>
               </div>
               <div className="flex justify-between">
-                <span className="text-on-surface-variant">Tender Mode:</span>
-                <span className="font-bold text-secondary uppercase">{paymentMode} (COUNTER SPECIFIED)</span>
+                <span className="text-slate-500">Tender Mode:</span>
+                <span className="font-semibold text-slate-800 uppercase">{paymentMode} (Counter Verified)</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-on-surface-variant">Cashier:</span>
-                <span>Rajesh Kumar (EMP-FIN-2016-309)</span>
+                <span className="text-slate-500">Cashier:</span>
+                <span className="font-semibold text-slate-700">Mr. Rajesh Kumar (Till #02)</span>
               </div>
-              <div className="flex justify-between pt-2 border-t border-[#cbd5e1] font-bold">
-                <span className="text-on-surface-variant">Final Student Balance:</span>
-                <span className="text-primary">
-                  ₹{projectedBalance.toLocaleString("en-IN")}.00{" "}
+              <div className="flex justify-between pt-1 border-t border-slate-200">
+                <span className="text-slate-600">Remaining Due Balance:</span>
+                <span className="font-bold text-[#3D405B] font-mono">
+                  ₹{projectedBalance.toLocaleString("en-IN")}{" "}
                   {projectedBalance === 0 ? "(TERM FULLY CLEARED)" : "(PARTIAL DUE)"}
                 </span>
               </div>
             </div>
 
-            <div className="p-2.5 bg-surface-container border border-[#cbd5e1] text-[11px] font-mono text-on-surface-variant rounded-xs">
-              <strong className="text-primary">LEGAL NOTICE:</strong> Once committed, this receipt is irrevocable under Financial Bylaws Sec 4.4. A reversing adjustment voucher will require Directorate Level 3 Authorization.
+            <div className="p-3 bg-amber-50 rounded-xl border border-amber-200 text-[11px] text-amber-900 leading-relaxed">
+              <strong>Notice:</strong> Once posted, this receipt is registered on the permanent institutional ledger and cannot be deleted.
             </div>
 
-            <div className="flex items-center justify-end gap-2 pt-2 border-t border-[#cbd5e1]">
+            <div className="flex items-center justify-end gap-2.5 pt-2 border-t border-slate-100">
               <button
                 type="button"
                 onClick={() => setIsConfirmModalOpen(false)}
-                className="px-4 py-2 border border-[#cbd5e1] text-xs font-mono font-bold uppercase hover:bg-surface-container"
+                className="px-4 py-2 border border-slate-200 text-xs font-semibold text-slate-700 hover:bg-slate-100 rounded-xl cursor-pointer"
               >
                 Back / Edit
               </button>
               <button
                 type="button"
                 onClick={handleFinalizePayment}
-                className="px-5 py-2 bg-primary text-on-primary text-xs font-mono font-bold uppercase tracking-wider flex items-center gap-1.5 hover:bg-primary-container shadow-md"
+                className="px-5 py-2 bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold rounded-xl flex items-center gap-1.5 transition-all shadow-xs cursor-pointer"
               >
                 <Printer className="h-4 w-4" />
-                <span>Confirm, Post &amp; Print Slip</span>
+                <span>Confirm &amp; Generate Voucher</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* GENERATED / REPRINT THERMAL VOUCHER MODAL */}
+      {generatedReceipt && (
+        <div className="fixed inset-0 z-50 bg-[#3D405B]/50 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4">
+          <div className="bg-white max-w-lg w-full rounded-2xl border border-slate-200 shadow-2xl p-5 sm:p-6 flex flex-col gap-4 animate-in fade-in zoom-in-95 duration-150">
+            <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+              <div className="flex items-center gap-2.5">
+                <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold">
+                  <Receipt className="w-5 h-5 text-emerald-600" />
+                </div>
+                <div>
+                  <h3 className="text-base font-bold text-[#3D405B]">
+                    Fee Receipt Voucher
+                  </h3>
+                  <span className="text-xs text-blue-600 font-mono font-semibold">
+                    {generatedReceipt.receiptNo}
+                  </span>
+                </div>
+              </div>
+              <button
+                onClick={() => setGeneratedReceipt(null)}
+                className="p-1 hover:bg-slate-100 rounded-lg text-slate-400 hover:text-slate-700 transition-colors cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Voucher Body (Thermal Stylized) */}
+            <div className="bg-slate-50 p-4 sm:p-5 rounded-xl border border-slate-200 text-xs space-y-3.5">
+              <div className="text-center border-b border-slate-200 pb-2.5">
+                <div className="text-sm font-bold text-[#3D405B] tracking-tight">
+                  Apex Institute of Technology &amp; Management
+                </div>
+                <div className="text-slate-500 text-[11px] font-medium">
+                  Central Accounts &amp; Bursar Directorate &bull; Official Voucher
+                </div>
+                <div className="text-slate-400 text-[10px] font-mono mt-0.5">
+                  GSTIN: 07AAAAA0000A1Z5 &bull; Till Counter #02
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3 text-xs">
+                <div>
+                  <span className="text-slate-400 block text-[10px] font-medium">
+                    Student Name:
+                  </span>
+                  <span className="font-bold text-[#3D405B]">
+                    {generatedReceipt.studentName}
+                  </span>
+                </div>
+                <div>
+                  <span className="text-slate-400 block text-[10px] font-medium">
+                    Roll Number:
+                  </span>
+                  <span className="font-bold text-blue-600 font-mono">
+                    {generatedReceipt.roll}
+                  </span>
+                </div>
+                <div>
+                  <span className="text-slate-400 block text-[10px] font-medium">
+                    Program &amp; Term:
+                  </span>
+                  <span className="text-slate-700 font-semibold">
+                    {generatedReceipt.course}
+                  </span>
+                </div>
+                <div>
+                  <span className="text-slate-400 block text-[10px] font-medium">
+                    Timestamp:
+                  </span>
+                  <span className="text-slate-700 font-mono">
+                    {generatedReceipt.time}
+                  </span>
+                </div>
+                <div>
+                  <span className="text-slate-400 block text-[10px] font-medium">
+                    Payment Mode:
+                  </span>
+                  <span className="font-bold text-slate-800">
+                    {generatedReceipt.mode}
+                  </span>
+                </div>
+                <div>
+                  <span className="text-slate-400 block text-[10px] font-medium">
+                    Audit Status:
+                  </span>
+                  <span className="font-bold text-emerald-700">
+                    {generatedReceipt.status}
+                  </span>
+                </div>
+              </div>
+
+              {/* Amount Box */}
+              <div className="p-3 bg-white rounded-xl border border-slate-200 flex items-center justify-between">
+                <div>
+                  <span className="text-slate-500 block text-[10px]">Total Paid:</span>
+                  <span className="text-lg font-bold font-mono text-emerald-700">
+                    ₹{generatedReceipt.amount.toLocaleString("en-IN")}
+                  </span>
+                </div>
+                <div className="text-right">
+                  <span className="text-[10px] text-slate-400 block">Operator:</span>
+                  <span className="font-semibold text-slate-700 text-xs">Rajesh Kumar</span>
+                </div>
+              </div>
+
+              {/* Verification Stamp */}
+              <div className="flex items-center justify-between p-2.5 bg-emerald-50 rounded-lg border border-emerald-200 text-emerald-800 text-[11px]">
+                <div className="flex items-center gap-2">
+                  <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
+                  <span>Digitally Reconciled by Bursar Cashier</span>
+                </div>
+                <span className="font-mono font-bold text-[10px]">VERIFIED</span>
+              </div>
+            </div>
+
+            <div className="flex items-center justify-end gap-2.5 pt-2 border-t border-slate-100">
+              <button
+                onClick={() => setGeneratedReceipt(null)}
+                className="px-4 py-2 border border-slate-200 text-xs font-semibold text-slate-700 hover:bg-slate-100 rounded-xl transition-colors cursor-pointer"
+              >
+                Close
+              </button>
+              <button
+                onClick={() => {
+                  showToast(`Voucher ${generatedReceipt.receiptNo} sent to counter printer!`);
+                  window.print();
+                }}
+                className="px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold rounded-xl flex items-center gap-1.5 transition-all shadow-xs cursor-pointer"
+              >
+                <Printer className="w-3.5 h-3.5" />
+                <span>Print Thermal Voucher</span>
               </button>
             </div>
           </div>
@@ -1183,7 +1320,7 @@ export default function RecordPaymentPage() {
   return (
     <Suspense
       fallback={
-        <div className="p-8 text-center font-mono text-sm text-secondary">
+        <div className="p-8 text-center text-sm text-slate-500">
           Loading Cashier Point-of-Sale Register...
         </div>
       }
@@ -1192,4 +1329,3 @@ export default function RecordPaymentPage() {
     </Suspense>
   );
 }
-

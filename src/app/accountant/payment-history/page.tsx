@@ -16,18 +16,20 @@ import {
   Eye,
   X,
   CreditCard,
-  Banknote,
   Building2,
   Check,
   AlertCircle,
   Copy,
   Mail,
-  MessageSquare,
   ShieldCheck,
   QrCode,
   Calendar,
   Layers,
   ChevronRight,
+  Coins,
+  FileText,
+  User,
+  ExternalLink,
 } from "lucide-react";
 
 interface TransactionRecord {
@@ -69,7 +71,7 @@ const mockTransactions: TransactionRecord[] = [
     amount: 27500,
     tenderMode: "UPI",
     refNo: "UPI-REF-90281923",
-    cashierTill: "Till #02 (P. Sharma)",
+    cashierTill: "Till #02 (R. Kumar)",
     status: "Cleared",
     details: {
       tuition: 20000,
@@ -94,7 +96,7 @@ const mockTransactions: TransactionRecord[] = [
     amount: 40000,
     tenderMode: "Cheque",
     refNo: "CHQ-778901 (SBI)",
-    cashierTill: "Till #02 (P. Sharma)",
+    cashierTill: "Till #02 (R. Kumar)",
     status: "Clearing",
     details: {
       tuition: 35000,
@@ -119,7 +121,7 @@ const mockTransactions: TransactionRecord[] = [
     amount: 25000,
     tenderMode: "Cash",
     refNo: "CASH-TILL02-5509",
-    cashierTill: "Till #02 (P. Sharma)",
+    cashierTill: "Till #02 (R. Kumar)",
     status: "Cleared",
     details: {
       tuition: 25000,
@@ -194,7 +196,7 @@ const mockTransactions: TransactionRecord[] = [
     amount: 50000,
     tenderMode: "UPI",
     refNo: "UPI-REF-90281144",
-    cashierTill: "Till #02 (P. Sharma)",
+    cashierTill: "Till #02 (R. Kumar)",
     status: "Cleared",
     details: {
       tuition: 45000,
@@ -260,17 +262,15 @@ const mockTransactions: TransactionRecord[] = [
 ];
 
 export default function AccountantPaymentHistoryPage() {
-  const [transactions, setTransactions] = useState<TransactionRecord[]>(mockTransactions);
+  const [transactions] = useState<TransactionRecord[]>(mockTransactions);
   const [searchQuery, setSearchQuery] = useState("");
   const [modeFilter, setModeFilter] = useState("ALL");
   const [dateFilter, setDateFilter] = useState("ALL");
   const [tillFilter, setTillFilter] = useState("ALL");
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
-  // Slideout drawer state
+  // Drawer / Modal state
   const [drawerTxn, setDrawerTxn] = useState<TransactionRecord | null>(null);
-
-  // Tally export modal state
   const [isTallyModalOpen, setIsTallyModalOpen] = useState(false);
 
   const showToast = (msg: string) => {
@@ -293,157 +293,226 @@ export default function AccountantPaymentHistoryPage() {
     return true;
   });
 
+  const handleExportCSV = () => {
+    const csvHeader =
+      "Voucher ID,Timestamp,Candidate,Roll No,Course,Fee Heads,Amount (INR),Tender Mode,Ref No,Cashier Till,Status\n";
+    const csvRows = filteredTransactions
+      .map(
+        (t) =>
+          `"${t.receiptNo}","${t.timestamp}","${t.studentName}","${t.rollNo}","${t.course}","${t.feeHeads}",${t.amount},"${t.tenderMode}","${t.refNo}","${t.cashierTill}","${t.status}"`
+      )
+      .join("\n");
+    const blob = new Blob([csvHeader + csvRows], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", `transaction_journal_${new Date().toISOString().slice(0, 10)}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    showToast("Daybook transaction journal exported as CSV!");
+  };
+
   return (
-    <div className="flex flex-col w-full pb-16 font-body text-on-surface">
+    <div className="p-4 sm:p-6 md:p-8 space-y-6 max-w-[1600px] mx-auto font-sans text-slate-800">
       {/* Toast Notification */}
       {toastMessage && (
-        <div className="fixed bottom-6 right-6 z-50 bg-primary-container text-on-primary px-4 py-3 shadow-lg flex items-center gap-2 border border-secondary font-mono text-xs animate-in slide-in-from-bottom">
-          <CheckCircle2 className="w-4 h-4 text-secondary-container" />
+        <div className="fixed bottom-6 right-6 z-50 bg-[#3D405B] text-white px-5 py-3.5 rounded-2xl shadow-2xl flex items-center gap-3 border border-slate-600 text-xs sm:text-sm font-semibold animate-in slide-in-from-bottom duration-200">
+          <CheckCircle2 className="h-5 w-5 text-emerald-400 shrink-0" />
           <span>{toastMessage}</span>
+          <button
+            onClick={() => setToastMessage(null)}
+            className="ml-2 text-slate-400 hover:text-white p-1 rounded-lg"
+          >
+            <X className="h-4 w-4" />
+          </button>
         </div>
       )}
 
-      {/* Top Breadcrumb & Executive Actions */}
-      <div className="bg-surface-container-lowest p-4 mb-4 shadow-xs border border-[#d5e3fc]">
-        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3">
-          <div className="flex flex-col">
-            <div className="flex items-center gap-1 font-mono text-[11px] text-secondary uppercase tracking-wider mb-1">
-              <span>Accounts &amp; Bursar Portal</span>
-              <span className="text-outline-variant">/</span>
+      {/* Top Header Banner */}
+      <div className="bg-white rounded-2xl p-5 sm:p-6 md:p-7 border border-slate-200 shadow-xs relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-96 h-full bg-gradient-to-l from-amber-50/70 via-blue-50/40 to-transparent pointer-events-none"></div>
+
+        <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+          <div className="space-y-2">
+            <div className="flex items-center gap-2 text-xs text-slate-500 font-medium">
+              <Link href="/accountant" className="text-amber-700 hover:underline">
+                Accounts Directorate
+              </Link>
+              <span>/</span>
               <span>Transaction Auditing</span>
-              <span className="text-outline-variant">/</span>
-              <span className="text-primary font-bold">Cashier Daybook Journal</span>
+              <span>/</span>
+              <span className="text-[#3D405B] font-bold">Cashier Daybook Journal</span>
             </div>
-            <div className="flex items-center gap-3">
-              <h1 className="text-xl font-bold font-headline text-primary tracking-tight">
-                Transaction Journal &amp; Fee Collection Daybook
-              </h1>
-              <span className="px-2 py-0.5 bg-secondary-container text-primary font-mono text-[11px] font-bold border border-[#a8c4f0]">
-                1,842 VOUCHERS RECORDED
-              </span>
+
+            <div>
+              <div className="flex flex-wrap items-center gap-2.5">
+                <h1 className="text-2xl sm:text-3xl font-bold text-[#3D405B] tracking-tight">
+                  Transaction Journal &amp; Fee Collection Daybook 📊
+                </h1>
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-amber-50 text-amber-800 text-xs font-semibold rounded-full border border-amber-200">
+                  1,842 Vouchers Recorded
+                </span>
+              </div>
+              <p className="text-xs sm:text-sm text-slate-500 mt-1">
+                Audited financial log of physical and electronic fee intakes, clearance timestamps, and ledger realization hashes.
+              </p>
             </div>
           </div>
 
-          {/* Top Actions */}
-          <div className="flex flex-wrap items-center gap-2">
+          {/* Action Buttons */}
+          <div className="flex flex-wrap items-center gap-2.5">
             <button
               onClick={() => setIsTallyModalOpen(true)}
-              type="button"
-              className="flex items-center gap-1.5 px-3 py-1.5 bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-mono text-xs uppercase tracking-wider transition-colors border border-[#cbd5e1] font-semibold cursor-pointer"
+              className="inline-flex items-center gap-2 px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-xl border border-slate-200 shadow-2xs transition-all cursor-pointer"
             >
-              <FileCode className="w-3.5 h-3.5 text-secondary" />
-              <span>Export to Tally XML</span>
+              <FileCode className="w-4 h-4 text-amber-700" />
+              <span>Export Tally XML</span>
             </button>
             <button
-              onClick={() => showToast("Exported 1,842 ledger lines to Excel (.xlsx)")}
-              type="button"
-              className="flex items-center gap-1.5 px-3 py-1.5 bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-mono text-xs uppercase tracking-wider transition-colors border border-[#cbd5e1] font-semibold cursor-pointer"
+              onClick={handleExportCSV}
+              className="inline-flex items-center gap-2 px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-xl border border-slate-200 shadow-2xs transition-all cursor-pointer"
             >
-              <FileSpreadsheet className="w-3.5 h-3.5 text-secondary" />
-              <span>Download Excel (.xlsx)</span>
+              <Download className="w-4 h-4 text-slate-600" />
+              <span>Download CSV</span>
             </button>
             <button
               onClick={() => window.print()}
-              type="button"
-              className="flex items-center gap-1.5 px-3 py-1.5 bg-primary text-on-primary hover:bg-primary/95 font-mono text-xs uppercase tracking-wider transition-colors font-bold shadow-xs cursor-pointer"
+              className="inline-flex items-center gap-2 px-4 py-2.5 bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold rounded-xl shadow-xs transition-all cursor-pointer"
             >
-              <Printer className="w-3.5 h-3.5" />
-              <span>Print Daybook Journal</span>
+              <Printer className="w-4 h-4" />
+              <span>Print Daybook</span>
             </button>
           </div>
         </div>
       </div>
 
-      {/* Key Telemetry Metrics (4 Cards) */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-4 font-mono">
-        <div className="bg-surface-container-lowest p-3 border border-[#d5e3fc] shadow-xs flex items-center justify-between">
-          <div className="flex flex-col">
-            <span className="text-[10px] text-on-surface-variant uppercase tracking-wider font-semibold">
-              Total Gross Realized
-            </span>
-            <span className="text-xl font-bold text-primary">₹4,18,45,000</span>
-            <span className="text-[10px] text-on-surface-variant mt-0.5">FY 2025-26 to Date</span>
+      {/* 4 Telemetry Metric Cards */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        {/* Card 1 */}
+        <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs hover:shadow-sm transition-all flex flex-col justify-between">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-semibold text-slate-500">Total Gross Realized</span>
+            <div className="w-9 h-9 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center">
+              <Building2 className="w-4 h-4" />
+            </div>
           </div>
-          <div className="p-2.5 bg-surface-container text-secondary">
-            <Banknote className="w-5 h-5" />
+          <div className="mt-3">
+            <div className="text-2xl font-bold text-[#3D405B] tracking-tight font-mono">
+              ₹4,18,45,000
+            </div>
+            <div className="text-xs text-purple-700 font-semibold mt-1">
+              FY 2025-26 to Date
+            </div>
           </div>
-        </div>
-
-        <div className="bg-surface-container-lowest p-3 border border-[#d5e3fc] shadow-xs flex items-center justify-between">
-          <div className="flex flex-col">
-            <span className="text-[10px] text-on-surface-variant uppercase tracking-wider font-semibold">
-              Today's Counter Intake
-            </span>
-            <span className="text-xl font-bold text-primary">₹3,85,000</span>
-            <span className="text-[10px] text-emerald-700 font-semibold mt-0.5">Till Session Active</span>
-          </div>
-          <div className="p-2.5 bg-surface-container text-secondary">
-            <Clock className="w-5 h-5" />
+          <div className="pt-2.5 mt-2.5 border-t border-slate-100 text-xs text-slate-500 flex justify-between">
+            <span>Annual Billed Target</span>
+            <span className="font-semibold text-slate-700">90.0% Realized</span>
           </div>
         </div>
 
-        <div className="bg-surface-container-lowest p-3 border border-[#d5e3fc] shadow-xs flex items-center justify-between">
-          <div className="flex flex-col">
-            <span className="text-[10px] text-on-surface-variant uppercase tracking-wider font-semibold">
-              Reconciled Transactions
-            </span>
-            <span className="text-xl font-bold text-primary">1,842 Slips</span>
-            <span className="text-[10px] text-emerald-700 font-semibold mt-0.5">98.6% Settlement</span>
+        {/* Card 2 */}
+        <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs hover:shadow-sm transition-all flex flex-col justify-between">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-semibold text-slate-500">Today&apos;s Counter Intake</span>
+            <div className="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
+              <Clock className="w-4 h-4" />
+            </div>
           </div>
-          <div className="p-2.5 bg-surface-container text-secondary">
-            <CheckCircle2 className="w-5 h-5" />
+          <div className="mt-3">
+            <div className="text-2xl font-bold text-[#3D405B] tracking-tight font-mono">
+              ₹3,85,000
+            </div>
+            <div className="text-xs text-emerald-600 font-bold mt-1">
+              +14.2% vs yesterday
+            </div>
+          </div>
+          <div className="pt-2.5 mt-2.5 border-t border-slate-100 text-xs text-slate-500 flex justify-between">
+            <span>Active Session</span>
+            <span className="font-semibold text-emerald-700">Till #02 Open</span>
           </div>
         </div>
 
-        <div className="bg-surface-container-lowest p-3 border border-[#d5e3fc] shadow-xs flex items-center justify-between">
-          <div className="flex flex-col">
-            <span className="text-[10px] text-on-surface-variant uppercase tracking-wider font-semibold">
-              Cheques in Clearing
-            </span>
-            <span className="text-xl font-bold text-amber-700">₹1,40,000</span>
-            <span className="text-[10px] text-amber-800 font-semibold mt-0.5">3 Under CTS-2010</span>
+        {/* Card 3 */}
+        <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs hover:shadow-sm transition-all flex flex-col justify-between">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-semibold text-slate-500">Reconciled Transactions</span>
+            <div className="w-9 h-9 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
+              <CheckCircle2 className="w-4 h-4" />
+            </div>
           </div>
-          <div className="p-2.5 bg-amber-50 text-amber-800 border border-amber-200">
-            <CreditCard className="w-5 h-5" />
+          <div className="mt-3">
+            <div className="text-2xl font-bold text-[#3D405B] tracking-tight font-mono">
+              1,842 Slips
+            </div>
+            <div className="text-xs text-blue-700 font-semibold mt-1">
+              98.6% Settlement Rate
+            </div>
+          </div>
+          <div className="pt-2.5 mt-2.5 border-t border-slate-100 text-xs text-slate-500 flex justify-between">
+            <span>Bursar Audit</span>
+            <span className="font-semibold text-blue-700">100% In Sync</span>
+          </div>
+        </div>
+
+        {/* Card 4 */}
+        <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs hover:shadow-sm transition-all flex flex-col justify-between">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-semibold text-slate-500">Cheques in Clearing</span>
+            <div className="w-9 h-9 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center">
+              <CreditCard className="w-4 h-4" />
+            </div>
+          </div>
+          <div className="mt-3">
+            <div className="text-2xl font-bold text-amber-700 tracking-tight font-mono">
+              ₹1,40,000
+            </div>
+            <div className="text-xs text-amber-800 font-semibold mt-1">
+              3 Under CTS-2010
+            </div>
+          </div>
+          <div className="pt-2.5 mt-2.5 border-t border-slate-100 text-xs text-slate-500 flex justify-between">
+            <span>Bank Clearing</span>
+            <span className="font-semibold text-amber-800">Pending Value Date</span>
           </div>
         </div>
       </div>
 
-      {/* Advanced Query Console / Filters Matrix */}
-      <div className="bg-surface-container-lowest p-3 border border-[#d5e3fc] shadow-xs mb-4 flex flex-col gap-2 font-mono text-xs">
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-2">
+      {/* Advanced Query Toolbar */}
+      <div className="bg-white p-5 sm:p-6 rounded-2xl border border-slate-200 shadow-xs space-y-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-3 items-center">
           {/* Search Input */}
-          <div className="relative md:col-span-2">
-            <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant" />
+          <div className="lg:col-span-5 relative flex items-center">
+            <Search className="w-4 h-4 absolute left-3.5 text-slate-400" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search Voucher, Candidate, Roll, Ref..."
-              className="w-full bg-surface-container-low pl-8 pr-3 py-1.5 border border-[#cbd5e1] focus:border-secondary focus:outline-none"
+              placeholder="Search voucher #, candidate name, roll, UTR reference..."
+              className="w-full h-10 pl-10 pr-3 bg-slate-50 text-xs text-slate-800 placeholder:text-slate-400 border border-slate-200 rounded-xl focus:outline-none focus:border-amber-600 transition-colors"
             />
           </div>
 
           {/* Date Selector */}
-          <div>
+          <div className="lg:col-span-2">
             <select
               value={dateFilter}
               onChange={(e) => setDateFilter(e.target.value)}
-              className="w-full bg-surface-container-low p-1.5 border border-[#cbd5e1] focus:border-secondary focus:outline-none"
+              className="w-full h-10 px-3 bg-slate-50 text-xs text-slate-700 border border-slate-200 rounded-xl focus:outline-none focus:border-amber-600"
             >
               <option value="ALL">All Dates (AY 2025-26)</option>
               <option value="TODAY">Today (28 Mar 2025)</option>
             </select>
           </div>
 
-          {/* Mode Filter */}
-          <div>
+          {/* Mode Selector */}
+          <div className="lg:col-span-2">
             <select
               value={modeFilter}
               onChange={(e) => setModeFilter(e.target.value)}
-              className="w-full bg-surface-container-low p-1.5 border border-[#cbd5e1] focus:border-secondary focus:outline-none"
+              className="w-full h-10 px-3 bg-slate-50 text-xs text-slate-700 border border-slate-200 rounded-xl focus:outline-none focus:border-amber-600"
             >
-              <option value="ALL">All Payment Modes</option>
+              <option value="ALL">All Tender Modes</option>
               <option value="UPI">UPI Gateway</option>
               <option value="Cash">Cash Currency</option>
               <option value="Cheque">Cheque / DD</option>
@@ -453,37 +522,38 @@ export default function AccountantPaymentHistoryPage() {
             </select>
           </div>
 
-          {/* Cashier Till Filter */}
-          <div>
+          {/* Till / Counter Selector */}
+          <div className="lg:col-span-3">
             <select
               value={tillFilter}
               onChange={(e) => setTillFilter(e.target.value)}
-              className="w-full bg-surface-container-low p-1.5 border border-[#cbd5e1] focus:border-secondary focus:outline-none"
+              className="w-full h-10 px-3 bg-slate-50 text-xs text-slate-700 border border-slate-200 rounded-xl focus:outline-none focus:border-amber-600"
             >
               <option value="ALL">All Cashier Counters</option>
-              <option value="Till #02">Till #02 (P. Sharma)</option>
+              <option value="Till #02">Till #02 (R. Kumar)</option>
               <option value="Till #01">Till #01 (A. Mehta)</option>
               <option value="Online">Online Gateway Pool</option>
             </select>
           </div>
         </div>
 
-        {/* Quick Filter Tags & Reset */}
-        <div className="flex flex-wrap items-center justify-between gap-2 pt-1 border-t border-[#e2e8f0] text-[11px]">
-          <div className="flex items-center gap-1.5">
-            <span className="text-gray-500 font-semibold uppercase">Active Filters:</span>
-            <span className="px-2 py-0.2 bg-surface-container text-primary border border-[#cbd5e1]">
+        {/* Active Filters Tag & Reset */}
+        <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-slate-100 text-xs">
+          <div className="flex items-center gap-2">
+            <span className="text-slate-400 font-semibold">Active Filter:</span>
+            <span className="px-2.5 py-1 bg-slate-100 text-slate-700 rounded-lg font-semibold">
               Mode: {modeFilter}
             </span>
-            <span className="px-2 py-0.2 bg-surface-container text-primary border border-[#cbd5e1]">
+            <span className="px-2.5 py-1 bg-slate-100 text-slate-700 rounded-lg font-semibold">
               Counter: {tillFilter}
             </span>
             {searchQuery && (
-              <span className="px-2 py-0.2 bg-secondary-container text-primary border border-[#a8c4f0]">
-                Query: "{searchQuery}"
+              <span className="px-2.5 py-1 bg-amber-50 text-amber-800 rounded-lg font-semibold border border-amber-200">
+                &ldquo;{searchQuery}&rdquo;
               </span>
             )}
           </div>
+
           <button
             onClick={() => {
               setSearchQuery("");
@@ -491,337 +561,325 @@ export default function AccountantPaymentHistoryPage() {
               setDateFilter("ALL");
               setTillFilter("ALL");
             }}
-            className="text-secondary hover:underline font-bold uppercase cursor-pointer"
+            className="text-amber-700 hover:text-amber-800 font-semibold cursor-pointer"
           >
             Clear All Filters
           </button>
         </div>
       </div>
 
-      {/* Primary Transaction Journal Ledger Table */}
-      <div className="bg-surface-container-lowest border border-[#d5e3fc] shadow-xs overflow-x-auto mb-4">
-        {/* Sub-header Bar */}
-        <div className="p-2.5 bg-surface-container-low border-b border-[#cbd5e1] flex items-center justify-between text-xs font-mono">
-          <div className="flex items-center gap-2">
-            <span className="font-bold text-primary uppercase">Daybook Realization Ledger</span>
-            <span className="px-1.5 py-0.2 bg-emerald-100 text-emerald-900 border border-emerald-300 font-bold text-[10px]">
-              &bull; LIVE SYNC ACTIVE
+      {/* Primary Transaction Journal Table */}
+      <div className="bg-white border border-slate-200 shadow-xs rounded-2xl overflow-hidden space-y-0">
+        <div className="px-5 py-4 bg-slate-50 border-b border-slate-200 flex items-center justify-between text-xs">
+          <div className="flex items-center gap-2.5">
+            <History className="h-4 w-4 text-amber-700" />
+            <span className="text-sm font-bold text-[#3D405B]">
+              Daybook Realization Ledger
+            </span>
+            <span className="px-2 py-0.5 bg-emerald-50 text-emerald-700 border border-emerald-200 font-semibold text-[10px] rounded-full">
+              Live Sync Active
             </span>
           </div>
-          <span className="text-on-surface-variant text-[11px]">
-            Displaying {filteredTransactions.length} of 1,842 Realized Records
+          <span className="text-slate-500 font-medium">
+            Displaying {filteredTransactions.length} of {transactions.length} Records
           </span>
         </div>
 
-        <table className="w-full text-left text-xs font-sans border-collapse">
-          <thead>
-            <tr className="bg-surface-container font-mono text-[10px] uppercase text-on-surface-variant border-b border-[#cbd5e1]">
-              <th className="p-2.5">Voucher / Txn ID</th>
-              <th className="p-2.5 font-mono">Timestamp</th>
-              <th className="p-2.5">Candidate Particulars</th>
-              <th className="p-2.5">Fee Heads Realized</th>
-              <th className="p-2.5 font-mono text-right">Amount (₹)</th>
-              <th className="p-2.5 text-center font-mono">Tender Mode</th>
-              <th className="p-2.5 font-mono">Gateway / Chq Ref</th>
-              <th className="p-2.5">Counter / Till</th>
-              <th className="p-2.5 text-center font-mono">Status</th>
-              <th className="p-2.5 text-right font-mono">Audit</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-[#e2e8f0]">
-            {filteredTransactions.map((txn) => (
-              <tr
-                key={txn.id}
-                onClick={() => setDrawerTxn(txn)}
-                className="hover:bg-surface-container-low transition-colors cursor-pointer group"
-              >
-                <td className="p-2.5 font-mono font-bold text-primary">
-                  <div className="flex items-center gap-1">
-                    <span className="group-hover:text-secondary underline-offset-2">
-                      {txn.receiptNo}
-                    </span>
-                  </div>
-                </td>
-
-                <td className="p-2.5 font-mono text-[11px] text-gray-600">
-                  {txn.timestamp}
-                </td>
-
-                <td className="p-2.5">
-                  <div className="flex flex-col">
-                    <span className="font-semibold text-primary">{txn.studentName}</span>
-                    <span className="font-mono text-[10px] text-secondary font-bold">
-                      {txn.rollNo}
-                    </span>
-                    <span className="text-[10px] text-gray-500">{txn.course}</span>
-                  </div>
-                </td>
-
-                <td className="p-2.5 text-[11px] text-gray-700">
-                  {txn.feeHeads}
-                </td>
-
-                <td className="p-2.5 text-right font-mono font-bold text-primary text-sm">
-                  ₹{txn.amount.toLocaleString("en-IN")}.00
-                </td>
-
-                <td className="p-2.5 text-center">
-                  <span
-                    className={`px-2 py-0.5 font-mono text-[10px] uppercase font-bold tracking-wider ${
-                      txn.tenderMode === "UPI"
-                        ? "bg-secondary-container text-primary"
-                        : txn.tenderMode === "Cash"
-                        ? "bg-emerald-100 text-emerald-800"
-                        : txn.tenderMode === "POS Card"
-                        ? "bg-amber-100 text-amber-800"
-                        : txn.tenderMode === "Cheque"
-                        ? "bg-orange-100 text-orange-800"
-                        : "bg-indigo-100 text-indigo-800"
-                    }`}
-                  >
-                    {txn.tenderMode}
-                  </span>
-                </td>
-
-                <td className="p-2.5 font-mono text-[10px] text-gray-600">
-                  {txn.refNo}
-                </td>
-
-                <td className="p-2.5 text-[11px] font-mono text-gray-600">
-                  {txn.cashierTill}
-                </td>
-
-                <td className="p-2.5 text-center">
-                  <span
-                    className={`px-2 py-0.5 font-mono text-[10px] font-bold uppercase inline-flex items-center gap-1 ${
-                      txn.status === "Cleared"
-                        ? "bg-emerald-100 text-emerald-900 border border-emerald-300"
-                        : txn.status === "Reconciled"
-                        ? "bg-blue-100 text-blue-900 border border-blue-300"
-                        : "bg-amber-100 text-amber-900 border border-amber-300"
-                    }`}
-                  >
-                    {txn.status === "Cleared" && <Check className="w-2.5 h-2.5" />}
-                    {txn.status}
-                  </span>
-                </td>
-
-                <td className="p-2.5 text-right">
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setDrawerTxn(txn);
-                    }}
-                    className="p-1 bg-surface-container hover:bg-surface-container-high border border-[#cbd5e1] text-secondary cursor-pointer"
-                    title="Audit Voucher Details"
-                  >
-                    <Eye className="w-3.5 h-3.5" />
-                  </button>
-                </td>
+        <div className="overflow-x-auto">
+          <table className="w-full text-left text-xs font-sans">
+            <thead>
+              <tr className="bg-slate-50/80 text-slate-600 font-bold border-b border-slate-200">
+                <th className="py-3 px-4">Voucher #</th>
+                <th className="py-3 px-3">Timestamp</th>
+                <th className="py-3 px-3">Candidate Particulars</th>
+                <th className="py-3 px-3">Fee Heads Realized</th>
+                <th className="py-3 px-3 text-right">Amount (₹)</th>
+                <th className="py-3 px-3 text-center">Tender Mode</th>
+                <th className="py-3 px-3">Gateway / Chq Ref</th>
+                <th className="py-3 px-3">Counter / Till</th>
+                <th className="py-3 px-3 text-center">Status</th>
+                <th className="py-3 px-4 text-right">Audit</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="divide-y divide-slate-100">
+              {filteredTransactions.map((txn) => (
+                <tr
+                  key={txn.id}
+                  onClick={() => setDrawerTxn(txn)}
+                  className="hover:bg-slate-50/80 transition-colors cursor-pointer group"
+                >
+                  <td className="py-3 px-4 font-mono font-bold text-blue-600">
+                    {txn.receiptNo}
+                  </td>
 
-        {/* Pagination & Daybook Reconciliation Summary Footer */}
-        <div className="bg-surface-container-low p-2.5 border-t border-[#cbd5e1] flex flex-wrap items-center justify-between gap-2 text-xs font-mono">
-          <div className="flex items-center gap-3">
-            <span className="font-bold text-primary">Daybook Total Realized: ₹1,77,500.00</span>
-            <span className="text-gray-500">|</span>
-            <span className="text-gray-600">6 Receipts Today</span>
-            <span className="text-gray-500">|</span>
+                  <td className="py-3 px-3 font-mono text-[11px] text-slate-500 whitespace-nowrap">
+                    {txn.timestamp}
+                  </td>
+
+                  <td className="py-3 px-3">
+                    <span className="font-bold text-[#3D405B] block">{txn.studentName}</span>
+                    <span className="font-mono text-[11px] text-slate-500">{txn.rollNo}</span>
+                    <span className="text-[10px] text-slate-400 block">{txn.course}</span>
+                  </td>
+
+                  <td className="py-3 px-3 text-slate-600">
+                    {txn.feeHeads}
+                  </td>
+
+                  <td className="py-3 px-3 text-right font-bold text-[#3D405B] font-mono text-sm">
+                    ₹{txn.amount.toLocaleString("en-IN")}
+                  </td>
+
+                  <td className="py-3 px-3 text-center">
+                    <span
+                      className={`inline-block px-2.5 py-0.5 text-[10px] font-bold rounded-full ${
+                        txn.tenderMode === "UPI"
+                          ? "bg-blue-50 text-blue-700 border border-blue-200"
+                          : txn.tenderMode === "Cash"
+                          ? "bg-emerald-50 text-emerald-700 border border-emerald-200"
+                          : txn.tenderMode === "POS Card"
+                          ? "bg-purple-50 text-purple-700 border border-purple-200"
+                          : txn.tenderMode === "Cheque"
+                          ? "bg-amber-50 text-amber-700 border border-amber-200"
+                          : "bg-indigo-50 text-indigo-700 border border-indigo-200"
+                      }`}
+                    >
+                      {txn.tenderMode}
+                    </span>
+                  </td>
+
+                  <td className="py-3 px-3 font-mono text-[11px] text-slate-600">
+                    {txn.refNo}
+                  </td>
+
+                  <td className="py-3 px-3 text-slate-600 text-[11px]">
+                    {txn.cashierTill}
+                  </td>
+
+                  <td className="py-3 px-3 text-center">
+                    <span
+                      className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 text-[10px] font-bold rounded-full border ${
+                        txn.status === "Cleared"
+                          ? "bg-emerald-50 text-emerald-700 border-emerald-200"
+                          : txn.status === "Reconciled"
+                          ? "bg-blue-50 text-blue-700 border-blue-200"
+                          : "bg-amber-50 text-amber-700 border-amber-200"
+                      }`}
+                    >
+                      <span
+                        className={`w-1.5 h-1.5 rounded-full ${
+                          txn.status === "Cleared"
+                            ? "bg-emerald-600"
+                            : txn.status === "Reconciled"
+                            ? "bg-blue-600"
+                            : "bg-amber-600 animate-pulse"
+                        }`}
+                      ></span>
+                      {txn.status}
+                    </span>
+                  </td>
+
+                  <td className="py-3 px-4 text-right">
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setDrawerTxn(txn);
+                      }}
+                      className="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-lg transition-colors cursor-pointer"
+                    >
+                      Audit
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        {/* Summary Footer */}
+        <div className="px-5 py-3.5 bg-slate-50 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
+          <div className="flex items-center gap-2 font-medium">
+            <span className="font-bold text-[#3D405B]">Daybook Realized Today: ₹1,77,500.00</span>
+            <span>&bull;</span>
+            <span>6 Receipts Processed</span>
+            <span>&bull;</span>
             <span className="text-emerald-700 font-semibold">Tally Ledger Sync: OK</span>
           </div>
 
-          <div className="flex items-center gap-1 text-[10px]">
-            <span className="text-on-surface-variant mr-2">Showing 1-8 of 1,842</span>
-            <button className="px-2 py-0.5 border border-[#cbd5e1] uppercase font-bold hover:bg-surface-container">
+          <div className="flex items-center gap-1 font-semibold">
+            <button className="px-3 py-1 bg-white text-slate-400 border border-slate-200 rounded-lg cursor-not-allowed">
               Prev
             </button>
-            <button className="px-2 py-0.5 bg-primary text-on-primary font-bold">1</button>
-            <button className="px-2 py-0.5 border border-[#cbd5e1] font-bold hover:bg-surface-container">
-              2
+            <button className="px-3 py-1 bg-amber-600 text-white rounded-lg shadow-2xs">
+              1
             </button>
-            <button className="px-2 py-0.5 border border-[#cbd5e1] font-bold hover:bg-surface-container">
-              3
-            </button>
-            <button className="px-2 py-0.5 border border-[#cbd5e1] uppercase font-bold hover:bg-surface-container">
+            <button className="px-3 py-1 bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 rounded-lg">
               Next
             </button>
           </div>
         </div>
       </div>
 
-      {/* Slideout Modal: Detailed Transaction Audit Voucher */}
+      {/* Slideout Modal: Transaction Audit Voucher */}
       {drawerTxn && (
-        <div className="fixed inset-0 z-50 bg-[#3D405B]/60 backdrop-blur-xs flex justify-end">
-          <div className="bg-surface-container-lowest border-l-2 border-primary w-full max-w-xl h-full shadow-2xl flex flex-col justify-between overflow-y-auto animate-in slide-in-from-right font-mono text-xs">
-            {/* Drawer Header */}
-            <div>
-              <div className="p-4 bg-primary text-white flex items-center justify-between border-b border-[#324769]">
-                <div className="flex items-center gap-2">
-                  <ShieldCheck className="w-5 h-5 text-secondary-container" />
-                  <div>
-                    <h3 className="font-bold uppercase tracking-tight text-sm font-headline">
-                      Transaction Audit Dossier: {drawerTxn.receiptNo}
-                    </h3>
-                    <span className="text-[10px] text-gray-300 font-mono">
-                      Timestamp: {drawerTxn.timestamp}
-                    </span>
-                  </div>
+        <div className="fixed inset-0 z-50 bg-[#3D405B]/50 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4">
+          <div className="bg-white max-w-xl w-full rounded-2xl border border-slate-200 shadow-2xl p-5 sm:p-6 flex flex-col gap-4 animate-in fade-in zoom-in-95 duration-150 max-h-[90vh] overflow-y-auto">
+            {/* Header */}
+            <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+              <div className="flex items-center gap-2.5">
+                <div className="w-10 h-10 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center font-bold">
+                  <ShieldCheck className="w-5 h-5 text-amber-700" />
                 </div>
-                <button
-                  onClick={() => setDrawerTxn(null)}
-                  className="p-1 hover:bg-white/10 text-white cursor-pointer"
-                >
-                  <X className="w-5 h-5" />
-                </button>
+                <div>
+                  <h3 className="text-base font-bold text-[#3D405B]">
+                    Transaction Audit Dossier: {drawerTxn.receiptNo}
+                  </h3>
+                  <span className="text-xs text-slate-500 font-mono">
+                    {drawerTxn.timestamp}
+                  </span>
+                </div>
+              </div>
+              <button
+                onClick={() => setDrawerTxn(null)}
+                className="p-1 hover:bg-slate-100 rounded-lg text-slate-400 hover:text-slate-700 transition-colors cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Content */}
+            <div className="space-y-3.5 text-xs">
+              {/* Banner */}
+              <div className="p-3.5 bg-slate-50 rounded-xl border border-slate-200 flex items-center justify-between">
+                <div>
+                  <span className="text-[10px] text-slate-400 font-bold uppercase block">Settlement Status</span>
+                  <span className="font-bold text-[#3D405B] text-sm uppercase">
+                    {drawerTxn.status === "Cleared" ? "CLEARING REALIZED & SEALED" : drawerTxn.status}
+                  </span>
+                  <span className="text-[11px] text-slate-500 block">Counter: {drawerTxn.cashierTill}</span>
+                </div>
+                <div className="text-right">
+                  <span className="text-[10px] text-slate-400 font-bold uppercase block">Amount Realized</span>
+                  <span className="text-xl font-bold font-mono text-emerald-700">
+                    ₹{drawerTxn.amount.toLocaleString("en-IN")}
+                  </span>
+                </div>
               </div>
 
-              {/* Drawer Content */}
-              <div className="p-4 flex flex-col gap-4">
-                {/* Barcode & Status Banner */}
-                <div className="p-3 bg-surface-container-low border border-[#cbd5e1] flex items-center justify-between">
-                  <div className="flex flex-col">
-                    <span className="text-[9px] uppercase text-gray-500 font-bold">
-                      Settlement Status
-                    </span>
-                    <span className="text-sm font-bold text-primary uppercase">
-                      {drawerTxn.status === "Cleared"
-                        ? "CLEARING REALIZED & SEALED"
-                        : drawerTxn.status}
-                    </span>
-                    <span className="text-[10px] text-gray-600 mt-0.5">
-                      Counter: {drawerTxn.cashierTill}
-                    </span>
-                  </div>
-                  <div className="text-right">
-                    <span className="text-[9px] uppercase text-gray-500 font-bold block">
-                      Amount Realized
-                    </span>
-                    <span className="text-xl font-bold text-primary font-mono">
-                      ₹{drawerTxn.amount.toLocaleString("en-IN")}.00
-                    </span>
-                  </div>
+              {/* Student Details */}
+              <div className="p-3.5 bg-white border border-slate-200 rounded-xl space-y-2">
+                <div className="text-xs font-bold text-[#3D405B] pb-1 border-b border-slate-100 flex justify-between">
+                  <span>Candidate Credentials</span>
+                  <span className="text-blue-600 font-mono">{drawerTxn.rollNo}</span>
                 </div>
-
-                {/* Student Particulars */}
-                <div className="border border-[#cbd5e1] p-3 bg-white">
-                  <div className="text-[10px] uppercase font-bold text-secondary mb-2 border-b border-gray-200 pb-1 flex items-center justify-between">
-                    <span>Candidate Credentials</span>
-                    <span className="text-primary font-mono">{drawerTxn.rollNo}</span>
-                  </div>
-                  <div className="grid grid-cols-2 gap-2 text-xs">
-                    <div>
-                      <span className="text-gray-500 text-[10px] block">Student Name:</span>
-                      <span className="font-bold text-primary font-sans">
-                        {drawerTxn.studentName}
-                      </span>
-                    </div>
-                    <div>
-                      <span className="text-gray-500 text-[10px] block">Program:</span>
-                      <span className="font-medium font-sans">{drawerTxn.course}</span>
-                    </div>
-                    <div>
-                      <span className="text-gray-500 text-[10px] block">Father / Guardian:</span>
-                      <span className="font-sans">{drawerTxn.details.guardian}</span>
-                    </div>
-                    <div>
-                      <span className="text-gray-500 text-[10px] block">Contact Phone:</span>
-                      <span className="font-mono">{drawerTxn.details.phone}</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Fee Head Breakdown */}
-                <div className="border border-[#cbd5e1] p-3 bg-white">
-                  <div className="text-[10px] uppercase font-bold text-secondary mb-2 border-b border-gray-200 pb-1">
-                    Itemized Allocation of Tender
-                  </div>
-                  <div className="space-y-1.5 text-xs">
-                    <div className="flex justify-between">
-                      <span className="text-gray-600">Tuition Fee Assessment:</span>
-                      <span className="font-bold text-primary">
-                        ₹{drawerTxn.details.tuition.toLocaleString("en-IN")}.00
-                      </span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-gray-600">Lab &amp; Computing Infrastructure:</span>
-                      <span className="font-bold text-primary">
-                        ₹{drawerTxn.details.lab.toLocaleString("en-IN")}.00
-                      </span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-gray-600">Exam Assessment:</span>
-                      <span className="font-bold text-primary">
-                        ₹{drawerTxn.details.exam.toLocaleString("en-IN")}.00
-                      </span>
-                    </div>
-                    <div className="border-t border-gray-300 pt-1.5 flex justify-between font-bold text-sm text-primary">
-                      <span>Total Realized:</span>
-                      <span>₹{drawerTxn.amount.toLocaleString("en-IN")}.00</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Technical Audit Metadata */}
-                <div className="border border-[#cbd5e1] p-3 bg-surface-container-low text-[11px] space-y-1.5">
-                  <div className="text-[10px] uppercase font-bold text-secondary mb-1">
-                    Statutory &amp; Cryptographic Telemetry
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-500">Tender Instrument:</span>
-                    <span className="font-bold text-primary">{drawerTxn.tenderMode}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-500">Instrument Reference / UTR:</span>
-                    <span className="font-bold text-primary">{drawerTxn.refNo}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-500">Counter Terminal ID:</span>
-                    <span className="font-mono text-gray-700">{drawerTxn.details.terminalId}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-500">Internal IP Node:</span>
-                    <span className="font-mono text-gray-700">{drawerTxn.details.ipAddress}</span>
+                <div className="grid grid-cols-2 gap-2.5">
+                  <div>
+                    <span className="text-slate-400 block text-[10px]">Student Name:</span>
+                    <span className="font-bold text-slate-800">{drawerTxn.studentName}</span>
                   </div>
                   <div>
-                    <span className="text-gray-500 text-[10px] block">SHA-256 Ledger Hash:</span>
-                    <span className="font-mono text-[9px] text-gray-700 break-all select-all block bg-white p-1 border border-gray-300 mt-0.5">
-                      {drawerTxn.details.shaHash}
+                    <span className="text-slate-400 block text-[10px]">Program:</span>
+                    <span className="text-slate-700">{drawerTxn.course}</span>
+                  </div>
+                  <div>
+                    <span className="text-slate-400 block text-[10px]">Father / Guardian:</span>
+                    <span className="text-slate-700">{drawerTxn.details.guardian}</span>
+                  </div>
+                  <div>
+                    <span className="text-slate-400 block text-[10px]">Contact Tel:</span>
+                    <span className="font-mono text-slate-800">{drawerTxn.details.phone}</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Fee Breakdown */}
+              <div className="p-3.5 bg-white border border-slate-200 rounded-xl space-y-2">
+                <div className="text-xs font-bold text-[#3D405B] pb-1 border-b border-slate-100">
+                  Itemized Fee Breakdown
+                </div>
+                <div className="space-y-1.5 text-slate-600">
+                  <div className="flex justify-between">
+                    <span>Tuition Fee Assessment:</span>
+                    <span className="font-mono font-semibold text-slate-800">
+                      ₹{drawerTxn.details.tuition.toLocaleString("en-IN")}
                     </span>
                   </div>
+                  <div className="flex justify-between">
+                    <span>Lab &amp; Computing Infrastructure:</span>
+                    <span className="font-mono font-semibold text-slate-800">
+                      ₹{drawerTxn.details.lab.toLocaleString("en-IN")}
+                    </span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Exam Assessment:</span>
+                    <span className="font-mono font-semibold text-slate-800">
+                      ₹{drawerTxn.details.exam.toLocaleString("en-IN")}
+                    </span>
+                  </div>
+                  <div className="pt-2 border-t border-slate-200 flex justify-between font-bold text-[#3D405B]">
+                    <span>Total Realized:</span>
+                    <span className="font-mono text-emerald-700">
+                      ₹{drawerTxn.amount.toLocaleString("en-IN")}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Technical Audit Metadata */}
+              <div className="p-3.5 bg-slate-50 border border-slate-200 rounded-xl space-y-1.5 text-[11px]">
+                <div className="text-xs font-bold text-[#3D405B] pb-1 border-b border-slate-200">
+                  Cryptographic Telemetry
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-slate-500">Tender Instrument:</span>
+                  <span className="font-bold text-slate-800">{drawerTxn.tenderMode}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-slate-500">Ref / UTR Number:</span>
+                  <span className="font-mono text-slate-800 font-semibold">{drawerTxn.refNo}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-slate-500">Counter Terminal:</span>
+                  <span className="font-mono text-slate-700">{drawerTxn.details.terminalId}</span>
+                </div>
+                <div>
+                  <span className="text-slate-500 block text-[10px]">SHA-256 Ledger Hash:</span>
+                  <span className="font-mono text-[9px] text-slate-600 break-all select-all block bg-white p-1.5 rounded-lg border border-slate-200 mt-1">
+                    {drawerTxn.details.shaHash}
+                  </span>
                 </div>
               </div>
             </div>
 
-            {/* Drawer Bottom Actions */}
-            <div className="p-4 bg-surface-container border-t border-[#cbd5e1] flex flex-wrap items-center justify-between gap-2">
-              <div className="flex items-center gap-1.5">
+            {/* Actions */}
+            <div className="flex items-center justify-between gap-2.5 pt-2 border-t border-slate-100">
+              <button
+                onClick={() => {
+                  showToast(`Receipt ${drawerTxn.receiptNo} dispatched to ${drawerTxn.studentName} via SMS & Email!`);
+                }}
+                className="px-3.5 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-xl flex items-center gap-1.5 transition-colors cursor-pointer"
+              >
+                <Mail className="w-3.5 h-3.5" />
+                <span>Resend Slips</span>
+              </button>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => setDrawerTxn(null)}
+                  className="px-4 py-2 border border-slate-200 text-xs font-semibold text-slate-700 hover:bg-slate-100 rounded-xl cursor-pointer"
+                >
+                  Close
+                </button>
                 <button
                   onClick={() => {
-                    showToast(`Receipt ${drawerTxn.receiptNo} re-sent via SMS & Email!`);
+                    showToast(`Printing voucher ${drawerTxn.receiptNo}...`);
+                    window.print();
                   }}
-                  className="px-3 py-1.5 bg-surface-container-high border border-[#cbd5e1] uppercase font-bold text-[10px] flex items-center gap-1 cursor-pointer"
+                  className="px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold rounded-xl flex items-center gap-1.5 transition-all shadow-xs cursor-pointer"
                 >
-                  <Mail className="w-3 h-3 text-secondary" />
-                  <span>Resend Slips</span>
+                  <Printer className="w-3.5 h-3.5" />
+                  <span>Print Voucher</span>
                 </button>
-                <Link
-                  href={`/accountant/receipts`}
-                  className="px-3 py-1.5 bg-surface-container-high border border-[#cbd5e1] uppercase font-bold text-[10px] flex items-center gap-1 text-primary"
-                >
-                  <Printer className="w-3 h-3 text-secondary" />
-                  <span>Official Receipt</span>
-                </Link>
               </div>
-
-              <button
-                onClick={() => setDrawerTxn(null)}
-                className="px-4 py-1.5 bg-primary text-on-primary uppercase font-bold text-xs tracking-wider cursor-pointer"
-              >
-                Close Audit
-              </button>
             </div>
           </div>
         </div>
@@ -829,61 +887,100 @@ export default function AccountantPaymentHistoryPage() {
 
       {/* Tally XML Export Modal */}
       {isTallyModalOpen && (
-        <div className="fixed inset-0 z-50 bg-[#3D405B]/60 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-surface-container-lowest border-2 border-primary w-full max-w-md p-5 shadow-2xl animate-in zoom-in-95 font-mono text-xs">
-            <div className="flex items-center justify-between border-b border-[#cbd5e1] pb-3 mb-4">
-              <div className="flex items-center gap-2">
-                <FileCode className="w-5 h-5 text-secondary" />
-                <h3 className="font-headline font-bold text-sm text-primary uppercase tracking-tight">
-                  Export TallyPrime ERP XML Schema
-                </h3>
+        <div className="fixed inset-0 z-50 bg-[#3D405B]/50 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4">
+          <div className="bg-white max-w-md w-full rounded-2xl border border-slate-200 shadow-2xl p-5 sm:p-6 flex flex-col gap-4 animate-in fade-in zoom-in-95 duration-150">
+            <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+              <div className="flex items-center gap-2.5">
+                <div className="w-10 h-10 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center font-bold">
+                  <FileCode className="w-5 h-5 text-amber-700" />
+                </div>
+                <div>
+                  <h3 className="text-base font-bold text-[#3D405B]">
+                    Export TallyPrime ERP XML
+                  </h3>
+                  <span className="text-xs text-slate-500">
+                    Standardized Ledger Schema
+                  </span>
+                </div>
               </div>
               <button
                 onClick={() => setIsTallyModalOpen(false)}
-                className="p-1 hover:bg-surface-container text-on-surface-variant cursor-pointer"
+                className="p-1 hover:bg-slate-100 rounded-lg text-slate-400 hover:text-slate-700 transition-colors cursor-pointer"
               >
-                <X className="w-4 h-4" />
+                <X className="w-5 h-5" />
               </button>
             </div>
 
-            <p className="text-[11px] text-on-surface-variant leading-relaxed mb-3">
-              Export standardized institutional voucher XML formatted for automated ingestion into TallyPrime / Tally ERP 9 ledger books.
+            <p className="text-xs text-slate-600 leading-relaxed">
+              Export standardized institutional daybook vouchers formatted for automated ingestion into TallyPrime / Tally ERP 9 ledger books.
             </p>
 
-            <div className="p-2.5 bg-surface-container-low border border-[#cbd5e1] mb-4 space-y-1">
+            <div className="p-3.5 bg-slate-50 rounded-xl border border-slate-200 text-xs space-y-2">
               <div className="flex justify-between">
-                <span className="text-gray-500">Tally Company:</span>
-                <span className="font-bold text-primary">APEX INST TECH &amp; MGMT</span>
+                <span className="text-slate-500">Tally Company:</span>
+                <span className="font-bold text-[#3D405B]">APEX INST TECH &amp; MGMT</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-500">Voucher Type:</span>
-                <span className="font-bold text-primary">Receipt Voucher (F6)</span>
+                <span className="text-slate-500">Voucher Type:</span>
+                <span className="font-bold text-amber-800">Receipt Voucher (F6)</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-500">Selected Range:</span>
-                <span className="font-bold text-primary">Today (28 Mar 2025)</span>
+                <span className="text-slate-500">Selected Range:</span>
+                <span className="font-semibold text-slate-700">Today (28 Mar 2025)</span>
               </div>
-              <div className="flex justify-between">
-                <span className="text-gray-500">Gross Export Amount:</span>
-                <span className="font-bold text-primary">₹1,77,500.00</span>
+              <div className="flex justify-between pt-1 border-t border-slate-200 font-bold">
+                <span className="text-slate-600">Gross Export Amount:</span>
+                <span className="text-emerald-700 font-mono">₹1,77,500.00</span>
               </div>
             </div>
 
-            <div className="flex items-center justify-end gap-2 pt-3 border-t border-[#cbd5e1]">
+            <div className="flex items-center justify-end gap-2.5 pt-2 border-t border-slate-100">
               <button
                 onClick={() => setIsTallyModalOpen(false)}
-                className="px-3 py-1.5 bg-surface-container hover:bg-surface-container-high text-on-surface uppercase font-semibold cursor-pointer"
+                className="px-4 py-2 border border-slate-200 text-xs font-semibold text-slate-700 hover:bg-slate-100 rounded-xl cursor-pointer"
               >
                 Cancel
               </button>
               <button
                 onClick={() => {
+                  const xmlContent = `<?xml version="1.0" encoding="UTF-8"?>
+<ENVELOPE>
+  <HEADER>
+    <TALLYREQUEST>Import Data</TALLYREQUEST>
+  </HEADER>
+  <BODY>
+    <IMPORTDATA>
+      <REQUESTDESC>
+        <REPORTNAME>All Masters</REPORTNAME>
+      </REQUESTDESC>
+      <REQUESTDATA>
+        <TALLYMESSAGE xmlns:UDF="TallyUDF">
+          <VOUCHER VCHTYPE="Receipt" ACTION="Create">
+            <DATE>20250328</DATE>
+            <NARRATION>Daybook Realization - Apex Institute Till #02</NARRATION>
+            <VOUCHERNUMBER>REC-2025-0842</VOUCHERNUMBER>
+            <AMOUNT>27500.00</AMOUNT>
+          </VOUCHER>
+        </TALLYMESSAGE>
+      </REQUESTDATA>
+    </IMPORTDATA>
+  </BODY>
+</ENVELOPE>`;
+                  const blob = new Blob([xmlContent], { type: "application/xml;charset=utf-8;" });
+                  const url = URL.createObjectURL(blob);
+                  const link = document.createElement("a");
+                  link.href = url;
+                  link.setAttribute("download", "Apex_Tally_Vouchers_28Mar2025.xml");
+                  document.body.appendChild(link);
+                  link.click();
+                  document.body.removeChild(link);
                   setIsTallyModalOpen(false);
-                  showToast("Generated Apex_Tally_Vouchers_28Mar2025.xml successfully!");
+                  showToast("Apex_Tally_Vouchers_28Mar2025.xml downloaded successfully!");
                 }}
-                className="px-4 py-1.5 bg-primary text-on-primary hover:bg-primary/95 uppercase font-bold tracking-wider cursor-pointer shadow-xs"
+                className="px-5 py-2 bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold rounded-xl flex items-center gap-1.5 transition-all shadow-xs cursor-pointer"
               >
-                Download XML Schema
+                <Download className="w-4 h-4" />
+                <span>Download XML Schema</span>
               </button>
             </div>
           </div>
@@ -892,4 +989,3 @@ export default function AccountantPaymentHistoryPage() {
     </div>
   );
 }
-
