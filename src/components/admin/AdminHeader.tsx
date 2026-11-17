@@ -22,7 +22,8 @@ import {
   LogOut,
   Shield,
   CheckCircle2,
-  AlertTriangle
+  AlertTriangle,
+  Menu,
 } from "lucide-react";
 
 // Route title mapping for admin sections
@@ -86,7 +87,11 @@ const notificationsData: NotificationItem[] = [
   },
 ];
 
-export default function AdminHeader() {
+interface AdminHeaderProps {
+  onOpenMobileNav?: () => void;
+}
+
+export default function AdminHeader({ onOpenMobileNav }: AdminHeaderProps) {
   const [showQuickModal, setShowQuickModal] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
@@ -134,19 +139,29 @@ export default function AdminHeader() {
   return (
     <header
       ref={headerRef}
-      className="fixed top-0 left-64 right-0 h-16 bg-white/95 backdrop-blur-md border-b border-slate-200/90 z-40 flex items-center justify-between px-6 select-none shadow-2xs"
+      className="fixed top-0 left-0 lg:left-64 right-0 h-16 bg-white/95 backdrop-blur-md border-b border-slate-200/90 z-40 flex items-center justify-between px-3 sm:px-6 select-none shadow-2xs"
     >
-      {/* Left: Dynamic Breadcrumbs & Search */}
-      <div className="flex items-center gap-5">
-        <nav className="flex items-center gap-2 text-xs">
+      {/* Left: Hamburger & Dynamic Breadcrumbs */}
+      <div className="flex items-center gap-2 sm:gap-4 min-w-0">
+        {/* Mobile Hamburger Menu Toggle */}
+        <button
+          type="button"
+          onClick={onOpenMobileNav}
+          className="lg:hidden p-2 rounded-xl text-slate-600 hover:text-[#3D405B] hover:bg-slate-100 transition-colors cursor-pointer shrink-0"
+          aria-label="Open Navigation Menu"
+        >
+          <Menu className="w-5 h-5" />
+        </button>
+
+        <nav className="flex items-center gap-1.5 sm:gap-2 text-xs truncate">
           <Link
             href="/admin"
-            className="font-semibold text-slate-500 hover:text-slate-800 transition-colors uppercase tracking-wider"
+            className="hidden sm:inline-block font-semibold text-slate-500 hover:text-slate-800 transition-colors uppercase tracking-wider"
           >
             Admin Console
           </Link>
-          <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
-          <span className="font-bold text-[#3D405B] bg-slate-100/90 px-2.5 py-1 rounded-lg border border-slate-200/80">
+          <ChevronRight className="hidden sm:inline-block w-3.5 h-3.5 text-slate-400 shrink-0" />
+          <span className="font-bold text-[#3D405B] bg-slate-100/90 px-2 sm:px-2.5 py-1 rounded-lg border border-slate-200/80 truncate text-[11px] sm:text-xs">
             {currentTitle}
           </span>
         </nav>
@@ -186,7 +201,7 @@ export default function AdminHeader() {
             className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#3D405B] hover:bg-[#2E3046] text-white text-xs font-semibold rounded-xl shadow-xs transition-all cursor-pointer"
           >
             <Plus className="w-3.5 h-3.5" />
-            <span>Quick Create</span>
+            <span className="hidden sm:inline">Quick Create</span>
           </button>
 
           {showQuickModal && (

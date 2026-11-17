@@ -18,6 +18,7 @@ import {
   Settings,
   Shield,
   LogOut,
+  X,
 } from "lucide-react";
 
 const navigationItems = [
@@ -36,59 +37,96 @@ const navigationItems = [
   { name: "Settings", href: "/admin/settings", icon: Settings },
 ];
 
-export default function AdminSidebar() {
+interface AdminSidebarProps {
+  isMobileOpen?: boolean;
+  onCloseMobile?: () => void;
+}
+
+export default function AdminSidebar({
+  isMobileOpen = false,
+  onCloseMobile,
+}: AdminSidebarProps) {
   const pathname = usePathname();
 
   return (
-    <aside className="fixed left-0 top-0 h-full w-64 bg-white text-slate-800 z-50 flex flex-col justify-between border-r border-slate-200 shadow-sm select-none">
-      {/* Top Branding & Nav */}
-      <div className="flex flex-col min-h-0 flex-1">
-        {/* Brand Header */}
-        <div className="h-16 px-4 flex items-center gap-3 bg-white text-[#3D405B] border-b border-slate-200 shrink-0">
-          <div className="w-9 h-9 bg-[#3D405B]/10 text-[#3D405B] font-bold flex items-center justify-center rounded-xl shadow-xs shrink-0">
-            <Shield className="w-5 h-5 text-[#3D405B]" />
-          </div>
-          <div className="flex flex-col min-w-0">
-            <span className="font-headline text-sm font-bold tracking-tight text-[#3D405B] leading-tight truncate">
-              Apex Institute
-            </span>
-            <span className="text-[10px] tracking-wider uppercase text-[#3D405B] font-semibold truncate">
-              Admin Console
-            </span>
-          </div>
-        </div>
+    <>
+      {/* Mobile Drawer Backdrop */}
+      {isMobileOpen && (
+        <div
+          onClick={onCloseMobile}
+          className="fixed inset-0 bg-slate-900/50 backdrop-blur-xs z-50 lg:hidden animate-in fade-in duration-200"
+          aria-hidden="true"
+        />
+      )}
 
-        {/* Navigation List (Scrollable for 13 items) */}
-        <nav className="flex-1 overflow-y-auto p-2.5 flex flex-col gap-1">
-          {navigationItems.map((item) => {
-            const isActive =
-              item.href === "/admin"
-                ? pathname === "/admin"
-                : pathname.startsWith(item.href);
+      <aside
+        className={`fixed left-0 top-0 h-full w-64 bg-white text-slate-800 z-50 flex flex-col justify-between border-r border-slate-200 shadow-xl lg:shadow-sm select-none transition-transform duration-300 ease-in-out ${
+          isMobileOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
+        }`}
+      >
+        {/* Top Branding & Nav */}
+        <div className="flex flex-col min-h-0 flex-1">
+          {/* Brand Header */}
+          <div className="h-16 px-4 flex items-center justify-between bg-white text-[#3D405B] border-b border-slate-200 shrink-0">
+            <div className="flex items-center gap-3 min-w-0">
+              <div className="w-9 h-9 bg-[#3D405B]/10 text-[#3D405B] font-bold flex items-center justify-center rounded-xl shadow-xs shrink-0">
+                <Shield className="w-5 h-5 text-[#3D405B]" />
+              </div>
+              <div className="flex flex-col min-w-0">
+                <span className="font-headline text-sm font-bold tracking-tight text-[#3D405B] leading-tight truncate">
+                  Apex Institute
+                </span>
+                <span className="text-[10px] tracking-wider uppercase text-[#3D405B] font-semibold truncate">
+                  Admin Console
+                </span>
+              </div>
+            </div>
 
-            const IconComponent = item.icon;
-
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`flex items-center gap-3 px-3.5 py-2.5 text-xs font-semibold transition-all rounded-xl ${
-                  isActive
-                    ? "bg-[#3D405B] text-white font-bold shadow-sm"
-                    : "text-slate-600 hover:bg-[#3D405B]/10 hover:text-[#3D405B]"
-                }`}
+            {/* Mobile Close Button */}
+            {onCloseMobile && (
+              <button
+                type="button"
+                onClick={onCloseMobile}
+                className="lg:hidden p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors ml-2 cursor-pointer"
+                aria-label="Close Navigation"
               >
-                <IconComponent
-                  className={`w-4 h-4 shrink-0 ${
-                    isActive ? "text-white" : "text-slate-400"
+                <X className="w-5 h-5" />
+              </button>
+            )}
+          </div>
+
+          {/* Navigation List (Scrollable for 13 items) */}
+          <nav className="flex-1 overflow-y-auto p-2.5 flex flex-col gap-1">
+            {navigationItems.map((item) => {
+              const isActive =
+                item.href === "/admin"
+                  ? pathname === "/admin"
+                  : pathname.startsWith(item.href);
+
+              const IconComponent = item.icon;
+
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  onClick={() => onCloseMobile?.()}
+                  className={`flex items-center gap-3 px-3.5 py-2.5 text-xs font-semibold transition-all rounded-xl ${
+                    isActive
+                      ? "bg-[#3D405B] text-white font-bold shadow-sm"
+                      : "text-slate-600 hover:bg-[#3D405B]/10 hover:text-[#3D405B]"
                   }`}
-                />
-                <span className="truncate">{item.name}</span>
-              </Link>
-            );
-          })}
-        </nav>
-      </div>
+                >
+                  <IconComponent
+                    className={`w-4 h-4 shrink-0 ${
+                      isActive ? "text-white" : "text-slate-400"
+                    }`}
+                  />
+                  <span className="truncate">{item.name}</span>
+                </Link>
+              );
+            })}
+          </nav>
+        </div>
 
       {/* Bottom Controls: Terminate Session, Compliance */}
       <div className="p-3 bg-white border-t border-slate-200 flex flex-col gap-2.5 shrink-0">
@@ -108,5 +146,6 @@ export default function AdminSidebar() {
         </div>
       </div>
     </aside>
+    </>
   );
 }

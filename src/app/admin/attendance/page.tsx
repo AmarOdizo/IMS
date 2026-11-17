@@ -1058,44 +1058,14 @@ export default function AttendancePage() {
               </div>
             </div>
 
-            {/* Attendance Trend Sparkline & Biometric Stamp */}
-            <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-5 space-y-4">
-              <div>
-                <div className="flex items-center justify-between">
-                  <h4 className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
-                    30-Day Trend Velocity
-                  </h4>
-                  <span className="text-xs font-bold text-emerald-600">89.4% Mean</span>
-                </div>
-
-                {/* SVG Curve */}
-                <div className="mt-3 h-20 w-full relative bg-slate-50 rounded-xl p-2 border border-slate-100">
-                  <svg className="w-full h-full text-indigo-600" preserveAspectRatio="none" viewBox="0 0 300 60">
-                    <path
-                      d="M0,35 L20,32 L40,28 L60,34 L80,38 L100,22 L120,24 L140,55 L160,26 L180,18 L200,20 L220,15 L240,30 L260,25 L280,22 L300,16"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2.5"
-                      vectorEffect="non-scaling-stroke"
-                    />
-                    {/* 75% red statutory threshold */}
-                    <line stroke="#e11d48" strokeDasharray="3,3" strokeWidth="1.5" x1="0" x2="300" y1="46" y2="46" />
-                  </svg>
-                  <span className="absolute bottom-1.5 right-2 text-[10px] font-mono text-rose-600 font-bold bg-white/80 px-1 rounded">
-                    75% Statutory Cutoff
-                  </span>
-                </div>
+            {/* Faculty Biometric Stamp */}
+            <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-4 flex items-center gap-3">
+              <div className="w-8 h-8 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
+                <ShieldCheck className="w-4 h-4" />
               </div>
-
-              {/* Faculty Biometric Stamp */}
-              <div className="pt-3 border-t border-slate-100 flex items-center gap-3">
-                <div className="w-8 h-8 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
-                  <ShieldCheck className="w-4 h-4" />
-                </div>
-                <div className="text-[11px] text-slate-500">
-                  <div className="font-semibold text-slate-800">Faculty Session Authenticated</div>
-                  <div>Dr. Margaret Vance (FAC-CS-001) • 08:58 AM</div>
-                </div>
+              <div className="text-[11px] text-slate-500">
+                <div className="font-semibold text-slate-800">Faculty Session Authenticated</div>
+                <div>Dr. Margaret Vance (FAC-CS-001) • 08:58 AM</div>
               </div>
             </div>
           </div>

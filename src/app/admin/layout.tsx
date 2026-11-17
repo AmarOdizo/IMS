@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
-import AdminSidebar from "@/components/admin/AdminSidebar";
-import AdminHeader from "@/components/admin/AdminHeader";
+import AdminLayoutClient from "@/components/admin/AdminLayoutClient";
 
 export const metadata: Metadata = {
   title: "Admin Dashboard - Central Command Matrix",
@@ -12,17 +11,5 @@ export default function AdminLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return (
-    <div className="min-h-screen bg-surface">
-      <AdminSidebar />
-      <div className="pl-64">
-        <AdminHeader />
-        <main className="w-full pt-16 bg-surface min-h-[calc(100vh-4rem)]">
-          <div className="w-full admin-zoom-wrapper portal-zoom-wrapper" style={{ zoom: "80%" }}>
-            {children}
-          </div>
-        </main>
-      </div>
-    </div>
-  );
+  return <AdminLayoutClient>{children}</AdminLayoutClient>;
 }
