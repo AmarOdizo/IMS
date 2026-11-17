@@ -29,7 +29,10 @@ import {
   Mail,
   Send,
   Sparkles,
-  Layers
+  Layers,
+  ArrowUpRight,
+  Lock,
+  Briefcase
 } from "lucide-react";
 
 interface ReportTemplate {
@@ -120,6 +123,30 @@ const REPORT_TEMPLATES: ReportTemplate[] = [
     lastRun: "Active Stream",
     coverage: "4,820 Evaluated Papers",
     formats: ["PDF", "CSV"]
+  },
+  {
+    id: "rep-7",
+    code: "APX-REP-PLC-05",
+    category: "academic",
+    categoryLabel: "Placement",
+    title: "Campus Placements & Corporate Recruitment Index",
+    scope: "Tier-1 enterprise offers, median CTC bands, and industry hiring matrix.",
+    cadence: "Bi-Weekly Batch",
+    lastRun: "3 days ago",
+    coverage: "1,240 Finalists, 92 Corporates",
+    formats: ["PDF", "XLSX", "CSV"]
+  },
+  {
+    id: "rep-8",
+    code: "APX-REP-RES-08",
+    category: "accreditation",
+    categoryLabel: "Research",
+    title: "Research Citations, Patents & Sponsored Lab Grants",
+    scope: "Scopus/WoS h-index tracking, government grants, and IP disclosures.",
+    cadence: "Quarterly Audit",
+    lastRun: "Apr 15, 2024",
+    coverage: "84 Papers, $1.42M Grants",
+    formats: ["PDF", "DOCX"]
   }
 ];
 
@@ -127,13 +154,13 @@ export default function ReportsAndAnalyticsPage() {
   const [reports] = useState<ReportTemplate[]>(REPORT_TEMPLATES);
   const [selectedReport, setSelectedReport] = useState<ReportTemplate>(REPORT_TEMPLATES[0]);
   const [activeTab, setActiveTab] = useState<"all" | "academic" | "finance" | "attendance" | "accreditation" | "workload">("all");
-  
+
   // Filter states
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedAcademicYear, setSelectedAcademicYear] = useState("AY 2024-25");
   const [selectedFaculty, setSelectedFaculty] = useState("all");
   const [selectedFrequency, setSelectedFrequency] = useState("all");
-  
+
   // Parameter Tuning states
   const [targetDept, setTargetDept] = useState("B.Tech Computer Science & Engineering");
   const [cohortBatch, setCohortBatch] = useState("Batch 2023-27 (Semester IV) - Active");
@@ -150,7 +177,7 @@ export default function ReportsAndAnalyticsPage() {
 
   const showToast = (msg: string) => {
     setToastMessage(msg);
-    setTimeout(() => setToastMessage(null), 3000);
+    setTimeout(() => setToastMessage(null), 3200);
   };
 
   const filteredReports = reports.filter(item => {
@@ -172,408 +199,364 @@ export default function ReportsAndAnalyticsPage() {
     return true;
   });
 
+  const getCategoryBadgeClass = (category: ReportTemplate["category"]) => {
+    switch (category) {
+      case "academic":
+        return "bg-indigo-50 text-indigo-700 border-indigo-200/80";
+      case "finance":
+        return "bg-emerald-50 text-emerald-700 border-emerald-200/80";
+      case "attendance":
+        return "bg-amber-50 text-amber-700 border-amber-200/80";
+      case "accreditation":
+        return "bg-purple-50 text-purple-700 border-purple-200/80";
+      case "workload":
+      default:
+        return "bg-blue-50 text-blue-700 border-blue-200/80";
+    }
+  };
+
   return (
-    <div className="flex flex-col w-full pb-16">
+    <div className="min-h-screen bg-slate-50/60 pb-16">
       {/* Toast Notification */}
       {toastMessage && (
-        <div className="fixed bottom-6 right-6 z-50 bg-primary text-on-primary px-4 py-3 shadow-xl border border-secondary flex items-center gap-3">
-          <CheckCircle2 className="w-5 h-5 text-secondary" />
-          <span className="font-mono-data text-body-sm font-semibold">{toastMessage}</span>
+        <div className="fixed bottom-6 right-6 z-50 bg-slate-900 text-white px-4 py-3 rounded-xl shadow-xl border border-slate-700 flex items-center gap-3 animate-in fade-in slide-in-from-bottom-2">
+          <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0" />
+          <span className="text-sm font-medium">{toastMessage}</span>
         </div>
       )}
 
-      {/* Sub-Header & Executive Breadcrumb Bar */}
-      <div className="bg-surface-container-lowest px-gutter-desktop py-space-md shadow-sm border-b border-outline-variant/30">
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-space-md">
-          <div className="flex flex-col gap-1">
-            <div className="flex items-center gap-2">
-              <span className="font-mono-data text-label-sm uppercase tracking-wider text-secondary">
-                Institutional Command
-              </span>
-              <ChevronRight className="w-3.5 h-3.5 text-on-surface-variant" />
-              <span className="font-mono-data text-label-sm uppercase tracking-wider text-on-surface-variant">
-                Registrar & Governance
-              </span>
-              <ChevronRight className="w-3.5 h-3.5 text-on-surface-variant" />
-              <span className="font-mono-data text-label-sm uppercase tracking-wider text-primary font-semibold">
-                Reports & Analytics Intelligence
+      {/* Main Container */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 space-y-6">
+        {/* Hero Header */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <div className="flex items-center gap-2.5">
+              <h1 className="text-2xl font-bold tracking-tight text-slate-900">Reports & Analytics</h1>
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200/80">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                Data Lake v4.12 Synced
               </span>
             </div>
-            <div className="flex items-center gap-space-sm mt-0.5">
-              <h1 className="font-headline-lg text-headline-lg tracking-tight text-primary font-bold">
-                Intelligence Command & Regulatory Audit Console
-              </h1>
-              <span className="inline-flex items-center gap-1.5 px-2 py-0.5 bg-surface-container-high text-on-secondary-container font-mono-data text-label-sm uppercase tracking-wider font-semibold">
-                <span className="h-1.5 w-1.5 rounded-full bg-secondary animate-pulse"></span>
-                Data Lake v4.12 • Synced 4m ago
-              </span>
-            </div>
+            <p className="text-sm text-slate-500 mt-1">
+              Institutional intelligence, statutory compliance dossiers (NIRF/NAAC/ABET) & automated dispatch center.
+            </p>
           </div>
-          <div className="flex flex-wrap items-center gap-space-xs">
+
+          <div className="flex items-center gap-2.5 flex-wrap">
             <button
               onClick={() => setIsAuditModalOpen(true)}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-surface-container-low text-primary hover:bg-surface-container font-label-md text-label-md uppercase tracking-wider transition-colors border border-outline-variant/40"
+              className="inline-flex items-center gap-2 px-3.5 py-2 text-xs font-semibold text-slate-700 bg-white border border-slate-200 rounded-xl hover:bg-slate-50 hover:border-slate-300 shadow-xs transition-all"
             >
-              <ShieldCheck className="w-4 h-4 text-secondary" />
-              <span>Regulatory Audit (NIRF/NAAC/ABET)</span>
+              <ShieldCheck className="w-4 h-4 text-indigo-600" />
+              <span>Regulatory Audit (NIRF/NAAC)</span>
             </button>
             <button
               onClick={() => showToast("Exporting Complete Executive Reporting Pack (ZIP, 14.8 MB)...")}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-surface-container-low text-primary hover:bg-surface-container font-label-md text-label-md uppercase tracking-wider transition-colors border border-outline-variant/40"
+              className="inline-flex items-center gap-2 px-3.5 py-2 text-xs font-semibold text-slate-700 bg-white border border-slate-200 rounded-xl hover:bg-slate-50 hover:border-slate-300 shadow-xs transition-all"
             >
-              <Download className="w-4 h-4" />
+              <Download className="w-4 h-4 text-slate-600" />
               <span>Export Executive Pack</span>
             </button>
             <button
               onClick={() => setIsScheduleModalOpen(true)}
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-primary text-on-primary hover:bg-primary-container font-label-md text-label-md uppercase tracking-wider transition-colors shadow-sm font-semibold"
+              className="inline-flex items-center gap-2 px-4 py-2 text-xs font-semibold text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl shadow-xs transition-all"
             >
               <Calendar className="w-4 h-4" />
-              <span>+ Schedule Automated Report</span>
+              <span>+ Schedule Dispatch</span>
             </button>
           </div>
         </div>
-      </div>
 
-      {/* Main Content Space */}
-      <div className="p-gutter-desktop space-y-space-lg">
-        {/* Top 4 Executive Intelligence KPI Metric Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-space-md">
-          {/* KPI 1 */}
-          <div className="bg-surface-container-lowest p-space-md shadow-sm border border-outline-variant/40 relative overflow-hidden flex flex-col justify-between">
-            <div className="absolute left-0 top-0 bottom-0 w-1 bg-secondary"></div>
-            <div className="pl-2">
-              <div className="flex items-center justify-between text-on-surface-variant mb-1">
-                <span className="font-label-sm text-label-sm uppercase tracking-wider font-semibold">
-                  Campus Enrollment & Retention
-                </span>
-                <GraduationCap className="w-4 h-4 text-secondary" />
+        {/* 4 Standard Redesigned KPI Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {/* KPI 1: Campus Enrollment & Retention */}
+          <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-5 hover:border-slate-300 transition-all">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                Enrollment & Retention
+              </span>
+              <div className="w-10 h-10 rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600">
+                <GraduationCap className="w-5 h-5" />
               </div>
-              <div className="flex items-baseline gap-2">
-                <span className="font-headline-lg text-headline-lg text-primary font-bold">3,892</span>
-                <span className="font-label-sm text-label-sm text-on-surface-variant uppercase">Enrolled</span>
-                <span className="ml-auto inline-flex items-center px-1.5 py-0.5 bg-surface-container-high text-on-secondary-container font-mono-data text-label-sm font-semibold">
-                  +1.8% YoY
-                </span>
-              </div>
-              <p className="font-body-sm text-body-sm text-on-surface-variant mt-2">
-                <strong className="font-semibold text-on-surface">97.2% Retention Rate</strong> • 42 Withdrawals / Transfers logged
-              </p>
             </div>
-            <div className="pl-2 mt-3 pt-2 bg-surface-container-low px-2 py-1.5 flex items-center justify-between">
-              <span className="font-mono-data text-label-sm text-on-surface-variant uppercase">Target: 3,850</span>
-              <span className="font-mono-data text-label-sm text-secondary font-semibold">101.1% Capacity</span>
+            <div className="mt-3">
+              <div className="text-2xl font-bold tracking-tight text-slate-900 tabular-nums">
+                3,892 <span className="text-xs font-normal text-slate-500">Enrolled</span>
+              </div>
+              <div className="mt-2 flex items-center justify-between text-xs font-medium">
+                <span className="text-emerald-600 font-semibold">+1.8% YoY • 97.2% Ret.</span>
+                <span className="text-slate-400">101.1% Cap</span>
+              </div>
             </div>
           </div>
 
-          {/* KPI 2 */}
-          <div className="bg-surface-container-lowest p-space-md shadow-sm border border-outline-variant/40 relative overflow-hidden flex flex-col justify-between">
-            <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary"></div>
-            <div className="pl-2">
-              <div className="flex items-center justify-between text-on-surface-variant mb-1">
-                <span className="font-label-sm text-label-sm uppercase tracking-wider font-semibold">
-                  Aggregate Academic Performance
-                </span>
-                <BarChart3 className="w-4 h-4 text-primary" />
+          {/* KPI 2: Aggregate Academic Performance */}
+          <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-5 hover:border-slate-300 transition-all">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                Academic Performance
+              </span>
+              <div className="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600">
+                <BarChart3 className="w-5 h-5" />
               </div>
-              <div className="flex items-baseline gap-2">
-                <span className="font-headline-lg text-headline-lg text-primary font-bold">3.44</span>
-                <span className="font-label-sm text-label-sm text-on-surface-variant uppercase">CGPA / 4.00</span>
-                <span className="ml-auto inline-flex items-center px-1.5 py-0.5 bg-surface-container-high text-on-secondary-container font-mono-data text-label-sm font-semibold">
-                  Tier-1 Met
-                </span>
-              </div>
-              <p className="font-body-sm text-body-sm text-on-surface-variant mt-2">
-                <strong className="font-semibold text-on-surface">94.6% Exam Clear Rate</strong> • 28.4% Dean&apos;s Honor Roll
-              </p>
             </div>
-            <div className="pl-2 mt-3 pt-2 bg-surface-container-low px-2 py-1.5 flex items-center justify-between">
-              <span className="font-mono-data text-label-sm text-on-surface-variant uppercase">Grade Spread</span>
-              <span className="font-mono-data text-label-sm text-primary font-semibold">Gaussian Bell Standard</span>
+            <div className="mt-3">
+              <div className="text-2xl font-bold tracking-tight text-slate-900 tabular-nums">
+                3.44 <span className="text-xs font-normal text-slate-500">CGPA / 4.00</span>
+              </div>
+              <div className="mt-2 flex items-center justify-between text-xs font-medium">
+                <span className="text-emerald-600 font-semibold">94.6% Exam Clear</span>
+                <span className="text-slate-400">28.4% Honor Roll</span>
+              </div>
             </div>
           </div>
 
-          {/* KPI 3 */}
-          <div className="bg-surface-container-lowest p-space-md shadow-sm border border-outline-variant/40 relative overflow-hidden flex flex-col justify-between">
-            <div className="absolute left-0 top-0 bottom-0 w-1 bg-secondary-container"></div>
-            <div className="pl-2">
-              <div className="flex items-center justify-between text-on-surface-variant mb-1">
-                <span className="font-label-sm text-label-sm uppercase tracking-wider font-semibold">
-                  Fee Collection & Arrears Telemetry
-                </span>
-                <DollarSign className="w-4 h-4 text-secondary" />
+          {/* KPI 3: Fee Collections Telemetry */}
+          <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-5 hover:border-slate-300 transition-all">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                Fee Collection Rate
+              </span>
+              <div className="w-10 h-10 rounded-xl bg-sky-50 flex items-center justify-center text-sky-600">
+                <DollarSign className="w-5 h-5" />
               </div>
-              <div className="flex items-baseline gap-2">
-                <span className="font-headline-lg text-headline-lg text-primary font-bold">$4.82M</span>
-                <span className="font-label-sm text-label-sm text-on-surface-variant uppercase">/ $5.10M</span>
-                <span className="ml-auto inline-flex items-center px-1.5 py-0.5 bg-surface-container-high text-on-secondary-container font-mono-data text-label-sm font-semibold">
-                  94.5% Collected
-                </span>
-              </div>
-              <p className="font-body-sm text-body-sm text-on-surface-variant mt-2">
-                <strong className="font-semibold text-on-surface">$280K Aging Ledger</strong> • Defaulter Rate: 2.1% (Low)
-              </p>
             </div>
-            <div className="pl-2 mt-3 pt-2 bg-surface-container-low px-2 py-1.5 flex items-center justify-between">
-              <span className="font-mono-data text-label-sm text-on-surface-variant uppercase">Bursar Clearance</span>
-              <span className="font-mono-data text-label-sm text-secondary font-semibold">3,680 Hall Tickets Issued</span>
+            <div className="mt-3">
+              <div className="text-2xl font-bold tracking-tight text-slate-900 tabular-nums">
+                $4.82M <span className="text-xs font-normal text-slate-500">/ $5.10M</span>
+              </div>
+              <div className="mt-2 flex items-center justify-between text-xs font-medium">
+                <span className="text-emerald-600 font-semibold">94.5% Realized</span>
+                <span className="text-slate-400">2.1% Defaulter</span>
+              </div>
             </div>
           </div>
 
-          {/* KPI 4 */}
-          <div className="bg-surface-container-lowest p-space-md shadow-sm border border-outline-variant/40 relative overflow-hidden flex flex-col justify-between">
-            <div className="absolute left-0 top-0 bottom-0 w-1 bg-surface-tint"></div>
-            <div className="pl-2">
-              <div className="flex items-center justify-between text-on-surface-variant mb-1">
-                <span className="font-label-sm text-label-sm uppercase tracking-wider font-semibold">
-                  Faculty Load & Research Velocity
-                </span>
-                <Award className="w-4 h-4 text-primary" />
+          {/* KPI 4: Faculty Load & Research Velocity */}
+          <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-5 hover:border-slate-300 transition-all">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                Faculty Load & Velocity
+              </span>
+              <div className="w-10 h-10 rounded-xl bg-purple-50 flex items-center justify-center text-purple-600">
+                <Award className="w-5 h-5" />
               </div>
-              <div className="flex items-baseline gap-2">
-                <span className="font-headline-lg text-headline-lg text-primary font-bold">16.4</span>
-                <span className="font-label-sm text-label-sm text-on-surface-variant uppercase">Hrs/Wk Avg</span>
-                <span className="ml-auto inline-flex items-center px-1.5 py-0.5 bg-surface-container-high text-on-secondary-container font-mono-data text-label-sm font-semibold">
-                  98.6% Staffed
-                </span>
-              </div>
-              <p className="font-body-sm text-body-sm text-on-surface-variant mt-2">
-                <strong className="font-semibold text-on-surface">142 Active Staff</strong> • 84 Peer-Reviewed Papers in AY 24-25
-              </p>
             </div>
-            <div className="pl-2 mt-3 pt-2 bg-surface-container-low px-2 py-1.5 flex items-center justify-between">
-              <span className="font-mono-data text-label-sm text-on-surface-variant uppercase">Grant Pipeline</span>
-              <span className="font-mono-data text-label-sm text-primary font-semibold">$1.42M Funded Labs</span>
+            <div className="mt-3">
+              <div className="text-2xl font-bold tracking-tight text-slate-900 tabular-nums">
+                16.4 <span className="text-xs font-normal text-slate-500">Hrs/Wk Avg</span>
+              </div>
+              <div className="mt-2 flex items-center justify-between text-xs font-medium">
+                <span className="text-purple-600 font-semibold">84 Papers AY 24-25</span>
+                <span className="text-slate-400">$1.42M Grants</span>
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Main Split-Pane Layout (8 cols left / 4 cols right) */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
-          {/* Left & Main Master Catalog (8 cols / ~65%) */}
-          <div className="lg:col-span-8 space-y-space-md">
-            {/* Category Filter Tabs */}
-            <div className="bg-surface-container-lowest shadow-sm border border-outline-variant/40 flex flex-wrap items-center overflow-x-auto">
+        {/* Category Navigation Ribbon & Filters */}
+        <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-4 space-y-4">
+          {/* Category Tabs */}
+          <div className="flex items-center gap-1.5 overflow-x-auto pb-1 border-b border-slate-100">
+            {[
+              { id: "all", label: "All Reports", count: reports.length },
+              { id: "academic", label: "Academic & Grades", count: reports.filter(r => r.category === "academic").length },
+              { id: "finance", label: "Finance & Bursar", count: reports.filter(r => r.category === "finance").length },
+              { id: "attendance", label: "Attendance & Cohorts", count: reports.filter(r => r.category === "attendance").length },
+              { id: "accreditation", label: "Accreditation & NIRF", count: reports.filter(r => r.category === "accreditation").length },
+              { id: "workload", label: "Staff Workload", count: reports.filter(r => r.category === "workload").length },
+            ].map(tab => (
               <button
-                onClick={() => setActiveTab("all")}
-                className={`px-space-md py-3 font-label-md text-label-md uppercase tracking-wider flex items-center gap-2 transition-colors ${
-                  activeTab === "all"
-                    ? "bg-primary text-on-primary font-semibold"
-                    : "text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface"
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id as any)}
+                className={`px-3.5 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all flex items-center gap-2 ${
+                  activeTab === tab.id
+                    ? "bg-indigo-600 text-white shadow-xs"
+                    : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
                 }`}
               >
-                <span>All Reports</span>
-                <span className="bg-surface-container-high text-primary px-1.5 py-0.2 rounded-none font-mono-data text-label-sm font-bold">
-                  36
+                <span>{tab.label}</span>
+                <span
+                  className={`px-1.5 py-0.5 rounded-md text-[10px] font-mono font-bold ${
+                    activeTab === tab.id ? "bg-white/20 text-white" : "bg-slate-100 text-slate-600"
+                  }`}
+                >
+                  {tab.count}
                 </span>
               </button>
-              <button
-                onClick={() => setActiveTab("academic")}
-                className={`px-space-md py-3 font-label-md text-label-md uppercase tracking-wider flex items-center gap-2 transition-colors ${
-                  activeTab === "academic"
-                    ? "bg-primary text-on-primary font-semibold"
-                    : "text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface"
-                }`}
-              >
-                <span>Academic & Grades</span>
-                <span className="bg-surface-container text-on-surface-variant px-1.5 py-0.2 rounded-none font-mono-data text-label-sm">
-                  12
-                </span>
-              </button>
-              <button
-                onClick={() => setActiveTab("finance")}
-                className={`px-space-md py-3 font-label-md text-label-md uppercase tracking-wider flex items-center gap-2 transition-colors ${
-                  activeTab === "finance"
-                    ? "bg-primary text-on-primary font-semibold"
-                    : "text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface"
-                }`}
-              >
-                <span>Finance & Bursar</span>
-                <span className="bg-surface-container text-on-surface-variant px-1.5 py-0.2 rounded-none font-mono-data text-label-sm">
-                  8
-                </span>
-              </button>
-              <button
-                onClick={() => setActiveTab("attendance")}
-                className={`px-space-md py-3 font-label-md text-label-md uppercase tracking-wider flex items-center gap-2 transition-colors ${
-                  activeTab === "attendance"
-                    ? "bg-primary text-on-primary font-semibold"
-                    : "text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface"
-                }`}
-              >
-                <span>Attendance & Cohorts</span>
-                <span className="bg-surface-container text-on-surface-variant px-1.5 py-0.2 rounded-none font-mono-data text-label-sm">
-                  6
-                </span>
-              </button>
-              <button
-                onClick={() => setActiveTab("accreditation")}
-                className={`px-space-md py-3 font-label-md text-label-md uppercase tracking-wider flex items-center gap-2 transition-colors ${
-                  activeTab === "accreditation"
-                    ? "bg-primary text-on-primary font-semibold"
-                    : "text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface"
-                }`}
-              >
-                <span>Accreditation & NIRF</span>
-                <span className="bg-surface-container text-on-surface-variant px-1.5 py-0.2 rounded-none font-mono-data text-label-sm">
-                  5
-                </span>
-              </button>
-              <button
-                onClick={() => setActiveTab("workload")}
-                className={`px-space-md py-3 font-label-md text-label-md uppercase tracking-wider flex items-center gap-2 transition-colors ${
-                  activeTab === "workload"
-                    ? "bg-primary text-on-primary font-semibold"
-                    : "text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface"
-                }`}
-              >
-                <span>Staff Workload</span>
-                <span className="bg-surface-container text-on-surface-variant px-1.5 py-0.2 rounded-none font-mono-data text-label-sm">
-                  5
-                </span>
-              </button>
+            ))}
+          </div>
+
+          {/* Extended Filter Ribbon */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-3 items-center">
+            <div className="lg:col-span-5 relative">
+              <Search className="absolute left-3 top-2.5 w-4 h-4 text-slate-400" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={e => setSearchQuery(e.target.value)}
+                placeholder="Search report templates, metrics, compliance tags, codes..."
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl pl-9 pr-3 py-2 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all"
+              />
             </div>
 
-            {/* Filter & Search Query Controls */}
-            <div className="bg-surface-container-lowest p-space-md shadow-sm border border-outline-variant/40 flex flex-col md:flex-row items-stretch gap-space-sm">
-              <div className="relative flex-1">
-                <Search className="absolute left-3 top-2.5 w-4 h-4 text-on-surface-variant" />
-                <input
-                  type="text"
-                  value={searchQuery}
-                  onChange={e => setSearchQuery(e.target.value)}
-                  className="w-full bg-surface-container-low pl-9 pr-3 py-2 font-body-sm text-body-sm text-on-surface focus:outline-none placeholder:text-on-surface-variant/60 border border-outline-variant/30"
-                  placeholder="Search report templates, metrics, compliance tags, codes..."
-                />
-              </div>
-              <div className="flex flex-wrap items-center gap-space-xs">
-                <select
-                  value={selectedAcademicYear}
-                  onChange={e => setSelectedAcademicYear(e.target.value)}
-                  className="bg-surface-container-low px-3 py-2 font-mono-data text-label-sm uppercase tracking-wider text-on-surface focus:outline-none border border-outline-variant/30"
-                >
-                  <option value="AY 2024-25">AY 2024-25 (Current Sem)</option>
-                  <option value="AY 2023-24">AY 2023-24 (Full Cycle)</option>
-                  <option value="AY 2022-23">Archived AY 2022-23</option>
-                </select>
-                <select
-                  value={selectedFaculty}
-                  onChange={e => setSelectedFaculty(e.target.value)}
-                  className="bg-surface-container-low px-3 py-2 font-mono-data text-label-sm uppercase tracking-wider text-on-surface focus:outline-none border border-outline-variant/30"
-                >
-                  <option value="all">All Faculties (Computing, AI, Mgmt, Eng)</option>
-                  <option value="computing">Faculty of Computing & Data Sciences</option>
-                  <option value="ai">Faculty of Artificial Intelligence</option>
-                  <option value="mgmt">Faculty of Business Management</option>
-                </select>
-                <select
-                  value={selectedFrequency}
-                  onChange={e => setSelectedFrequency(e.target.value)}
-                  className="bg-surface-container-low px-3 py-2 font-mono-data text-label-sm uppercase tracking-wider text-on-surface focus:outline-none border border-outline-variant/30"
-                >
-                  <option value="all">All Frequencies</option>
-                  <option value="weekly">Automated Weekly</option>
-                  <option value="daily">Daily EOD</option>
-                  <option value="monthly">Monthly Compliance</option>
-                  <option value="dynamic">Real-Time Dynamic</option>
-                </select>
-                <button
-                  onClick={() => {
-                    setSearchQuery("");
-                    setSelectedFaculty("all");
-                    setSelectedFrequency("all");
-                    showToast("Dataset refreshed and synced with Data Lake.");
-                  }}
-                  className="p-2 bg-surface-container-low hover:bg-surface-container text-on-surface-variant hover:text-on-surface transition-colors border border-outline-variant/30"
-                  title="Refresh Dataset"
-                >
-                  <RotateCcw className="w-4 h-4" />
-                </button>
-              </div>
+            <div className="lg:col-span-2">
+              <select
+                value={selectedAcademicYear}
+                onChange={e => setSelectedAcademicYear(e.target.value)}
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
+              >
+                <option value="AY 2024-25">AY 2024-25 (Current)</option>
+                <option value="AY 2023-24">AY 2023-24 (Full Cycle)</option>
+                <option value="AY 2022-23">Archived AY 2022-23</option>
+              </select>
             </div>
 
-            {/* Master Reports Catalog & Execution Register (Table) */}
-            <div className="bg-surface-container-lowest shadow-sm border border-outline-variant/40 overflow-hidden">
+            <div className="lg:col-span-3">
+              <select
+                value={selectedFaculty}
+                onChange={e => setSelectedFaculty(e.target.value)}
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
+              >
+                <option value="all">All Faculties & Schools</option>
+                <option value="computing">Faculty of Computing & Data</option>
+                <option value="ai">Faculty of Artificial Intelligence</option>
+                <option value="mgmt">School of Management</option>
+              </select>
+            </div>
+
+            <div className="lg:col-span-2 flex items-center gap-2">
+              <select
+                value={selectedFrequency}
+                onChange={e => setSelectedFrequency(e.target.value)}
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
+              >
+                <option value="all">All Cadences</option>
+                <option value="weekly">Automated Weekly</option>
+                <option value="daily">Daily EOD</option>
+                <option value="monthly">Monthly Audit</option>
+                <option value="dynamic">Real-Time</option>
+              </select>
+              <button
+                onClick={() => {
+                  setSearchQuery("");
+                  setSelectedFaculty("all");
+                  setSelectedFrequency("all");
+                  showToast("Dataset refreshed and synced with Data Lake.");
+                }}
+                title="Refresh Dataset"
+                className="p-2 text-slate-500 hover:text-slate-800 bg-slate-50 border border-slate-200 rounded-xl hover:bg-slate-100 transition-colors shrink-0"
+              >
+                <RotateCcw className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Main Split Layout: Left Reports Ledger (8 cols) vs Right Interactive Studio Drawer (4 cols) */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+          {/* LEFT COLUMN: Master Reports Catalog Table & YoY Metrics (8 of 12 cols / ~66%) */}
+          <div className="lg:col-span-8 space-y-6">
+            {/* Master Reports Catalog Card */}
+            <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs overflow-hidden flex flex-col">
+              {/* Action Bar */}
+              <div className="p-4 border-b border-slate-100 flex flex-wrap items-center justify-between gap-3 bg-slate-50/50">
+                <div className="flex items-center gap-3">
+                  <span className="text-xs font-semibold text-slate-700 uppercase tracking-wider">
+                    Executive Report Registry
+                  </span>
+                  <div className="h-4 w-px bg-slate-200" />
+                  <button
+                    onClick={() => showToast("Bulk batch export generated for all visible reporting registers.")}
+                    className="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-semibold text-slate-700 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors shadow-2xs"
+                  >
+                    <Download className="w-3.5 h-3.5 text-indigo-600" />
+                    <span>Bulk Export</span>
+                  </button>
+                </div>
+                <div className="flex items-center gap-2 text-xs text-slate-500 font-mono">
+                  Showing {filteredReports.length} of {reports.length} Templates
+                </div>
+              </div>
+
+              {/* Scrollable Table */}
               <div className="overflow-x-auto">
                 <table className="w-full text-left border-collapse">
                   <thead>
-                    <tr className="bg-surface-container-low text-on-surface-variant font-label-sm text-label-sm uppercase tracking-wider border-b border-outline-variant/30">
-                      <th className="py-2.5 px-3">Report Code & Class</th>
-                      <th className="py-2.5 px-3">Report Title & Scope</th>
-                      <th className="py-2.5 px-3">Cadence & Recent Run</th>
-                      <th className="py-2.5 px-3">Coverage / Metrics</th>
-                      <th className="py-2.5 px-3">Formats</th>
-                      <th className="py-2.5 px-3 text-right">Actions</th>
+                    <tr className="bg-slate-50/80 border-b border-slate-200/80 text-[11px] font-bold text-slate-500 uppercase tracking-wider">
+                      <th className="px-3.5 py-3">Report Code & Class</th>
+                      <th className="px-3.5 py-3">Report Title & Scope</th>
+                      <th className="px-3.5 py-3">Cadence & Last Run</th>
+                      <th className="px-3.5 py-3">Coverage</th>
+                      <th className="px-3.5 py-3">Formats</th>
+                      <th className="px-3.5 py-3 text-right">Actions</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-surface-container">
+                  <tbody className="divide-y divide-slate-100 text-xs">
                     {filteredReports.map(rep => {
                       const isSelected = selectedReport.id === rep.id;
+
                       return (
                         <tr
                           key={rep.id}
                           onClick={() => setSelectedReport(rep)}
-                          className={`transition-colors cursor-pointer group ${
+                          className={`cursor-pointer transition-colors ${
                             isSelected
-                              ? "bg-primary/5 hover:bg-primary/10 border-l-4 border-primary"
-                              : "hover:bg-surface-container-low"
+                              ? "bg-indigo-50/60 hover:bg-indigo-50 border-l-4 border-indigo-600"
+                              : "hover:bg-slate-50/70"
                           }`}
                         >
-                          <td className="py-2.5 px-3 align-middle">
+                          <td className="px-3.5 py-3.5 align-top whitespace-nowrap">
                             <div className="flex items-center gap-2">
-                              <Sparkles className="w-4 h-4 text-secondary" />
-                              <div className="flex flex-col">
-                                <span className="font-mono-data text-mono-data font-bold text-primary">
-                                  {rep.code}
-                                </span>
-                                <span className="font-label-sm text-label-sm uppercase text-secondary font-semibold">
+                              <Sparkles className="w-3.5 h-3.5 text-indigo-600 shrink-0" />
+                              <div className="flex flex-col gap-0.5">
+                                <span className="font-mono font-bold text-slate-900">{rep.code}</span>
+                                <span
+                                  className={`inline-block px-1.5 py-0.5 rounded text-[10px] font-semibold border ${getCategoryBadgeClass(
+                                    rep.category
+                                  )}`}
+                                >
                                   {rep.categoryLabel}
                                 </span>
                               </div>
                             </div>
                           </td>
-                          <td className="py-2.5 px-3 align-middle">
-                            <div className="font-body-md text-body-md text-on-surface font-semibold group-hover:text-primary">
+                          <td className="px-3.5 py-3.5 align-top max-w-xs">
+                            <div className="font-semibold text-slate-900 hover:text-indigo-600 transition-colors">
                               {rep.title}
                             </div>
-                            <div className="font-body-sm text-body-sm text-on-surface-variant">
+                            <div className="text-[11px] text-slate-500 mt-0.5 leading-relaxed">
                               {rep.scope}
                             </div>
                           </td>
-                          <td className="py-2.5 px-3 align-middle">
-                            <div className="font-mono-data text-label-sm text-on-surface">
-                              {rep.cadence}
-                            </div>
-                            <div className="font-label-sm text-label-sm text-on-surface-variant uppercase">
-                              {rep.lastRun}
-                            </div>
+                          <td className="px-3.5 py-3.5 align-top whitespace-nowrap">
+                            <div className="font-mono text-slate-800 font-medium">{rep.cadence}</div>
+                            <div className="text-[10px] text-slate-400 font-mono mt-0.5">{rep.lastRun}</div>
                           </td>
-                          <td className="py-2.5 px-3 align-middle">
-                            <span className="font-mono-data text-label-sm text-primary font-medium">
-                              {rep.coverage}
-                            </span>
+                          <td className="px-3.5 py-3.5 align-top whitespace-nowrap">
+                            <span className="font-medium text-slate-700">{rep.coverage}</span>
                           </td>
-                          <td className="py-2.5 px-3 align-middle">
-                            <div className="flex items-center gap-1 font-mono-data text-label-sm font-bold">
+                          <td className="px-3.5 py-3.5 align-top whitespace-nowrap">
+                            <div className="flex items-center gap-1 font-mono text-[10px] font-bold">
                               {rep.formats.map(f => (
                                 <span
                                   key={f}
-                                  className="px-1.5 py-0.5 bg-surface-container text-on-surface text-[0.6875rem]"
+                                  className="px-1.5 py-0.5 rounded bg-slate-100 text-slate-700 border border-slate-200/80"
                                 >
                                   {f}
                                 </span>
                               ))}
                             </div>
                           </td>
-                          <td className="py-2.5 px-3 align-middle text-right">
-                            <div className="inline-flex items-center gap-1">
+                          <td className="px-3.5 py-3.5 align-top text-right whitespace-nowrap">
+                            <div className="inline-flex items-center gap-1.5">
                               <button
                                 onClick={e => {
                                   e.stopPropagation();
                                   setSelectedReport(rep);
                                   setIsPreviewModalOpen(true);
                                 }}
-                                className="px-2 py-1 bg-primary text-on-primary hover:bg-primary-container font-label-sm text-label-sm uppercase tracking-wider transition-colors font-semibold"
+                                className="px-2.5 py-1 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-semibold transition-colors shadow-2xs"
                               >
                                 Run Now
                               </button>
@@ -582,7 +565,7 @@ export default function ReportsAndAnalyticsPage() {
                                   e.stopPropagation();
                                   showToast(`Downloaded signed archive for ${rep.code}`);
                                 }}
-                                className="p-1 text-on-surface-variant hover:text-primary transition-colors"
+                                className="p-1 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors"
                                 title="Download Archive"
                               >
                                 <Download className="w-4 h-4" />
@@ -596,38 +579,26 @@ export default function ReportsAndAnalyticsPage() {
                 </table>
               </div>
 
-              {/* Bottom Pagination & Batch Controls */}
-              <div className="bg-surface-container-low px-space-md py-2.5 flex flex-col sm:flex-row items-center justify-between gap-space-sm border-t border-outline-variant/30">
-                <div className="flex items-center gap-3">
-                  <span className="font-mono-data text-label-sm text-on-surface-variant">
-                    Showing <strong className="text-on-surface">1 - {filteredReports.length}</strong> of 36 Reports
-                  </span>
-                  <button
-                    onClick={() => showToast("Bulk batch export generated for all visible reporting registers.")}
-                    className="inline-flex items-center gap-1 text-primary hover:text-secondary font-label-sm text-label-sm uppercase tracking-wider font-semibold"
-                  >
-                    <Download className="w-3.5 h-3.5" />
-                    <span>Bulk Export Selected</span>
-                  </button>
-                </div>
-                <div className="flex items-center gap-1">
-                  <span className="font-mono-data text-label-sm text-on-surface-variant mr-2">Page 1 of 6</span>
+              {/* Table Pagination Footer */}
+              <div className="p-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3 bg-slate-50/50">
+                <span className="text-xs text-slate-500 font-mono">
+                  Page 1 of 6 (Total {reports.length} Templates)
+                </span>
+                <div className="inline-flex items-center gap-1 text-xs">
                   <button
                     disabled
-                    className="px-2 py-1 bg-surface-container opacity-50 cursor-not-allowed text-on-surface-variant font-label-sm text-label-sm uppercase"
+                    className="px-2.5 py-1 bg-white border border-slate-200 text-slate-400 rounded-lg cursor-not-allowed opacity-50"
                   >
                     Prev
                   </button>
-                  <button className="px-2 py-1 bg-primary text-on-primary font-mono-data text-label-sm font-bold">
-                    1
-                  </button>
-                  <button className="px-2 py-1 bg-surface-container hover:bg-surface-container-high text-on-surface font-mono-data text-label-sm">
+                  <button className="px-3 py-1 bg-indigo-600 text-white font-bold rounded-lg font-mono">1</button>
+                  <button className="px-3 py-1 bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 rounded-lg font-mono">
                     2
                   </button>
-                  <button className="px-2 py-1 bg-surface-container hover:bg-surface-container-high text-on-surface font-mono-data text-label-sm">
+                  <button className="px-3 py-1 bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 rounded-lg font-mono">
                     3
                   </button>
-                  <button className="px-2 py-1 bg-surface-container hover:bg-surface-container-high text-on-surface font-label-sm text-label-sm uppercase">
+                  <button className="px-2.5 py-1 bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 rounded-lg">
                     Next
                   </button>
                 </div>
@@ -635,201 +606,194 @@ export default function ReportsAndAnalyticsPage() {
             </div>
 
             {/* Visual Telemetry & Multi-Vector Trajectory Card */}
-            <div className="bg-surface-container-lowest p-space-md shadow-sm border border-outline-variant/40 space-y-space-md">
-              <div className="flex items-center justify-between">
+            <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-5 space-y-4">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                 <div className="flex items-center gap-2">
-                  <TrendingUp className="w-5 h-5 text-secondary" />
-                  <h3 className="font-headline-sm text-headline-sm uppercase tracking-tight text-primary font-bold">
-                    Semester YoY Metric Trajectory Telemetry
-                  </h3>
+                  <div className="w-8 h-8 rounded-lg bg-indigo-50 flex items-center justify-center text-indigo-600">
+                    <TrendingUp className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <h3 className="text-sm font-bold text-slate-900">
+                      Semester YoY Metric Trajectory Telemetry
+                    </h3>
+                    <p className="text-[11px] text-slate-500">
+                      Aggregated across all 18 Schools & 3 Campuses
+                    </p>
+                  </div>
                 </div>
-                <span className="font-mono-data text-label-sm uppercase text-on-surface-variant">
-                  Aggregated across all 18 Schools & 3 Campuses
+                <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-slate-100 text-slate-700 border border-slate-200">
+                  AY 2024–25 Baseline
                 </span>
               </div>
 
-              {/* Trend Bar Graph Matrix */}
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-space-sm pt-2">
-                {/* Trajectory 1 */}
-                <div className="bg-surface-container-low p-space-sm flex flex-col justify-between border border-outline-variant/30">
+              {/* Trajectory 4-Grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 pt-1">
+                {/* Metric 1 */}
+                <div className="p-3 bg-slate-50 rounded-xl border border-slate-200/80 flex flex-col justify-between">
                   <div>
-                    <div className="flex items-center justify-between text-on-surface-variant font-label-sm text-label-sm uppercase">
+                    <div className="flex items-center justify-between text-xs font-semibold text-slate-600">
                       <span>Enrollment</span>
-                      <span className="text-secondary font-bold">+5.2% YoY</span>
+                      <span className="text-emerald-600 font-bold">+5.2% YoY</span>
                     </div>
-                    <div className="font-headline-sm text-headline-sm text-primary font-bold mt-1">
-                      3,892 Pax
-                    </div>
+                    <div className="text-lg font-bold text-slate-900 mt-1">3,892 Pax</div>
                   </div>
                   <div className="mt-3">
-                    <div className="h-2 w-full bg-surface-container overflow-hidden">
-                      <div className="h-full bg-secondary w-[82%]"></div>
+                    <div className="h-1.5 w-full bg-slate-200 rounded-full overflow-hidden">
+                      <div className="h-full bg-indigo-600 rounded-full w-[82%]" />
                     </div>
-                    <span className="font-mono-data text-label-sm text-on-surface-variant mt-1 block">
-                      Baseline: 3,700
-                    </span>
+                    <span className="text-[10px] font-mono text-slate-400 mt-1 block">Baseline: 3,700</span>
                   </div>
                 </div>
 
-                {/* Trajectory 2 */}
-                <div className="bg-surface-container-low p-space-sm flex flex-col justify-between border border-outline-variant/30">
+                {/* Metric 2 */}
+                <div className="p-3 bg-slate-50 rounded-xl border border-slate-200/80 flex flex-col justify-between">
                   <div>
-                    <div className="flex items-center justify-between text-on-surface-variant font-label-sm text-label-sm uppercase">
+                    <div className="flex items-center justify-between text-xs font-semibold text-slate-600">
                       <span>Fee Realization</span>
-                      <span className="text-secondary font-bold">+3.1% YoY</span>
+                      <span className="text-emerald-600 font-bold">+3.1% YoY</span>
                     </div>
-                    <div className="font-headline-sm text-headline-sm text-primary font-bold mt-1">
-                      94.5% Rate
-                    </div>
+                    <div className="text-lg font-bold text-slate-900 mt-1">94.5% Rate</div>
                   </div>
                   <div className="mt-3">
-                    <div className="h-2 w-full bg-surface-container overflow-hidden">
-                      <div className="h-full bg-primary w-[94.5%]"></div>
+                    <div className="h-1.5 w-full bg-slate-200 rounded-full overflow-hidden">
+                      <div className="h-full bg-emerald-500 rounded-full w-[94.5%]" />
                     </div>
-                    <span className="font-mono-data text-label-sm text-on-surface-variant mt-1 block">
-                      Cleared: $4.82M
-                    </span>
+                    <span className="text-[10px] font-mono text-slate-400 mt-1 block">Cleared: $4.82M</span>
                   </div>
                 </div>
 
-                {/* Trajectory 3 */}
-                <div className="bg-surface-container-low p-space-sm flex flex-col justify-between border border-outline-variant/30">
+                {/* Metric 3 */}
+                <div className="p-3 bg-slate-50 rounded-xl border border-slate-200/80 flex flex-col justify-between">
                   <div>
-                    <div className="flex items-center justify-between text-on-surface-variant font-label-sm text-label-sm uppercase">
+                    <div className="flex items-center justify-between text-xs font-semibold text-slate-600">
                       <span>Exam Pass Rate</span>
-                      <span className="text-secondary font-bold">+1.4% YoY</span>
+                      <span className="text-emerald-600 font-bold">+1.4% YoY</span>
                     </div>
-                    <div className="font-headline-sm text-headline-sm text-primary font-bold mt-1">
-                      94.6% Clear
-                    </div>
+                    <div className="text-lg font-bold text-slate-900 mt-1">94.6% Clear</div>
                   </div>
                   <div className="mt-3">
-                    <div className="h-2 w-full bg-surface-container overflow-hidden">
-                      <div className="h-full bg-secondary-container w-[94.6%]"></div>
+                    <div className="h-1.5 w-full bg-slate-200 rounded-full overflow-hidden">
+                      <div className="h-full bg-sky-500 rounded-full w-[94.6%]" />
                     </div>
-                    <span className="font-mono-data text-label-sm text-on-surface-variant mt-1 block">
-                      Arrears: 5.4%
-                    </span>
+                    <span className="text-[10px] font-mono text-slate-400 mt-1 block">Arrears: 5.4%</span>
                   </div>
                 </div>
 
-                {/* Trajectory 4 */}
-                <div className="bg-surface-container-low p-space-sm flex flex-col justify-between border border-outline-variant/30">
+                {/* Metric 4 */}
+                <div className="p-3 bg-slate-50 rounded-xl border border-slate-200/80 flex flex-col justify-between">
                   <div>
-                    <div className="flex items-center justify-between text-on-surface-variant font-label-sm text-label-sm uppercase">
+                    <div className="flex items-center justify-between text-xs font-semibold text-slate-600">
                       <span>Chronic Absence</span>
-                      <span className="text-secondary font-bold">-2.8% Delta</span>
+                      <span className="text-emerald-600 font-bold">-2.8% Delta</span>
                     </div>
-                    <div className="font-headline-sm text-headline-sm text-primary font-bold mt-1">
-                      1.64% Cohort
-                    </div>
+                    <div className="text-lg font-bold text-slate-900 mt-1">1.64% Cohort</div>
                   </div>
                   <div className="mt-3">
-                    <div className="h-2 w-full bg-surface-container overflow-hidden">
-                      <div className="h-full bg-surface-tint w-[16%]"></div>
+                    <div className="h-1.5 w-full bg-slate-200 rounded-full overflow-hidden">
+                      <div className="h-full bg-amber-500 rounded-full w-[16%]" />
                     </div>
-                    <span className="font-mono-data text-label-sm text-on-surface-variant mt-1 block">
-                      Intervention: 64 pax
-                    </span>
+                    <span className="text-[10px] font-mono text-slate-400 mt-1 block">Flagged: 64 pax</span>
                   </div>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Right Column Studio Drawer & Live Compiler (4 cols / ~35%) */}
-          <div className="lg:col-span-4 space-y-space-md">
+          {/* RIGHT COLUMN: Studio Drawer & Live Compiler (4 of 12 cols / ~34%) */}
+          <div className="lg:col-span-4 space-y-5">
             {/* Live Report Studio Card */}
-            <div className="bg-surface-container-lowest p-space-md shadow-sm border border-outline-variant/40 space-y-space-md relative">
-              <div className="flex items-center justify-between pb-2 border-b border-surface-container">
+            <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-5 space-y-4">
+              <div className="flex items-center justify-between pb-3 border-b border-slate-100">
                 <div className="flex items-center gap-2">
-                  <Sliders className="w-5 h-5 text-primary" />
-                  <h2 className="font-headline-sm text-headline-sm uppercase tracking-tight text-primary font-bold">
+                  <div className="w-8 h-8 rounded-lg bg-indigo-50 flex items-center justify-center text-indigo-600">
+                    <Sliders className="w-4 h-4" />
+                  </div>
+                  <h2 className="text-sm font-bold text-slate-900">
                     Live Report Studio
                   </h2>
                 </div>
-                <span className="px-2 py-0.5 bg-surface-container font-mono-data text-label-sm uppercase text-primary font-bold">
+                <span className="px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-700 font-mono text-[10px] font-bold">
                   Interactive
                 </span>
               </div>
 
               {/* Active Selection Banner */}
-              <div className="bg-surface-container-low p-space-sm flex items-start gap-space-sm border border-outline-variant/30">
-                <FileText className="w-6 h-6 text-secondary mt-0.5" />
+              <div className="bg-slate-50 rounded-xl p-3 flex items-start gap-3 border border-slate-200/80">
+                <FileText className="w-5 h-5 text-indigo-600 mt-0.5 shrink-0" />
                 <div className="min-w-0">
-                  <span className="font-mono-data text-label-sm text-secondary font-semibold uppercase">
-                    Active Template Selection
+                  <span className="text-[10px] font-mono uppercase font-bold text-indigo-600">
+                    Active Selection
                   </span>
-                  <h4 className="font-body-md text-body-md font-bold text-primary truncate">
+                  <h4 className="text-xs font-bold text-slate-900 truncate">
                     {selectedReport.code}
                   </h4>
-                  <p className="font-body-sm text-body-sm text-on-surface-variant truncate">
+                  <p className="text-[11px] text-slate-500 truncate">
                     {selectedReport.title}
                   </p>
                 </div>
               </div>
 
               {/* Document Render Miniature Visual Preview */}
-              <div className="bg-surface-container-lowest border-2 border-dashed border-surface-container p-3 relative shadow-inner">
-                <div className="flex items-center justify-between mb-2 pb-2 border-b border-surface-container">
-                  <div className="flex items-center gap-2">
-                    <Building className="w-5 h-5 text-primary" />
-                    <span className="font-headline-sm text-[0.75rem] font-bold text-primary uppercase">
-                      Apex Institute • Academic Ledger
+              <div className="bg-slate-50/70 rounded-xl border border-dashed border-slate-300 p-3 relative">
+                <div className="flex items-center justify-between mb-2 pb-2 border-b border-slate-200">
+                  <div className="flex items-center gap-1.5">
+                    <Building className="w-4 h-4 text-indigo-600" />
+                    <span className="text-[10px] font-bold text-slate-900 uppercase">
+                      Apex Institute • Academic Gazette
                     </span>
                   </div>
-                  <span className="font-mono-data text-[0.625rem] text-on-surface-variant uppercase font-semibold">
+                  <span className="font-mono text-[9px] text-emerald-600 font-semibold">
                     SHA-256 VALIDATED
                   </span>
                 </div>
 
                 {/* Document lines preview */}
-                <div className="space-y-1.5 font-mono-data text-[0.6875rem] text-on-surface">
-                  <div className="flex justify-between bg-surface-container-low px-1.5 py-0.5 font-semibold">
+                <div className="space-y-1 font-mono text-[10px] text-slate-800">
+                  <div className="flex justify-between bg-white rounded px-2 py-1 font-bold text-slate-600 border border-slate-200/60">
                     <span>USN #</span>
                     <span>NAME</span>
                     <span>SGPA</span>
                     <span>RESULT</span>
                   </div>
-                  <div className="flex justify-between px-1.5 py-0.5 text-on-surface-variant">
+                  <div className="flex justify-between px-2 py-0.5 text-slate-600">
                     <span>APX24CS001</span>
-                    <span>Alexander Vance</span>
-                    <span className="font-bold text-primary">3.92</span>
-                    <span className="text-secondary font-semibold">DISTINCTION</span>
+                    <span className="font-sans">A. Vance</span>
+                    <span className="font-bold text-indigo-600">3.92</span>
+                    <span className="text-emerald-600 font-semibold font-sans">DISTINCTION</span>
                   </div>
-                  <div className="flex justify-between px-1.5 py-0.5 text-on-surface-variant">
+                  <div className="flex justify-between px-2 py-0.5 text-slate-600">
                     <span>APX24CS002</span>
-                    <span>Maya R. Chen</span>
-                    <span className="font-bold text-primary">3.88</span>
-                    <span className="text-secondary font-semibold">DISTINCTION</span>
+                    <span className="font-sans">M. Chen</span>
+                    <span className="font-bold text-indigo-600">3.88</span>
+                    <span className="text-emerald-600 font-semibold font-sans">DISTINCTION</span>
                   </div>
-                  <div className="flex justify-between px-1.5 py-0.5 text-on-surface-variant">
+                  <div className="flex justify-between px-2 py-0.5 text-slate-600">
                     <span>APX24CS003</span>
-                    <span>Karthik S. Nair</span>
-                    <span className="font-bold text-primary">3.41</span>
-                    <span className="text-on-surface font-semibold">FIRST CLASS</span>
+                    <span className="font-sans">K. Nair</span>
+                    <span className="font-bold text-slate-900">3.41</span>
+                    <span className="text-slate-600 font-sans">FIRST CLASS</span>
                   </div>
                 </div>
 
-                <div className="mt-3 pt-2 border-t border-surface-container flex items-center justify-between text-[0.625rem] font-mono-data text-on-surface-variant">
-                  <span>SECURITY HASH: 9f8a3c...d81e</span>
-                  <span className="text-secondary font-semibold">DIGITALLY SIGNED</span>
+                <div className="mt-2.5 pt-2 border-t border-slate-200 flex items-center justify-between text-[9px] font-mono text-slate-400">
+                  <span>HASH: 9f8a3c...d81e</span>
+                  <span className="text-emerald-600 font-semibold">DIGITALLY SIGNED</span>
                 </div>
               </div>
 
-              {/* Parameter Tuning Panel */}
-              <div className="space-y-space-sm">
-                <span className="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-semibold block">
-                  Execution Parameter Tuning
+              {/* Execution Parameter Tuning */}
+              <div className="space-y-3">
+                <span className="text-xs font-semibold text-slate-700 block">
+                  Execution Parameters
                 </span>
                 <div className="space-y-1">
-                  <label className="font-label-sm text-label-sm uppercase tracking-wider text-on-surface font-bold">
-                    Target Faculty / Department
+                  <label className="text-[11px] font-medium text-slate-600">
+                    Target Department / School
                   </label>
                   <select
                     value={targetDept}
                     onChange={e => setTargetDept(e.target.value)}
-                    className="w-full bg-surface-container-low px-3 py-1.5 font-body-sm text-body-sm text-on-surface focus:outline-none border border-outline-variant/40"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
                   >
                     <option>B.Tech Computer Science & Engineering</option>
                     <option>B.Tech Artificial Intelligence & Data</option>
@@ -837,28 +801,30 @@ export default function ReportsAndAnalyticsPage() {
                     <option>B.Tech Electronics & Communication</option>
                   </select>
                 </div>
+
                 <div className="space-y-1">
-                  <label className="font-label-sm text-label-sm uppercase tracking-wider text-on-surface font-bold">
+                  <label className="text-[11px] font-medium text-slate-600">
                     Cohort Batch & Term
                   </label>
                   <select
                     value={cohortBatch}
                     onChange={e => setCohortBatch(e.target.value)}
-                    className="w-full bg-surface-container-low px-3 py-1.5 font-body-sm text-body-sm text-on-surface focus:outline-none border border-outline-variant/40"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
                   >
                     <option>Batch 2023-27 (Semester IV) - Active</option>
                     <option>Batch 2022-26 (Semester VI)</option>
                     <option>Batch 2021-25 (Semester VIII - Graduating)</option>
                   </select>
                 </div>
+
                 <div className="space-y-1">
-                  <label className="font-label-sm text-label-sm uppercase tracking-wider text-on-surface font-bold">
+                  <label className="text-[11px] font-medium text-slate-600">
                     Grade Calculation Scheme
                   </label>
                   <select
                     value={gradingScheme}
                     onChange={e => setGradingScheme(e.target.value)}
-                    className="w-full bg-surface-container-low px-3 py-1.5 font-body-sm text-body-sm text-on-surface focus:outline-none border border-outline-variant/40"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
                   >
                     <option>Relative Grading (Gaussian Curve Standard)</option>
                     <option>Absolute Threshold Scale (10-Point UGC)</option>
@@ -867,94 +833,91 @@ export default function ReportsAndAnalyticsPage() {
                 </div>
 
                 {/* Inclusions Telemetry Checkboxes */}
-                <div className="pt-2 space-y-1.5">
-                  <span className="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-bold block">
-                    Include Telemetry Layers
+                <div className="pt-1 space-y-1.5 text-xs text-slate-700">
+                  <span className="text-[11px] font-medium text-slate-600 block">
+                    Telemetry Layers
                   </span>
-                  <label className="flex items-center gap-2 cursor-pointer font-body-sm text-body-sm text-on-surface">
+                  <label className="flex items-center gap-2 cursor-pointer">
                     <input
                       type="checkbox"
                       checked={includeAttendanceCross}
                       onChange={e => setIncludeAttendanceCross(e.target.checked)}
-                      className="w-4 h-4 accent-primary rounded-none"
+                      className="rounded text-indigo-600 focus:ring-indigo-500"
                     />
                     <span>Attendance Correlation Cross-Matrix</span>
                   </label>
-                  <label className="flex items-center gap-2 cursor-pointer font-body-sm text-body-sm text-on-surface">
+                  <label className="flex items-center gap-2 cursor-pointer">
                     <input
                       type="checkbox"
                       checked={includeICA}
                       onChange={e => setIncludeICA(e.target.checked)}
-                      className="w-4 h-4 accent-primary rounded-none"
+                      className="rounded text-indigo-600 focus:ring-indigo-500"
                     />
-                    <span>Internal Continuous Assessment (ICA) breakdown</span>
+                    <span>Internal Continuous Assessment (ICA)</span>
                   </label>
-                  <label className="flex items-center gap-2 cursor-pointer font-body-sm text-body-sm text-on-surface">
+                  <label className="flex items-center gap-2 cursor-pointer">
                     <input
                       type="checkbox"
                       checked={includeRank}
                       onChange={e => setIncludeRank(e.target.checked)}
-                      className="w-4 h-4 accent-primary rounded-none"
+                      className="rounded text-indigo-600 focus:ring-indigo-500"
                     />
-                    <span>Cohort Class Rank Percentile & Dean&apos;s Honor Badge</span>
+                    <span>Class Rank Percentile & Dean&apos;s Honor Badge</span>
                   </label>
                 </div>
               </div>
 
-              {/* Delivery & Recurrence Configuration */}
-              <div className="p-space-sm bg-surface-container-low space-y-2 border border-outline-variant/30">
-                <span className="font-label-sm text-label-sm uppercase tracking-wider text-primary font-bold block">
-                  Automation Cadence
-                </span>
-                <div className="flex items-center justify-between font-mono-data text-body-sm text-on-surface">
-                  <span>Recurrence:</span>
-                  <strong className="font-semibold text-primary">Every Monday @ 07:00 EST</strong>
+              {/* Delivery Cadence Box */}
+              <div className="p-3 bg-slate-50 rounded-xl border border-slate-200/80 space-y-1.5">
+                <div className="flex items-center justify-between text-xs">
+                  <span className="font-semibold text-slate-700">Automation Cadence:</span>
+                  <strong className="font-semibold text-indigo-600 font-mono text-[11px]">
+                    Every Monday @ 07:00 EST
+                  </strong>
                 </div>
-                <div className="font-mono-data text-label-sm text-on-surface-variant break-all">
-                  Recipients: dean.vance@apex.edu, exams@apex.edu, registrar@apex.edu
+                <div className="text-[10px] font-mono text-slate-400 truncate">
+                  dean.vance@apex.edu, exams@apex.edu, registrar@apex.edu
                 </div>
               </div>
 
               {/* Studio Actions */}
-              <div className="space-y-space-xs pt-2">
+              <div className="space-y-2 pt-1">
                 <button
                   onClick={() => setIsPreviewModalOpen(true)}
-                  className="w-full py-2.5 bg-primary text-on-primary hover:bg-primary-container font-label-md text-label-md uppercase tracking-wider font-semibold transition-colors flex items-center justify-center gap-2 shadow-sm"
+                  className="w-full py-2.5 bg-indigo-600 text-white rounded-xl text-xs font-semibold hover:bg-indigo-700 transition-colors flex items-center justify-center gap-2 shadow-xs"
                 >
                   <Play className="w-4 h-4" />
                   <span>Generate & Preview Report</span>
                 </button>
                 <button
-                  onClick={() => {
-                    setIsScheduleModalOpen(true);
-                  }}
-                  className="w-full py-2 bg-surface-container text-primary hover:bg-surface-container-high font-label-md text-label-md uppercase tracking-wider transition-colors flex items-center justify-center gap-2 font-semibold"
+                  onClick={() => setIsScheduleModalOpen(true)}
+                  className="w-full py-2 bg-slate-100 text-slate-700 hover:bg-slate-200 rounded-xl text-xs font-semibold transition-colors flex items-center justify-center gap-2"
                 >
-                  <Calendar className="w-4 h-4" />
+                  <Calendar className="w-4 h-4 text-slate-600" />
                   <span>Schedule to Auto-Email Queue</span>
                 </button>
               </div>
             </div>
 
             {/* Security, FERPA & Compliance Guarantee Box */}
-            <div className="bg-surface-container-lowest p-space-md shadow-sm border border-outline-variant/40 space-y-space-sm relative overflow-hidden">
-              <div className="flex items-center gap-2 text-primary font-bold">
-                <ShieldCheck className="w-5 h-5 text-secondary" />
-                <span className="font-headline-sm text-headline-sm uppercase tracking-tight">
+            <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-5 space-y-3">
+              <div className="flex items-center gap-2 text-slate-900 font-bold">
+                <ShieldCheck className="w-5 h-5 text-indigo-600" />
+                <span className="text-xs uppercase tracking-wider font-bold">
                   Security & Regulatory Seal
                 </span>
               </div>
-              <p className="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
-                All exported datasets adhere strictly to FERPA, GDPR, and National Statutory Accreditation guidelines. Each generated batch is cryptographically stamped with SHA-256 checksums and automatically logged to Campus Immutable Ledger <strong className="font-mono-data text-primary">#APX-SEC-LOG-2024</strong>.
+              <p className="text-xs text-slate-500 leading-relaxed">
+                All exported datasets adhere strictly to FERPA, GDPR, and National Statutory Accreditation guidelines. Each generated batch is cryptographically stamped with SHA-256 checksums and logged to Campus Immutable Ledger <strong className="font-mono text-indigo-600">#APX-SEC-LOG-2024</strong>.
               </p>
-              <div className="flex items-center gap-2 pt-1 flex-wrap">
-                <span className="px-2 py-0.5 bg-surface-container font-mono-data text-[0.6875rem] text-on-surface-variant uppercase font-bold">
+              <div className="flex items-center gap-1.5 pt-1 flex-wrap">
+                <span className="px-2 py-0.5 rounded bg-slate-100 font-mono text-[10px] text-slate-600 font-bold border border-slate-200/60">
                   FERPA SECURE
                 </span>
-                <span className="px-2 py-0.5 bg-surface-container font-mono-data text-[0.6875rem] text-on-surface-variant uppercase font-bold">
+                <span className="px-2 py-0.5 rounded bg-slate-100 font-mono text-[10px] text-slate-600 font-bold border border-slate-200/60">
                   NAAC CRITERION-2
                 </span>
-                <span className="px-2 py-0.5 bg-surface-container font-mono-data text-[0.6875rem] text-on-surface-variant uppercase font-bold">
+                <span className="px-2 py-0.5 rounded bg-slate-100 font-mono text-[10px] text-slate-600 font-bold border border-slate-200/60">
                   256-BIT ENCRYPTION
                 </span>
               </div>
@@ -965,100 +928,105 @@ export default function ReportsAndAnalyticsPage() {
 
       {/* MODAL 1: FULL REPORT GENERATION & PREVIEW MODAL */}
       {isPreviewModalOpen && (
-        <div className="fixed inset-0 z-50 bg-primary/70 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
-          <div className="bg-surface-container-lowest border border-outline-variant/60 shadow-2xl max-w-4xl w-full p-6 space-y-4 my-8">
-            <div className="flex items-center justify-between border-b border-outline-variant/30 pb-3">
+        <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto">
+          <div className="bg-white rounded-2xl border border-slate-200 shadow-2xl max-w-4xl w-full p-6 space-y-4 my-8 animate-in fade-in zoom-in-95">
+            <div className="flex items-center justify-between border-b border-slate-100 pb-3">
               <div className="flex items-center gap-3">
-                <Building className="w-6 h-6 text-primary" />
+                <div className="w-10 h-10 rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600 shrink-0">
+                  <Building className="w-5 h-5" />
+                </div>
                 <div>
-                  <h3 className="font-headline-sm text-headline-sm uppercase tracking-tight text-primary font-bold">
+                  <h3 className="text-base font-bold text-slate-900">
                     {selectedReport.title}
                   </h3>
-                  <div className="font-mono-data text-label-sm text-on-surface-variant">
+                  <div className="font-mono text-xs text-slate-400 mt-0.5">
                     {selectedReport.code} • {cohortBatch} • {targetDept}
                   </div>
                 </div>
               </div>
-              <button onClick={() => setIsPreviewModalOpen(false)} className="p-1">
+              <button
+                onClick={() => setIsPreviewModalOpen(false)}
+                className="p-1 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors"
+              >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
             {/* Live Generated Data Table */}
-            <div className="border border-outline-variant/40 overflow-x-auto">
-              <table className="w-full text-left font-body-sm text-body-sm">
-                <thead className="bg-surface-container-low font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant border-b border-outline-variant/40">
+            <div className="border border-slate-200 rounded-xl overflow-x-auto">
+              <table className="w-full text-left text-xs">
+                <thead className="bg-slate-50/80 text-[11px] font-bold text-slate-500 uppercase tracking-wider border-b border-slate-200/80">
                   <tr>
-                    <th className="p-2.5">Roll No (USN)</th>
-                    <th className="p-2.5">Candidate Name</th>
-                    <th className="p-2.5">Program</th>
-                    <th className="p-2.5">Credits Completed</th>
-                    <th className="p-2.5">SGPA</th>
-                    <th className="p-2.5">CGPA</th>
-                    <th className="p-2.5">Attendance</th>
-                    <th className="p-2.5 text-right">Academic Standing</th>
+                    <th className="p-3">Roll No (USN)</th>
+                    <th className="p-3">Candidate Name</th>
+                    <th className="p-3">Program</th>
+                    <th className="p-3">Credits</th>
+                    <th className="p-3">SGPA</th>
+                    <th className="p-3">CGPA</th>
+                    <th className="p-3">Attendance</th>
+                    <th className="p-3 text-right">Standing</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-outline-variant/20 font-mono-data">
-                  <tr className="hover:bg-surface-container-low">
-                    <td className="p-2.5 font-bold text-primary">APX24CS001</td>
-                    <td className="p-2.5 font-sans font-medium">Alexander Vance</td>
-                    <td className="p-2.5">B.Tech CSE</td>
-                    <td className="p-2.5">24 / 24</td>
-                    <td className="p-2.5 font-bold text-secondary">3.92</td>
-                    <td className="p-2.5 font-bold text-primary">3.90</td>
-                    <td className="p-2.5">94.8%</td>
-                    <td className="p-2.5 text-right font-sans font-semibold text-secondary">DEAN&apos;S LIST</td>
+                <tbody className="divide-y divide-slate-100 font-mono">
+                  <tr className="hover:bg-slate-50">
+                    <td className="p-3 font-bold text-slate-900">APX24CS001</td>
+                    <td className="p-3 font-sans font-medium text-slate-800">Alexander Vance</td>
+                    <td className="p-3">B.Tech CSE</td>
+                    <td className="p-3">24 / 24</td>
+                    <td className="p-3 font-bold text-indigo-600">3.92</td>
+                    <td className="p-3 font-bold text-slate-900">3.90</td>
+                    <td className="p-3 text-emerald-600 font-semibold">94.8%</td>
+                    <td className="p-3 text-right font-sans font-bold text-emerald-600">DEAN&apos;S LIST</td>
                   </tr>
-                  <tr className="hover:bg-surface-container-low">
-                    <td className="p-2.5 font-bold text-primary">APX24CS002</td>
-                    <td className="p-2.5 font-sans font-medium">Maya R. Chen</td>
-                    <td className="p-2.5">B.Tech CSE</td>
-                    <td className="p-2.5">24 / 24</td>
-                    <td className="p-2.5 font-bold text-secondary">3.88</td>
-                    <td className="p-2.5 font-bold text-primary">3.84</td>
-                    <td className="p-2.5">96.2%</td>
-                    <td className="p-2.5 text-right font-sans font-semibold text-secondary">DEAN&apos;S LIST</td>
+                  <tr className="hover:bg-slate-50">
+                    <td className="p-3 font-bold text-slate-900">APX24CS002</td>
+                    <td className="p-3 font-sans font-medium text-slate-800">Maya R. Chen</td>
+                    <td className="p-3">B.Tech CSE</td>
+                    <td className="p-3">24 / 24</td>
+                    <td className="p-3 font-bold text-indigo-600">3.88</td>
+                    <td className="p-3 font-bold text-slate-900">3.84</td>
+                    <td className="p-3 text-emerald-600 font-semibold">96.2%</td>
+                    <td className="p-3 text-right font-sans font-bold text-emerald-600">DEAN&apos;S LIST</td>
                   </tr>
-                  <tr className="hover:bg-surface-container-low">
-                    <td className="p-2.5 font-bold text-primary">APX24CS003</td>
-                    <td className="p-2.5 font-sans font-medium">Karthik S. Nair</td>
-                    <td className="p-2.5">B.Tech CSE</td>
-                    <td className="p-2.5">24 / 24</td>
-                    <td className="p-2.5 font-bold text-primary">3.41</td>
-                    <td className="p-2.5 font-bold text-primary">3.45</td>
-                    <td className="p-2.5">88.5%</td>
-                    <td className="p-2.5 text-right font-sans font-medium text-on-surface">FIRST CLASS</td>
+                  <tr className="hover:bg-slate-50">
+                    <td className="p-3 font-bold text-slate-900">APX24CS003</td>
+                    <td className="p-3 font-sans font-medium text-slate-800">Karthik S. Nair</td>
+                    <td className="p-3">B.Tech CSE</td>
+                    <td className="p-3">24 / 24</td>
+                    <td className="p-3 font-bold text-slate-900">3.41</td>
+                    <td className="p-3 font-bold text-slate-900">3.45</td>
+                    <td className="p-3">88.5%</td>
+                    <td className="p-3 text-right font-sans font-medium text-slate-700">FIRST CLASS</td>
                   </tr>
-                  <tr className="hover:bg-surface-container-low">
-                    <td className="p-2.5 font-bold text-primary">APX24CS004</td>
-                    <td className="p-2.5 font-sans font-medium">Sophia Jenkins</td>
-                    <td className="p-2.5">B.Tech CSE</td>
-                    <td className="p-2.5">24 / 24</td>
-                    <td className="p-2.5 font-bold text-primary">3.55</td>
-                    <td className="p-2.5 font-bold text-primary">3.52</td>
-                    <td className="p-2.5">91.0%</td>
-                    <td className="p-2.5 text-right font-sans font-medium text-on-surface">FIRST CLASS</td>
+                  <tr className="hover:bg-slate-50">
+                    <td className="p-3 font-bold text-slate-900">APX24CS004</td>
+                    <td className="p-3 font-sans font-medium text-slate-800">Sophia Jenkins</td>
+                    <td className="p-3">B.Tech CSE</td>
+                    <td className="p-3">24 / 24</td>
+                    <td className="p-3 font-bold text-slate-900">3.55</td>
+                    <td className="p-3 font-bold text-slate-900">3.52</td>
+                    <td className="p-3">91.0%</td>
+                    <td className="p-3 text-right font-sans font-medium text-slate-700">FIRST CLASS</td>
                   </tr>
-                  <tr className="hover:bg-surface-container-low">
-                    <td className="p-2.5 font-bold text-primary">APX24CS005</td>
-                    <td className="p-2.5 font-sans font-medium">Devon Brooks</td>
-                    <td className="p-2.5">B.Tech CSE</td>
-                    <td className="p-2.5">21 / 24</td>
-                    <td className="p-2.5 font-bold text-error">2.68</td>
-                    <td className="p-2.5 font-bold text-error">2.74</td>
-                    <td className="p-2.5 text-error font-bold">71.2%</td>
-                    <td className="p-2.5 text-right font-sans font-semibold text-error">ATTENDANCE SHORTAGE</td>
+                  <tr className="hover:bg-slate-50">
+                    <td className="p-3 font-bold text-slate-900">APX24CS005</td>
+                    <td className="p-3 font-sans font-medium text-slate-800">Devon Brooks</td>
+                    <td className="p-3">B.Tech CSE</td>
+                    <td className="p-3">21 / 24</td>
+                    <td className="p-3 font-bold text-rose-600">2.68</td>
+                    <td className="p-3 font-bold text-rose-600">2.74</td>
+                    <td className="p-3 text-rose-600 font-bold">71.2%</td>
+                    <td className="p-3 text-right font-sans font-semibold text-rose-600">ATTENDANCE SHORTAGE</td>
                   </tr>
                 </tbody>
               </table>
             </div>
 
-            <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-outline-variant/30">
-              <div className="flex items-center gap-2 font-mono-data text-[0.75rem] text-on-surface-variant">
+            <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-slate-100">
+              <div className="flex items-center gap-2 font-mono text-xs text-slate-400">
                 <span>DIGITAL CHECKSUM: 9f8a3c4b...</span>
                 <span>•</span>
-                <span className="text-secondary font-semibold">FERPA AUDITED</span>
+                <span className="text-emerald-600 font-semibold">FERPA AUDITED</span>
               </div>
               <div className="flex items-center gap-2">
                 <button
@@ -1066,7 +1034,7 @@ export default function ReportsAndAnalyticsPage() {
                     window.print();
                     showToast("Sending report to system print spools...");
                   }}
-                  className="px-4 py-2 border border-outline-variant/60 font-label-md text-label-md uppercase tracking-wider hover:bg-surface-container flex items-center gap-1.5"
+                  className="px-3.5 py-2 border border-slate-200 text-slate-700 hover:bg-slate-50 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-colors"
                 >
                   <Printer className="w-4 h-4" />
                   <span>Print Document</span>
@@ -1076,7 +1044,7 @@ export default function ReportsAndAnalyticsPage() {
                     showToast(`Exported ${selectedReport.code} as formatted XLSX workbook.`);
                     setIsPreviewModalOpen(false);
                   }}
-                  className="px-4 py-2 bg-surface-container hover:bg-surface-container-high text-primary font-label-md text-label-md uppercase tracking-wider font-semibold flex items-center gap-1.5"
+                  className="px-3.5 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-colors"
                 >
                   <Download className="w-4 h-4" />
                   <span>Export XLSX</span>
@@ -1086,7 +1054,7 @@ export default function ReportsAndAnalyticsPage() {
                     showToast(`Signed PDF report generated for ${selectedReport.code}`);
                     setIsPreviewModalOpen(false);
                   }}
-                  className="px-6 py-2 bg-primary text-on-primary font-label-md text-label-md uppercase tracking-wider font-semibold hover:bg-primary-container shadow-sm flex items-center gap-1.5"
+                  className="px-5 py-2 bg-indigo-600 text-white rounded-xl text-xs font-semibold hover:bg-indigo-700 transition-colors shadow-xs flex items-center gap-1.5"
                 >
                   <Download className="w-4 h-4" />
                   <span>Download PDF</span>
@@ -1099,39 +1067,44 @@ export default function ReportsAndAnalyticsPage() {
 
       {/* MODAL 2: SCHEDULE AUTOMATED REPORT */}
       {isScheduleModalOpen && (
-        <div className="fixed inset-0 z-50 bg-primary/70 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-surface-container-lowest border border-outline-variant/60 shadow-2xl max-w-lg w-full p-6 space-y-4">
-            <div className="flex items-center justify-between border-b border-outline-variant/30 pb-3">
+        <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl border border-slate-200 shadow-2xl max-w-lg w-full p-6 space-y-4 animate-in fade-in zoom-in-95">
+            <div className="flex items-center justify-between border-b border-slate-100 pb-3">
               <div className="flex items-center gap-2">
-                <Calendar className="w-5 h-5 text-secondary" />
-                <h3 className="font-headline-sm text-headline-sm uppercase tracking-tight text-primary font-bold">
+                <div className="w-8 h-8 rounded-lg bg-indigo-50 flex items-center justify-center text-indigo-600">
+                  <Calendar className="w-4 h-4" />
+                </div>
+                <h3 className="text-base font-bold text-slate-900">
                   Schedule Automated Dispatch
                 </h3>
               </div>
-              <button onClick={() => setIsScheduleModalOpen(false)} className="p-1">
+              <button
+                onClick={() => setIsScheduleModalOpen(false)}
+                className="p-1 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100"
+              >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
-            <div className="space-y-3 font-body-sm text-body-sm">
+            <div className="space-y-3 text-xs">
               <div className="space-y-1">
-                <label className="font-label-sm text-label-sm uppercase tracking-wider text-on-surface font-bold">
+                <label className="font-semibold text-slate-700">
                   Report Template
                 </label>
                 <input
                   type="text"
                   readOnly
                   value={`${selectedReport.code} - ${selectedReport.title}`}
-                  className="w-full bg-surface-container-low p-2 border border-outline-variant/40 font-mono-data text-body-sm"
+                  className="w-full bg-slate-50 p-2.5 rounded-xl border border-slate-200 font-mono text-slate-800 text-xs"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div className="space-y-1">
-                  <label className="font-label-sm text-label-sm uppercase tracking-wider text-on-surface font-bold">
+                  <label className="font-semibold text-slate-700">
                     Cadence / Frequency
                   </label>
-                  <select className="w-full bg-surface-container-low p-2 border border-outline-variant/40">
+                  <select className="w-full bg-slate-50 p-2.5 rounded-xl border border-slate-200 text-slate-800">
                     <option>Weekly on Mondays</option>
                     <option>Daily at EOD (23:59)</option>
                     <option>Monthly (1st of month)</option>
@@ -1139,53 +1112,53 @@ export default function ReportsAndAnalyticsPage() {
                   </select>
                 </div>
                 <div className="space-y-1">
-                  <label className="font-label-sm text-label-sm uppercase tracking-wider text-on-surface font-bold">
+                  <label className="font-semibold text-slate-700">
                     Execution Time (EST)
                   </label>
                   <input
                     type="time"
                     defaultValue="07:00"
-                    className="w-full bg-surface-container-low p-2 border border-outline-variant/40 font-mono-data"
+                    className="w-full bg-slate-50 p-2.5 rounded-xl border border-slate-200 font-mono text-slate-800"
                   />
                 </div>
               </div>
 
               <div className="space-y-1">
-                <label className="font-label-sm text-label-sm uppercase tracking-wider text-on-surface font-bold">
-                  Recipient Email Distribution List (comma separated)
+                <label className="font-semibold text-slate-700">
+                  Recipient Email Distribution List
                 </label>
                 <textarea
                   rows={2}
                   defaultValue="dean.vance@apex.edu, exams@apex.edu, registrar@apex.edu"
-                  className="w-full bg-surface-container-low p-2 border border-outline-variant/40 font-mono-data text-[0.75rem]"
+                  className="w-full bg-slate-50 p-2.5 rounded-xl border border-slate-200 font-mono text-[11px] text-slate-800"
                 />
               </div>
 
               <div className="space-y-1">
-                <label className="font-label-sm text-label-sm uppercase tracking-wider text-on-surface font-bold">
+                <label className="font-semibold text-slate-700">
                   Attachment Output Format
                 </label>
                 <div className="flex items-center gap-4 pt-1">
-                  <label className="flex items-center gap-1.5 cursor-pointer">
-                    <input type="checkbox" defaultChecked className="accent-primary" />
+                  <label className="flex items-center gap-1.5 cursor-pointer text-slate-700">
+                    <input type="checkbox" defaultChecked className="rounded text-indigo-600 focus:ring-indigo-500" />
                     <span>Encrypted PDF</span>
                   </label>
-                  <label className="flex items-center gap-1.5 cursor-pointer">
-                    <input type="checkbox" defaultChecked className="accent-primary" />
+                  <label className="flex items-center gap-1.5 cursor-pointer text-slate-700">
+                    <input type="checkbox" defaultChecked className="rounded text-indigo-600 focus:ring-indigo-500" />
                     <span>Excel (.xlsx)</span>
                   </label>
-                  <label className="flex items-center gap-1.5 cursor-pointer">
-                    <input type="checkbox" className="accent-primary" />
+                  <label className="flex items-center gap-1.5 cursor-pointer text-slate-700">
+                    <input type="checkbox" className="rounded text-indigo-600 focus:ring-indigo-500" />
                     <span>Raw CSV</span>
                   </label>
                 </div>
               </div>
             </div>
 
-            <div className="flex items-center justify-end gap-3 pt-3 border-t border-outline-variant/30">
+            <div className="flex items-center justify-end gap-3 pt-3 border-t border-slate-100">
               <button
                 onClick={() => setIsScheduleModalOpen(false)}
-                className="px-4 py-2 border border-outline-variant/60 font-label-md text-label-md uppercase tracking-wider text-on-surface hover:bg-surface-container"
+                className="px-4 py-2 border border-slate-200 text-xs font-semibold rounded-xl text-slate-600 hover:bg-slate-50"
               >
                 Cancel
               </button>
@@ -1194,7 +1167,7 @@ export default function ReportsAndAnalyticsPage() {
                   setIsScheduleModalOpen(false);
                   showToast(`Cron job scheduled for ${selectedReport.code} every Monday @ 07:00 EST.`);
                 }}
-                className="px-6 py-2 bg-primary text-on-primary font-label-md text-label-md uppercase tracking-wider font-semibold hover:bg-primary-container transition-colors shadow-sm"
+                className="px-5 py-2 bg-indigo-600 text-white rounded-xl text-xs font-semibold hover:bg-indigo-700 transition-colors shadow-xs"
               >
                 Save Schedule
               </button>
@@ -1205,66 +1178,71 @@ export default function ReportsAndAnalyticsPage() {
 
       {/* MODAL 3: REGULATORY AUDIT DOSSIER */}
       {isAuditModalOpen && (
-        <div className="fixed inset-0 z-50 bg-primary/70 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-surface-container-lowest border border-outline-variant/60 shadow-2xl max-w-xl w-full p-6 space-y-4">
-            <div className="flex items-center justify-between border-b border-outline-variant/30 pb-3">
+        <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl border border-slate-200 shadow-2xl max-w-xl w-full p-6 space-y-4 animate-in fade-in zoom-in-95">
+            <div className="flex items-center justify-between border-b border-slate-100 pb-3">
               <div className="flex items-center gap-2">
-                <ShieldCheck className="w-5 h-5 text-secondary" />
-                <h3 className="font-headline-sm text-headline-sm uppercase tracking-tight text-primary font-bold">
+                <div className="w-8 h-8 rounded-lg bg-indigo-50 flex items-center justify-center text-indigo-600">
+                  <ShieldCheck className="w-4 h-4" />
+                </div>
+                <h3 className="text-base font-bold text-slate-900">
                   Statutory Regulatory Audit Dossier
                 </h3>
               </div>
-              <button onClick={() => setIsAuditModalOpen(false)} className="p-1">
+              <button
+                onClick={() => setIsAuditModalOpen(false)}
+                className="p-1 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100"
+              >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
-            <div className="space-y-3 font-body-sm text-body-sm">
-              <p className="text-on-surface-variant">
+            <div className="space-y-3 text-xs">
+              <p className="text-slate-500 leading-relaxed">
                 Pre-packaged criterion evidence reports mapped to NIRF (National Institutional Ranking Framework), NAAC Criteria 1–7, and ABET accreditation metrics.
               </p>
 
-              <div className="space-y-2">
-                <div className="p-3 bg-surface-container-low border border-outline-variant/30 flex items-center justify-between">
+              <div className="space-y-2.5">
+                <div className="p-3 bg-slate-50 rounded-xl border border-slate-200/80 flex items-center justify-between">
                   <div>
-                    <div className="font-bold text-primary">NIRF 2025 Data Capture Framework (DCF)</div>
-                    <div className="font-mono-data text-[0.6875rem] text-on-surface-variant">
+                    <div className="font-bold text-slate-900">NIRF 2025 Data Capture Framework (DCF)</div>
+                    <div className="font-mono text-[10px] text-slate-400 mt-0.5">
                       TLR, RPC, GO, OI, PR Parameters • AY 2024-25
                     </div>
                   </div>
                   <button
                     onClick={() => showToast("Downloaded NIRF DCF Data Bundle (PDF & Excel)")}
-                    className="px-3 py-1 bg-primary text-on-primary font-label-sm text-label-sm uppercase tracking-wider"
+                    className="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-semibold transition-colors"
                   >
                     Download
                   </button>
                 </div>
 
-                <div className="p-3 bg-surface-container-low border border-outline-variant/30 flex items-center justify-between">
+                <div className="p-3 bg-slate-50 rounded-xl border border-slate-200/80 flex items-center justify-between">
                   <div>
-                    <div className="font-bold text-primary">NAAC Self-Study Report (SSR) Criterion 1–7</div>
-                    <div className="font-mono-data text-[0.6875rem] text-on-surface-variant">
+                    <div className="font-bold text-slate-900">NAAC Self-Study Report (SSR) Criterion 1–7</div>
+                    <div className="font-mono text-[10px] text-slate-400 mt-0.5">
                       Curricular Aspects, Teaching-Learning, Research, Infrastructure
                     </div>
                   </div>
                   <button
                     onClick={() => showToast("Downloaded NAAC SSR Dossier Bundle")}
-                    className="px-3 py-1 bg-primary text-on-primary font-label-sm text-label-sm uppercase tracking-wider"
+                    className="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-semibold transition-colors"
                   >
                     Download
                   </button>
                 </div>
 
-                <div className="p-3 bg-surface-container-low border border-outline-variant/30 flex items-center justify-between">
+                <div className="p-3 bg-slate-50 rounded-xl border border-slate-200/80 flex items-center justify-between">
                   <div>
-                    <div className="font-bold text-primary">ABET Engineering Accreditation Readiness</div>
-                    <div className="font-mono-data text-[0.6875rem] text-on-surface-variant">
+                    <div className="font-bold text-slate-900">ABET Engineering Accreditation Readiness</div>
+                    <div className="font-mono text-[10px] text-slate-400 mt-0.5">
                       Student Outcomes 1–7, Program Educational Objectives (PEOs)
                     </div>
                   </div>
                   <button
                     onClick={() => showToast("Downloaded ABET Assessment Matrix")}
-                    className="px-3 py-1 bg-primary text-on-primary font-label-sm text-label-sm uppercase tracking-wider"
+                    className="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-semibold transition-colors"
                   >
                     Download
                   </button>
@@ -1275,7 +1253,7 @@ export default function ReportsAndAnalyticsPage() {
             <div className="flex justify-end pt-2">
               <button
                 onClick={() => setIsAuditModalOpen(false)}
-                className="px-4 py-2 bg-surface-container text-primary font-label-md text-label-md uppercase tracking-wider hover:bg-surface-container-high"
+                className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-semibold transition-colors"
               >
                 Close
               </button>
@@ -1286,4 +1264,3 @@ export default function ReportsAndAnalyticsPage() {
     </div>
   );
 }
-
