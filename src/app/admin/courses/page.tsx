@@ -23,7 +23,12 @@ import {
   X,
   RotateCcw,
   CheckCircle2,
-  Eye
+  Eye,
+  ChevronDown,
+  ChevronUp,
+  Grid,
+  GraduationCap,
+  Check
 } from "lucide-react";
 
 interface Subject {
@@ -215,6 +220,363 @@ const initialSubjects: Record<string, Subject[]> = {
       theoryHours: 3,
       semester: 4
     }
+  ],
+  "CS-BTECH-1": [
+    {
+      id: "cs1-1",
+      code: "CS101",
+      title: "Problem Solving & C Programming",
+      type: "Core Theory",
+      instructor: "Dr. Elena Rostova",
+      labHours: "None",
+      credits: 4.0,
+      theoryHours: 3,
+      semester: 1
+    },
+    {
+      id: "cs1-2",
+      code: "MA101",
+      title: "Engineering Mathematics I",
+      type: "Core Theory",
+      instructor: "Prof. S. Ramanujan",
+      labHours: "None",
+      credits: 4.0,
+      theoryHours: 4,
+      semester: 1
+    },
+    {
+      id: "cs1-3",
+      code: "PH101",
+      title: "Engineering Physics & Solid State",
+      type: "Core Theory",
+      instructor: "Dr. Alistair Chen",
+      labHours: "None",
+      credits: 3.5,
+      theoryHours: 3,
+      semester: 1
+    },
+    {
+      id: "cs1-4",
+      code: "CS102L",
+      title: "Computing Tools & Linux CLI Lab",
+      type: "Practical Lab",
+      instructor: "Inst. Jenkins",
+      labHours: "4 Hrs/Wk",
+      credits: 2.0,
+      theoryHours: 0,
+      semester: 1
+    }
+  ],
+  "AI-BTECH-4": [
+    {
+      id: "ai4-1",
+      code: "AI401",
+      title: "Deep Learning & Neural Architectures",
+      type: "Core Theory",
+      instructor: "Dr. Elena Rostova",
+      labHours: "None",
+      credits: 4.0,
+      theoryHours: 3,
+      semester: 4
+    },
+    {
+      id: "ai4-2",
+      code: "AI402",
+      title: "Reinforcement Learning & Multi-Agent",
+      type: "Core Theory",
+      instructor: "Prof. Rajesh K. Sharma",
+      labHours: "None",
+      credits: 4.0,
+      theoryHours: 3,
+      semester: 4
+    },
+    {
+      id: "ai4-3",
+      code: "AI403",
+      title: "Sensor Fusion & ROS Robotics",
+      type: "Program Elective",
+      instructor: "Prof. Marcus Sterling",
+      labHours: "None",
+      credits: 3.5,
+      theoryHours: 3,
+      semester: 4
+    },
+    {
+      id: "ai4-4",
+      code: "AI404L",
+      title: "PyTorch & GPU Model Lab",
+      type: "Practical Lab",
+      instructor: "Dr. Vikram Seth",
+      labHours: "4 Hrs/Wk",
+      credits: 2.5,
+      theoryHours: 0,
+      semester: 4
+    },
+    {
+      id: "ai4-5",
+      code: "AI405",
+      title: "Ethics & Safety in Autonomous AI",
+      type: "Humanities Elective",
+      instructor: "Guest: Dr. Rao",
+      labHours: "None",
+      credits: 2.0,
+      theoryHours: 2,
+      semester: 4
+    }
+  ],
+  "AI-BTECH-1": [
+    {
+      id: "ai1-1",
+      code: "AI101",
+      title: "Foundations of Artificial Intelligence",
+      type: "Core Theory",
+      instructor: "Dr. Elena Rostova",
+      labHours: "None",
+      credits: 4.0,
+      theoryHours: 3,
+      semester: 1
+    },
+    {
+      id: "ai1-2",
+      code: "MA103",
+      title: "Linear Algebra & Multivariable Calculus",
+      type: "Core Theory",
+      instructor: "Prof. S. Ramanujan",
+      labHours: "None",
+      credits: 4.0,
+      theoryHours: 4,
+      semester: 1
+    },
+    {
+      id: "ai1-3",
+      code: "AI102L",
+      title: "Python for Data Science & AI Lab",
+      type: "Practical Lab",
+      instructor: "Inst. Jenkins",
+      labHours: "4 Hrs/Wk",
+      credits: 2.5,
+      theoryHours: 0,
+      semester: 1
+    }
+  ],
+  "MBA-EXEC-1": [
+    {
+      id: "mba1-1",
+      code: "MBA501",
+      title: "Strategic Corporate Leadership",
+      type: "Core Theory",
+      instructor: "Prof. Marcus Sterling",
+      labHours: "None",
+      credits: 3.5,
+      theoryHours: 3,
+      semester: 1
+    },
+    {
+      id: "mba1-2",
+      code: "MBA502",
+      title: "Advanced Financial Management & Valuation",
+      type: "Core Theory",
+      instructor: "Dr. Sarah Lin",
+      labHours: "None",
+      credits: 4.0,
+      theoryHours: 4,
+      semester: 1
+    },
+    {
+      id: "mba1-3",
+      code: "MBA503",
+      title: "Technology Innovation Management",
+      type: "Core Theory",
+      instructor: "Dr. Alistair Chen",
+      labHours: "None",
+      credits: 3.5,
+      theoryHours: 3,
+      semester: 1
+    },
+    {
+      id: "mba1-4",
+      code: "MBA504",
+      title: "Business Analytics & Strategic Decisions",
+      type: "Program Elective",
+      instructor: "Dr. Vikram Seth",
+      labHours: "None",
+      credits: 3.0,
+      theoryHours: 3,
+      semester: 1
+    }
+  ],
+  "MBA-EXEC-2": [
+    {
+      id: "mba2-1",
+      code: "MBA506",
+      title: "Global Supply Chain Operations",
+      type: "Core Theory",
+      instructor: "Prof. Marcus Sterling",
+      labHours: "None",
+      credits: 3.5,
+      theoryHours: 3,
+      semester: 2
+    },
+    {
+      id: "mba2-2",
+      code: "MBA507",
+      title: "Venture Capital & Tech Ventures",
+      type: "Program Elective",
+      instructor: "Dr. Sarah Lin",
+      labHours: "None",
+      credits: 3.5,
+      theoryHours: 3,
+      semester: 2
+    },
+    {
+      id: "mba2-3",
+      code: "MBA508",
+      title: "Organizational Design & Talent Strategy",
+      type: "Core Theory",
+      instructor: "Guest: Dr. Rao",
+      labHours: "None",
+      credits: 3.0,
+      theoryHours: 3,
+      semester: 2
+    }
+  ],
+  "ECE-BTECH-4": [
+    {
+      id: "ec4-1",
+      code: "EC401",
+      title: "Signals & Digital Signal Processing",
+      type: "Core Theory",
+      instructor: "Prof. Rajesh K. Sharma",
+      labHours: "None",
+      credits: 4.0,
+      theoryHours: 3,
+      semester: 4
+    },
+    {
+      id: "ec4-2",
+      code: "EC402",
+      title: "Microprocessors & Embedded Systems",
+      type: "Core Theory",
+      instructor: "Dr. Alistair Chen",
+      labHours: "None",
+      credits: 4.0,
+      theoryHours: 3,
+      semester: 4
+    },
+    {
+      id: "ec4-3",
+      code: "EC403",
+      title: "Electromagnetic Fields & Waveguides",
+      type: "Core Theory",
+      instructor: "Prof. Marcus Sterling",
+      labHours: "None",
+      credits: 3.5,
+      theoryHours: 3,
+      semester: 4
+    },
+    {
+      id: "ec4-4",
+      code: "EC404L",
+      title: "DSP & Embedded FPGA Systems Lab",
+      type: "Practical Lab",
+      instructor: "Inst. Jenkins",
+      labHours: "4 Hrs/Wk",
+      credits: 2.0,
+      theoryHours: 0,
+      semester: 4
+    }
+  ],
+  "DS-MSC-1": [
+    {
+      id: "ds1-1",
+      code: "DS501",
+      title: "Statistical Inference & Bayesian Modeling",
+      type: "Core Theory",
+      instructor: "Dr. Vikram Seth",
+      labHours: "None",
+      credits: 4.0,
+      theoryHours: 4,
+      semester: 1
+    },
+    {
+      id: "ds1-2",
+      code: "DS502",
+      title: "Big Data Engineering & Apache Spark",
+      type: "Core Theory",
+      instructor: "Prof. Rajesh K. Sharma",
+      labHours: "None",
+      credits: 4.0,
+      theoryHours: 3,
+      semester: 1
+    },
+    {
+      id: "ds1-3",
+      code: "DS503",
+      title: "Time-Series Analysis & Predictive Forecasting",
+      type: "Program Elective",
+      instructor: "Dr. Elena Rostova",
+      labHours: "None",
+      credits: 3.5,
+      theoryHours: 3,
+      semester: 1
+    },
+    {
+      id: "ds1-4",
+      code: "DS504L",
+      title: "Distributed Data Analytics Cloud Lab",
+      type: "Practical Lab",
+      instructor: "Inst. Jenkins",
+      labHours: "4 Hrs/Wk",
+      credits: 2.5,
+      theoryHours: 0,
+      semester: 1
+    }
+  ],
+  "DES-BDES-4": [
+    {
+      id: "des4-1",
+      code: "DES401",
+      title: "Human-Computer Interaction & Usability",
+      type: "Core Theory",
+      instructor: "Dr. Alistair Chen",
+      labHours: "None",
+      credits: 3.5,
+      theoryHours: 3,
+      semester: 4
+    },
+    {
+      id: "des4-2",
+      code: "DES402",
+      title: "Design Systems & Component Architecture",
+      type: "Core Theory",
+      instructor: "Prof. Marcus Sterling",
+      labHours: "None",
+      credits: 4.0,
+      theoryHours: 3,
+      semester: 4
+    },
+    {
+      id: "des4-3",
+      code: "DES403",
+      title: "Typography, Motion & Visual Systems",
+      type: "Program Elective",
+      instructor: "Dr. Sarah Lin",
+      labHours: "None",
+      credits: 3.5,
+      theoryHours: 3,
+      semester: 4
+    },
+    {
+      id: "des4-4",
+      code: "DES404L",
+      title: "Interactive Prototyping & Figma Lab",
+      type: "Practical Lab",
+      instructor: "Inst. Jenkins",
+      labHours: "4 Hrs/Wk",
+      credits: 3.0,
+      theoryHours: 0,
+      semester: 4
+    }
   ]
 };
 
@@ -222,6 +584,8 @@ export default function CoursesPage() {
   const [courses, setCourses] = useState<Course[]>(initialCourses);
   const [selectedCourse, setSelectedCourse] = useState<Course>(initialCourses[0]);
   const [selectedSemester, setSelectedSemester] = useState<number>(4);
+  const [workspaceView, setWorkspaceView] = useState<"studio" | "all">("studio");
+  const [isAddSubjectExpanded, setIsAddSubjectExpanded] = useState<boolean>(false);
   const [activeCategory, setActiveCategory] = useState<string>("All");
   const [searchQuery, setSearchQuery] = useState("");
   const [departmentFilter, setDepartmentFilter] = useState("all");
@@ -268,9 +632,16 @@ export default function CoursesPage() {
   const [editCourseCategory, setEditCourseCategory] = useState<Course["category"]>("Eng & Tech");
   const [editCourseStatus, setEditCourseStatus] = useState<Course["status"]>("Active");
 
+  const handleSelectCourse = (c: Course) => {
+    setSelectedCourse(c);
+    if (selectedSemester > c.semesters) {
+      setSelectedSemester(1);
+    }
+  };
+
   const handleOpenViewModal = (c: Course) => {
     setViewingCourse(c);
-    setSelectedCourse(c);
+    handleSelectCourse(c);
     setIsViewCourseModalOpen(true);
   };
 
@@ -349,7 +720,7 @@ export default function CoursesPage() {
 
   // Current semester subjects
   const currentKey = `${selectedCourse.code}-${selectedSemester}`;
-  const currentSubjects = subjectsMap[currentKey] || subjectsMap["CS-BTECH-4"] || [];
+  const currentSubjects = subjectsMap[currentKey] || [];
   const currentTotalCredits = currentSubjects.reduce((acc, s) => acc + s.credits, 0);
 
   // Add subject handler
@@ -374,7 +745,20 @@ export default function CoursesPage() {
 
     setSubjectsMap((prev) => ({
       ...prev,
-      [currentKey]: [...(prev[currentKey] || currentSubjects), newSub]
+      [currentKey]: [...(prev[currentKey] || []), newSub]
+    }));
+
+    // Update subject count in courses
+    setCourses((prev) =>
+      prev.map((c) =>
+        c.id === selectedCourse.id
+          ? { ...c, subjectsCount: c.subjectsCount + 1 }
+          : c
+      )
+    );
+    setSelectedCourse((prev) => ({
+      ...prev,
+      subjectsCount: prev.subjectsCount + 1
     }));
 
     // Reset form
@@ -383,14 +767,27 @@ export default function CoursesPage() {
     setNewSubCredits(3.0);
     setNewSubTheoryHours(3);
     setNewSubLabHours("0");
-    showToast(`Subject ${newSub.code} added to Semester ${selectedSemester} manifest.`);
+    setIsAddSubjectExpanded(false);
+    showToast(`Subject ${newSub.code} added to ${selectedCourse.code} Semester ${selectedSemester}!`);
   };
 
   // Detach subject handler
   const handleDetachSubject = (subId: string, subCode: string) => {
     setSubjectsMap((prev) => ({
       ...prev,
-      [currentKey]: (prev[currentKey] || currentSubjects).filter((s) => s.id !== subId)
+      [currentKey]: (prev[currentKey] || []).filter((s) => s.id !== subId)
+    }));
+
+    setCourses((prev) =>
+      prev.map((c) =>
+        c.id === selectedCourse.id
+          ? { ...c, subjectsCount: Math.max(0, c.subjectsCount - 1) }
+          : c
+      )
+    );
+    setSelectedCourse((prev) => ({
+      ...prev,
+      subjectsCount: Math.max(0, prev.subjectsCount - 1)
     }));
     showToast(`Subject ${subCode} detached from curriculum.`);
   };
@@ -756,7 +1153,7 @@ export default function CoursesPage() {
                       return (
                         <tr
                           key={c.id}
-                          onClick={() => setSelectedCourse(c)}
+                          onClick={() => handleSelectCourse(c)}
                           className={`hover:bg-slate-50/70 transition-colors cursor-pointer ${
                             isSelected ? "bg-indigo-50/60 hover:bg-indigo-50 border-l-4 border-indigo-600" : ""
                           }`}
@@ -867,233 +1264,529 @@ export default function CoursesPage() {
           </div>
         </div>
 
-        {/* Right Column (4 cols): Active Program Syllabus Studio */}
+        {/* Right Column (4 cols): Active Workspace & Curriculum Studio */}
         <div className="xl:col-span-4">
           <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs overflow-hidden sticky top-20">
-            {/* Active Program Studio Header */}
-            <div className="bg-[#3D405B] text-white p-4.5 space-y-1.5">
+            {/* Active Workspace Header with Navigation Tabs */}
+            <div className="bg-[#3D405B] text-white p-4 space-y-3">
               <div className="flex items-center justify-between">
-                <span className="px-2 py-0.5 bg-white/10 text-white font-mono text-[10px] rounded uppercase font-semibold">
-                  Active Workspace
-                </span>
+                <div className="flex items-center gap-1.5">
+                  <span className="px-2 py-0.5 bg-white/10 text-white font-mono text-[10px] rounded uppercase font-bold tracking-wider">
+                    Active Workspace
+                  </span>
+                </div>
                 <div className="flex items-center gap-1 text-[11px] text-emerald-300 font-medium">
                   <CheckCircle className="w-3.5 h-3.5" />
                   <span>Dean Approved</span>
                 </div>
               </div>
-              <h2 className="text-sm font-bold tracking-tight">
-                {selectedCourse.code} &bull; {selectedCourse.title}
-              </h2>
-              <div className="flex items-center justify-between text-xs text-slate-300 pt-0.5">
-                <span>Duration: <strong className="text-white font-mono">{selectedCourse.duration}</strong></span>
-                <span>Total Fees: <strong className="text-white font-mono">₹{selectedCourse.totalTuition.toLocaleString("en-IN")}</strong></span>
-              </div>
-            </div>
 
-            {/* Semester Tab Ribbon */}
-            <div className="bg-slate-50 px-3 pt-2.5 flex items-center gap-1.5 overflow-x-auto border-b border-slate-100">
-              {Array.from({ length: selectedCourse.semesters || 8 }, (_, i) => i + 1).map((sem) => {
-                const isActive = selectedSemester === sem;
-                return (
-                  <button
-                    key={sem}
-                    onClick={() => setSelectedSemester(sem)}
-                    className={`px-3 py-1.5 text-xs font-semibold rounded-t-lg transition-colors cursor-pointer whitespace-nowrap ${
-                      isActive
-                        ? "bg-white text-[#3D405B] shadow-2xs border-t-2 border-t-[#3D405B]"
-                        : "text-slate-500 hover:text-slate-800"
-                    }`}
-                  >
-                    Sem {sem}
-                  </button>
-                );
-              })}
-            </div>
-
-            {/* Semester Summary Stat */}
-            <div className="px-4 py-2.5 bg-slate-50/50 flex items-center justify-between text-xs border-b border-slate-100">
-              <span className="font-semibold text-[#3D405B]">Semester {selectedSemester} Subjects</span>
-              <span className="font-mono bg-blue-50 text-blue-700 px-2 py-0.5 rounded-full font-bold text-[11px] border border-blue-200">
-                {currentTotalCredits.toFixed(1)} Credits
-              </span>
-            </div>
-
-            {/* Current Semester Subjects List */}
-            <div className="p-3 divide-y divide-slate-100 space-y-1 max-h-[340px] overflow-y-auto">
-              {currentSubjects.map((subject) => (
-                <div
-                  key={subject.id}
-                  className="py-2.5 px-2 hover:bg-slate-50 rounded-xl transition-colors"
+              {/* View Switcher: Studio vs All Programs */}
+              <div className="flex items-center bg-black/20 p-1 rounded-xl gap-1 text-xs font-semibold">
+                <button
+                  type="button"
+                  onClick={() => setWorkspaceView("studio")}
+                  className={`flex-1 py-1.5 px-3 rounded-lg transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
+                    workspaceView === "studio"
+                      ? "bg-white text-[#3D405B] shadow-xs"
+                      : "text-white/80 hover:text-white hover:bg-white/10"
+                  }`}
                 >
-                  <div className="flex items-start justify-between gap-2">
-                    <div>
-                      <div className="flex items-center gap-1.5">
-                        <span className="font-mono font-bold text-[#3D405B] text-xs">{subject.code}</span>
-                        <span className="text-slate-800 font-medium text-xs">{subject.title}</span>
-                      </div>
-                      <div className="mt-1 flex flex-wrap items-center gap-2 text-[11px] text-slate-500">
-                        <span
-                          className={`px-1.5 py-0.5 text-[10px] font-medium rounded ${
-                            subject.type === "Practical Lab"
-                              ? "bg-purple-50 text-purple-700 border border-purple-200"
-                              : "bg-slate-100 text-slate-700"
-                          }`}
-                        >
-                          {subject.type}
-                        </span>
-                        <span>{subject.instructor}</span>
-                        <span className="text-blue-600 font-medium">Lab: {subject.labHours}</span>
-                      </div>
-                    </div>
-                    <div className="text-right flex flex-col items-end shrink-0">
-                      <span className="font-mono font-bold text-[#3D405B] text-xs">
-                        {subject.credits.toFixed(1)} CR
-                      </span>
-                      <div className="flex gap-1 mt-1 text-slate-400">
-                        <button
-                          onClick={() => showToast(`Modifying ${subject.code} syllabus params`)}
-                          className="hover:text-blue-600 p-0.5 cursor-pointer"
-                          title="Edit Subject"
-                        >
-                          <Sliders className="w-3.5 h-3.5" />
-                        </button>
-                        <button
-                          onClick={() => handleDetachSubject(subject.id, subject.code)}
-                          className="hover:text-rose-600 p-0.5 cursor-pointer"
-                          title="Detach"
-                        >
-                          <Trash2 className="w-3.5 h-3.5" />
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
+                  <BookOpen className="w-3.5 h-3.5" />
+                  <span>Curriculum Studio</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setWorkspaceView("all")}
+                  className={`flex-1 py-1.5 px-3 rounded-lg transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
+                    workspaceView === "all"
+                      ? "bg-white text-[#3D405B] shadow-xs"
+                      : "text-white/80 hover:text-white hover:bg-white/10"
+                  }`}
+                >
+                  <Grid className="w-3.5 h-3.5" />
+                  <span>All Programs ({courses.length})</span>
+                </button>
+              </div>
 
-            {/* Quick Add Subject Inline Form */}
-            <div className="p-4 bg-slate-50/80 border-t border-slate-100 space-y-3">
-              <span className="font-bold text-xs uppercase tracking-wider text-[#3D405B] flex items-center gap-1.5">
-                <Plus className="w-4 h-4 text-blue-600" />
-                Add Subject to Sem {selectedSemester}
-              </span>
-
-              <form className="space-y-2.5 text-xs" onSubmit={handleAddSubject}>
-                <div className="grid grid-cols-2 gap-2">
-                  <div>
-                    <label className="block text-[10px] font-semibold text-slate-500 mb-1">
-                      Subject Code
-                    </label>
-                    <input
-                      id="addSubjectCodeInput"
-                      type="text"
-                      value={newSubCode}
-                      onChange={(e) => setNewSubCode(e.target.value)}
-                      placeholder="e.g. CS406"
-                      className="w-full bg-white px-2.5 py-1.5 font-mono text-slate-800 focus:outline-none border border-slate-200 rounded-lg text-xs focus:border-[#3D405B]"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-[10px] font-semibold text-slate-500 mb-1">
-                      Subject Type
-                    </label>
-                    <select
-                      value={newSubType}
-                      onChange={(e) => setNewSubType(e.target.value as Subject["type"])}
-                      className="w-full bg-white px-2.5 py-1.5 text-slate-800 focus:outline-none border border-slate-200 rounded-lg text-xs focus:border-[#3D405B]"
+              {/* Studio Mode Header Quick Program Selector */}
+              {workspaceView === "studio" && (
+                <div className="space-y-2 pt-1 border-t border-white/10">
+                  <div className="flex items-center justify-between text-xs text-white/80">
+                    <span className="text-[11px] font-medium text-slate-300">Active Program:</span>
+                    <button
+                      type="button"
+                      onClick={() => setWorkspaceView("all")}
+                      className="text-[11px] text-indigo-200 hover:text-white font-semibold underline underline-offset-2 cursor-pointer"
                     >
-                      <option value="Core Theory">Core Theory</option>
-                      <option value="Practical Lab">Practical Lab</option>
-                      <option value="Program Elective">Program Elective</option>
-                      <option value="Open Elective">Open Elective</option>
-                      <option value="Humanities Elective">Humanities Elective</option>
+                      Browse all {courses.length} &rarr;
+                    </button>
+                  </div>
+
+                  {/* Program Switcher Dropdown */}
+                  <div className="relative">
+                    <select
+                      value={selectedCourse.id}
+                      onChange={(e) => {
+                        const found = courses.find((c) => c.id === e.target.value);
+                        if (found) {
+                          handleSelectCourse(found);
+                          showToast(`Loaded ${found.code} into workspace`);
+                        }
+                      }}
+                      className="w-full bg-white/10 hover:bg-white/15 focus:bg-white focus:text-slate-900 border border-white/20 rounded-xl px-3 py-2 text-xs font-semibold text-white focus:outline-none transition-all cursor-pointer"
+                    >
+                      {courses.map((c) => (
+                        <option key={c.id} value={c.id} className="text-slate-900">
+                          {c.code} &bull; {c.title} ({c.duration})
+                        </option>
+                      ))}
                     </select>
                   </div>
-                </div>
 
-                <div>
-                  <label className="block text-[10px] font-semibold text-slate-500 mb-1">
-                    Full Subject Title
-                  </label>
-                  <input
-                    type="text"
-                    value={newSubTitle}
-                    onChange={(e) => setNewSubTitle(e.target.value)}
-                    placeholder="e.g. Computer Networks & Protocols"
-                    className="w-full bg-white px-2.5 py-1.5 text-slate-800 focus:outline-none border border-slate-200 rounded-lg text-xs focus:border-[#3D405B]"
-                  />
-                </div>
+                  {/* Quick Program Chips Ribbon */}
+                  <div className="flex items-center gap-1.5 overflow-x-auto pb-1 pt-0.5 no-scrollbar">
+                    {courses.map((c) => {
+                      const isCurr = c.id === selectedCourse.id;
+                      return (
+                        <button
+                          key={c.id}
+                          type="button"
+                          onClick={() => handleSelectCourse(c)}
+                          className={`px-2.5 py-1 rounded-lg text-[10px] font-mono font-bold transition-all whitespace-nowrap cursor-pointer shrink-0 border ${
+                            isCurr
+                              ? "bg-white text-[#3D405B] border-white shadow-xs"
+                              : "bg-white/10 text-white/90 border-white/10 hover:bg-white/20"
+                          }`}
+                        >
+                          {c.code}
+                        </button>
+                      );
+                    })}
+                  </div>
 
-                <div className="grid grid-cols-3 gap-2">
-                  <div>
-                    <label className="block text-[10px] font-semibold text-slate-500 mb-1">
-                      Credits
-                    </label>
-                    <input
-                      type="number"
-                      step="0.5"
-                      value={newSubCredits}
-                      onChange={(e) => setNewSubCredits(parseFloat(e.target.value) || 0)}
-                      className="w-full bg-white px-2.5 py-1.5 font-mono text-slate-800 focus:outline-none border border-slate-200 rounded-lg text-xs"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-[10px] font-semibold text-slate-500 mb-1">
-                      Theory (h/wk)
-                    </label>
-                    <input
-                      type="number"
-                      value={newSubTheoryHours}
-                      onChange={(e) => setNewSubTheoryHours(parseInt(e.target.value) || 0)}
-                      className="w-full bg-white px-2.5 py-1.5 font-mono text-slate-800 focus:outline-none border border-slate-200 rounded-lg text-xs"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-[10px] font-semibold text-slate-500 mb-1">
-                      Lab (h/wk)
-                    </label>
-                    <input
-                      type="text"
-                      value={newSubLabHours}
-                      onChange={(e) => setNewSubLabHours(e.target.value)}
-                      className="w-full bg-white px-2.5 py-1.5 font-mono text-slate-800 focus:outline-none border border-slate-200 rounded-lg text-xs"
-                    />
+                  <div className="flex items-center justify-between text-[11px] text-slate-300 pt-1">
+                    <span>Dept: <strong className="text-white font-medium">{selectedCourse.department}</strong></span>
+                    <span>Fees: <strong className="text-white font-mono">₹{selectedCourse.totalTuition.toLocaleString("en-IN")}</strong></span>
                   </div>
                 </div>
+              )}
+            </div>
 
-                <div>
-                  <label className="block text-[10px] font-semibold text-slate-500 mb-1">
-                    Faculty Lead / Instructor
-                  </label>
-                  <select
-                    value={newSubInstructor}
-                    onChange={(e) => setNewSubInstructor(e.target.value)}
-                    className="w-full bg-white px-2.5 py-1.5 text-slate-800 focus:outline-none border border-slate-200 rounded-lg text-xs focus:border-[#3D405B]"
-                  >
-                    <option>Dr. Elena Rostova (Assoc. Prof)</option>
-                    <option>Prof. Rajesh K. Sharma (Professor)</option>
-                    <option>Dr. Alistair Chen (Dept Chair)</option>
-                    <option>Prof. Marcus Sterling (Asst. Prof)</option>
-                  </select>
+            {/* TAB CONTENT 1: CURRICULUM STUDIO */}
+            {workspaceView === "studio" && (
+              <div>
+                {/* Semester Tab Ribbon */}
+                <div className="bg-slate-50 px-3 pt-2.5 flex items-center gap-1.5 overflow-x-auto border-b border-slate-100">
+                  {Array.from({ length: selectedCourse.semesters || 8 }, (_, i) => i + 1).map((sem) => {
+                    const isActive = selectedSemester === sem;
+                    return (
+                      <button
+                        key={sem}
+                        type="button"
+                        onClick={() => setSelectedSemester(sem)}
+                        className={`px-3 py-1.5 text-xs font-semibold rounded-t-lg transition-colors cursor-pointer whitespace-nowrap ${
+                          isActive
+                            ? "bg-white text-[#3D405B] shadow-2xs border-t-2 border-t-[#3D405B]"
+                            : "text-slate-500 hover:text-slate-800"
+                        }`}
+                      >
+                        Sem {sem}
+                      </button>
+                    );
+                  })}
                 </div>
 
-                <div className="pt-1">
+                {/* Semester Summary Stat + Toggle Add Subject Button */}
+                <div className="px-4 py-3 bg-slate-50/70 flex items-center justify-between text-xs border-b border-slate-100">
+                  <div className="flex items-center gap-2">
+                    <span className="font-bold text-slate-800">
+                      Semester {selectedSemester} Subjects
+                    </span>
+                    <span className="font-mono bg-indigo-50 text-indigo-700 px-2 py-0.5 rounded-full font-bold text-[10px] border border-indigo-200">
+                      {currentTotalCredits.toFixed(1)} Credits
+                    </span>
+                  </div>
                   <button
-                    type="submit"
-                    className="w-full py-2 bg-[#3D405B] hover:bg-[#2E3046] text-white font-semibold rounded-xl transition-all flex items-center justify-center gap-1.5 shadow-xs cursor-pointer"
+                    type="button"
+                    onClick={() => setIsAddSubjectExpanded(!isAddSubjectExpanded)}
+                    className={`px-2.5 py-1 rounded-lg text-xs font-semibold transition-all flex items-center gap-1 cursor-pointer ${
+                      isAddSubjectExpanded
+                        ? "bg-rose-50 text-rose-600 hover:bg-rose-100 border border-rose-200"
+                        : "bg-[#3D405B] text-white hover:bg-[#2E3046] shadow-2xs"
+                    }`}
                   >
-                    <Save className="w-4 h-4" />
-                    <span>Save &amp; Attach to Curriculum</span>
+                    {isAddSubjectExpanded ? (
+                      <>
+                        <X className="w-3.5 h-3.5" />
+                        <span>Close Form</span>
+                      </>
+                    ) : (
+                      <>
+                        <Plus className="w-3.5 h-3.5" />
+                        <span>+ Add Subject</span>
+                      </>
+                    )}
                   </button>
                 </div>
-              </form>
-            </div>
 
-            {/* Regulatory Compliance Validation Box */}
-            <div className="p-3 bg-slate-50 text-slate-500 text-[11px] flex items-center gap-2 border-t border-slate-100">
-              <ShieldAlert className="w-4 h-4 text-emerald-600 shrink-0" />
-              <p>Curriculum aligned with IEEE/ACM Computing Guidelines. Prerequisite trees locked.</p>
-            </div>
+                {/* Upgraded Subject Creation Form (Collapsible Card with Polished UI/UX) */}
+                {isAddSubjectExpanded && (
+                  <div className="p-4 bg-gradient-to-b from-indigo-50/40 via-white to-white border-b border-indigo-100 animate-in fade-in slide-in-from-top-2 duration-200">
+                    <div className="flex items-center justify-between mb-3 pb-2 border-b border-slate-100">
+                      <div className="flex items-center gap-2">
+                        <div className="w-6 h-6 rounded-lg bg-indigo-600 text-white flex items-center justify-center">
+                          <Plus className="w-3.5 h-3.5" />
+                        </div>
+                        <div>
+                          <h4 className="font-bold text-xs text-slate-800">
+                            Add Subject to {selectedCourse.code}
+                          </h4>
+                          <span className="text-[10px] text-slate-500 font-medium">
+                            Attaching to Semester {selectedSemester} curriculum
+                          </span>
+                        </div>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => setIsAddSubjectExpanded(false)}
+                        className="p-1 text-slate-400 hover:text-slate-600 rounded-lg hover:bg-slate-100 transition-colors cursor-pointer"
+                        title="Close"
+                      >
+                        <X className="w-4 h-4" />
+                      </button>
+                    </div>
+
+                    <form className="space-y-3 text-xs" onSubmit={handleAddSubject}>
+                      <div className="grid grid-cols-2 gap-2.5">
+                        <div>
+                          <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-600 mb-1">
+                            Subject Code *
+                          </label>
+                          <input
+                            type="text"
+                            required
+                            value={newSubCode}
+                            onChange={(e) => setNewSubCode(e.target.value)}
+                            placeholder="e.g. CS406"
+                            className="w-full bg-white px-3 py-2 font-mono font-bold text-slate-800 focus:outline-none border border-slate-200 rounded-xl text-xs focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 transition-all placeholder-slate-400"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-600 mb-1">
+                            Subject Type
+                          </label>
+                          <select
+                            value={newSubType}
+                            onChange={(e) => setNewSubType(e.target.value as Subject["type"])}
+                            className="w-full bg-white px-3 py-2 text-slate-800 focus:outline-none border border-slate-200 rounded-xl text-xs focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 transition-all cursor-pointer font-medium"
+                          >
+                            <option value="Core Theory">Core Theory</option>
+                            <option value="Practical Lab">Practical Lab</option>
+                            <option value="Program Elective">Program Elective</option>
+                            <option value="Open Elective">Open Elective</option>
+                            <option value="Humanities Elective">Humanities Elective</option>
+                          </select>
+                        </div>
+                      </div>
+
+                      <div>
+                        <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-600 mb-1">
+                          Full Subject Title *
+                        </label>
+                        <input
+                          type="text"
+                          required
+                          value={newSubTitle}
+                          onChange={(e) => setNewSubTitle(e.target.value)}
+                          placeholder="e.g. Cloud Computing & Distributed Architectures"
+                          className="w-full bg-white px-3 py-2 text-slate-800 focus:outline-none border border-slate-200 rounded-xl text-xs focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 transition-all placeholder-slate-400 font-medium"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-600 mb-1">
+                          Assigned Faculty Lead / Instructor
+                        </label>
+                        <select
+                          value={newSubInstructor}
+                          onChange={(e) => setNewSubInstructor(e.target.value)}
+                          className="w-full bg-white px-3 py-2 text-slate-800 focus:outline-none border border-slate-200 rounded-xl text-xs focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 transition-all cursor-pointer"
+                        >
+                          <option>Dr. Elena Rostova (Assoc. Prof)</option>
+                          <option>Prof. Rajesh K. Sharma (Professor)</option>
+                          <option>Dr. Alistair Chen (Dept Chair)</option>
+                          <option>Prof. Marcus Sterling (Asst. Prof)</option>
+                          <option>Dr. Sarah Lin (Finance & Strategy)</option>
+                          <option>Dr. Vikram Seth (AI & Data Science)</option>
+                          <option>Inst. Jenkins (Lab Lead)</option>
+                        </select>
+                      </div>
+
+                      <div className="grid grid-cols-3 gap-2.5 pt-0.5">
+                        <div>
+                          <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-600 mb-1">
+                            Credits (CR)
+                          </label>
+                          <input
+                            type="number"
+                            step="0.5"
+                            min="0.5"
+                            max="12"
+                            value={newSubCredits}
+                            onChange={(e) => setNewSubCredits(parseFloat(e.target.value) || 0)}
+                            className="w-full bg-white px-3 py-2 font-mono font-bold text-slate-800 focus:outline-none border border-slate-200 rounded-xl text-xs focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 transition-all"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-600 mb-1">
+                            Theory (h/wk)
+                          </label>
+                          <input
+                            type="number"
+                            min="0"
+                            max="10"
+                            value={newSubTheoryHours}
+                            onChange={(e) => setNewSubTheoryHours(parseInt(e.target.value) || 0)}
+                            className="w-full bg-white px-3 py-2 font-mono text-slate-800 focus:outline-none border border-slate-200 rounded-xl text-xs focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 transition-all"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-600 mb-1">
+                            Lab Hours
+                          </label>
+                          <select
+                            value={newSubLabHours}
+                            onChange={(e) => setNewSubLabHours(e.target.value)}
+                            className="w-full bg-white px-2.5 py-2 font-mono text-slate-800 focus:outline-none border border-slate-200 rounded-xl text-xs focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 transition-all cursor-pointer"
+                          >
+                            <option value="0">None</option>
+                            <option value="2">2 Hrs/Wk</option>
+                            <option value="4">4 Hrs/Wk</option>
+                            <option value="6">6 Hrs/Wk</option>
+                          </select>
+                        </div>
+                      </div>
+
+                      <div className="pt-2 flex items-center justify-end gap-2 border-t border-slate-100">
+                        <button
+                          type="button"
+                          onClick={() => setIsAddSubjectExpanded(false)}
+                          className="px-3 py-2 border border-slate-200 hover:bg-slate-50 text-slate-600 rounded-xl font-semibold transition-colors cursor-pointer text-xs"
+                        >
+                          Cancel
+                        </button>
+                        <button
+                          type="submit"
+                          className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl transition-all flex items-center gap-1.5 shadow-xs cursor-pointer text-xs"
+                        >
+                          <Save className="w-3.5 h-3.5" />
+                          <span>Attach to Curriculum</span>
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                )}
+
+                {/* Current Semester Subjects List */}
+                <div className="p-3 divide-y divide-slate-100 space-y-1 max-h-[380px] overflow-y-auto">
+                  {currentSubjects.length === 0 ? (
+                    <div className="py-10 px-4 text-center">
+                      <div className="w-12 h-12 rounded-2xl bg-indigo-50 text-indigo-500 mx-auto flex items-center justify-center mb-2.5">
+                        <BookOpen className="w-6 h-6" />
+                      </div>
+                      <p className="text-xs font-bold text-slate-800">
+                        No subjects catalogued for Sem {selectedSemester}
+                      </p>
+                      <p className="text-[11px] text-slate-500 mt-1 max-w-xs mx-auto">
+                        This semester does not have any attached core or elective courses yet.
+                      </p>
+                      <button
+                        type="button"
+                        onClick={() => setIsAddSubjectExpanded(true)}
+                        className="mt-3 px-3 py-1.5 bg-[#3D405B] hover:bg-[#2E3046] text-white rounded-xl text-xs font-semibold transition-all inline-flex items-center gap-1.5 cursor-pointer shadow-xs"
+                      >
+                        <Plus className="w-3.5 h-3.5" />
+                        <span>Add Subject to Sem {selectedSemester}</span>
+                      </button>
+                    </div>
+                  ) : (
+                    currentSubjects.map((subject) => (
+                      <div
+                        key={subject.id}
+                        className="py-2.5 px-2 hover:bg-slate-50 rounded-xl transition-colors"
+                      >
+                        <div className="flex items-start justify-between gap-2">
+                          <div>
+                            <div className="flex items-center gap-1.5">
+                              <span className="font-mono font-bold text-indigo-700 bg-indigo-50 px-1.5 py-0.5 rounded text-[11px] border border-indigo-100">
+                                {subject.code}
+                              </span>
+                              <span className="text-slate-800 font-bold text-xs">{subject.title}</span>
+                            </div>
+                            <div className="mt-1 flex flex-wrap items-center gap-2 text-[11px] text-slate-500">
+                              <span
+                                className={`px-1.5 py-0.5 text-[10px] font-semibold rounded ${
+                                  subject.type === "Practical Lab"
+                                    ? "bg-purple-50 text-purple-700 border border-purple-200"
+                                    : subject.type === "Program Elective"
+                                    ? "bg-blue-50 text-blue-700 border border-blue-200"
+                                    : subject.type === "Humanities Elective"
+                                    ? "bg-amber-50 text-amber-700 border border-amber-200"
+                                    : "bg-slate-100 text-slate-700"
+                                }`}
+                              >
+                                {subject.type}
+                              </span>
+                              <span className="text-slate-600">{subject.instructor}</span>
+                              <span className="text-blue-600 font-medium">Lab: {subject.labHours}</span>
+                            </div>
+                          </div>
+                          <div className="text-right flex flex-col items-end shrink-0">
+                            <span className="font-mono font-bold text-[#3D405B] text-xs">
+                              {subject.credits.toFixed(1)} CR
+                            </span>
+                            <div className="flex gap-1 mt-1 text-slate-400">
+                              <button
+                                type="button"
+                                onClick={() => showToast(`Editing syllabus for ${subject.code}`)}
+                                className="hover:text-blue-600 p-1 rounded hover:bg-blue-50 cursor-pointer"
+                                title="Edit Subject Parameters"
+                              >
+                                <Sliders className="w-3.5 h-3.5" />
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => handleDetachSubject(subject.id, subject.code)}
+                                className="hover:text-rose-600 p-1 rounded hover:bg-rose-50 cursor-pointer"
+                                title="Detach Subject"
+                              >
+                                <Trash2 className="w-3.5 h-3.5" />
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ))
+                  )}
+                </div>
+
+                {/* Regulatory Compliance Validation Box */}
+                <div className="p-3 bg-slate-50 text-slate-500 text-[11px] flex items-center gap-2 border-t border-slate-100">
+                  <ShieldAlert className="w-4 h-4 text-emerald-600 shrink-0" />
+                  <p>Curriculum aligned with IEEE/ACM Computing Guidelines. Prerequisite trees locked.</p>
+                </div>
+              </div>
+            )}
+
+            {/* TAB CONTENT 2: ALL PROGRAMS DIRECTORY (Shows ALL programs inside Active Workspace) */}
+            {workspaceView === "all" && (
+              <div className="p-3 space-y-3">
+                <div className="flex items-center justify-between px-1">
+                  <span className="text-xs font-bold text-slate-800 uppercase tracking-wider">
+                    All Degree Programs ({courses.length})
+                  </span>
+                  <span className="text-[11px] text-slate-500">
+                    Click to load into studio
+                  </span>
+                </div>
+
+                <div className="space-y-2.5 max-h-[560px] overflow-y-auto pr-1">
+                  {courses.map((c) => {
+                    const isSelected = selectedCourse.id === c.id;
+                    return (
+                      <div
+                        key={c.id}
+                        className={`p-3 rounded-2xl border transition-all ${
+                          isSelected
+                            ? "bg-indigo-50/70 border-indigo-300 shadow-xs ring-1 ring-indigo-200"
+                            : "bg-white hover:bg-slate-50 border-slate-200"
+                        }`}
+                      >
+                        <div className="flex items-start justify-between gap-2">
+                          <div>
+                            <div className="flex items-center gap-1.5 mb-1">
+                              <span className="font-mono font-bold text-indigo-700 bg-white px-2 py-0.5 rounded text-[11px] border border-indigo-100 shadow-2xs">
+                                {c.code}
+                              </span>
+                              <span className="text-[10px] font-semibold text-slate-500 bg-slate-100 px-2 py-0.5 rounded">
+                                {c.category}
+                              </span>
+                            </div>
+                            <h4 className="font-bold text-xs text-slate-900 leading-snug">
+                              {c.title}
+                            </h4>
+                            <p className="text-[11px] text-slate-500 mt-0.5">{c.department}</p>
+                          </div>
+
+                          <span
+                            className={`px-2 py-0.5 rounded-full text-[10px] font-semibold shrink-0 border ${
+                              c.status === "Active"
+                                ? "bg-emerald-50 text-emerald-700 border-emerald-200"
+                                : "bg-amber-50 text-amber-700 border-amber-200"
+                            }`}
+                          >
+                            {c.status}
+                          </span>
+                        </div>
+
+                        {/* Metrics Bar */}
+                        <div className="grid grid-cols-3 gap-2 mt-3 pt-2.5 border-t border-slate-100 text-[11px]">
+                          <div>
+                            <span className="text-[10px] text-slate-400 block uppercase font-semibold">Duration</span>
+                            <span className="font-mono font-bold text-slate-700">{c.duration}</span>
+                          </div>
+                          <div>
+                            <span className="text-[10px] text-slate-400 block uppercase font-semibold">Tuition / Yr</span>
+                            <span className="font-mono font-bold text-slate-900">₹{c.tuitionYear.toLocaleString("en-IN")}</span>
+                          </div>
+                          <div>
+                            <span className="text-[10px] text-slate-400 block uppercase font-semibold">Subjects</span>
+                            <span className="font-mono font-bold text-indigo-700">{c.subjectsCount} Subjects</span>
+                          </div>
+                        </div>
+
+                        {/* Action Buttons */}
+                        <div className="mt-3 pt-2 flex items-center justify-between gap-2">
+                          <button
+                            type="button"
+                            onClick={() => {
+                              handleSelectCourse(c);
+                              setWorkspaceView("studio");
+                              showToast(`Loaded ${c.code} into Curriculum Studio`);
+                            }}
+                            className={`flex-1 py-1.5 px-3 rounded-xl text-xs font-semibold transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
+                              isSelected
+                                ? "bg-indigo-600 hover:bg-indigo-700 text-white shadow-2xs"
+                                : "bg-slate-100 hover:bg-slate-200 text-slate-800"
+                            }`}
+                          >
+                            <BookOpen className="w-3.5 h-3.5" />
+                            <span>{isSelected ? "Currently Active Studio" : "Open in Studio"}</span>
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => handleOpenViewModal(c)}
+                            className="p-1.5 border border-slate-200 hover:bg-slate-100 text-slate-600 rounded-xl transition-colors cursor-pointer"
+                            title="View Program Details"
+                          >
+                            <Eye className="w-3.5 h-3.5" />
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => handleOpenEditModal(c)}
+                            className="p-1.5 border border-slate-200 hover:bg-slate-100 text-slate-600 rounded-xl transition-colors cursor-pointer"
+                            title="Edit Program"
+                          >
+                            <Edit className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -1390,7 +2083,8 @@ export default function CoursesPage() {
                   type="button"
                   onClick={() => {
                     setIsViewCourseModalOpen(false);
-                    setSelectedCourse(viewingCourse);
+                    handleSelectCourse(viewingCourse);
+                    setWorkspaceView("studio");
                     showToast(`Opened ${viewingCourse.code} in Curriculum Studio`);
                   }}
                   className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-xl transition-colors cursor-pointer flex items-center gap-1.5"
